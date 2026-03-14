@@ -91,25 +91,17 @@
     }
     #nav-list { flex: 1; padding: 0.5rem 0; }
 
-    .nav-group { padding: 0.15rem 0; }
-    .nav-date {
-      padding: 0.5rem 1rem 0.2rem;
-      font-size: 0.72rem;
-      color: var(--fg-muted);
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
     .nav-link {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.35rem 1rem 0.35rem 1.5rem;
+      display: block;
+      padding: 0.35rem 1rem;
       font-size: 0.875rem;
       color: var(--fg);
       text-decoration: none;
       border-radius: 0 4px 4px 0;
       margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .nav-link:hover {
       background: color-mix(in srgb, var(--accent) 12%, transparent);
@@ -119,16 +111,6 @@
       background: color-mix(in srgb, var(--accent) 15%, transparent);
       color: var(--accent);
       font-weight: 600;
-    }
-    .nav-badge {
-      font-size: 0.65rem;
-      padding: 0.05rem 0.35rem;
-      border-radius: 3px;
-      background: #dbeafe;
-      color: #1d4ed8;
-    }
-    @media (prefers-color-scheme: dark) {
-      .nav-badge { background: #1e3a5f; color: #93c5fd; }
     }
     .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
 
@@ -227,15 +209,10 @@
         const data = await res.json();
 
         let html = '';
-        for (const group of data) {
-          html += `<div class="nav-group"><div class="nav-date">${group.display}</div>`;
-          for (const page of group.pages) {
-            const filename = page.path.split('/').pop();
-            const active   = CURRENT_FILE === filename ? ' active' : '';
-            const badge    = page.is_weekly ? ' <span class="nav-badge">週刊</span>' : '';
-            html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}${badge}</a>`;
-          }
-          html += '</div>';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
         }
         document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
       } catch {
