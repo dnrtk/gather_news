@@ -1,0 +1,73 @@
+{% extends "base.html.j2" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_styles %}
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .period { color: var(--fg-muted); font-size: 0.95rem; margin-bottom: 0.2rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+.day-section { margin-bottom: 2rem; }
+.day-section h2 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fg-muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+.article-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4rem 1rem;
+  align-items: start;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.article-row:last-child { border-bottom: none; }
+.article-title a {
+  color: var(--fg);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.article-title a:hover { color: var(--accent); text-decoration: underline; }
+.article-one-liner { font-size: 0.82rem; color: var(--fg-muted); margin-top: 0.1rem; }
+.article-source { font-size: 0.75rem; color: var(--fg-muted); white-space: nowrap; }
+.empty-day { font-size: 0.85rem; color: var(--fg-muted); font-style: italic; }
+@media (max-width: 600px) {
+  .article-row { grid-template-columns: 1fr; }
+}
+{% endblock %}
+
+{% block content %}
+<header>
+  <h1>{{ title }}</h1>
+  <p class="period">{{ period }}</p>
+  <p class="meta">生成日時: {{ generated_at }}</p>
+</header>
+
+{% set weekday_ja = ["月", "火", "水", "木", "金"] %}
+{% for d in week_dates %}
+<section class="day-section">
+  <h2>{{ d.strftime('%m/%d') }}（{{ weekday_ja[loop.index0] }}）</h2>
+  {% set day_articles = date_groups[d] %}
+  {% if day_articles %}
+    {% for article in day_articles %}
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer">{{ article.title }}</a>
+        </div>
+        <div class="article-one-liner">{{ article.one_liner }}</div>
+      </div>
+      <div class="article-source">{{ article.source_name }}</div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p class="empty-day">記事なし</p>
+  {% endif %}
+</section>
+{% endfor %}
+{% endblock %}
