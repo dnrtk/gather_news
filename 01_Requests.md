@@ -52,6 +52,22 @@ Windowsタスクスケジューラ（6:00 / 18:00）
 | The Verge | https://www.theverge.com | RSS あり |
 | ITmedia AI+ | https://www.itmedia.co.jp/aiplus/ | RSS あり |
 
+### Tier 4 - 量子コンピュータ
+
+| ソース | URL | 備考 |
+|--------|------|------|
+| IEEE Spectrum Quantum | https://spectrum.ieee.org/feeds/topic/quantum-computing.rss | RSS あり |
+| Quantum Computing Report | https://quantumcomputingreport.com/feed/ | RSS あり |
+| IBM Research Blog | https://research.ibm.com/blog/rss | RSS あり |
+
+### Tier 5 - 世界情勢
+
+| ソース | URL | 備考 |
+|--------|------|------|
+| Reuters World News | https://feeds.reuters.com/reuters/worldNews | RSS あり |
+| BBC World News | https://feeds.bbci.co.uk/news/world/rss.xml | RSS あり |
+| NHK国際放送 | https://www3.nhk.or.jp/rss/news/cat6.xml | RSS あり |
+
 ---
 
 ## 機能要件

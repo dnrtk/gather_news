@@ -96,6 +96,32 @@ sources:
         url: "https://rss.itmedia.co.jp/rss/2.0/aiplus.xml"
         type: rss
 
+  tier4:
+    limit: 3
+    items:
+      - name: "IEEE Spectrum Quantum"
+        url: "https://spectrum.ieee.org/feeds/topic/quantum-computing.rss"
+        type: rss
+      - name: "Quantum Computing Report"
+        url: "https://quantumcomputingreport.com/feed/"
+        type: rss
+      - name: "IBM Research Blog"
+        url: "https://research.ibm.com/blog/rss"
+        type: rss
+
+  tier5:
+    limit: 3
+    items:
+      - name: "Reuters World News"
+        url: "https://feeds.reuters.com/reuters/worldNews"
+        type: rss
+      - name: "BBC World News"
+        url: "https://feeds.bbci.co.uk/news/world/rss.xml"
+        type: rss
+      - name: "NHK国際放送"
+        url: "https://www3.nhk.or.jp/rss/news/cat6.xml"
+        type: rss
+
 seen_urls:
   retention_days: 7                     # キャッシュ保持期間（日）
 ```
@@ -242,7 +268,7 @@ HTML生成と同タイミングで、記事データをJSONファイルとして
 | 要素 | 内容 |
 |------|------|
 | ページタイトル | `YYYY年MM月DD日 朝刊 / 夕刊 ニュースダイジェスト` |
-| セクション | Tier 1: AI一次情報 / Tier 2: テック全般 / Tier 3: その他（有効時のみ） |
+| セクション | Tier 1: AI一次情報 / Tier 2: テック全般 / Tier 3: その他 / Tier 4: 量子コンピュータ / Tier 5: 世界情勢（有効なTierのみ表示） |
 | 各記事カード | タイトル（元記事リンク付き）・ソース名・取得日時・日本語要約 |
 | ヘッダー | ページタイトル・生成日時 |
 | フッター | `index.html` へ戻るリンク |
