@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月17日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月17日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月17日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://engineering.fb.com/2026/03/02/data-infrastructure/investing-in-infrastructure-metas-renewed-commitment-to-jemalloc/" target="_blank" rel="noopener noreferrer">Meta’s renewed commitment to jemalloc</a></h3>
+    <p class="meta">Hacker News | 03/17 03:12</p>
+    <p class="summary">Metaは、インフラの効率を支えるメモリ割り当てライブラリ「jemalloc」への継続的な投資を発表した。jemalloc 6の開発に注力しており、ヒーププロファイリングの改善、メモリ断片化の抑制、スケーラビリティの向上を目指している。Metaの大規模なワークロードにおいてメモリ使用量の最適化は不可欠であり、オープンソースコミュニティとの連携を深めながら、次世代のメモリ管理技術の開発を進めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://kevinboone.me/small_web_is_big.html" target="_blank" rel="noopener noreferrer">The “small web” is bigger than you might think</a></h3>
+    <p class="meta">Hacker News | 03/17 02:17</p>
+    <p class="summary">検索エンジンやSNSに覆い隠された「スモールウェブ（個人のブログや趣味のサイト）」が、実は想像以上に広大で多様であることを解説している。広告やSEO、AI生成コンテンツに支配された商用ウェブとは異なり、人間味のある情報発信の場として価値が見直されている。著者は、これらのニッチなサイトを探索することで、かつてのインターネットが持っていた純粋な楽しさや深い知識に触れることができると述べている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://community.home-assistant.io/t/my-journey-to-a-reliable-and-enjoyable-locally-hosted-voice-assistant/944860" target="_blank" rel="noopener noreferrer">My Journey to a reliable and enjoyable locally hosted voice assistant (2025)</a></h3>
+    <p class="meta">Hacker News | 03/16 22:09</p>
+    <p class="summary">プライバシー保護と信頼性を重視し、クラウドに依存しないローカル完結型の音声アシスタントをHome Assistantで構築した体験談。Whisper（音声認識）、Piper（音声合成）、LLMを活用し、応答速度や精度を実用的なレベルに引き上げた。スマートホームの操作だけでなく、自然な会話も可能にする構成を詳細に解説しており、2025年時点でのローカル音声AIの進化と、その導入のメリットを強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://arxiv.org/abs/2603.12229" target="_blank" rel="noopener noreferrer">Language Model Teams as Distrbuted Systems</a></h3>
+    <p class="meta">Hacker News | 03/17 02:19</p>
+    <p class="summary">複数の大規模言語モデル（LLM）エージェントで構成されるチームを「分散システム」として捉え、その挙動や最適化を論じた論文。通信プロトコル、合意形成、リソース割り当てなど、従来の分散コンピューティングの概念をAIチームに適用する。エラーの伝播や並列処理の効率性を分析し、複雑なタスクを協調して解決するための理論的枠組みを提案している。これにより、より堅牢でスケーラブルなマルチエージェントシステムの構築が可能になる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://it-notes.dragas.net/2026/03/16/why-i-love-freebsd/" target="_blank" rel="noopener noreferrer">Why I love FreeBSD</a></h3>
+    <p class="meta">Hacker News | 03/16 20:23</p>
+    <p class="summary">著者がFreeBSDを愛用する理由として、システムの一貫性、優れたドキュメント、堅牢なネットワークスタック、そしてZFSやJailsといった先進的な機能を挙げている。Linuxカーネルとユーザーランドが個別に開発されるLinuxディストリビューションとは異なり、FreeBSDはOS全体が統合されて開発されている点を高く評価。シンプルで予測可能な設計が、サーバー運営や開発において高い信頼性と快適さをもたらすと説いている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/trifolium/books/1c0373f3570334" target="_blank" rel="noopener noreferrer">ちいさくはじめる Nix</a></h3>
+    <p class="meta">Zenn トレンド | 03/16 15:01</p>
+    <p class="summary">Nixのパッケージ管理や環境構築を小規模から始めるためのガイド。宣言的な設定管理や再現性の高さといったNixの魅力を紹介し、Home ManagerやFlakesを用いた具体的な設定手順を解説している。学習コストが高いとされるNixを、まずは個人の開発環境の一部に取り入れる方法を提案。複雑な依存関係の解消や、異なるマシン間での環境同期を容易にするための実践的なステップがまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/knowledgework/articles/0160b8d008d1e9" target="_blank" rel="noopener noreferrer">もし、勤めている会社がM&amp;Aされたらエンジニアはどう行動するか？</a></h3>
+    <p class="meta">Zenn トレンド | 03/16 03:00</p>
+    <p class="summary">勤務先がM&amp;A（合併・買収）された際、エンジニアが直面する環境の変化や取るべき行動を解説した記事。文化の統合、技術スタックの選定、評価制度の変化といった不確実性の中で、冷静に状況を把握し、自身のキャリアにとってプラスになる機会を見極める重要性を説く。統合プロセスに積極的に関与することで存在感を示すことや、変化を恐れず新たな挑戦として捉える姿勢が、エンジニアとしての成長に繋がると述べている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prum_hitomi/items/67d68b074c45d10f0307?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【新人エンジニアへ】「やりたいこと」がなくてもいい！ - Canから始めるエンジニアのキャリア戦略 -</a></h3>
+    <p class="meta">Qiita トレンド | 03/16 03:41</p>
+    <p class="summary">新人エンジニアに向けて、明確な「やりたいこと（Will）」がなくても、まずは「できること（Can）」を増やすことでキャリアを切り拓く戦略を提案。スキルを習得し市場価値を高めることで、後から選択肢ややりたいことが見つかるという考え方を説く。焦りを感じる若手に対し、目の前の業務に注力し、確実に実績を積み重ねることが将来の自由度と自信に繋がるという、現実的で前向きなメッセージを送っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/16/warren-presses-pentagon-over-decision-to-grant-xai-access-to-classified-networks/" target="_blank" rel="noopener noreferrer">Warren presses Pentagon over decision to grant xAI access to classified networks</a></h3>
+    <p class="meta">TechCrunch | 03/16 20:58</p>
+    <p class="summary">エリザベス・ウォーレン上院議員が、イーロン・マスク氏率いるxAI社に対し、国防総省が機密ネットワークへのアクセス権を与えた決定を疑問視し、説明を求めている。マスク氏の外国（中国やサウジアラビア等）とのビジネス上のつながりが、国家安全保障上のリスクを招く可能性を懸念。機密情報の取り扱いに関する審査プロセスが適切に行われたか、独占的な契約になっていないかを厳しく追及している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/16/memories-ai-is-building-the-visual-memory-layer-for-wearables-and-robotics/" target="_blank" rel="noopener noreferrer">Memories AI is building the visual memory layer for wearables and robotics</a></h3>
+    <p class="meta">TechCrunch | 03/16 20:30</p>
+    <p class="summary">Memories AIは、ウェアラブル端末やロボットが捉えた膨大な視覚データを、AIが理解・検索可能な「視覚的記憶層」として構築する技術を開発している。過去の出来事や物体を意味ベースで検索可能にすることで、AIアシスタントの文脈理解を向上させる。人間の記憶をデジタルで補完・拡張することを目指しており、プライバシーに配慮しつつ、デバイスが「見たもの」を価値ある知識に変える基盤を提供する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/16/samsung-bets-this-island-startup-can-tame-the-grid-with-software-and-batteries/" target="_blank" rel="noopener noreferrer">Samsung bets this island startup can tame the grid with software and batteries</a></h3>
+    <p class="meta">TechCrunch | 03/16 20:00</p>
+    <p class="summary">サムスンは、再生可能エネルギーの不安定な供給をソフトウェアと蓄電池で制御するスタートアップへの投資を強化している。この企業は、電力網の需要と供給をリアルタイムで最適化し、化石燃料への依存を減らす技術を提供。特に離島や不安定な送電網を持つ地域での実績が注目されている。エネルギー効率を最大化し、分散型電源の普及を加速させることで、持続可能な電力インフラの構築に寄与することを目指している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/kvantify-atom-computing-and-aarhus-university-launch-earlybirdd-project/" target="_blank" rel="noopener noreferrer">Kvantify, Atom Computing, and Aarhus University Launch EarlyBIRDD Project</a></h3>
+    <p class="meta">Quantum Computing Report | 03/16 19:20</p>
+    <p class="summary">Kvantify、Atom Computing、オーフス大学が共同で、量子コンピューティングを活用した創薬プロジェクト「EarlyBIRDD」を開始した。中性原子量子コンピュータを用いることで、従来のコンピュータでは困難だった複雑な分子シミュレーションの高速化を目指す。創薬の初期段階における疾患メカニズムの解明や、薬剤設計の精度向上を図る。産学連携により量子技術の実用化を加速し、医療分野に革新をもたらすことが期待されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/syngenta-and-quantumbasel-partner-to-advance-agricultural-molecular-modeling/" target="_blank" rel="noopener noreferrer">Syngenta and QuantumBasel Partner to Advance Agricultural Molecular Modeling</a></h3>
+    <p class="meta">Quantum Computing Report | 03/16 19:09</p>
+    <p class="summary">農業大手のシンジェンタとQuantumBaselが提携し、農業分野における分子モデリングに量子コンピューティングを導入する。持続可能な農薬の開発や、気候変動に強い作物の種子設計を効率化することが目的。量子アルゴリズムを用いることで、複雑な化学反応のシミュレーション時間を大幅に短縮し、より環境負荷の低い農業ソリューションの早期実現を目指す。量子技術が世界の食料安全保障と持続可能な農業に貢献する新たな事例となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/xanadu-and-telus-collaborate-on-sovereign-quantum-data-centre-infrastructure/" target="_blank" rel="noopener noreferrer">Xanadu and TELUS Collaborate on Sovereign Quantum Data Centre Infrastructure</a></h3>
+    <p class="meta">Quantum Computing Report | 03/16 18:57</p>
+    <p class="summary">量子コンピューティングのXanaduと通信大手TELUSが、カナダ国内に「主権型量子データセンター」を構築するために協力する。機密性の高いデータを国内で安全に処理・保管しつつ、クラウド経由で量子計算能力を提供することを目指す。国家レベルのデータ保護と技術自立を重視しており、政府や金融、医療などの重要分野での量子活用を推進。光量子コンピュータ技術と高速通信網を統合し、次世代の計算基盤を確立する計画だ。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c8r17plnvy3o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Wary allies show there&#39;s no quick fix to Trump&#39;s Iran crisis</a></h3>
+    <p class="meta">BBC World News | 03/16 17:34</p>
+    <p class="summary">トランプ政権によるイラン情勢への強硬な対応に対し、同盟諸国が慎重な姿勢を示しており、危機の早期解決が困難な状況にある。同盟国は米国との足並みを揃えつつも、軍事衝突や経済混乱を避けるための外交的出口を模索。一方的な圧力だけではイランを対話に引き出すことは難しく、各国間の思惑のズレが解決を複雑にしている。長期化する緊張状態の中で、国際社会の協調体制が試されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cqj9kgxqjwjo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Meta and TikTok let harmful content rise after evidence outrage drove engagement, say whistleblowers</a></h3>
+    <p class="meta">BBC World News | 03/16 06:10</p>
+    <p class="summary">MetaとTikTokの内部告発者は、両社がユーザーの「怒り」を煽る有害コンテンツを意図的に放置していたと主張した。怒りや対立を伴う投稿はエンゲージメント（反応率）が高くなるため、収益を優先して拡散を抑制しなかったという。告発によれば、プラットフォーム側は有害性を認識しながらも、成長目標のために安全対策を後回しにしていた。アルゴリズムが社会の分断を助長している実態が浮き彫りになり、規制強化を求める声が強まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/crl4gxgkkylo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Iran hits key UAE oil port and Dubai airport</a></h3>
+    <p class="meta">BBC World News | 03/16 12:43</p>
+    <p class="summary">イランがアラブ首長国連邦（UAE）の主要な石油港とドバイ国際空港を攻撃した。この攻撃により、世界のエネルギー供給拠点および主要な航空ハブに深刻な緊張が走っている。攻撃の背景には地域的な対立の激化があり、原油価格の高騰や国際物流への甚大な影響が懸念されている。近隣諸国や米国は警戒を強めており、さらなる報復の連鎖が中東全域を不安定化させる恐れがあるとして、国際社会は事態を注視している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260317/k10015077361000.html" target="_blank" rel="noopener noreferrer">政府 艦船派遣期待で関係国に連絡し対応検討 日米首脳会談前に</a></h3>
+    <p class="meta">NHK国際放送 | 03/16 20:12</p>
+    <p class="summary">日本政府は、中東情勢の緊迫化を受け、船舶の安全確保に向けた艦船派遣を検討している。日米首脳会談を前に、米国を含む関係各国と連絡を取り、自衛隊による貢献のあり方を慎重に調整中。公海上の安全航行を維持するための国際的な枠組みへの参画や、情報収集体制の強化が議論の柱となっている。国内の法整備や政治的影響を考慮しつつ、国際社会からの期待に応え、日本のプレゼンスを示す狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260317/k10015077511000.html" target="_blank" rel="noopener noreferrer">国連人権理事会の専門家 米国とイスラエルの攻撃を違法と非難</a></h3>
+    <p class="meta">NHK国際放送 | 03/16 19:53</p>
+    <p class="summary">国連人権理事会の専門家パネルは、米国とイスラエルによる特定の軍事攻撃が国際法に違反しているとして非難する声明を出した。攻撃による民間人の犠牲やインフラ破壊を「違法」と指摘し、人道上の配慮が欠けていると批判。国際的な人道支援の妨げになっている点も問題視し、即時の停戦と独立した調査を求めている。これに対し該当国は自衛権の行使であると主張しており、国際社会における対立が深まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260317/k10015077471000.html" target="_blank" rel="noopener noreferrer">米中の貿易協議が終了 いずれも協議の成果を強調</a></h3>
+    <p class="meta">NHK国際放送 | 03/16 19:45</p>
+    <p class="summary">米中両国による新たな貿易協議が終了し、双方がその成果を強調する声明を発表した。関税の扱い、市場アクセス、知的財産権保護などの重要課題について議論が行われ、一定の進展があったとされる。経済的な対立が続く中、対話の継続を確認したことは緊張緩和への一歩と見なされている。具体的な合意内容については今後精査が必要だが、世界経済への悪影響を最小限に抑えたい両国の思惑が一致した形となった。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
