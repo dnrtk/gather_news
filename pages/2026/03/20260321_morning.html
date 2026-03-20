@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月21日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月21日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月21日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.lemonde.fr/en/international/article/2026/03/20/stravaleaks-france-s-aircraft-carrier-located-in-real-time-by-le-monde-through-fitness-app_6751640_4.html" target="_blank" rel="noopener noreferrer">France&#39;s aircraft carrier located in real time by Le Monde through fitness app</a></h3>
+    <p class="meta">Hacker News | 03/20 22:01</p>
+    <p class="summary">フィットネスアプリ「Strava」の公開データを通じて、フランスの航空母艦の現在地がル・モンド紙によってリアルタイムで特定された。軍関係者がアプリを使って活動を記録した際、GPSデータが意図せず公開設定になっていたことが原因。この事案は、軍事機密の漏洩や安全保障上の重大なリスクを浮き彫りにした。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blogs.windows.com/windows-insider/2026/03/20/our-commitment-to-windows-quality/" target="_blank" rel="noopener noreferrer">Our commitment to Windows quality</a></h3>
+    <p class="meta">Hacker News | 03/21 04:16</p>
+    <p class="summary">MicrosoftはWindowsの品質向上に向けた継続的な取り組みについてブログを公開した。Windows Insiderプログラムの参加者からのフィードバックを基に、OSの安定性、セキュリティ、そしてユーザー体験の改善に注力することを強調。より信頼性の高い更新プロセスを通じて、ユーザーに高品質なコンピューティング環境を提供することを目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/MoonshotAI/Attention-Residuals" target="_blank" rel="noopener noreferrer">Attention Residuals</a></h3>
+    <p class="meta">Hacker News | 03/21 03:23</p>
+    <p class="summary">MoonshotAIが公開した「Attention Residuals」のGitHubリポジトリ。トランスフォーマーモデルにおけるアテンション機構の残差接続に着目し、学習の安定性と効率を向上させるための新しい技術的手法を提案している。大規模言語モデルなどのディープラーニングモデルの性能最適化を目的とした研究用コードやドキュメントが含まれている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zserge.com/posts/visicalc/" target="_blank" rel="noopener noreferrer">VisiCalc Reconstructed</a></h3>
+    <p class="meta">Hacker News | 03/17 19:39</p>
+    <p class="summary">世界初の表計算ソフト「VisiCalc」を現代の技術で再構築するプロジェクトの紹介。オリジナルのコードを分析し、ブラウザ上で動作するように再現を試みている。パーソナルコンピュータの歴史において重要な役割を果たしたソフトウェアの内部構造を理解し、その革新的な設計思想を技術的に継承・解説する内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://practical.engineering/blog/2026/3/17/the-los-angeles-aqueduct-is-wild" target="_blank" rel="noopener noreferrer">The Los Angeles Aqueduct Is Wild</a></h3>
+    <p class="meta">Hacker News | 03/18 03:43</p>
+    <p class="summary">ロサンゼルス水道（LA Aqueduct）の壮大なインフラとその歴史を解説する記事。砂漠を越えて水を運ぶために重力を利用した巧みな設計がなされているが、一方で水源地への環境影響や法的な紛争など、多くの課題も抱えてきた。エンジニアリングの観点から、この巨大な水利システムの仕組みと社会的な影響を紐解いている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tellernovel_inc/articles/bb27cd0f28f8cb" target="_blank" rel="noopener noreferrer">React Native開発が変わる。RozeniteでCoding Agentに「目と手」を与えた話</a></h3>
+    <p class="meta">Zenn トレンド | 03/19 11:20</p>
+    <p class="summary">React Native開発を効率化するため、AIエージェントに「視覚（UI認識）」と「操作（シミュレータ操作）」の能力を与える「Rozenite」の取り組みを紹介。AIが画面を直接確認しながらコードを修正・検証することで、従来より高度な開発自動化を実現した。AIとの協調による新しいモバイルアプリ開発の形を提示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/GeneLab_999/items/04ff280edc3178b60104?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">「OpenAI APIのトークン消費量をざっくり計算して」と頼まれて調べたら絶望した話</a></h3>
+    <p class="meta">Qiita トレンド | 03/19 03:57</p>
+    <p class="summary">OpenAI APIのトークン消費量を正確に見積もることの難しさに直面した体験談。モデルごとの単価の違い、入出力の重み、日本語特有のトークン化の仕組みなど、単純な文字数計算では収まらないコスト計算の複雑さを詳述している。実運用における予算管理の注意点と、事前の詳細な調査の重要性を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/miruky/items/026aeee6b59f78df5e9d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【2026年最新版】ローカルLLM（Ollama）で完全オフラインAI開発環境を作る</a></h3>
+    <p class="meta">Qiita トレンド | 03/18 03:12</p>
+    <p class="summary">2026年最新版の、Ollamaを使用して完全オフラインで大規模言語モデル（LLM）を動作させる開発環境の構築ガイド。プライバシーや機密情報の保護が必要な現場で、ローカルPCのリソースのみを使ってAIを活用する手順を解説。必要なハードウェア要件からセットアップの手順まで、具体的に紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/20/microsoft-rolls-back-some-of-its-copilot-ai-bloat-on-windows/" target="_blank" rel="noopener noreferrer">Microsoft rolls back some of its Copilot AI bloat on Windows</a></h3>
+    <p class="meta">TechCrunch | 03/20 20:53</p>
+    <p class="summary">MicrosoftがWindowsにおけるCopilot AIの過剰な統合の一部を撤回し始めた。ユーザーから「ソフトウェアの肥大化（bloat）」として批判を受けていたUIの煩雑さを解消するため、一部の機能をオプション化または削除する動きを見せている。ユーザー体験のバランスを重視し、OSの使いやすさを再優先する方針に転換した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/video/what-happened-at-nvidia-gtc-nemoclaw-robot-olaf-and-a-1-trillion-bet/" target="_blank" rel="noopener noreferrer">What happened at Nvidia GTC: NemoClaw, Robot Olaf, and a $1 trillion bet</a></h3>
+    <p class="meta">TechCrunch | 03/20 20:02</p>
+    <p class="summary">Nvidiaのイベント「GTC」のハイライトをまとめた記事。新技術「NemoClaw」や人型ロボット「Olaf」などの発表を通じ、AIとロボティクス分野への1兆ドル規模の投資戦略が示された。GPUの進化にとどまらず、あらゆる産業をAIで再定義しようとする同社の野心的なビジョンと次世代コンピューティングの方向性が語られている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/20/amidst-legal-turmoil-kalshi-is-temporarily-banned-in-nevada/" target="_blank" rel="noopener noreferrer">Amidst legal turmoil, Kalshi is temporarily banned in Nevada</a></h3>
+    <p class="meta">TechCrunch | 03/20 19:15</p>
+    <p class="summary">予測市場プラットフォームのKalshiが、法的な論争の中でネバダ州での活動を一時的に禁止された。選挙結果などを対象とした取引を巡り、規制当局との間で管轄権やギャンブル規制に関する争いが続いており、今回の措置はその一環である。この判断は、予測市場という新しい業界全体の規制のあり方に影響を与える可能性がある。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cde5y63y3n7o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Norway&#39;s crown princess breaks silence, claiming she was &#39;manipulated and deceived&#39; by Epstein</a></h3>
+    <p class="meta">BBC World News | 03/20 15:30</p>
+    <p class="summary">ノルウェーのメッテ＝マリット皇太子妃が、過去にジェフリー・エプスタイン氏から「操作され、欺かれていた」と声明を発表した。数年前にエプスタイン氏と数回面会していたことを認め、彼の犯罪行為を知っていたら決して関わることはなかったと強調。深い後悔の意を表明し、自身の関わりについて沈黙を破り説明した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cr71rkeg7xxo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Ukraine-Hungary oil pipeline row threatens EU loan</a></h3>
+    <p class="meta">BBC World News | 03/20 20:16</p>
+    <p class="summary">ウクライナとハンガリーの間の石油パイプラインを巡る対立が、EUによるウクライナへの融資計画に影響を及ぼしている。ウクライナがロシア産石油の輸送を制限したことにハンガリーが反発しており、この紛争がEU内での合意形成を妨げている。財政支援の遅延を招く恐れがあり、関係各国の外交的な対応が注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c248pgn158go?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Israel strikes Syria after Druze clashes</a></h3>
+    <p class="meta">BBC World News | 03/20 16:02</p>
+    <p class="summary">イスラエル占領下のゴラン高原でドルーズ派との衝突が発生した後、イスラエル軍がシリア国内の標的に対して攻撃を実施した。地域的な緊張の高まりが背景にあり、シリア側からの攻撃に対する報復や軍事的抑止力の維持を目的としている。この衝突により、中東地域の情勢がさらに不安定化することが懸念されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260321/k10015080711000.html" target="_blank" rel="noopener noreferrer">“高速制限速度10キロ引き下げ” 石油消費抑える対策提言 IEA</a></h3>
+    <p class="meta">NHK国際放送 | 03/20 20:37</p>
+    <p class="summary">国際エネルギー機関（IEA）は、石油消費を抑えるため、高速道路の制限速度を時速10キロ引き下げるなどの対策を提言した。エネルギー価格の高騰や供給不安を受け、緊急の需要削減が必要だと強調。在宅勤務の推奨や公共交通機関の利用促進と合わせ、燃料効率を改善し資源依存度を下げる狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260321/k10015080671000.html" target="_blank" rel="noopener noreferrer">高市首相 日米首脳会談など一連の日程終え 帰国の途に</a></h3>
+    <p class="meta">NHK国際放送 | 03/20 20:35</p>
+    <p class="summary">高市首相は日米首脳会談など、一連の米国訪問日程を終えて帰国の途についた。会談では安全保障協力の強化や先端技術分野での連携が確認され、日米同盟の堅固さを内外に示す機会となった。首相は今回の外交成果を強調し、今後も強固な日米関係を基軸にアジア太平洋地域の安定に努める方針である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260321/k10015080701000.html" target="_blank" rel="noopener noreferrer">高市首相 アーリントン国立墓地を訪れ献花</a></h3>
+    <p class="meta">NHK国際放送 | 03/20 20:29</p>
+    <p class="summary">訪米中の高市首相は、ワシントン近郊のアーリントン国立墓地を訪れ、無名戦士の墓に献花した。戦没者への哀悼の意を表すとともに、日米の歴史的な和解と絆を改めて確認する象徴的な行事となった。この訪問は外交日程の一環であり、両国の平和への決意と強固な友好関係を強調する狙いがある。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
