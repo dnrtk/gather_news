@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月26日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月26日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月26日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://fightchatcontrol.eu/?foo=bar" target="_blank" rel="noopener noreferrer">The EU still wants to scan  your private messages and photos</a></h3>
+    <p class="meta">Hacker News | 03/26 05:27</p>
+    <p class="summary">EUは「チャット・コントロール」と呼ばれる、プライバシーを侵害する可能性のあるメッセージのスキャン規制を推進し続けている。児童虐待素材の検知を名目に、暗号化された通信を監視しようとする動きに対し、プライバシー保護の観点から強い反対の声が上がっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://rpastro.square.site/s/stories/phm" target="_blank" rel="noopener noreferrer">My astrophotography in the movie Project Hail Mary</a></h3>
+    <p class="meta">Hacker News | 03/22 23:28</p>
+    <p class="summary">天体写真家が、アンディ・ウィアーの小説を映画化した『プロジェクト・ヘイル・メアリー』に自身の作品が採用された経緯を語っている。映画のセットデザインや小道具として自身の写真がどのように使われたか、その喜びと制作への貢献について紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.nytimes.com/2026/03/25/us/politics/supreme-court-cox-music-copyright.html" target="_blank" rel="noopener noreferrer">Supreme Court Sides with Cox in Copyright Fight over Pirated Music</a></h3>
+    <p class="meta">Hacker News | 03/26 00:02</p>
+    <p class="summary">米最高裁は、インターネットプロバイダーのCox Communicationsがユーザーの音楽海賊行為に対して法的責任を問われていた訴訟で、Cox側の主張を認める判断を下した。著作権侵害をめぐる大規模な法的争いにおいて、プロバイダー側の負担を軽減する重要な判決となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://lapcatsoftware.com/articles/2026/3/11.html" target="_blank" rel="noopener noreferrer">Apple randomly closes bug reports unless you &#34;verify&#34; the bug remains unfixed</a></h3>
+    <p class="meta">Hacker News | 03/26 04:14</p>
+    <p class="summary">Appleのバグ報告システムにおいて、開発者が報告したバグが修正されたかを確認するよう求められ、対応しないと報告が勝手に終了される仕様が批判されている。この不親切なプロセスが、バグの放置や開発者の不満を招いていると指摘されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://ente.com/blog/ensu/" target="_blank" rel="noopener noreferrer">Ensu – Ente’s Local LLM app</a></h3>
+    <p class="meta">Hacker News | 03/25 21:49</p>
+    <p class="summary">プライバシー重視のサービスを提供するEnteが、ローカルで動作する大規模言語モデル（LLM）アプリ「Ensu」を公開した。クラウドにデータを送信せず、ユーザーのデバイス上で直接AIを動かすことで、セキュリティとプライバシーを確保しながら効率的な作業を可能にする。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/headwaters/articles/d4417cd67f7935" target="_blank" rel="noopener noreferrer">Microsoft Learn参照させるAgent Skillsあるじゃん！</a></h3>
+    <p class="meta">Zenn トレンド | 03/24 10:32</p>
+    <p class="summary">MicrosoftのAIエージェント機能「Agent Skills」において、Microsoft Learnのドキュメントを直接参照して回答を生成できるようになった。これにより、最新の技術情報に基づいた正確なサポートが可能になり、エンジニアの利便性が向上したことを紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/25/waymo-robotaxi-roadside-assistance-emergency-first-responders/" target="_blank" rel="noopener noreferrer">Who’s driving Waymo’s self-driving cars? Sometimes, the police.</a></h3>
+    <p class="meta">TechCrunch | 03/25 20:57</p>
+    <p class="summary">Waymoの自動運転車において、警察官や救急隊員が緊急時に車両を操作・移動させる事例が報告されている。道路封鎖や緊急車両の通行が必要な際、AIが適切に判断できない場合に備え、当局が物理的に介入できる仕組みや現場での運用の現状が明らかになった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/25/google-turboquant-ai-memory-compression-silicon-valley-pied-piper/" target="_blank" rel="noopener noreferrer">Google unveils TurboQuant, a new AI memory compression algorithm — and yes, the internet is calling it ‘Pied Piper’</a></h3>
+    <p class="meta">TechCrunch | 03/25 20:38</p>
+    <p class="summary">GoogleがAIモデルのメモリ使用量を劇的に削減する新アルゴリズム「TurboQuant」を発表した。その驚異的な圧縮性能から、ドラマ『シリコンバレー』に登場する伝説の技術「パイド・パイパー」のようだとネット上で話題になっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/25/melania-trump-wants-a-robot-to-homeschool-your-child/" target="_blank" rel="noopener noreferrer">Melania Trump wants a robot to homeschool your child</a></h3>
+    <p class="meta">TechCrunch | 03/25 18:55</p>
+    <p class="summary">メラニア・トランプ氏が、教育用ロボットを活用したホームスクーリングの推進を提言している。AI技術を用いた家庭内教育により、子供一人ひとりに合わせた学習環境を構築することを目指しているが、伝統的な教育システムへの影響を含め議論を呼んでいる。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/silent-waves-launches-zephyr-a-traveling-wave-parametric-amplifier-for-scaling-quantum-architectures/" target="_blank" rel="noopener noreferrer">Silent Waves Launches Zephyr, a Traveling Wave Parametric Amplifier for Scaling Quantum Architectures</a></h3>
+    <p class="meta">Quantum Computing Report | 03/25 18:47</p>
+    <p class="summary">Silent Waves社が、量子コンピューティングの拡張に不可欠な進行波パラメトリック増幅器（TWPA）「Zephyr」をリリースした。極低温での信号増幅効率を大幅に向上させ、量子ビットの読み出し精度を高めることで、大規模な量子アーキテクチャの実現を支援する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/atom-computing-and-cisco-establish-collaboration-for-distributed-quantum-architectures/" target="_blank" rel="noopener noreferrer">Atom Computing and Cisco Establish Collaboration for Distributed Quantum Architectures</a></h3>
+    <p class="meta">Quantum Computing Report | 03/25 18:29</p>
+    <p class="summary">Atom ComputingとCiscoが提携し、分散型量子コンピューティング・アーキテクチャの開発に着手した。Ciscoのネットワーク技術とAtomの量子技術を組み合わせ、将来的な量子通信インフラや、複数の量子プロセッサを接続するスケーラブルなシステムの構築を目指す。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/qpiai-implements-high-speed-hardware-decoder-for-64-qubit-kaveri-processor/" target="_blank" rel="noopener noreferrer">QpiAI Implements High-Speed Hardware Decoder for 64-Qubit Kaveri Processor</a></h3>
+    <p class="meta">Quantum Computing Report | 03/25 18:10</p>
+    <p class="summary">QpiAI社が、64量子ビットのプロセッサ「Kaveri」向けの高速ハードウェアデコーダーを実装した。量子エラー訂正をリアルタイムで実行する技術であり、量子計算の信頼性と速度を向上させることで、実用的な量子コンピューティングの実現に向けた大きな一歩となる。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c747x7gz249o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Meta and YouTube found liable in landmark social media addiction trial</a></h3>
+    <p class="meta">BBC World News | 03/25 19:38</p>
+    <p class="summary">米国の画期的な裁判において、MetaとYouTubeがSNS中毒を引き起こしたとして責任を認められた。未成年者のメンタルヘルスに対するプラットフォーム側の注意義務が問われた形であり、今後のテック企業に対する規制や同様の訴訟に大きな影響を与える可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cvg06q36052o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">UN votes to recognise enslavement of Africans as &#39;gravest crime against humanity&#39;</a></h3>
+    <p class="meta">BBC World News | 03/25 20:12</p>
+    <p class="summary">国連は、アフリカ人の奴隷化を「人道に対する最も重大な罪」として認める決議を採択した。歴史的な搾取に対する公式な認識を深めるとともに、被害を受けた子孫への補償や人種差別の根絶に向けた国際的な協調を促す象徴的な決定となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c9qd7wyln2jo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Democrats flip Florida state seat that includes Trump&#39;s Mar-a-Lago home</a></h3>
+    <p class="meta">BBC World News | 03/25 15:07</p>
+    <p class="summary">米フロリダ州の補欠選挙において、トランプ前大統領の私邸「マール・ア・ラーゴ」を含む選挙区で民主党候補が勝利し、議席を奪還した。共和党の拠点とされる地域での逆転劇であり、今後の政治情勢や選挙戦略に影響を与える可能性があるとして注目を集めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260326/k10015084331000.html" target="_blank" rel="noopener noreferrer">トランプ大統領 5月14日と15日に中国訪問 習主席と会談へ</a></h3>
+    <p class="meta">NHK国際放送 | 03/25 18:12</p>
+    <p class="summary">トランプ大統領が5月14日と15日に中国を訪問し、習近平国家主席と会談することが決まった。貿易摩擦や地域情勢など重要課題について協議される見通しで、米中両国間の緊張緩和や新たな協力関係の構築に向けた重要な外交機会となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260326/k10015084291000.html" target="_blank" rel="noopener noreferrer">デンマーク議会選挙 米トランプ政権に反発の与党が議席大幅減</a></h3>
+    <p class="meta">NHK国際放送 | 03/25 15:12</p>
+    <p class="summary">デンマークの議会選挙で、米トランプ政権への強い反発姿勢を示していた与党が議席を大幅に減らした。対米関係の悪化や外交政策に対する国民の不安が反映された形となり、今後の政権運営や北欧諸国の対米外交のあり方に影響を与える可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260325/k10015084251000.html" target="_blank" rel="noopener noreferrer">大使館侵入で中国外務省 徹底的な捜査改めて求める</a></h3>
+    <p class="meta">NHK国際放送 | 03/25 13:46</p>
+    <p class="summary">在外大使館への侵入事件を受け、中国外務省は関係当局に対し、徹底的な捜査と責任者の処罰を改めて求めた。外交施設の安全確保と主権の尊重を強調し、事件の背後関係を含めた全容解明を求めて強い懸念を表明している。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
