@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月26日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月26日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月26日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://whoami.wiki/blog/personal-encyclopedias" target="_blank" rel="noopener noreferrer">Personal Encyclopedias</a></h3>
+    <p class="meta">Hacker News | 03/26 04:41</p>
+    <p class="summary">個人の知識管理において、自身の人生や学びを百科事典のように構造化することの重要性を説く記事。LLMなどの技術を活用して、過去の記録や知識を自分専用のWikiとして整理する試みと、それがもたらす長期的な利点について詳しく述べている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://bugs.xdavidhu.me/tesla/2026/03/23/running-tesla-model-3s-computer-on-my-desk-using-parts-from-crashed-cars/" target="_blank" rel="noopener noreferrer">Running Tesla Model 3&#39;s computer on my desk using parts from crashed cars</a></h3>
+    <p class="meta">Hacker News | 03/26 06:11</p>
+    <p class="summary">事故車から回収したテスラ・モデル3のコンピュータ（MCUやAutopilotなど）を、自宅のデスク上で動作させるまでの技術的な道のりを解説したブログ。配線や電源供給、車両通信の模倣など、車外でシステムを起動させるためのハードウェアハックを紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://arcprize.org/arc-agi/3" target="_blank" rel="noopener noreferrer">ARC-AGI-3</a></h3>
+    <p class="meta">Hacker News | 03/26 03:16</p>
+    <p class="summary">汎用人工知能（AGI）の進歩を測定するためのベンチマーク「ARC-AGI」の第3フェーズに関する発表。視覚的な推論パズルを通じて、AIが人間のような未知の課題に対する適応能力を持っているかを競い、賞金を設定して世界中の開発者に挑戦を促している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.washington.edu/news/2026/03/19/earthquake-scientists-reveal-how-overplowing-weakens-soil-at-experimental-farm/" target="_blank" rel="noopener noreferrer">Earthquake scientists reveal how overplowing weakens soil at experimental farm</a></h3>
+    <p class="meta">Hacker News | 03/25 23:12</p>
+    <p class="summary">地震学者が実験農場での調査を通じ、過度な耕起（耕しすぎ）が土壌の強度を著しく弱めることを明らかにした。これが豪雨時の地滑りリスクを高める可能性を指摘。持続可能な農業と災害対策の両面から、農法が土地の物理的安定性に与える影響を論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://english.elpais.com/culture/2026-03-17/the-uncomfortable-truth-that-will-always-haunt-the-ramones-they-sold-more-t-shirts-than-records.html" target="_blank" rel="noopener noreferrer">The truth that haunts the Ramones: &#39;They sold more T-shirts than records&#39;</a></h3>
+    <p class="meta">Hacker News | 03/22 10:58</p>
+    <p class="summary">パンクロックの先駆者ラモーンズが、音楽作品の売上よりもTシャツの売上の方が圧倒的に多いという「不都合な真実」を深掘りした記事。文化的アイコンとしての巨大な影響力と、実際の商業的ヒットとの乖離、そしてロゴが独り歩きした歴史的背景を考察している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/microsoft/articles/github-copilot-cli-presentation" target="_blank" rel="noopener noreferrer">GitHub Copilot CLI でプレゼンテーションをする技術</a></h3>
+    <p class="meta">Zenn トレンド | 03/25 12:40</p>
+    <p class="summary">GitHub Copilot CLIを活用して、技術プレゼンテーションを効率化・演出する手法を紹介する記事。ターミナル上でAIと対話しながらデモを進めることで、ライブ感のある発表を行う技術や、開発者にとって魅力的なプレゼンを構成するためのノウハウを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/medley/articles/sharing-memory-skills-subagents-across-ai-tools" target="_blank" rel="noopener noreferrer">複数の AI コーディングツールで開発体験を揃える — メモリ・スキル・サブエージェントの共通化</a></h3>
+    <p class="meta">Zenn トレンド | 03/25 06:02</p>
+    <p class="summary">CursorやGitHub Copilotなど複数のAI開発ツールを併用する際、記憶やスキル、サブエージェントの設定を共通化して開発体験を揃える手法を解説。MCP（Model Context Protocol）等の活用により、ツール間での情報の断絶を防ぎ、効率を最大化する設計思想を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/miyabitti/articles/9d8e2ab63379ad" target="_blank" rel="noopener noreferrer">Webサービスを作る上でRustを採用する必要ってほぼないよね</a></h3>
+    <p class="meta">Zenn トレンド | 03/25 04:48</p>
+    <p class="summary">一般的なWebサービス開発において、学習コストや開発速度の観点からRustを採用する必要性は低いと主張する記事。多くの場合、TypeScriptやGoなどで十分であり、極端なパフォーマンスが必要なケースを除き、Rustの選択は慎重であるべきだという視点を提供している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/emi_ndk/items/2332ff5c93e63ab736ad?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【緊急】月間9500万DLのLiteLLMが乗っ取られた。インストールしただけでSSH鍵・AWS認証・仮想通貨が全部盗まれる</a></h3>
+    <p class="meta">Qiita トレンド | 03/24 17:51</p>
+    <p class="summary">月間9500万ダウンロードを誇るライブラリ「LiteLLM」が悪意あるコードに汚染され、インストールするだけでSSH鍵やAWS認証情報、仮想通貨が盗まれる危険があることを緊急警告。サプライチェーン攻撃の脅威と、特定のバージョンへの更新停止など早急な対策を呼びかけている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/masa20057/items/747faa3de771373a3e4f?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">実務1年目の僕に伝えたい。完璧主義を捨てて「プロ」になるための行動4選</a></h3>
+    <p class="meta">Qiita トレンド | 03/26 02:28</p>
+    <p class="summary">実務1年目のエンジニアに向け、完璧主義が成長を阻む要因になると説き、プロとして振る舞うための4つの行動基準を提示。スピードの重要性、適切な相談のタイミング、成果物の質に対する考え方など、現場で評価されるためのマインドセットをまとめている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/26/a-little-known-croatian-startup-is-coming-for-the-robotaxi-market-with-help-from-uber/" target="_blank" rel="noopener noreferrer">A little-known Croatian startup is coming for the robotaxi market with help from Uber</a></h3>
+    <p class="meta">TechCrunch | 03/26 08:15</p>
+    <p class="summary">クロアチアのスタートアップVerneが、Uberと提携してロボタクシー市場に参入する計画。リマック・グループの創業者らが設立し、専用設計の自律走行車とアプリを用い、欧州市場を皮切りにグローバルなサービス展開を目指す注目のプロジェクトについて報じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/25/the-least-surprising-chapter-of-the-manus-story-is-whats-happening-right-now/" target="_blank" rel="noopener noreferrer">The least surprising chapter of the Manus story is what’s happening right now</a></h3>
+    <p class="meta">TechCrunch | 03/26 02:46</p>
+    <p class="summary">「世界初の汎用AIエージェント」を標榜するスタートアップManusの現状を批判的に分析。派手なマーケティングの一方で、製品の実態や技術的根拠に疑念が浮上している点を指摘し、AI業界における過度な期待と実情の乖離、そして今後の透明性の必要性を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/25/deccan-ai-raises-25m-as-ai-training-push-relies-on-india-based-workforce/" target="_blank" rel="noopener noreferrer">Mercor competitor Deccan AI raises $25M, sources experts from India</a></h3>
+    <p class="meta">TechCrunch | 03/26 00:30</p>
+    <p class="summary">AIトレーニング用データ作成を手がけるDeccan AIが2,500万ドルを調達。インドの高度な専門人材を活用し、複雑なコーディングや論理推論を必要とするLLM向けの高品質なデータセットを提供することで、競合に対抗し急成長を遂げている現状を伝えている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/gqis-quantum-technology-framework-for-the-energy-value-chain/" target="_blank" rel="noopener noreferrer">GQI’s Quantum Technology Framework for the Energy Value Chain</a></h3>
+    <p class="meta">Quantum Computing Report | 03/26 03:54</p>
+    <p class="summary">エネルギー産業のバリューチェーン全体における量子技術の活用フレームワークを紹介。送電網の最適化、新材料の開発、エネルギー需給予測など、量子コンピューティングがエネルギーの生成から消費までの各プロセスをいかに変革し得るか、具体的かつ戦略的な活用分野を提示している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cm29l9r68j8o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Who wants what and why from US-Iran peace talks?</a></h3>
+    <p class="meta">BBC World News | 03/25 21:37</p>
+    <p class="summary">米国とイランの和平交渉における各陣営の意図を分析した記事。核合意の再構築、経済制裁の解除、地域的な安全保障など、双方が抱える国内の政治的課題と譲れない一線について解説し、長年の対立解消に向けた複雑な交渉の舞台裏を探っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cn08x9lw0pzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Prepare for turbulence - how a prolonged Middle East conflict could reshape how we fly</a></h3>
+    <p class="meta">BBC World News | 03/26 00:41</p>
+    <p class="summary">中東紛争の長期化が世界の航空業界に与える深刻な影響を予測。飛行ルートの迂回に伴う燃料コストの増加や所要時間の延長、さらにそれが航空券価格に波及する可能性を指摘。地政学的リスクが空の旅の利便性や経済構造をいかに変えようとしているかを詳細に論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260326/k10015084361000.html" target="_blank" rel="noopener noreferrer">米大統領“イラン合意したがっている” イランは協議を否定</a></h3>
+    <p class="meta">NHK国際放送 | 03/26 08:32</p>
+    <p class="summary">バイデン米大統領が「イランは核協議などで合意を望んでいる」との見解を示したのに対し、イラン政府がこれを否定した。米国側の楽観的な姿勢とイラン側の慎重な姿勢のズレが浮き彫りになり、関係改善に向けた交渉の行方は依然として不透明な状況が続いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260326/k10015084451000.html" target="_blank" rel="noopener noreferrer">高市首相 トランプ大統領への艦船派遣の説明 “理解得られた”</a></h3>
+    <p class="meta">NHK国際放送 | 03/26 08:12</p>
+    <p class="summary">高市首相がトランプ米大統領と会談し、中東などへの自衛隊艦船の派遣方針について直接説明した。トランプ氏から理解を得られたとし、日米同盟のさらなる強化を確認。地域情勢の安定化に向けた日本の役割拡大について、両首脳間で議論が行われたことを報告した。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
