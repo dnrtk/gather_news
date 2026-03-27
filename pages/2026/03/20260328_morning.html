@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月28日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月28日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月28日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://lr0.org/blog/p/macos/" target="_blank" rel="noopener noreferrer">Make macOS consistently bad (unironically)</a></h3>
+    <p class="meta">Hacker News | 03/28 04:15</p>
+    <p class="summary">macOSにおけるUIの一貫性の欠如を批判し、皮肉を込めて「一貫して悪い」状態に統一することを提案する記事。クラシックなUIとiOSスタイルのUIが混在する現状がユーザー体験を損なっていると指摘。完璧な一貫性が望めないなら、中途半端に混在させるよりも、特定のスタイルに統一して予測可能性を高めるべきだと論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.dailydoseofds.com/p/anatomy-of-the-claude-folder" target="_blank" rel="noopener noreferrer">Anatomy of the .claude/ folder</a></h3>
+    <p class="meta">Hacker News | 03/27 23:35</p>
+    <p class="summary">Claude CLIが使用する`.claude`フォルダの内部構造について解説した記事。このフォルダには、プロジェクトのコンテキスト、設定、履歴が保存されており、AIがコードベースを理解するための重要な役割を果たす。記事では、どのようなファイルが格納され、開発プロセスをどのように最適化しているかを詳細に分析している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.axios.com/local/nashville/2026/03/16/nashville-library-digitize-home-movies" target="_blank" rel="noopener noreferrer">Nashville library launches Memory Lab for digitizing home movies</a></h3>
+    <p class="meta">Hacker News | 03/24 13:22</p>
+    <p class="summary">ナッシュビル公共図書館が、家庭にある古いビデオや映画をデジタル化するための「メモリー・ラボ」を開設した。市民はVHSやカセットなどの古いメディアを無料でデジタル形式に変換できる。貴重な家族の記録を保存するための機材とワークスペースを提供し、地域コミュニティの歴史保存を支援することを目的としている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://telnyx.com/resources/telnyx-python-sdk-supply-chain-security-notice-march-2026" target="_blank" rel="noopener noreferrer">Telnyx package compromised on PyPI</a></h3>
+    <p class="meta">Hacker News | 03/27 17:57</p>
+    <p class="summary">TelnyxのPython SDKがPyPI（Python Package Index）で侵害されたことを伝えるセキュリティ通知。悪意のあるコードが含まれた特定のバージョンが配布されたとして、ユーザーにアップデートと侵害の確認を呼びかけている。同社はサプライチェーン攻撃への対策として、影響を受けたバージョンの削除とセキュリティ体制の強化を実施した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://owltec.ca/Other/Installing+a+Let%27s+Encrypt+TLS+certificate+on+a+Brother+printer+automatically+with+Certbot+(%26+Cloudflare)" target="_blank" rel="noopener noreferrer">Installing a Let&#39;s Encrypt TLS certificate on a Brother printer with Certbot</a></h3>
+    <p class="meta">Hacker News | 03/27 22:49</p>
+    <p class="summary">ブラザー製プリンターにCertbotとCloudflareを使用して、Let&#39;s EncryptのTLS証明書を自動でインストールする方法を解説したガイド。プリンターのWeb管理画面を保護するため、DNS認証を利用して証明書を取得・更新する手順を説明している。従来の手動更新の手間を省き、セキュリティを向上させる実践的な内容となっている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/elyza/articles/84c897de6fb26d" target="_blank" rel="noopener noreferrer">ルーブリックに基づく主観的な判定を取り入れたGRPO学習</a></h3>
+    <p class="meta">Zenn トレンド | 03/27 00:07</p>
+    <p class="summary">ELYZAによる、GRPO（Group Relative Policy Optimization）学習にルーブリックを用いた主観的判定を導入する手法の解説記事。数学などの客観的報酬だけでなく、LLMを評価者として活用し、特定の評価基準（ルーブリック）に基づいて報酬を与えることで、より複雑で定性的なタスクにおけるモデルの性能向上を図る取り組みを紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/27/memory-chip-giant-sk-hynix-could-help-end-rammageddon-with-blockbuster-us-ipo/" target="_blank" rel="noopener noreferrer">Memory chip giant SK hynix could help end ‘RAMmageddon’ with blockbuster US IPO</a></h3>
+    <p class="meta">TechCrunch | 03/27 19:11</p>
+    <p class="summary">半導体メモリ大手のSKハイニックスが、米国での巨額のIPO（新規株式公開）を検討している。AI需要の急増に伴うHBM（高帯域幅メモリ）の供給不足、通称「RAMマゲドン」の解消に向け、調達した資金を生産設備の拡大に充てる狙いがある。この動きは、半導体業界の勢力図や市場の供給体制に大きな影響を与える可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/27/waymo-skyrocketing-ridership-in-one-chart/" target="_blank" rel="noopener noreferrer">Waymo’s skyrocketing ridership in one chart</a></h3>
+    <p class="meta">TechCrunch | 03/27 19:11</p>
+    <p class="summary">Waymo（ウェイモ）の自動運転タクシーの利用者が急増していることを示すグラフを紹介する記事。サービス提供エリアの拡大に伴い、週間乗車数が記録的な勢いで伸びている現状を分析。競合他社が苦戦する中で、Waymoが自動運転技術の商業化において着実に市場を支配しつつある様子をデータで示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/27/european-commission-confirms-cyberattack-after-hackers-claim-data-breach/" target="_blank" rel="noopener noreferrer">European Commission confirms cyberattack after hackers claim data breach</a></h3>
+    <p class="meta">TechCrunch | 03/27 17:59</p>
+    <p class="summary">欧州委員会は、ハッカー集団によるデータ漏洩の主張を受け、サイバー攻撃を受けたことを認めた。当局は現在、盗まれたとされるデータの範囲や攻撃の規模を調査中。重要情報の流出が懸念される中、欧州の主要機関を標的としたサイバーセキュリティの脆弱性と、今後の対策強化の必要性が改めて浮き彫りとなっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c75kzk3lgl5o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">UN human rights chief calls on US to conclude probe into Iran school strike</a></h3>
+    <p class="meta">BBC World News | 03/27 13:25</p>
+    <p class="summary">国連の人権高等弁務官が、イランの学校に対する空爆事件について、米国に調査の早期完了を求めた。この空爆は民間人に甚大な被害を与えたとされており、国際法遵守の観点から真相解明が急務となっている。人権局は、責任の所在を明確にし、同様の悲劇を防ぐための透明性ある報告を強く促している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cvgl4yk7vgpo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Iran-backed hackers breach FBI director Kash Patel&#39;s personal emails</a></h3>
+    <p class="meta">BBC World News | 03/27 19:21</p>
+    <p class="summary">イランが支援するハッカー集団が、カシュ・パテルFBI長官の個人のメールアカウントをハッキングした。米当局は、この攻撃が国家主導の諜報活動の一環であるとみて警戒を強めている。高官の個人情報が狙われたことで、サイバー防衛の強化と、イランによる米政府関係者への干渉に対する懸念が改めて高まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c4g8w4xp97jo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Spanish woman who died through euthanasia failed by state, say critics</a></h3>
+    <p class="meta">BBC World News | 03/27 12:09</p>
+    <p class="summary">スペインで安楽死を選択した女性を巡り、国が制度上の適切な支援を怠ったとする批判の声が上がっている。女性は法的な手続きの遅れや複雑なハードルに直面し、苦痛の中で最期を迎えたとされる。この記事は、安楽死法が施行された後の運用面での課題や、個人の尊厳を守るための国の責任について問い直している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260328/k10015086291000.html" target="_blank" rel="noopener noreferrer">イラン情勢【日本への影響】政府 原油調達先の多角化急ぐ</a></h3>
+    <p class="meta">NHK国際放送 | 03/27 20:31</p>
+    <p class="summary">中東情勢の緊迫化に伴い、日本政府が原油調達先の多角化を急いでいる。イラン情勢の悪化がエネルギー価格の急騰や供給網の途絶を招く恐れがあるため、中東依存度を下げるための外交努力と国内備蓄の確認を進めている。国民生活への影響を最小限に抑えるため、エネルギー安全保障の強化が急務となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260328/k10015086391000.html" target="_blank" rel="noopener noreferrer">G7外相会合 イラン情勢めぐり共同声明「民間への攻撃停止を」</a></h3>
+    <p class="meta">NHK国際放送 | 03/27 20:26</p>
+    <p class="summary">G7外相会合において、緊迫するイラン情勢に関する共同声明が採択された。声明では、民間人やインフラへの攻撃を即時に停止するよう強く求め、事態のさらなるエスカレーションを避けるよう全ての当事者に自制を促した。国際社会が連携して、対話による解決と人道状況の改善を優先する姿勢を強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260328/k10015086361000.html" target="_blank" rel="noopener noreferrer">茂木外相 日中関係めぐる日本側の立場を説明 G7外相会合で</a></h3>
+    <p class="meta">NHK国際放送 | 03/27 20:09</p>
+    <p class="summary">茂木外務大臣がG7外相会合に出席し、日中関係における日本の立場を説明した。中国の海洋進出や人権問題に対する懸念を共有しつつ、建設的かつ安定的な関係構築に向けた日本の外交方針を各国の外相に伝えた。自由で開かれたインド太平洋の実現に向け、G7諸国との連携をさらに深めることで一致した。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
