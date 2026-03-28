@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月28日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月28日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月28日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://jai.scs.stanford.edu/" target="_blank" rel="noopener noreferrer">Go hard on agents, not on your filesystem</a></h3>
+    <p class="meta">Hacker News | 03/28 09:39</p>
+    <p class="summary">AIエージェントの活用におけるアプローチを議論する記事。ファイルシステムを直接操作して負荷をかけるのではなく、エージェントの判断や制御を重視したアーキテクチャの重要性が説かれています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://arstechnica.com/gadgets/2026/03/amds-ryzen-9-9950x3d2-dual-edition-crams-208mb-of-cache-into-a-single-chip/" target="_blank" rel="noopener noreferrer">AMD&#39;s Ryzen 9 9950X3D2 Dual Edition crams 208MB of cache into a single chip</a></h3>
+    <p class="meta">Hacker News | 03/28 11:17</p>
+    <p class="summary">AMDの最新プロセッサ「Ryzen 9 9950X3D2 Dual Edition」に関するニュース。単一チップに驚異的な208MBのキャッシュを搭載し、高い処理性能を実現しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://theopenreader.org/Journalism:CERN_Uses_Tiny_AI_Models_Burned_into_Silicon_for_Real-Time_LHC_Data_Filtering" target="_blank" rel="noopener noreferrer">CERN uses tiny AI models burned into silicon for real-time LHC data filtering</a></h3>
+    <p class="meta">Hacker News | 03/28 17:06</p>
+    <p class="summary">CERNが大型ハドロン衝突型加速器（LHC）の膨大なデータからリアルタイムで情報を抽出するため、シリコンに直接焼き込まれた小型AIモデルを活用していることを紹介。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://hn-trustspark.com/" target="_blank" rel="noopener noreferrer">Trust Signals as Sparklines for Hacker News</a></h3>
+    <p class="meta">Hacker News | 03/27 01:43</p>
+    <p class="summary">Hacker Newsにおけるユーザーの信頼性を示す指標をスパークライン（簡易グラフ）で可視化するツールについての解説。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://naturalist.bearblog.dev/the-bee-that-everyone-wants-to-save/" target="_blank" rel="noopener noreferrer">The bee that everyone wants to save</a></h3>
+    <p class="meta">Hacker News | 03/26 02:35</p>
+    <p class="summary">生態系維持の観点から保護が叫ばれている、特定のハチの重要性と、人々が保護に関心を寄せる背景についての考察。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/phykm/articles/9b18faddcbe0f2" target="_blank" rel="noopener noreferrer">電磁気学っぽい理論は電磁気学しかない？</a></h3>
+    <p class="meta">Zenn トレンド | 03/27 15:07</p>
+    <p class="summary">「電磁気学に似た理論は電磁気学しかないのか」という問いに対し、物理学的な視点から理論の構造や類似性について論じた記事。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/dinii/articles/18128bd1685e2a" target="_blank" rel="noopener noreferrer">社内問い合わせをAIエージェント化して爆速で解決できるようにした</a></h3>
+    <p class="meta">Zenn トレンド | 03/27 07:11</p>
+    <p class="summary">社内問い合わせ対応をAIエージェント化し、回答プロセスを自動化・効率化することで、解決スピードを劇的に向上させた実体験を紹介。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/dely_jp/articles/snowflake-managed-mcp-claude-code-agentic-dataops" target="_blank" rel="noopener noreferrer">Snowflake Managed MCP Server × Claude Codeでデータの仕事を全部Agenticにやりきれそう</a></h3>
+    <p class="meta">Zenn トレンド | 03/27 01:45</p>
+    <p class="summary">SnowflakeのManaged MCP ServerとClaude Codeを組み合わせ、データ関連業務をAIエージェント中心のワークフロー（Agentic DataOps）へ移行する手法を解説。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/miruky/items/43a6828c806a9ebcfdd1?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Claude Codeの5つの習熟レベル。CLAUDE.mdで止まっている人が知らないSkills・Hooks・Orchestrationの世界について</a></h3>
+    <p class="meta">Qiita トレンド | 03/25 15:01</p>
+    <p class="summary">Claude Codeの習熟度を5段階に分け、CLAUDE.mdの設定に留まらない、SkillsやHooks、Orchestrationを駆使した高度な活用法を伝授するガイド。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/miruky/items/b996e374c91923141178?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">DDoS攻撃でAWS請求が200万円に！S3・CloudFrontで絶対やるべきコスト爆発防止策 6選</a></h3>
+    <p class="meta">Qiita トレンド | 03/26 15:01</p>
+    <p class="summary">DDoS攻撃によりAWSの請求額が急騰するリスクを回避するため、S3やCloudFrontで実装すべきコスト制限や監視などの防御策6選を紹介。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/27/whoop-has-lebron-now-it-wants-your-mom/" target="_blank" rel="noopener noreferrer">Whoop has LeBron – now it wants your mom</a></h3>
+    <p class="meta">TechCrunch | 03/28 02:31</p>
+    <p class="summary">ウェアラブルデバイス「Whoop」が、著名なスポーツ選手に加え、一般のファミリー層へターゲットを拡大し、市場シェアの拡大を狙っている戦略について。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/27/physical-intelligence-is-reportedly-in-talks-to-raise-1-billion-again/" target="_blank" rel="noopener noreferrer">Physical Intelligence is reportedly in talks to raise $1 billion, again</a></h3>
+    <p class="meta">TechCrunch | 03/27 23:59</p>
+    <p class="summary">AIロボット技術を開発するPhysical Intelligence社が、再び10億ドルの資金調達に向けて協議中であると報じられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/27/why-softbanks-new-40b-loan-points-to-a-2026-openai-ipo/" target="_blank" rel="noopener noreferrer">Why SoftBank’s new $40B loan points to a 2026 OpenAI IPO</a></h3>
+    <p class="meta">TechCrunch | 03/27 21:44</p>
+    <p class="summary">ソフトバンクによる400億ドル規模の巨額融資が、OpenAIが2026年に予定しているとされるIPOの予兆であるとの分析。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cn89ry7y835o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Nepal&#39;s ex-PM arrested over fatal protest crackdown</a></h3>
+    <p class="meta">BBC World News | 03/28 06:58</p>
+    <p class="summary">ネパールの元首相が、抗議活動に対する致命的な鎮圧を指示した容疑で逮捕された事件について報道。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c0rxqng5pyno?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">&#39;The gravest crime against humanity&#39;: What does the UN vote on slavery mean?</a></h3>
+    <p class="meta">BBC World News | 03/28 01:06</p>
+    <p class="summary">国連で採決された奴隷制に関する決議を「人類に対する最も重大な罪」と位置づけ、その意義や国際的な影響について解説。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/sport/golf/articles/cvg092kege7o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Tiger Woods charged with driving under influence after crash</a></h3>
+    <p class="meta">BBC World News | 03/28 06:47</p>
+    <p class="summary">プロゴルファーのタイガー・ウッズ氏が自動車事故を起こし、飲酒あるいは薬物等の影響下での運転容疑で訴追されたとのニュース。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260328/k10015086371000.html" target="_blank" rel="noopener noreferrer">イラン軍事作戦1か月 米国務長官 “作戦は数週間で終わる”</a></h3>
+    <p class="meta">NHK国際放送 | 03/28 08:27</p>
+    <p class="summary">イランの軍事作戦開始から1か月、米国務長官が「作戦は数週間以内に終結する」との見通しを示したことを報じる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260328/k10015086571000.html" target="_blank" rel="noopener noreferrer">米FBI長官にサイバー攻撃 “イラン関わる”ハッカー集団が声明</a></h3>
+    <p class="meta">NHK国際放送 | 03/28 06:39</p>
+    <p class="summary">米FBI長官がサイバー攻撃を受けたことを受け、イランに関与するハッカー集団が犯行声明を出したとの報道。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260328/k10015086521000.html" target="_blank" rel="noopener noreferrer">アメリカ元高官「エネルギー供給の史上最大の混乱だ」</a></h3>
+    <p class="meta">NHK国際放送 | 03/28 02:21</p>
+    <p class="summary">エネルギー供給の現状について、米元高官が「史上最大の混乱である」と強く警鐘を鳴らしたことを伝えている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
