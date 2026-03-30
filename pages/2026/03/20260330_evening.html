@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月30日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月30日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月30日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.datagubbe.se/aipixels/" target="_blank" rel="noopener noreferrer">The curious case of retro demo scene graphics</a></h3>
+    <p class="meta">Hacker News | 03/30 14:27</p>
+    <p class="summary">AIが生成したピクセルと、制約の多いレトロなハードウェアで作成されたデモシーンのグラフィックの違いを考察しています。AIは視覚的な再現は得意ですが、デモシーンの本質である「ハードウェアの限界に挑む工夫」や職人技を欠いています。記事は、低解像度や限られた色数という制約の中で生まれる芸術性の重要性を強調しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.lysk.tech/excalidraw-frame-export/" target="_blank" rel="noopener noreferrer">I use excalidraw to manage my diagrams for my blog</a></h3>
+    <p class="meta">Hacker News | 03/30 16:17</p>
+    <p class="summary">ブログの図解作成にExcalidrawを活用する方法を紹介しています。特に「フレームエクスポート」機能の利便性を強調しており、一つのファイル内で複数の図を管理し、必要な部分だけを個別に書き出すワークフローを解説しています。手書き風のスタイルと、SVGやPNGでの簡単な書き出しがブログ運営において非常に効率的であると述べています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://dani2442.github.io/posts/continuous-rl/" target="_blank" rel="noopener noreferrer">Hamilton-Jacobi-Bellman Equation: Reinforcement Learning and Diffusion Models</a></h3>
+    <p class="meta">Hacker News | 03/30 16:34</p>
+    <p class="summary">ハミルトン・ヤコビ・ベルマン（HJB）方程式を通じて、強化学習と拡散モデルの関連性を解説する技術記事です。連続時間における制御理論と生成モデルの数学的な共通点を探り、エントロピー正則化強化学習がどのように拡散過程と結びつくかを論じています。物理学と機械学習の理論的な架け橋となる概念を詳しく掘り下げています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.sigasi.com/opinion/jan/vhdls-crown-jewel/" target="_blank" rel="noopener noreferrer">VHDL&#39;s Crown Jewel</a></h3>
+    <p class="meta">Hacker News | 03/30 13:39</p>
+    <p class="summary">VHDLの最も優れた機能として、その強力な型システムと構造化能力に焦点を当てています。複雑なハードウェア設計において、インターフェースを明確に定義し、再利用性を高める仕組みが他の言語に対する優位性であると論じています。大規模なプロジェクトにおける保守性と信頼性を担保するためのVHDL独自の設計思想を高く評価しています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mnonamer/articles/react-yada-2026" target="_blank" rel="noopener noreferrer">React やだ 2026</a></h3>
+    <p class="meta">Zenn トレンド | 03/29 13:30</p>
+    <p class="summary">2026年時点でのReactに対する批判的な視点をまとめた記事です。サーバーコンポーネントの複雑化や、エコシステムの過度な肥大化、学習コストの増大など、開発現場で感じる「疲れ」を綴っています。かつてのシンプルさが失われ、フレームワーク主導の複雑な設計を強いられる現状に対し、エンジニアとしての率直な懸念を述べています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/komlock_lab/articles/agent-payments-stack-2026" target="_blank" rel="noopener noreferrer">エージェントが払う仕組み — AIエージェント決済の6層構造</a></h3>
+    <p class="meta">Zenn トレンド | 03/29 10:45</p>
+    <p class="summary">AIエージェントが自律的に決済を行うための「6層構造」のスタックを提唱しています。アイデンティティ管理から、法定通貨・暗号通貨の決済手段、承認フロー、監査ログまで、エージェントが経済活動を行うために必要な技術要素を整理しています。AIが「発注から支払い」までを完結させる未来のインフラのあり方を具体的に解説しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/noppe/articles/f6d41c3e87c433" target="_blank" rel="noopener noreferrer">iOS26からSampleBufferへ安全なアクセスが可能に</a></h3>
+    <p class="meta">Zenn トレンド | 03/29 09:05</p>
+    <p class="summary">iOS 26で導入された、SampleBufferへの安全なアクセスを可能にする新機能について解説しています。メモリ安全性や並行処理の観点から、従来のCベースのAPIに伴うリスクを低減する新しいSwiftインターフェースを紹介しています。映像や音声の低レイヤー処理を扱う開発者にとって、より堅牢で直感的なコード記述が可能になった点を評価しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/masa20057/items/ac1e447ba9996b5543da?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">未経験から3年で感じたこれからのキャリアを築くための行動3選</a></h3>
+    <p class="meta">Qiita トレンド | 03/30 04:25</p>
+    <p class="summary">未経験からエンジニアになり3年が経過した筆者が、今後のキャリア構築に重要だと感じた3つの行動を紹介しています。1つ目は「技術だけでなくビジネスを理解すること」、2つ目は「アウトプットを習慣化し外部との接点を持つこと」、3つ目は「変化を恐れず新しい領域に挑戦し続けること」です。将来を見据えた主体的な姿勢の重要性を説いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/ShotaOki/items/ae0f16a088f71639e50f?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Draw.ioをプロンプトとして実行すると便利かもしれない</a></h3>
+    <p class="meta">Qiita トレンド | 03/28 03:55</p>
+    <p class="summary">Draw.ioで作成した図をLLMへのプロンプトとして利用する手法を提案しています。図のXMLデータやテキスト情報をAIに読み込ませることで、複雑なシステムの構造や業務フローを正確に伝え、精度の高いコード生成やドキュメント作成が可能になると述べています。視覚的な情報を論理的な入力として活用する新しい可能性を提示しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/29/why-openai-really-shut-down-sora/" target="_blank" rel="noopener noreferrer">Why OpenAI really shut down Sora</a></h3>
+    <p class="meta">TechCrunch | 03/30 03:09</p>
+    <p class="summary">OpenAIが動画生成AI「Sora」の提供を終了した理由を分析しています。膨大な計算コストの増大と、それに伴う収益性の悪化、さらに著作権問題を巡る法的なリスクが背景にあると指摘されています。技術的な革新性よりも、ビジネスとしての持続可能性と法的安全性の確保が優先された結果であると論じています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/29/google-pixel-10a-review-camera-bump-performance-ai-chip/" target="_blank" rel="noopener noreferrer">The Pixel 10a doesn’t have a camera bump, and it’s great</a></h3>
+    <p class="meta">TechCrunch | 03/29 21:30</p>
+    <p class="summary">Googleの新型スマホ「Pixel 10a」のレビュー記事です。最大の特徴はカメラの突起（バンプ）がなくなったフラットな背面デザインで、携帯性と操作性が大幅に向上したと評価しています。性能面でも独自AIチップの搭載により、ミドルレンジモデルながらフラッグシップに劣らないユーザー体験を実現していると述べています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/29/youtube-ceo-says-the-best-youtubers-will-never-leave-their-home/" target="_blank" rel="noopener noreferrer">YouTube CEO says the best YouTubers will ‘never leave their home’</a></h3>
+    <p class="meta">TechCrunch | 03/29 21:17</p>
+    <p class="summary">YouTubeのCEOが、将来のトップクリエイターは「家から一歩も出なくなる」との見通しを語りました。生成AIや仮想空間技術の進化により、ロケやスタジオ撮影を必要とせず、自宅から世界中に高品質なコンテンツを発信できる環境が整いつつあると述べています。テクノロジーがクリエイティビティの場所的制約を打破する未来を強調しています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cwyd07m7e1xo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Photos show heavily damaged US radar jet at Saudi base</a></h3>
+    <p class="meta">BBC World News | 03/29 18:42</p>
+    <p class="summary">サウジアラビアの基地で、激しく損傷した米軍のレーダー機の写真が公開されました。損傷の原因や状況の詳細は不明ですが、重要機材への深刻なダメージが確認されています。この事案が中東における米軍の監視活動や作戦能力に与える影響が懸念されており、当局による調査が進められています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c93e4gxn22wo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Fugitive Dezi Freeman shot dead by Australian police after seven months in hiding</a></h3>
+    <p class="meta">BBC World News | 03/30 07:07</p>
+    <p class="summary">7ヶ月間の逃亡生活を続けていたデジ・フリーマン容疑者が、オーストラリア警察によって射殺されました。潜伏先を突き止めた警察との対峙の末に事態が悪化したと報じられています。長期間の捜査に終止符が打たれましたが、事件の詳細な経緯については現在警察による詳しい調査が行われています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/clyew40w249o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Myanmar junta chief Min Aung Hlaing nominated as president</a></h3>
+    <p class="meta">BBC World News | 03/30 05:26</p>
+    <p class="summary">ミャンマー軍事政権のトップであるミン・アウン・フライン総司令官が、大統領に指名されました。クーデター後の混乱が続く中、軍による支配体制をさらに強固にする動きと見られています。国際社会からは民主主義への逆行として厳しい批判が集まっており、国内の抵抗勢力との緊張も一層高まることが予想されます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260330/k10015087611000.html" target="_blank" rel="noopener noreferrer">中国が古屋圭司衆院議員に入国禁止などの制裁措置</a></h3>
+    <p class="meta">NHK国際放送 | 03/30 08:06</p>
+    <p class="summary">中国政府は、自民党の古屋圭司衆院議員に対し、中国への入国禁止や国内資産の凍結などの制裁措置を発表しました。古屋氏の台湾訪問などが「中国の内政に対する干渉である」として反発した形です。日本側は不当な制裁として抗議しており、日中関係のさらなる冷え込みが懸念されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260330/k10015087531000.html" target="_blank" rel="noopener noreferrer">国連レバノン暫定軍が攻撃受け1人死亡 “戦争犯罪”と強く非難</a></h3>
+    <p class="meta">NHK国際放送 | 03/30 06:31</p>
+    <p class="summary">レバノン南部に展開する国連レバノン暫定軍（UNIFIL）が攻撃を受け、隊員1人が死亡しました。国連はこの攻撃を「戦争犯罪」に該当する可能性があるとして強く非難し、徹底調査を求めています。現地の緊張状態が続く中、平和維持活動に従事する要員の安全確保が国際的な課題となっています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
