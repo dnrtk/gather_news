@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月31日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月31日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月31日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.sambent.com/the-white-house-app-has-huawei-spyware-and-an-ice-tip-line/" target="_blank" rel="noopener noreferrer">Fedware: Government apps that spy harder than the apps they ban</a></h3>
+    <p class="meta">Hacker News | 03/31 03:16</p>
+    <p class="summary">ホワイトハウスの公式アプリを含む、政府提供のアプリ（Fedware）におけるプライバシーと監視の懸念を指摘している。禁止されている他国製アプリと同様、あるいはそれ以上に過剰な追跡機能やICE（移民税関捜査局）への通報機能、ファーウェイ製スパイウェアの疑いがあるコンポーネントが含まれている。政府がセキュリティを理由に民間アプリを規制しながら、自らも同様の、あるいはより深刻なプライバシー侵害を伴うアプリを配布している矛盾を批判している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://alexhwoods.com/dont-let-ai-write-for-you/" target="_blank" rel="noopener noreferrer">Do your own writing</a></h3>
+    <p class="meta">Hacker News | 03/30 21:39</p>
+    <p class="summary">文章執筆をAIに任せるべきではないと説く記事。書くという行為は単なるアウトプットではなく、思考を整理し深めるプロセスそのものである。AIに依存すると、独自の視点や個性が失われ、読者との真のつながりも損なわれる。自分の言葉で書くことでしか得られない知的成長と自己表現の価値を強調し、効率性よりも書くプロセスの重要性を再認識するよう促している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://nbailey.ca/post/router/" target="_blank" rel="noopener noreferrer">How to turn anything into a router</a></h3>
+    <p class="meta">Hacker News | 03/30 22:28</p>
+    <p class="summary">汎用的なPCや古いハードウェアをルーターとして活用する方法を技術的に解説したガイド。Linuxネットワーク機能の基本設定、パケット転送、IPマスカレード、DHCP/DNSサーバーの構成などを紹介している。専用ルーターを購入する代わりに、既存のデバイスを高度なネットワーク制御が可能なルーターへと変身させるための実践的なステップと知識を提供している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://anishathalye.com/macbook-touchscreen/" target="_blank" rel="noopener noreferrer">Turning a MacBook into a touchscreen with $1 of hardware (2018)</a></h3>
+    <p class="meta">Hacker News | 03/31 04:22</p>
+    <p class="summary">2018年のプロジェクトで、わずか1ドルの鏡とWebカメラを活用してMacBookの画面をタッチスクリーン化する試み。鏡をカメラ部分に取り付け、画面上の指の反射をソフトウェアで解析することで、物理的なタッチをシミュレートする「Siddharth」と呼ばれる手法。ハードウェアの改造を最小限に抑えつつ、既存の光学系を巧みに利用したクリエイティブなハックについて解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.dhanishsemar.com/writing/bird-brains" target="_blank" rel="noopener noreferrer">Bird brains (2023)</a></h3>
+    <p class="meta">Hacker News | 03/30 22:14</p>
+    <p class="summary">鳥類の驚異的な知能について、最新の研究を交えて考察する2023年の記事。「鳥の脳（Bird brain）」という言葉は愚かさの代名詞として使われてきたが、実際にはカラス科やオウムなどは高度な問題解決能力、道具の使用、共感能力さえ持っている。脳の構造が哺乳類とは異なりながらも、極めて高密度なニューロン配置によって高い認知機能を実現している進化の不思議を探求している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/dely_jp/articles/cf19634b63015b" target="_blank" rel="noopener noreferrer">定常業務を自動操縦にする — Claude Code スケジューラーの育て方</a></h3>
+    <p class="meta">Zenn トレンド | 03/30 01:28</p>
+    <p class="summary">Claude Codeを活用して日々の定常業務を自動化し、「自動操縦」状態にするための手法を解説したZennの記事。単なるスクリプト実行にとどまらず、Claudeにコンテキストを理解させ、スケジューラーとして適切に判断・実行させるための「育て方」や運用上の工夫を紹介している。エンジニアの生産性を飛躍的に高めるためのAIエージェント活用術を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/acntechjp/articles/20260329_linux" target="_blank" rel="noopener noreferrer">よう若いの。Linuxってのはだな。</a></h3>
+    <p class="meta">Zenn トレンド | 03/29 16:12</p>
+    <p class="summary">若手エンジニアに向けて、Linuxの基本思想や歴史、向き合い方を伝承するスタイルの記事。コマンドライン操作の重要性、ファイルシステムの構造、オープンソース文化の精神などを平易かつ情熱的に解説している。単なるツールの使い方ではなく、Linuxを理解することで得られるエンジニアとしての土台作りと、探究心を持ち続けることの大切さを説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/yuyanz/items/5d2087dd5500d0689d7e?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【M365 Copilot】Teamsでチャットするだけで進捗管理ができた話</a></h3>
+    <p class="meta">Qiita トレンド | 03/29 06:25</p>
+    <p class="summary">Microsoft 365 CopilotをTeamsで活用し、チャットベースでプロジェクトの進捗管理を行った体験談。散らばった会話情報から進捗状況を要約させたり、未完了のタスクを特定させたりすることで、管理者の工数を大幅に削減した事例を紹介している。AIが日常的なコミュニケーションツールと融合することで、実務がいかに効率化されるかを具体的に示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/30/ai-trust-adoption-poll-more-americans-adopt-tools-fewer-say-they-can-trust-the-results/" target="_blank" rel="noopener noreferrer">As more Americans adopt AI tools, fewer say they can trust the results</a></h3>
+    <p class="meta">TechCrunch | 03/30 20:24</p>
+    <p class="summary">米国でAIツールの普及が進む一方で、その回答結果に対する信頼度が低下しているという調査結果を報じる記事。より多くの人々が日常的にAIを利用するようになったが、誤情報の懸念や透明性の欠如から、出力内容を鵜呑みにせず懐疑的に見る傾向が強まっている。利用の拡大と信頼のギャップが浮き彫りになっており、AI開発企業には精度の向上と説明責任が求められている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/30/what-were-looking-for-in-startup-battlefield-2026-and-how-to-put-your-best-application-forward/" target="_blank" rel="noopener noreferrer">What we’re looking for in Startup Battlefield 2026 and how to put your best application forward</a></h3>
+    <p class="meta">TechCrunch | 03/30 18:57</p>
+    <p class="summary">TechCrunchが主催する「Startup Battlefield 2026」の審査基準と、効果的な応募方法についてのガイド。選考チームが注目する革新性、スケーラビリティ、チームの質などの重要ポイントを解説している。世界中から集まるスタートアップの中から選ばれるために、いかに自分たちのビジョンと技術的優位性を簡潔かつ強力に伝えるべきか、具体的なアドバイスを提供している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/30/delve-whistleblower-strikes-again-with-alleged-receipts-about-fake-compliance/" target="_blank" rel="noopener noreferrer">Delve whistleblower strikes again, with alleged receipts about ‘fake compliance’</a></h3>
+    <p class="meta">TechCrunch | 03/30 18:26</p>
+    <p class="summary">AI企業Delveの内部告発者が、同社の「偽装コンプライアンス」に関する新たな証拠を公開したというニュース。安全基準を満たしていると対外的に主張しながら、実際には内部で規制を回避し、リスクを軽視していた疑いが持たれている。企業の倫理的責任とAI開発におけるガバナンスの欠如を指摘する内容であり、業界全体に波及する可能性があるスキャンダルを報じている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cwy368j1e3lo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Spain closes airspace to US aircraft involved in Iran war</a></h3>
+    <p class="meta">BBC World News | 03/30 15:29</p>
+    <p class="summary">スペイン政府が、イランとの紛争に関与する米国軍用機に対し、自国の領空通過を禁止したと報じる記事。国際的な緊張が高まる中、スペインは紛争への直接的な加担を避け、中立的な立場を強調する狙いがある。この決定はNATO加盟国間での足並みの乱れを示唆しており、今後の軍事作戦や外交関係への影響が懸念されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/czrevyx28z2o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Russian oil tanker reaches Cuba after Trump appears to loosen blockade</a></h3>
+    <p class="meta">BBC World News | 03/30 14:46</p>
+    <p class="summary">トランプ氏が対キューバ封鎖を緩和する兆しを見せたことを受け、ロシアの石油タンカーがキューバに到着したというニュース。長年の経済制裁により深刻なエネルギー不足に陥っていたキューバにとって、この動きは大きな転換点となる可能性がある。米国の政策変更が地域の地政学的なパワーバランスにどのような変化をもたらすか、注目が集まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c0e7lrxrelwo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Zelensky says allies asked him to scale back attacks on Russian energy</a></h3>
+    <p class="meta">BBC World News | 03/30 17:53</p>
+    <p class="summary">ウクライナのゼレンスキー大統領が、同盟国からロシアのエネルギー施設への攻撃を控えるよう要請されたことを明らかにした。攻撃による世界的なエネルギー価格の高騰や、ロシア側からの激しい報復を懸念した要請とみられる。自国の防衛戦略と同盟国の経済的・政治的利害が対立する中で、ウクライナが難しい舵取りを迫られている現状が示されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260331/k10015088161000.html" target="_blank" rel="noopener noreferrer">フィリピン“日本から軽油約14万バレル調達”と発表</a></h3>
+    <p class="meta">NHK国際放送 | 03/30 20:34</p>
+    <p class="summary">フィリピン政府が、日本から約14万バレルの軽油を調達すると発表したニュース。国内のエネルギー供給の安定化を図るための措置であり、日本とのエネルギー協力関係を強化する狙いがある。この調達により、フィリピン国内の価格高騰の抑制や、インフラ・運輸部門の安定稼働が期待されている。両国の経済連携を象徴する動きとして報じられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260331/k10015088061000.html" target="_blank" rel="noopener noreferrer">フランスのマクロン大統領 きょうから3日間の日程で来日</a></h3>
+    <p class="meta">NHK国際放送 | 03/30 20:19</p>
+    <p class="summary">フランスのマクロン大統領が、3日間の日程で日本を訪問する。今回の訪日では首脳会談が予定されており、安全保障や経済協力、文化交流など幅広い分野での連携強化を目指す。特にG7の枠組みにおける協力や、インド太平洋地域における連携の重要性などが議論される見通しで、日仏両国のパートナーシップを深める重要な機会となる。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
