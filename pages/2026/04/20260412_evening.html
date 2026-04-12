@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月12日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月12日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月12日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://stevehanov.ca/blog/how-i-run-multiple-10k-mrr-companies-on-a-20month-tech-stack" target="_blank" rel="noopener noreferrer">I run multiple $10K MRR companies on a $20/month tech stack</a></h3>
+    <p class="meta">Hacker News | 04/12 15:00</p>
+    <p class="summary">月額20ドルのサーバー1台で、月間収益1万ドル超のサービスを複数運営する手法を解説。PHPやDocker、SQLiteなど枯れた技術を活用し、複雑さを排除することで、運用コストと認知負荷を最小限に抑えている。ツール選定よりも、シンプルさと価値提供に集中することが、小規模なSaaS運営での成功の鍵であると説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://brennan.day/the-end-of-eleventy/" target="_blank" rel="noopener noreferrer">The End of Eleventy</a></h3>
+    <p class="meta">Hacker News | 04/12 10:55</p>
+    <p class="summary">静的サイトジェネレーター「Eleventy (11ty)」が直面している状況についての考察。プロジェクトの財政的な持続可能性や、主要開発者の環境の変化に伴う影響に触れている。開発者は今後の展望として、独立したオープンソースプロジェクトとしての在り方や、ユーザーコミュニティとの関係性について議論を投げかけている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.johndcook.com/blog/2026/04/06/tofolli-gates/" target="_blank" rel="noopener noreferrer">Tofolli gates are all you need</a></h3>
+    <p class="meta">Hacker News | 04/07 18:40</p>
+    <p class="summary">トフォリ門（Tofolli gate）が、量子計算や古典的な可逆計算において「それだけで十分（ユニバーサル）」であることを解説。古典的なすべての論理回路をトフォリ門だけで構築できる性質や、量子コンピュータが古典コンピュータの上位互換であることを示す理論的背景を、簡潔な数理的視点から説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/anthropics/claude-code/issues/46829" target="_blank" rel="noopener noreferrer">Anthropic silently downgraded cache TTL from 1h → 5M on March 6th</a></h3>
+    <p class="meta">Hacker News | 04/12 14:45</p>
+    <p class="summary">Anthropicが提供するClaude APIのプロンプトキャッシュ機能において、TTL（生存期間）が1時間から5分へと密かに短縮されたことが判明。GitHubのIssueで報告されたこの変更は、開発者のコスト効率に大きな影響を与える可能性がある。明示的な通知がないまま行われた調整に対し、コミュニティから透明性を求める声が上がっている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/acntechjp/articles/ac59a66d0e58d6" target="_blank" rel="noopener noreferrer">「AI時代に良い問いを立てる人が優秀」は本当なのか？をクーンのパラダイム論から考える</a></h3>
+    <p class="meta">Zenn トレンド | 04/11 15:37</p>
+    <p class="summary">クーンのパラダイム論を用い、AI時代に「良い問いを立てる力」が重要とされる風潮を批判的に検討。通常科学の枠内での問いはAIでも対応可能だが、パラダイムを転換するような問いは依然として人間に依存する。単に問いの質を上げるだけでなく、既存の枠組み自体を疑う重要性を、科学哲学の観点から考察している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/shinyaa31/articles/082457e115885c" target="_blank" rel="noopener noreferrer">agent-browser入門：Claude Codeからブラウザを自在に操る！導入＆他ツール使い分けガイド</a></h3>
+    <p class="meta">Zenn トレンド | 04/11 07:19</p>
+    <p class="summary">AnthropicのClaude CodeからWebブラウザを操作可能にする「agent-browser」の導入ガイド。セットアップ手順やPlaywrightを利用した仕組み、MCP（Model Context Protocol）サーバーとしての活用法を解説。Open Interpreterなど他のエージェントツールとの使い分けについても触れ、効率的な開発ワークフローの構築を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/miruky/items/fcab851c5351f79b481d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【必須】GitHubとnpmで脆弱なパッケージを入れないための防御設定 8選</a></h3>
+    <p class="meta">Qiita トレンド | 04/11 04:53</p>
+    <p class="summary">GitHubやnpmを利用した開発において、悪意のあるパッケージの混入を防ぐための8つの防御策を紹介。Dependency Reviewの導入、2FAの強制、npm provenanceによるビルドの正当性確認、特定キーワードを含むパッケージの警告設定など、サプライチェーン攻撃からプロジェクトを守るための実践的な設定手順がまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/11/walmart-owned-flipkart-amazon-are-squeezing-indias-quick-commerce-startups/" target="_blank" rel="noopener noreferrer">Walmart-owned Flipkart, Amazon are squeezing India’s quick commerce startups</a></h3>
+    <p class="meta">TechCrunch | 04/12 03:00</p>
+    <p class="summary">インドのクイックコマース市場において、ウォルマート傘下のFlipkartやAmazonが攻勢を強めている。わずか10〜30分で配送を行うサービスにおいて、ZeptoやBlinkitといった先行するスタートアップは、巨大資本を持つ競合他社の参入により、激しい顧客獲得競争と収益化のプレッシャーにさらされている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/11/kalshi-wins-temporary-pause-in-arizona-criminal-case/" target="_blank" rel="noopener noreferrer">Kalshi wins temporary pause in Arizona criminal case</a></h3>
+    <p class="meta">TechCrunch | 04/11 21:20</p>
+    <p class="summary">予測市場プラットフォームのKalshiが、アリゾナ州での刑事訴追に関する手続きの暫定的な停止を勝ち取った。選挙結果の予測賭博を巡る法的な争いの一環であり、規制当局との攻防が続く中で一時的な猶予を得た形となる。予測市場の合法性を巡る議論は、今後の米国内での運用に大きな影響を与える可能性がある。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cdxdepjrv95o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Hungarians vote in big numbers on whether to end Orbán rule and elect rival</a></h3>
+    <p class="meta">BBC World News | 04/12 07:44</p>
+    <p class="summary">ハンガリーで総選挙の投票が行われ、高い投票率を記録。10年以上にわたり権力を握るオルバン首相に対し、元与党関係者で現在は野党の旗手となったペーテル・マジャル氏が挑む構図。欧州全体が注目する中、有権者が現状維持か、それとも親欧米・反汚職を掲げる新勢力による変革かを選択する重要な局面となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cj0vn30574no?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">&#39;We need real peace&#39;: Easter truce fails to lift grim mood in war-torn Ukraine</a></h3>
+    <p class="meta">BBC World News | 04/12 04:20</p>
+    <p class="summary">復活祭（イースター）を迎えた戦時下のウクライナでは、停戦が実現せず重苦しい雰囲気が漂っている。平和への祈りが捧げられる一方で、前線では戦闘が続き、市民の生活は依然として脅かされている。国民の間では「表面的な休戦ではなく、真の平和が必要だ」という切実な声が強まっている状況を伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c6ppd0qdp1do?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Asha Bhosle: The sound of Bollywood dies aged 92</a></h3>
+    <p class="meta">BBC World News | 04/12 08:24</p>
+    <p class="summary">ボリウッドを代表する伝説的歌手、アシャ・ボスレ氏が92歳で死去。ギネス記録を持つほどの膨大な曲数を録音し、その歌声は数世代にわたりインド映画界を支えてきた。彼女の死は「ボリウッドの一つの時代が終わった」と評され、音楽界やファンから深い哀悼の意が寄せられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260412/k10015097681000.html" target="_blank" rel="noopener noreferrer">中国 台湾向け経済的優遇策など発表 民進党政権へ圧力強める</a></h3>
+    <p class="meta">NHK国際放送 | 04/12 08:56</p>
+    <p class="summary">中国政府は台湾に対し、経済的な優遇措置を含む新たな政策を発表。これは台湾の民進党政権への揺さぶりを強める狙いがあると見られる。経済的なアメとムチを使い分けることで、台湾国内の世論形成に影響を与え、統一に向けた圧力を一段と強める中国側の姿勢が鮮明になっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260412/k10015097351000.html" target="_blank" rel="noopener noreferrer">【動画】Pickup NEWS（4月12日）</a></h3>
+    <p class="meta">NHK国際放送 | 04/12 04:58</p>
+    <p class="summary">4月12日の主要なニュースを動画でまとめたNHKのダイジェスト。国内外の政治、経済、社会ニュースの中から特に注目すべきトピックをピックアップし、映像と共に簡潔に解説している。日々のニュースを短時間で把握するのに適したコンテンツとなっている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
