@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月13日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月13日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月13日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://arxiv.org/abs/2603.21852" target="_blank" rel="noopener noreferrer">All elementary functions from a single binary operator</a></h3>
+    <p class="meta">Hacker News | 04/13 10:49</p>
+    <p class="summary">単一の二項演算子からすべての初等関数を導出できることを示した研究論文。数学と計算理論の観点から、関数の合成や代数的構造の最小単位を探求し、複雑な数学的表現が単一の基盤から構成可能であることを論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.viktorcessan.com/the-economics-of-software-teams/" target="_blank" rel="noopener noreferrer">The Economics of Software Teams: Why Most Engineering Orgs Are Flying Blind</a></h3>
+    <p class="meta">Hacker News | 04/13 14:45</p>
+    <p class="summary">ソフトウェア開発組織における経済学的な視点の欠如を指摘した記事。多くの組織が技術的な出力とビジネス価値の結びつきを把握できておらず、生産性の測定に苦慮している現状を分析し、より健全な意思決定のためのフレームワークを提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.eetimes.com/taking-on-cuda-with-rocm-one-step-after-another/" target="_blank" rel="noopener noreferrer">Taking on CUDA with ROCm: &#39;One Step After Another&#39;</a></h3>
+    <p class="meta">Hacker News | 04/13 07:38</p>
+    <p class="summary">NVIDIAのCUDAが支配するAI・HPC市場に対し、AMDのROCmプラットフォームがどのように挑んでいるかを解説。ソフトウェアエコシステムの改善と着実なアップデートを重ねることで、CUDAの代替肢としての地位を確立しようとする「一歩ずつ」の歩みを追っている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/masakura/articles/bc88704f8af091" target="_blank" rel="noopener noreferrer">GHSA-fvcv-3m26-pcqx (Axios の脆弱性) がなんか変</a></h3>
+    <p class="meta">Zenn トレンド | 04/12 09:19</p>
+    <p class="summary">HTTPクライアントAxiosに関する脆弱性報告（GHSA-fvcv-3m26-pcqx）に違和感を唱える記事。報告されている内容と実際のコードの挙動、CVSSスコアの整合性などを技術的な観点から検証し、脆弱性の実態や公表プロセスの疑問点を指摘している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mh4gf/articles/claude-code-multi-session-job-queue" target="_blank" rel="noopener noreferrer">Claude Codeのマルチセッション管理にジョブキューの概念を取り入れる</a></h3>
+    <p class="meta">Zenn トレンド | 04/12 06:50</p>
+    <p class="summary">AI開発ツールClaude Codeにおいて、複数のセッションやタスクを効率的に管理するためにジョブキューの概念を取り入れる手法の提案。非同期処理やタスクの優先順位付けを活用し、複数の開発タスクを並行してスムーズに処理するための実装アイデアを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/condy/articles/2b44f40bb58ad1" target="_blank" rel="noopener noreferrer">Laravelで安易にRepositoryやServiceを作らない方が良いと思う</a></h3>
+    <p class="meta">Zenn トレンド | 04/11 15:56</p>
+    <p class="summary">Laravel開発において、RepositoryやServiceパターンを無批判に導入することへの注意喚起。過度な抽象化はコードの複雑化を招くとし、プロジェクトの規模や要件に応じてEloquentの機能を活かしたシンプルな設計を選択すべきであると論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/wata-sho/items/417ec32f3b19185a7ca4?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【35歳未経験でも理解できた】サーバープッシュ技術</a></h3>
+    <p class="meta">Qiita トレンド | 04/13 01:22</p>
+    <p class="summary">初心者向けにサーバープッシュ技術を分かりやすく解説した記事。WebSocket、SSE（Server-Sent Events）、ロングポーリングの3つの主要技術について、それぞれの仕組みやメリット、具体的な活用シーンを比較しながら説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/13/the-largest-orbital-compute-cluster-is-open-for-business/" target="_blank" rel="noopener noreferrer">The largest orbital compute cluster is open for business</a></h3>
+    <p class="meta">TechCrunch | 04/13 07:01</p>
+    <p class="summary">宇宙軌道上に構築された最大規模のコンピューティング・クラスターが運用を開始。衛星データの地上送信待機時間を短縮し、宇宙空間で直接データを処理する「軌道上エッジコンピューティング」の本格的なビジネス利用が始まったことを報じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/12/trump-officials-may-be-encouraging-banks-to-test-anthropics-mythos-model/" target="_blank" rel="noopener noreferrer">Trump officials may be encouraging banks to test Anthropic’s Mythos model</a></h3>
+    <p class="meta">TechCrunch | 04/12 21:14</p>
+    <p class="summary">トランプ政権の幹部が、銀行に対してAnthropic社の新しいAIモデル「Mythos」のテストを推奨している可能性があるとの報道。政府による特定のAI技術の推進が、金融業界の規制やAI市場の競争環境にどのような影響を与えるかが注目されている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cd9vg782kx7o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Orbán era swept away by Péter Magyar&#39;s Hungary election landslide</a></h3>
+    <p class="meta">BBC World News | 04/13 06:25</p>
+    <p class="summary">ハンガリー総選挙でペーテル・マジャール氏率いる野党が大勝し、長年政権を維持したオルバン首相が敗北。汚職への不満や変革を求める国民の支持が集まり、同国の政治体制が大きな転換期を迎えたことを伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cn0wzxqyx17o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Katya Adler: Jubilation in Budapest will be felt in Europe but leaves Moscow cold</a></h3>
+    <p class="meta">BBC World News | 04/13 08:28</p>
+    <p class="summary">ハンガリーの政権交代に対する国際的な反応を分析。親ロシア的な姿勢を見せていたオルバン氏の退陣は欧州諸国から歓迎される一方、EU内の重要な協力者を失うことになるロシアにとっては打撃となり、冷ややかな反応を示していると解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260413/k10015075041000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（4月13日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 04/13 08:46</p>
+    <p class="summary">2026年4月13日時点のロシアによるウクライナ侵攻の戦況報告。前線での軍事衝突や攻撃の状況、各国の支援動向など、日々変化する現地の最新情勢を公共放送の視点から随時更新形式で伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260413/k10015097821000.html" target="_blank" rel="noopener noreferrer">ハンガリー 16年ぶりの政権交代へ 欧州などは歓迎 議会選挙で</a></h3>
+    <p class="meta">NHK国際放送 | 04/13 08:18</p>
+    <p class="summary">ハンガリーの議会選挙で、16年ぶりに政権が交代することとなった。独裁的な手法が批判されていたオルバン政権の退陣を受け、欧州連合（EU）などはこの結果を歓迎。新政権による法の支配の回復や外交方針の転換に期待が寄せられている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
