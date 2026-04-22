@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月22日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月22日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月22日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.youtube.com/watch?v=h6GWikWlAQA" target="_blank" rel="noopener noreferrer">Making RAM at Home [video]</a></h3>
+    <p class="meta">Hacker News | 04/21 08:35</p>
+    <p class="summary">自宅でコンピュータメモリ（RAM）を自作するプロセスを解説した動画。半導体の基礎原理から、物理的な回路の構築、実際にデータの読み書きを確認するまでの実験的な試みを紹介している。技術的な好奇心を刺激する教育的な内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://openai.com/index/introducing-chatgpt-images-2-0/" target="_blank" rel="noopener noreferrer">ChatGPT Images 2.0</a></h3>
+    <p class="meta">Hacker News | 04/22 03:50</p>
+    <p class="summary">OpenAIが発表した「ChatGPT Images 2.0」に関する記事。DALL-E 3を基盤とした画像生成・編集機能の刷新により、チャット内で直接画像を修正したり、より細かな指示を反映させたりすることが可能になった。表現の自由度と使いやすさが大幅に向上している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://spectrum.ieee.org/smart-contact-lens-glaucoma-microfluidics" target="_blank" rel="noopener noreferrer">Contact Lens Uses Microfluidics to Monitor and Treat Glaucoma</a></h3>
+    <p class="meta">Hacker News | 04/19 20:53</p>
+    <p class="summary">マイクロ流体技術を用いたスマートコンタクトレンズが、緑内障の監視と治療を同時に行うというニュース。眼圧の変動をリアルタイムで検知し、必要に応じて自動で薬剤を放出する機能を備えている。侵襲性を抑えた次世代の医療デバイスとして期待される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://lawsofsoftwareengineering.com" target="_blank" rel="noopener noreferrer">Laws of Software Engineering</a></h3>
+    <p class="meta">Hacker News | 04/21 20:04</p>
+    <p class="summary">ソフトウェア開発における普遍的な原則や法則（コンウェイの法則やブルックスの法則など）をまとめたサイト。プロジェクト管理、設計、チームの生産性を高めるための知見を体系的に解説しており、エンジニアにとって重要な指針を提供している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://asteriskmag.com/issues/14/the-mystery-in-the-medicine-cabinet" target="_blank" rel="noopener noreferrer">Acetaminophen vs. ibuprofen</a></h3>
+    <p class="meta">Hacker News | 04/21 00:21</p>
+    <p class="summary">アセトアミノフェンとイブプロフェンの違いを医学的・歴史的視点から掘り下げた記事。両者の作用機序や副作用、適切な使い分けについて最新の研究結果を交えて解説している。家庭用医薬品としての選択に役立つ背景知識を深める内容。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/shintaroamaike/articles/69a7611880420d" target="_blank" rel="noopener noreferrer">その生産性向上、現場が静かに支払っているコストの話</a></h3>
+    <p class="meta">Zenn トレンド | 04/21 10:40</p>
+    <p class="summary">組織の「生産性向上」の裏に隠れたコストについて論じた記事。自動化や新ツールの導入が、長期的にはメンテナンス負荷や認知負荷の増大を招くリスクを指摘し、現場が密かに支払っているコストを可視化することの重要性と持続可能な改善のあり方を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/progate/articles/cb3018bbfc5aad" target="_blank" rel="noopener noreferrer">いい CLAUDE.md なのか、Claude Code と計測・分析してみた</a></h3>
+    <p class="meta">Zenn トレンド | 04/21 06:03</p>
+    <p class="summary">Claude専用の設定ファイル「CLAUDE.md」の有効性を、Claude Codeを用いて定量的に分析した記事。プロジェクト固有の文脈をAIにどう伝えるべきかを実験し、開発効率を最大化するための記述ルールや運用のベストプラクティスを共有している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/hitomin_poke/items/befed7f99c8d90b649b9?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【前編】9割の新人エンジニアがやっている 「承知しました」の落とし穴</a></h3>
+    <p class="meta">Qiita トレンド | 04/22 04:09</p>
+    <p class="summary">新人エンジニアが使いがちな「承知しました」という返答の落とし穴を指摘する記事。指示の意図を十分に理解せずに返事をしてしまうことで発生するミスコミュニケーションを解説し、具体的な確認事項やプロとしてのコミュニケーション術を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/miruky/items/f67bd754c1f7a5116a7c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【徹底解説】DBスペシャリストなりぞこないが教える、データベースの教科書（設計もあるよ）</a></h3>
+    <p class="meta">Qiita トレンド | 04/21 08:12</p>
+    <p class="summary">データベースの基礎から設計、運用までを網羅的に解説した技術記事。リレーショナルモデルの理論から、インデックスの仕組み、正規化のポイントまでを、著者の経験に基づいた平易な言葉で説明しており、初学者から中級者まで幅広く役立つ内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/21/redwood-materials-lays-off-10-in-restructuring-to-chase-energy-storage-business/" target="_blank" rel="noopener noreferrer">Redwood Materials lays off 10% in restructuring to chase energy storage business</a></h3>
+    <p class="meta">TechCrunch | 04/22 00:37</p>
+    <p class="summary">電池リサイクル大手のRedwood Materialsが、エネルギー貯蔵事業への注力に向けた事業再編のため、従業員の10％を削減した。電気自動車市場の変動に対応しつつ、定置用蓄電池市場などの新たな成長領域にリソースを集中させる戦略的な狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/21/meta-will-record-employees-keystrokes-and-use-it-to-train-its-ai-models/" target="_blank" rel="noopener noreferrer">Meta will record employees’ keystrokes and use it to train its AI models</a></h3>
+    <p class="meta">TechCrunch | 04/21 23:45</p>
+    <p class="summary">Meta社が、AIモデルのトレーニングのために従業員の打鍵情報（キーストローク）を記録する計画。社内ツールの改善やAIの精度向上が目的だが、プライバシーの保護や労働監視の観点から、従業員や専門家の間で大きな議論を呼ぶ可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/21/unauthorized-group-has-gained-access-to-anthropics-exclusive-cyber-tool-mythos-report-claims/" target="_blank" rel="noopener noreferrer">Unauthorized group has gained access to Anthropic’s exclusive cyber tool Mythos, report claims</a></h3>
+    <p class="meta">TechCrunch | 04/21 23:26</p>
+    <p class="summary">Anthropicの独自サイバーツール「Mythos」に、未承認のグループがアクセスしたという報告。AIセキュリティの研究に用いられる機密ツールが流出した懸念があり、AI企業の安全性管理やサイバー防御の脆弱性が改めて浮き彫りとなっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/quantum-elements-to-explore-digital-twin-modeling-on-rigetti-hardware/" target="_blank" rel="noopener noreferrer">Quantum Elements to Explore Digital Twin Modeling on Rigetti Hardware</a></h3>
+    <p class="meta">Quantum Computing Report | 04/21 23:28</p>
+    <p class="summary">Quantum Elements社が、Rigetti Computingの量子ハードウェアを使用してデジタルツインのモデリングを探索する。量子計算の特性を活かし、複雑なシステムのシミュレーション精度を飛躍的に向上させることを目指す、産業応用へ向けた取り組み。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/tantalising-lasers-importance-of-tantalum-in-the-supply-chain/" target="_blank" rel="noopener noreferrer">Tantalising Lasers – Importance of Tantalum in the Supply Chain</a></h3>
+    <p class="meta">Quantum Computing Report | 04/21 22:44</p>
+    <p class="summary">量子コンピューティングやレーザー技術に不可欠なレアメタル「タンタル」のサプライチェーンの重要性を説く記事。特定の産地への依存や供給不安が技術革新のボトルネックとなるリスクを指摘し、安定調達のための戦略的な視点を提供している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/infleqtion-awarded-2-million-darpa-contract-for-heterogeneous-quantum-software/" target="_blank" rel="noopener noreferrer">Infleqtion Awarded $2 Million DARPA Contract for Heterogeneous Quantum Software</a></h3>
+    <p class="meta">Quantum Computing Report | 04/21 18:47</p>
+    <p class="summary">Infleqtion社が、異種混合の量子ソフトウェア開発のためにDARPAから200万ドルの契約を獲得した。異なる方式の量子デバイスを統合的に運用する基盤を構築し、将来的な量子コンピューティングの実用化と国防への活用を加速させる。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cvg4yr90jr2o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump buys time for Iran deal after frantic day of diplomacy</a></h3>
+    <p class="meta">BBC World News | 04/22 00:32</p>
+    <p class="summary">トランプ大統領が緊迫した外交交渉の末、イラン核合意に関する交渉時間を確保した。激しい外交戦が繰り広げられる中、即時の対立を回避しつつ、新たな枠組みを模索するための猶予期間が設けられた形となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cn4vk13wgwwo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Phone tracking shows how Colombian mercenaries backed Sudan&#39;s RSF - report</a></h3>
+    <p class="meta">BBC World News | 04/22 04:01</p>
+    <p class="summary">携帯電話の追跡調査により、コロンビアの傭兵がスーダンの準軍事組織「即応支援部隊（RSF）」を支援していた実態が判明した。紛争における外部勢力の関与がデジタルデータによって証明され、国際的な傭兵ネットワークの複雑さが浮き彫りになった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c895j8zgqe4o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Virginia approves redistricting measure, boosting Democrats&#39; hopes for midterms</a></h3>
+    <p class="meta">BBC World News | 04/22 02:24</p>
+    <p class="summary">バージニア州で選挙区の区割り変更案が承認された。この変更は民主党にとって有利に働くと見られており、目前に迫った中間選挙の行方を左右する重要な動きとして注目されている。州レベルの政治勢力図が塗り替えられる可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260422/k10015105251000.html" target="_blank" rel="noopener noreferrer">トランプ大統領 停戦延長も海上封鎖は継続 協議の行方は不透明</a></h3>
+    <p class="meta">NHK国際放送 | 04/22 08:53</p>
+    <p class="summary">トランプ大統領が停戦の延長を発表したが、海上封鎖などの制裁措置は継続する方針を示した。相手国との協議が続く中、譲歩と圧力を組み合わせた強硬姿勢を維持しており、事態の根本的な解決に向けた見通しは依然として不透明な状況が続いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260422/k10015082691000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（4月22日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 04/22 07:44</p>
+    <p class="summary">2026年4月22日のロシアによるウクライナ侵攻の最新状況。各地での戦闘状況や国際社会の支援、制裁の動きなどが随時更新されている。現地の緊迫した情勢とともに、終結に向けた各国の政治的な駆け引きが多角的に伝えられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260422/k10015105381000.html" target="_blank" rel="noopener noreferrer">米中間選挙前にバージニア州で区割り変更へ 野党 民主党有利に</a></h3>
+    <p class="meta">NHK国際放送 | 04/22 05:33</p>
+    <p class="summary">米国中間選挙を控え、バージニア州で選挙区の再画定が行われた。この区割りは野党・民主党に有利な影響を与えると予想されており、議会での過半数争いに大きな影響を及ぼす可能性がある。州の政治情勢を決定づける重要な転換点として注目される。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
