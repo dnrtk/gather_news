@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月25日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月25日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月25日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.jeffgeerling.com/blog/2026/new-10-gbe-usb-adapters-cooler-smaller-cheaper/" target="_blank" rel="noopener noreferrer">New 10 GbE USB adapters are cooler, smaller, cheaper</a></h3>
+    <p class="meta">Hacker News | 04/25 14:56</p>
+    <p class="summary">新しいチップセットを採用したUSB-C 10GbEアダプターが登場し、従来品に比べ発熱が少なく、小型化および低価格化が進んでいる。これにより、ノートPCや小型PCでの高速ネットワーク接続がより手軽かつ実用的になった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/nex-crm/wuphf" target="_blank" rel="noopener noreferrer">Show HN: A Karpathy-style LLM wiki your agents maintain (Markdown and Git)</a></h3>
+    <p class="meta">Hacker News | 04/25 17:53</p>
+    <p class="summary">「wuphf」は、AIエージェントがメンテナンスを行うMarkdownとGitベースのWikiシステムである。Andrej Karpathyのスタイルを参考に、情報の整理や更新を自動化・効率化することを目指しており、GitHubで公開されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bloomberg.com/news/articles/2026-04-24/google-plans-to-invest-up-to-40-billion-in-anthropic" target="_blank" rel="noopener noreferrer">Google plans to invest up to $40B in Anthropic</a></h3>
+    <p class="meta">Hacker News | 04/25 01:04</p>
+    <p class="summary">GoogleがAIスタートアップのAnthropicに対し、最大400億ドルの追加投資を計画していることが報じられた。この巨額投資により、同社との提携を強化し、競合他社に対抗する狙いがあると見られる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://clad.you/blog/posts/questionnaire-mlp/" target="_blank" rel="noopener noreferrer">A 3D Body from Eight Questions – No Photo, No GPU</a></h3>
+    <p class="meta">Hacker News | 04/22 21:20</p>
+    <p class="summary">写真や高性能なGPUを使用せず、わずか8つの質問に答えるだけで個人の3D体型モデルを生成する技術が公開された。多層パーセプトロン（MLP）を活用し、少ない計算リソースで個々の体型を正確に表現することに成功している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://en.wikipedia.org/wiki/Paraloid_B-72" target="_blank" rel="noopener noreferrer">Paraloid B-72</a></h3>
+    <p class="meta">Hacker News | 04/22 13:17</p>
+    <p class="summary">Paraloid B-72は、美術品の保存や修復に広く使用される熱可塑性樹脂である。経年劣化に強く、透明性や可逆性に優れているため、接着剤やコーティング材として博物館などの専門機関で重宝されている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/nka21/articles/claude-code-multi-agent-reviewer" target="_blank" rel="noopener noreferrer">AIレビューの「で、これ合ってんの？」を減らす</a></h3>
+    <p class="meta">Zenn トレンド | 04/24 15:24</p>
+    <p class="summary">AIによるコードレビューの信頼性を高めるため、Claude Codeを活用したマルチエージェント体制の構築手法について解説されている。複数のAIが異なる役割でチェックを行うことで、誤検知を減らし、人間が納得できる精度の高いレビューを実現する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/techtrain_blog/articles/0991bc406b58e2" target="_blank" rel="noopener noreferrer">Claude Code と二人七脚 DB 設計</a></h3>
+    <p class="meta">Zenn トレンド | 04/24 12:06</p>
+    <p class="summary">開発者がClaude Codeをパートナーとして、データベース設計を行うプロセスを記録した記事。対話を通じて要件を定義し、スキーマ定義やマイグレーションファイルを生成しながら、AIと共に効率的に設計を進める「二人七脚」の開発手法が示されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/renue/articles/4687cb5e5c0031" target="_blank" rel="noopener noreferrer">【renue】社員全員でClaude Codeを使い、自社のデモECをハッキングしてみた</a></h3>
+    <p class="meta">Zenn トレンド | 04/24 09:03</p>
+    <p class="summary">企業の全社員がClaude Codeを活用し、自社のデモ用ECサイトに対して疑似ハッキングを行った事例。AIの高度な解析能力を利用して脆弱性を発見し、修正案まで導き出す過程を通じて、セキュリティ対策におけるAI活用の可能性を検証している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/Katsushi21/items/9c5fff6f00bcd03b3370?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">プッシュ通知の許可フロー設計 ― ブラウザやデバイスごとの違いと実装パターン</a></h3>
+    <p class="meta">Qiita トレンド | 04/24 08:26</p>
+    <p class="summary">Webプッシュ通知の許可率を向上させるためのUI設計と、ブラウザやデバイスごとの実装仕様の違いについて詳説した記事。ユーザー体験を損なわないタイミングでの通知促しや、実装における注意点、具体的なパターンが紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/ko1-ino/items/ccc64ce6504c77100cfb?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AI駆動開発の手法は分岐するが、本質は一点に収束する ― 現場で6週間議論して辿り着いた結論</a></h3>
+    <p class="meta">Qiita トレンド | 04/23 12:23</p>
+    <p class="summary">現場で6週間にわたり議論されたAI駆動開発の本質についての考察。多様な手法が存在する中で、最終的には「AIとの協働をいかに最適化し、価値を生み出すか」という一点に収束することを説き、今後のエンジニアに求められる姿勢を提示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/24/lachy-groom-to-back-pronto-as-indias-house-help-startup-scales-fast-sources-say/" target="_blank" rel="noopener noreferrer">Lachy Groom to back India startup Pronto at a $200M valuation, sources say</a></h3>
+    <p class="meta">TechCrunch | 04/25 03:30</p>
+    <p class="summary">著名な投資家Lachy Groomが、インドの家事代行スタートアップ「Pronto」に2億ドルの評価額で出資する。インドでの急速な需要拡大を背景に、デジタルプラットフォームを活用した家事支援サービスの成長性が高く評価されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/24/steve-ballmer-blasts-founder-he-backed-who-pleaded-guilty-to-fraud-i-was-duped-and-feel-silly/" target="_blank" rel="noopener noreferrer">Steve Ballmer blasts founder he backed who pleaded guilty to fraud: ‘I was duped and feel silly’</a></h3>
+    <p class="meta">TechCrunch | 04/24 23:32</p>
+    <p class="summary">元マイクロソフトCEOのスティーブ・バルマー氏が、自身が出資したスタートアップの創業者による詐欺行為に対し怒りを表明した。創業者が罪を認めたことを受け、バルマー氏は「騙された自分が愚かだった」と述べ、投資の難しさを語っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/24/palantir-is-reportedly-helping-the-irs-investigate-financial-crimes/" target="_blank" rel="noopener noreferrer">Palantir is reportedly helping the IRS investigate financial crimes</a></h3>
+    <p class="meta">TechCrunch | 04/24 21:53</p>
+    <p class="summary">データ分析企業Palantir（パランティア）が、米内国歳入庁（IRS）による金融犯罪の調査を支援していると報じられた。高度なデータ解析技術を活用して、複雑な脱税や資金洗浄のパターンを特定するための協力体制が構築されている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cj40r2gw24wo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Katya Adler: Europe&#39;s Nato allies push back at reported US threat to Spain</a></h3>
+    <p class="meta">BBC World News | 04/25 00:10</p>
+    <p class="summary">米国がスペインに対して圧力をかけているとの報道を受け、欧州のNATO同盟国が反発を強めている。防衛予算や安全保障政策を巡る対立が背景にあり、同盟内の結束に緊張が生じている状況をBBCの編集委員が分析している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260425/k10015108221000.html" target="_blank" rel="noopener noreferrer">米AI新興アンソロピックに出資 巨大テクノロジー企業で広がる</a></h3>
+    <p class="meta">NHK国際放送 | 04/25 08:02</p>
+    <p class="summary">米国のAI新興企業アンソロピックに対し、GoogleやAmazonなどの巨大IT企業が相次いで巨額の出資を行っている。高性能なAI開発を巡る競争が激化する中、有望なスタートアップを自社陣営に取り込み、技術基盤を強化する動きが広がっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260425/k10015108191000.html" target="_blank" rel="noopener noreferrer">ベネズエラ暫定大統領 首脳外交で体制維持も</a></h3>
+    <p class="meta">NHK国際放送 | 04/25 06:20</p>
+    <p class="summary">ベネズエラの暫定大統領が、各国首脳との外交を通じて体制の維持と国際的な正当性の確保を図っている。国内の経済混乱や政治的対立が続く中、支持国との関係強化を模索し、政権の安定化を目指している現状が報じられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260425/k10015108181000.html" target="_blank" rel="noopener noreferrer">国連 中満事務次長「核軍縮議論 各国は合意形成に柔軟姿勢を」</a></h3>
+    <p class="meta">NHK国際放送 | 04/25 05:02</p>
+    <p class="summary">国連の中満泉事務次長は、核軍縮を巡る議論において、各国が合意形成に向けてより柔軟な姿勢を示すよう呼びかけた。国際的な緊張が高まる中、核兵器のない世界の実現に向けた停滞を打破する必要性を強く訴えている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
