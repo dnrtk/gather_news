@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月28日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月28日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月28日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://gtfobins.org/" target="_blank" rel="noopener noreferrer">GTFOBins</a></h3>
+    <p class="meta">Hacker News | 04/28 15:27</p>
+    <p class="summary">Unixバイナリを利用してシステムのセキュリティ制限を回避する手法をまとめたキュレーションサイト。設定ミスのある環境で、権限昇格やサンドボックス回避などに悪用される恐れがあるバイナリの実行例を網羅しており、セキュリティ診断や防御策の検討に役立てられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://talkie-lm.com/introducing-talkie" target="_blank" rel="noopener noreferrer">Talkie: a 13B vintage language model from 1930</a></h3>
+    <p class="meta">Hacker News | 04/28 06:55</p>
+    <p class="summary">1930年代の技術で構築されたという設定の「ヴィンテージ言語モデル」を紹介するプロジェクト。130億のパラメータを持ち、当時の美学や文脈を反映した出力を生成する。レトロなインターフェースと現代のAI技術を融合させた、ユニークなデジタルアート作品としての側面が強い。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://ismy.blue/" target="_blank" rel="noopener noreferrer">Is my blue your blue?</a></h3>
+    <p class="meta">Hacker News | 04/28 05:24</p>
+    <p class="summary">青と緑の境界線が個人によってどのように異なるかを測定するテストサイト。提示される色が「青」か「緑」かを回答していくことで、自分の色彩感覚が他者と比較してどの程度偏っているか、あるいは標準的かを視覚化できる。知覚の主観性をデータで示す試みである。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://apod.nasa.gov/apod/ap260427.html" target="_blank" rel="noopener noreferrer">Can You Find the Comet?</a></h3>
+    <p class="meta">Hacker News | 04/27 16:59</p>
+    <p class="summary">NASAの「今日の天文写真」において、星々の中に隠れた彗星を探すクイズ形式の画像が紹介された。微かな輝きを放つ彗星を背景の星団やガス雲の中から見つけ出すプロセスを通じて、天体観測の難しさと宇宙の広大さを実感できる内容となっている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/bilzard/articles/b924d7995b28bc" target="_blank" rel="noopener noreferrer">40%キーボードに移行する前に知っておきたかったこと</a></h3>
+    <p class="meta">Zenn トレンド | 04/28 00:00</p>
+    <p class="summary">40%キーボードへの移行を検討する人向けに、実体験に基づく知見をまとめた記事。数字行や記号キーがない特殊なレイアウトにおける「レイヤー設定」の重要性や、打鍵効率を維持するための工夫、慣れるまでに必要な学習コストなど、導入前に考慮すべき点が解説されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/aircloset/articles/65efe9614f8e73" target="_blank" rel="noopener noreferrer">非エンジニアの「作りたい」と「安全に公開したい」を両立する Sandbox MCP を作った</a></h3>
+    <p class="meta">Zenn トレンド | 04/27 23:02</p>
+    <p class="summary">非エンジニアがAIを活用してアプリを安全に開発・公開できる「Sandbox MCP」の開発記録。セキュリティリスクを制御しつつ、生成AIによるコード実行環境を提供することで、プログラミング知識が乏しくてもアイデアを迅速に形にできる環境の構築事例を紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/bizreach_aps/articles/0d758497357167" target="_blank" rel="noopener noreferrer">AIエージェントにユーザーを演じさせて業務をテストする</a></h3>
+    <p class="meta">Zenn トレンド | 04/27 03:53</p>
+    <p class="summary">業務システムのテストにおいて、AIエージェントに特定のユーザー属性を持たせて操作をシミュレーションさせる手法を紹介。人間が手動で行っていた複雑なテストをAIに代替させることで、品質向上と工数削減を両立し、潜在的なバグや課題を早期発見する試みについて述べている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/masa20057/items/3df8598b3ebaf1eb6888?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【初学者向け】「どう並べて、どう取り出すか」で変わる - データ構造の基礎</a></h3>
+    <p class="meta">Qiita トレンド | 04/28 04:56</p>
+    <p class="summary">プログラミング初学者を対象に、配列、スタック、キューといった基本的なデータ構造の概念を解説。データの保持方法や取り出し方の違いが、プログラムの処理速度や効率にどのような影響を与えるかを、具体例を交えて分かりやすく説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/hitomin_poke/items/018678abdb0267983fc3?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【後編】9割の新人エンジニアがやっている 「承知しました」の落とし穴</a></h3>
+    <p class="meta">Qiita トレンド | 04/28 04:04</p>
+    <p class="summary">新人エンジニアが使いがちな「承知しました」という言葉の危うさを指摘する記事。内容を理解したのか作業を承諾したのかといった曖昧さが招く認識齟齬を解説し、トラブルを防ぐために、より具体的でプロフェッショナルな報告・連絡・相談のあり方を提示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/27/drizzle-on-top-a-new-high-end-dog-food-brand-is-coming-for-the-1/" target="_blank" rel="noopener noreferrer">Drizzle on top: a new high-end dog food brand is coming for the 1%</a></h3>
+    <p class="meta">TechCrunch | 04/28 05:02</p>
+    <p class="summary">超富裕層をターゲットにした高級ドッグフードブランド「Drizzle」が登場。最高級の原材料とパーソナライズされた栄養設計を特徴とし、ペットへの支出を惜しまない「トップ1%」の富裕層市場を狙った、極めてニッチで高付加価値なビジネス展開が注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/27/indias-snabbit-closes-56m-round-as-investor-interest-heats-up-in-on-demand-home-services/" target="_blank" rel="noopener noreferrer">India’s Snabbit closes $56M round as investor interest in on-demand home services heats up</a></h3>
+    <p class="meta">TechCrunch | 04/28 03:30</p>
+    <p class="summary">インドのオンデマンド・ホームサービス企業「Snabbit」が5600万ドルの資金調達を実施。清掃や修理などの家事代行サービスへの投資家の関心が高まっており、同社は調達資金を活用してサービス網の拡大とテクノロジー強化を図り、急成長するインド市場でのシェア拡大を狙う。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cew7wez72vxo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Suspect charged with attempted assassination of Trump at Washington dinner</a></h3>
+    <p class="meta">BBC World News | 04/28 00:41</p>
+    <p class="summary">ワシントンでの夕食会において、トランプ前大統領の暗殺を企てた疑いで容疑者が訴追された。警備当局が事前に不審な動きを察知して拘束したため、幸い負傷者は出なかった。この事件は米国内の政治的緊張の高まりを象徴するものとして、大きな波紋を広げている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cje4eeyq27lo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">US political violence generates a familiar cycle - this time it&#39;s in overdrive</a></h3>
+    <p class="meta">BBC World News | 04/28 00:19</p>
+    <p class="summary">米国における政治的暴力が加速し、対立のサイクルが激化している現状を分析した記事。党派間の分断や過激な言説が暴力を誘発し、それがさらに報復や非難の連鎖を生む「オーバードライブ」状態に陥っている社会情勢に対し、危機の深刻さと構造的な課題を指摘している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260428/k10015110331000.html" target="_blank" rel="noopener noreferrer">肥料の主原料「尿素」の輸入価格17％上昇 イラン情勢影響で</a></h3>
+    <p class="meta">NHK国際放送 | 04/28 08:20</p>
+    <p class="summary">肥料の主原料である「尿素」の輸入価格が前年同期比で17%上昇した。中東のイラン情勢の緊迫化に伴う供給不安が背景にあり、国内農家にとっては肥料価格の高騰が経営を圧迫する懸念が出ている。政府や関係機関は供給の安定確保に向けた対策を模索している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260428/k10015110301000.html" target="_blank" rel="noopener noreferrer">韓国軍 北朝鮮監視の衛星5基今月中に運用へ 米依存度低下か</a></h3>
+    <p class="meta">NHK国際放送 | 04/28 07:55</p>
+    <p class="summary">韓国軍は、北朝鮮の軍事動向を監視するための軍事偵察衛星5基を今月中に運用開始する。これにより、これまで米国の情報資産に依存していた監視能力が大幅に強化され、自国でのリアルタイムな情報収集が可能になる。朝鮮半島の緊張に対する抑止力の向上が期待される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260428/k10015110261000.html" target="_blank" rel="noopener noreferrer">出光興産 ベトナムに原油供給へ 供給網の維持につながるか</a></h3>
+    <p class="meta">NHK国際放送 | 04/28 07:48</p>
+    <p class="summary">出光興産がベトナムの製油所に対して原油供給を開始することが判明。アジア市場におけるエネルギー供給網の維持と強化を目的としており、経済成長が続くベトナムで安定供給体制を構築する。日本のエネルギー安全保障にも寄与する戦略的な取り組みとして注目される。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
