@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月30日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月30日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月30日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/anthropics/claude-code/issues/53262" target="_blank" rel="noopener noreferrer">HERMES.md: Anthropic bug causes $200 extra charge, refuses refund</a></h3>
+    <p class="meta">Hacker News | 04/30 03:54</p>
+    <p class="summary">Anthropicの「Claude Code」において、バグによりユーザーに200ドルの追加料金が誤って請求される問題が発生している。GitHub上の報告によると、同社はこの請求に対する返金を拒否しており、ユーザーの間で不満が高まっている。この問題は、意図しないAPI使用量のリセットや課金システムの不具合が原因とみられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zed.dev/blog/zed-1-0" target="_blank" rel="noopener noreferrer">Zed 1.0</a></h3>
+    <p class="meta">Hacker News | 04/29 23:34</p>
+    <p class="summary">高性能なコードエディタ「Zed」がバージョン1.0として正式にリリースされた。ZedはAtomやTree-sitterの開発者らによって構築され、Rustを採用することで圧倒的な処理速度とGPUによるレンダリング、リアルタイムの共同編集機能を実現している。今回の正式版リリースにより、エンジニア向けの強力な開発環境としての地位を確立することを目指す。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://jivx.com/kyoto-bloom" target="_blank" rel="noopener noreferrer">Kyoto cherry blossoms now bloom earlier than at any point in 1,200 years</a></h3>
+    <p class="meta">Hacker News | 04/30 04:32</p>
+    <p class="summary">京都の桜の開花時期が、過去1200年間の記録の中で最も早まっている。歴史的な記録データによると、近年の開花日は以前の平均よりも大幅に前倒しされており、これは地球温暖化や都市化による気温上昇が直接的な原因とされている。この長年の記録は、気候変動が地域の生態系や文化的なイベントに与える深刻な影響を浮き彫りにしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://copy.fail/" target="_blank" rel="noopener noreferrer">Copy Fail – CVE-2026-31431</a></h3>
+    <p class="meta">Hacker News | 04/30 03:13</p>
+    <p class="summary">「Copy Fail」と名付けられた脆弱性（CVE-2026-31431）に関する詳細が公開された。この脆弱性は、特定の条件下でコピー＆ペースト操作を行う際に、メモリ上の予期しないデータが漏洩したり、悪意のあるコードが実行されたりするリスクがある。修正パッチの適用や、信頼できないソースからのテキスト操作に対する注意が呼びかけられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://abc.xyz/investor/news/news-details/2026/Alphabet-Announces-First-Quarter-2026-Results-2026-X-ge4Dm6bf/default.aspx" target="_blank" rel="noopener noreferrer">Alphabet Announces First Quarter 2026 Results</a></h3>
+    <p class="meta">Hacker News | 04/30 05:20</p>
+    <p class="summary">Alphabetが2026年度第1四半期の決算を発表した。売上高と利益の両面で市場予想を上回る好調な結果となり、特にクラウド部門とAI関連サービスの成長が大きく寄与している。YouTubeの広告収入も堅調に推移しており、同社は今後もAIインフラへの投資を加速させ、検索エンジンや各種サービスへのAI統合を深めていく方針を示した。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/pixiv/articles/69638446455b0d" target="_blank" rel="noopener noreferrer">Deno に DOMMatrix を入れるために Rust で CSS Values and Units の構文解析、計算をした話</a></h3>
+    <p class="meta">Zenn トレンド | 04/28 17:22</p>
+    <p class="summary">DenoにDOMMatrixを実装するため、Rustを用いてCSSの数値や単位（Values and Units）の構文解析および計算を行った開発記録。既存のパーサーでは不足していた計算機能を自前で実装し、ブラウザ互換性を高めるための苦労や工夫が綴られている。Denoの内部実装におけるRustの活用事例として、詳細な技術的知見が共有されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/espeon011/articles/3022342eb6f2ba" target="_blank" rel="noopener noreferrer">DIDP の Rust インターフェース RPID で柔軟な数理最適化モデリング + Wasm</a></h3>
+    <p class="meta">Zenn トレンド | 04/28 10:04</p>
+    <p class="summary">数理最適化手法の一つであるDIDP（Domain-Independent Dynamic Programming）のRust用インターフェース「RPID」についての解説記事。RPIDを用いることで柔軟なモデリングが可能になり、WebAssembly（Wasm）化することでブラウザ上での実行も実現している。複雑なスケジューリング問題などを効率的に解くための新しい選択肢として紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/29/google-gains-25m-subscriptions-in-q1-driven-by-youtube-and-google-one/" target="_blank" rel="noopener noreferrer">Google gains 25M subscriptions in Q1, driven by YouTube and Google One</a></h3>
+    <p class="meta">TechCrunch | 04/29 20:59</p>
+    <p class="summary">Googleは2026年第1四半期に、有料サブスクリプションの契約数が2,500万件増加したと発表した。この成長を牽引したのはYouTube PremiumやGoogle Oneなどのサービスであり、広告以外の収益源が着実に拡大していることを示している。同社は、AI機能を統合した高付加価値なプランの提供が、ユーザーの獲得と維持に貢献していると分析している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/29/fusion-power-startup-zap-energy-pulls-a-partial-pivot-adding-nuclear-fission-to-the-mix/" target="_blank" rel="noopener noreferrer">Fusion power startup Zap Energy pulls a partial pivot, adding nuclear fission to the mix</a></h3>
+    <p class="meta">TechCrunch | 04/29 20:53</p>
+    <p class="summary">核融合スタートアップのZap Energyが事業方針を一部転換し、従来の核融合に加えて核分裂技術も取り入れることを発表した。核融合の商用化には時間がかかるため、確立された技術である核分裂を組み合わせることで早期のエネルギー供給と事業の安定化を図る狙いがある。このハイブリッド戦略により、クリーンエネルギーの実現を加速させるとしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/29/parallel-web-systems-hits-2b-valuation-five-months-after-its-last-big-raise/" target="_blank" rel="noopener noreferrer">Parallel Web Systems hits $2B valuation five months after its last big raise</a></h3>
+    <p class="meta">TechCrunch | 04/29 18:33</p>
+    <p class="summary">Parallel Web Systemsの評価額が、前回の資金調達からわずか5か月で20億ドルに達した。同社はWebインフラの最適化や並列処理技術を専門としており、急成長するAI市場や大規模データ処理の需要を背景に投資家から高い注目を集めている。今回の増資により、さらなる技術開発とグローバル展開を加速させる計画だ。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cj4pxr0gr02o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Oil price briefly hits $120 after reports of &#39;extended&#39; Iran blockade</a></h3>
+    <p class="meta">BBC World News | 04/29 20:24</p>
+    <p class="summary">イランによる「長期的な封鎖」の報道を受け、原油価格が一時1バレル120ドルまで急騰した。ホルムズ海峡などの重要航路における緊張が高まったことで供給不足への懸念が広がったことが要因である。主要国はエネルギー供給の安定化に向けた対応を迫られており、世界経済へのインフレ圧力の再燃が危惧されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c70vzj1nrddo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Comey surrenders over charge of threatening Trump&#39;s life in Instagram post</a></h3>
+    <p class="meta">BBC World News | 04/29 20:24</p>
+    <p class="summary">Instagramの投稿でトランプ大統領の殺害を予告したとして、コミー氏が当局に出頭した。この投稿は重大な脅迫罪に当たると判断され、司法当局が捜査を進めていた。本人は投稿内容の意図について詳しく説明していないが、政治的対立が激化する中、ソーシャルメディア上での言動が法的な責任を問われる形となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c392ln77w30o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Hungary&#39;s next PM says frozen EU funds will be paid out soon</a></h3>
+    <p class="meta">BBC World News | 04/29 19:51</p>
+    <p class="summary">ハンガリーの次期首相は、欧州連合（EU）によって凍結されていた資金が近く支払われる見通しであることを明らかにした。法の支配を巡る問題でEU側と対立していたが、妥協点を見出すための交渉が進展したとしている。この資金解放は、財政難に直面するハンガリー経済にとって大きな支援となると期待されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260430/k10015111131000.html" target="_blank" rel="noopener noreferrer">高市首相 日豪首脳会談で経済安保共同宣言を出す方向で調整</a></h3>
+    <p class="meta">NHK国際放送 | 04/29 20:49</p>
+    <p class="summary">高市首相はオーストラリアとの首脳会談において、経済安全保障に関する共同宣言を出す方向で調整に入った。サプライチェーンの強靭化や重要鉱物の安定供給、先端技術の保護などでの連携を強化する狙いがある。中国を念頭に、自由で開かれたインド太平洋の維持に向けて、同盟国・同志国との協力を一段と深める方針だ。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260430/k10015111181000.html" target="_blank" rel="noopener noreferrer">FRB議長指名のウォーシュ氏 人事案承認 5月中旬にも就任へ</a></h3>
+    <p class="meta">NHK国際放送 | 04/29 20:44</p>
+    <p class="summary">アメリカ連邦準備制度理事会（FRB）の次期議長に指名されたケビン・ウォーシュ氏の人事案が、上院で承認された。早ければ5月中旬にも正式に就任する見通しだ。物価抑制に向けた利上げの判断や、金融システムの安定化に向けた手腕が問われることになる。市場は新議長のスタンスを慎重に見極めようとしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260430/k10015111281000.html" target="_blank" rel="noopener noreferrer">トランプ大統領 イランの提案拒否か イラン側も対抗措置示唆</a></h3>
+    <p class="meta">NHK国際放送 | 04/29 20:39</p>
+    <p class="summary">トランプ大統領が、イラン側から提示された対話や緊張緩和に向けた提案を拒否した可能性が高いことがわかった。これを受け、イラン側もさらなる対抗措置を講じることを示唆しており、中東地域における緊張が再び高まっている。両国間の対立は、エネルギー市場や国際情勢に大きな不確実性をもたらしている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
