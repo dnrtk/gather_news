@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月01日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月01日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月01日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://en.wikipedia.org/wiki/Auto_polo" target="_blank" rel="noopener noreferrer">Auto Polo</a></h3>
+    <p class="meta">Hacker News | 04/29 00:51</p>
+    <p class="summary">オートポロは、馬の代わりに自動車を用いるポロに似たモータースポーツ。20世紀初頭にアメリカで考案され、1910年代から1920年代にかけて人気を博した。激しい接触や車両の横転が頻発する非常に危険な競技であり、参加者の負傷や死亡、車両の損壊が絶えなかった。その過激さから次第に衰退し、現在では歴史的な珍しいスポーツとして知られている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.tcd.ie/news_events/articles/2026/caedmons-hymn-discovery/" target="_blank" rel="noopener noreferrer">New copy of earliest poem in English, written 1,3k years ago, discovered in Rome</a></h3>
+    <p class="meta">Hacker News | 04/29 20:35</p>
+    <p class="summary">英語最古の詩とされる「キャドモンの賛歌」の、約1300年前の新たな写本がローマで発見された。トリニティ・カレッジ・ダブリンの研究者らによるこの発見は、初期中世の英語の発展やキリスト教普及の過程を解明する上で極めて重要な資料となる。これまで知られていなかったテキストの細部が含まれており、文献学における歴史的な発見として注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.openwall.com/lists/oss-security/2026/04/30/10" target="_blank" rel="noopener noreferrer">For Linux kernel vulnerabilities, there is no heads-up to distributions</a></h3>
+    <p class="meta">Hacker News | 05/01 01:43</p>
+    <p class="summary">Linuxカーネルの脆弱性情報について、修正パッチの公開前に各ディストリビューションへ個別の事前通知（heads-up）を行わない方針が議論されている。これは、カーネルの修正が頻繁かつ複雑であり、特定のグループに限定した事前通知を維持することが困難なためだ。今後は公開メーリングリストを通じた透明性の高い情報共有が重視され、各ベンダーはより迅速な対応が求められることになる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.theargumentmag.com/p/i-can-never-talk-to-an-ai-anonymously" target="_blank" rel="noopener noreferrer">Opus 4.7 knows the real Kelsey</a></h3>
+    <p class="meta">Hacker News | 04/30 02:09</p>
+    <p class="summary">最新のAIモデルが、匿名性を保とうとするユーザーの文体や文脈からその正体を正確に特定してしまう現象を論じている。個人の書き方の癖や知識の偏りはAIにとって強力な識別子となり、完全な匿名対話は事実上不可能になりつつある。AIの高度な推論能力がプライバシーにもたらす新たな脅威と、人間がAIと向き合う際のアイデンティティの在り方に警鐘を鳴らしている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/aircloset/articles/4c5f49f89db19f" target="_blank" rel="noopener noreferrer">自作MCPサーバーのトークン消費を9割削減するTips ── MCPの退避パターン</a></h3>
+    <p class="meta">Zenn トレンド | 05/01 01:10</p>
+    <p class="summary">自作のMCP（Model Context Protocol）サーバーにおいて、LLMへのコンテキスト注入を最適化し、トークン消費量を最大9割削減する手法を紹介。不要なデータの送信を避け、必要な情報のみを「退避」させて効率的に参照するパターンを解説している。開発コストと実行コストの両面から、大規模なデータを扱うMCPサーバー運用の効率化に役立つ具体的なTipsとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/edash_tech_blog/articles/4ece2a554ecb27" target="_blank" rel="noopener noreferrer">S3 Files 性能評価</a></h3>
+    <p class="meta">Zenn トレンド | 04/30 12:33</p>
+    <p class="summary">Amazon S3をファイルシステムのように扱う手法やライブラリの性能評価を行った記事。スループット、レイテンシ、API呼び出し回数などの観点から、用途に応じた最適なアクセス方法を比較検討している。特に大量の小規模ファイルを扱う際や、高並列アクセス時のボトルネックを可視化しており、クラウドネイティブなストレージ設計における実装選択の判断材料を提供している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/okazu_dm/articles/7d30c496c8fbb6" target="_blank" rel="noopener noreferrer">terraform applyをGHAで実行してはいけない理由</a></h3>
+    <p class="meta">Zenn トレンド | 04/30 12:02</p>
+    <p class="summary">GitHub Actionsで直接「terraform apply」を実行することのリスクを解説。主な懸念点として、実行権限の過度な付与によるセキュリティリスクや、意図しない破壊的変更の即時適用、CI/CDパイプラインの不透明性が挙げられる。代わりにTerraform Cloudなどの専用ツールや、手動承認ステップの導入を推奨し、インフラ運用の安全性とガバナンスを確保するためのプラクティスを提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prum_hitomi/items/864876245891c0cbb127?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">「クラウドだから大丈夫」は危険です ― 新人エンジニアがやりがちな“信頼性の勘違い”</a></h3>
+    <p class="meta">Qiita トレンド | 05/01 03:03</p>
+    <p class="summary">新人エンジニアが陥りがちな「クラウドを使えば自動的に信頼性が確保される」という誤解に警鐘を鳴らす記事。マネージドサービスであっても障害は発生し、責任共有モデルに基づき利用者側での設計（冗長化やバックアップなど）が不可欠であることを強調。クラウドの特性を正しく理解し、可用性や耐久性を主体的に設計することの重要性を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/fiord/items/e568f199e5753d3bb1b2?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Copy Fail とは？（結構詳しめ）</a></h3>
+    <p class="meta">Qiita トレンド | 04/30 15:59</p>
+    <p class="summary">ソフトウェア開発や運用における「Copy Fail（コピー失敗）」現象について詳細に解説。単純なファイルコピーの失敗だけでなく、データの整合性欠如やパーミッションの問題、同期のズレなど、予期せぬ挙動を引き起こす要因を深掘りしている。エラーハンドリングの重要性や、確実なデータ転送を実現するためのチェックサム検証、リトライ戦略などの具体的な対策についても触れている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/30/chatgpt-images-2-0-is-a-hit-in-india-but-not-a-big-winner-elsewhere-yet/" target="_blank" rel="noopener noreferrer">ChatGPT Images 2.0 is a hit in India, but not a big winner elsewhere, yet</a></h3>
+    <p class="meta">TechCrunch | 05/01 02:00</p>
+    <p class="summary">ChatGPTの画像生成機能「Images 2.0」がインドで爆発的な人気を博している一方、他の地域ではまだ大きな普及に至っていない現状を報告。インドでは教育や小規模ビジネスでの活用が先行している。他地域での普及が遅れている要因として、既存ツールとの競合や著作権への懸念、言語対応の差などが挙げられるが、今後グローバルでの展開が加速するかが注目される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/30/as-tim-cook-steps-down-apple-hit-record-sales-but-a-chip-shortage-looms/" target="_blank" rel="noopener noreferrer">As Tim Cook steps down, Apple hit record sales — but a chip shortage looms</a></h3>
+    <p class="meta">TechCrunch | 04/30 23:59</p>
+    <p class="summary">ティム・クック氏がAppleのCEOを退任する発表と同時に、同社が過去最高の売上高を記録した。クック氏のリーダーシップ下で培われた強固なサプライチェーンとサービス部門の成長が結実した形だが、一方で深刻な半導体不足が今後の経営に影を落としている。後継者は、好調な業績を維持しつつ、供給網の混乱や次世代製品の開発といった困難な課題に対処することが求められる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/30/y-combinator-alum-skio-sells-for-105m-cash-only-raised-8m-founder-says/" target="_blank" rel="noopener noreferrer">Y Combinator alum Skio sells for $105M cash, only raised $8M, founder says</a></h3>
+    <p class="meta">TechCrunch | 04/30 23:58</p>
+    <p class="summary">Y Combinator出身のサブスク管理スタートアップ「Skio」が、1億500万ドルの現金で売却された。特筆すべきは、同社がこれまでにわずか800万ドルの資金調達しか行っていなかった点である。効率的な資本運用と急速な成長が評価された結果であり、資金調達を最小限に抑えつつ高額売却を実現した「資本効率の良さ」の好例として、スタートアップ界隈で注目を集めている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cddp4j7p8pzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Violence in Australian town after arrest of man over girl&#39;s murder</a></h3>
+    <p class="meta">BBC World News | 05/01 04:08</p>
+    <p class="summary">オーストラリアの町で少女殺害事件の容疑者が逮捕された後、怒った住民らによる激しい暴動が発生した。警察署に群衆が詰めかけ、警察車両の破壊や職員への攻撃が行われるなど治安が悪化している。当局は平静を呼びかけているが、地域の緊張は極めて高まっており、法秩序の維持と並行して、悲劇的な事件に対するコミュニティの感情的なケアが急務となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cz72j59znw3o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Oscar goes missing after Academy Award winner is blocked from taking it on flight</a></h3>
+    <p class="meta">BBC World News | 05/01 03:02</p>
+    <p class="summary">アカデミー賞受賞者が、オスカー像の機内持ち込みを拒否された後、その像が行方不明になる騒動が起きた。空港の検疫や手荷物検査の過程で混乱が生じ、預け荷物として処理された後に行方が分からなくなったという。現在、航空会社と当局が捜索を続けている。一生に一度の栄誉の象徴が紛失するという異例の事態に、SNS上でも大きな関心と心配の声が寄せられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260501/k10015112781000.html" target="_blank" rel="noopener noreferrer">対米投資第1弾 国際協力銀行などが融資契約を締結</a></h3>
+    <p class="meta">NHK国際放送 | 05/01 08:53</p>
+    <p class="summary">国際協力銀行（JBIC）などは、日本企業の対米投資を支援する第1弾として融資契約を締結した。これは供給網の強靱化や脱炭素関連など、戦略的分野での日米連携を具体化するもの。日本企業の米国市場での競争力を高めるとともに、経済安全保障の観点からも重要な一歩となる。今後もインフラや先端技術分野を中心に、官民一体となった投資支援が継続される見通しだ。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260501/k10015112711000.html" target="_blank" rel="noopener noreferrer">バンクシー新作の像 ロンドンに出現 “盲目的な愛国心”風刺か</a></h3>
+    <p class="meta">NHK国際放送 | 05/01 08:07</p>
+    <p class="summary">芸術家バンクシーの新作とされる彫像がロンドンに出現した。この作品は「盲目的な愛国心」を風刺しているとみられ、公共の場に設置されたことで多くの通行人の目を引いている。バンクシーらしい社会批判を込めたメッセージがSNSでも拡散されており、当局の対応や作品の真意を巡って様々な憶測を呼んでいる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260501/k10015112321000.html" target="_blank" rel="noopener noreferrer">米大統領“海上封鎖の威力大きい” イラン“核開発 放棄せず”</a></h3>
+    <p class="meta">NHK国際放送 | 05/01 07:22</p>
+    <p class="summary">米大統領は、イランに対する海上封鎖が圧力として極めて有効であるとの認識を示した。これに対しイラン側は、平和利用を主張する核開発を決して放棄しない姿勢を改めて強調。両国の緊張が極限まで高まっており、国際社会は事態の悪化やエネルギー価格への影響を注視している。外交的解決の道が模索される中、一触即発の状況が続いている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
