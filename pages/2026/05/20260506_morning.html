@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月06日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月06日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月06日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://dnssec-analyzer.verisignlabs.com/nic.de" target="_blank" rel="noopener noreferrer">.de TLD offline due to DNSSEC?</a></h3>
+    <p class="meta">Hacker News | 05/06 05:16</p>
+    <p class="summary">ドイツのトップレベルドメイン（.de）において、DNSSEC（DNSセキュリティ拡張）に関連する深刻な問題が発生し、一部でオフラインになる事態が起きました。Verisignの解析ツールによると、DSレコードの欠落や署名の検証失敗が示唆されています。この障害により、.deドメインを使用する多くのウェブサイトやメールサービスに影響が及び、DNSの設定とセキュリティ管理の重要性が改めて浮き彫りになりました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.google/innovation-and-ai/technology/developers-tools/multi-token-prediction-gemma-4/" target="_blank" rel="noopener noreferrer">Accelerating Gemma 4: faster inference with multi-token prediction drafters</a></h3>
+    <p class="meta">Hacker News | 05/06 01:14</p>
+    <p class="summary">Googleは、最新の軽量AIモデル「Gemma 4」の推論を高速化する技術として、マルチトークン予測ドラフターを導入しました。この技術は、従来の1トークンずつの生成ではなく、将来の複数のトークンを並行して予測することで、モデルの精度を維持しながら処理速度を大幅に向上させます。開発者ツールとして提供され、エッジデバイスやクラウド上でのAI実行効率を最適化し、より応答性の高いユーザー体験を可能にします。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://reflex.dev/blog/computer-use-is-45x-more-expensive-than-structured-apis/" target="_blank" rel="noopener noreferrer">Computer Use is 45x more expensive than structured APIs</a></h3>
+    <p class="meta">Hacker News | 05/06 01:34</p>
+    <p class="summary">AIにコンピュータの画面操作をさせる「Computer Use」機能は、構造化されたAPIを介した操作と比較して、コストが約45倍も高くなるという分析結果が発表されました。UI要素を視覚的に認識し、マウス操作や入力をシミュレートするには大量のトークンと処理時間が必要となるためです。柔軟性は高いものの、コスト効率を重視する場合は、従来通りのAPI連携が依然として圧倒的に優位であることが強調されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://susam.net/inverse-laws-of-robotics.html" target="_blank" rel="noopener noreferrer">Three Inverse Laws of AI</a></h3>
+    <p class="meta">Hacker News | 05/06 00:27</p>
+    <p class="summary">著者は、AIやロボティクスに関する「3つの逆法則」を提案しています。1.「AIが普及するほど、人間は自然知能を信頼しなくなる」、2.「ロボットが便利になるほど、人間は基本的な技能を失う」、3.「AIが人間の仕事を代替するほど、人間は価値のない仕事に固執する」という皮肉な視点です。技術の進歩が人間社会にもたらすパラドックスを鋭く指摘し、AIとの共生において失われる人間性や知性について警鐘を鳴らしています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.thatprivacyguy.com/blog/chrome-silent-nano-install/" target="_blank" rel="noopener noreferrer">Google Chrome silently installs a 4 GB AI model on your device without consent</a></h3>
+    <p class="meta">Hacker News | 05/05 16:34</p>
+    <p class="summary">Google Chromeが、ユーザーの明確な同意なしに約4GBのAIモデル（Gemini Nano）をバックグラウンドでサイレントインストールしていることが報告されました。これはローカルでAI機能を提供するためのものですが、ディスク容量の占有やリソースの消費がプライバシーや透明性の観点から批判されています。設定での無効化手段が限定的であることも指摘されており、テック企業の強引なAI導入姿勢が議論を呼んでいます。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/watab2000/articles/ff5e07b13bc93b" target="_blank" rel="noopener noreferrer">例のサイゼイヤをIPAに通報した</a></h3>
+    <p class="meta">Zenn トレンド | 05/05 03:00</p>
+    <p class="summary">著者は、サイゼリヤの注文システムに関連するセキュリティ上の脆弱性を発見し、IPA（情報処理推進機構）の脆弱性報告窓口に通報した経緯を報告しています。詳細な技術的検証を通じて、悪意のある第三者が情報を操作したり閲覧したりできるリスクを指摘しました。適切なプロセスでの報告を行うことで、企業のセキュリティ改善を促すとともに、開発者としての倫理的責任と法的な報告手順の重要性を説いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/myshmeh/articles/dbt-fusion-ga-essence" target="_blank" rel="noopener noreferrer">dbt Fusionの本質・注目ポイント・導入方法を一挙におさらい！</a></h3>
+    <p class="meta">Zenn トレンド | 05/05 01:41</p>
+    <p class="summary">データ変換ツールdbtの最新機能「dbt Fusion」の本質と導入方法を解説した記事です。dbt Fusionは、データメッシュ環境におけるガバナンスと開発効率の両立を目的としており、異なるプロジェクト間のモデル共有や依存関係の管理を大幅に簡素化します。特に「クロスプロジェクト・リネージ」の可視化が注目されており、大規模組織でのデータ管理の複雑さを解消する強力なソリューションとして期待されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/yamk/articles/ai-agent-permission-inventory" target="_blank" rel="noopener noreferrer">AI coding agent を使い続けるために、自分の開発環境の権限棚卸しをした</a></h3>
+    <p class="meta">Zenn トレンド | 05/04 17:43</p>
+    <p class="summary">AIコーディングエージェントを安全に利用し続けるため、開発環境における権限設定を再点検した記録です。エージェントがファイル操作やシェル実行を行う際の権限を最小限に抑える重要性を強調しています。具体的には、不用意なコード破壊や機密情報の流出を防ぐため、実行ディレクトリの制限やSSHキーの管理、読み取り専用モードの活用などの対策を講じ、AIと安全に共存するための環境構築を提案しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/KanNishida/items/74103e76c26b55596f7a?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AIがコードを書く時代に、なぜRの可読性が重要になるのか</a></h3>
+    <p class="meta">Qiita トレンド | 05/05 03:19</p>
+    <p class="summary">AIがコードを生成する現代において、R言語のコードの可読性がむしろ重要性を増している理由を解説しています。AIが出力したコードの正誤を人間が判断する機会が増えるため、人間にとって読みやすいtidyverseなどの構文が不可欠となります。また、可読性の高いコードはAIへのフィードバックや修正指示も容易にします。AIを単なる生成ツールではなく「共同作業者」として活用するために、明確なコードが鍵になると説いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/manchan/items/63745b9198f1989c2a15?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Claude Codeを120%使いこなす設定3選【ECC・Memory.md・Obsidian連携】</a></h3>
+    <p class="meta">Qiita トレンド | 05/03 16:25</p>
+    <p class="summary">AnthropicのCLIツール「Claude Code」を最大限に活用する3つの設定を紹介しています。1.エラーを自動修正する「ECC」の活用、2.プロジェクトの背景情報を保持する「Memory.md」の導入、3.思考過程やログを管理する「Obsidian」との連携について具体的に解説。これらのカスタマイズにより、AIがより文脈を理解した高度なコード生成やリサーチが可能になり、開発ワークフローを劇的に改善できるとしています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/05/apple-plans-to-make-ios-27-a-choose-your-own-adventure-of-ai-models/" target="_blank" rel="noopener noreferrer">Apple plans to make iOS 27 a Choose Your Own Adventure of AI models</a></h3>
+    <p class="meta">TechCrunch | 05/05 20:56</p>
+    <p class="summary">Appleは将来のiOS（iOS 27）において、ユーザーが使用するAIモデルを自由に選択できる形式の導入を計画しています。Apple独自のモデルだけでなく、Google、OpenAI、Anthropicなどの他社製AIをシステムレベルで切り替え可能にする構想です。これにより、ユーザーは用途や好みに合わせてAIの性能やプライバシー特性を選べるようになり、Appleのプラットフォーム戦略がよりオープンな方向へ転換することを示唆しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/05/asml-ceo-christophe-fouquet-no-one-is-coming-for-us/" target="_blank" rel="noopener noreferrer">ASML CEO Christophe Fouquet on his company’s monopoly: no one is coming for us</a></h3>
+    <p class="meta">TechCrunch | 05/05 20:06</p>
+    <p class="summary">半導体露光装置メーカー最大手ASMLのクリストフ・フーケCEOは、自社の独占的地位について「追随できる企業は存在しない」と強い自信を示しました。極端紫外線（EUV）技術の複雑さと開発コストが極めて高いため、新規参入の障壁が事実上突破不可能であることを強調しています。一方で、地政学的な輸出規制や供給網の維持が最大の課題であるとも指摘。世界で最も重要なテクノロジー企業としての責任と戦略についても言及しました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/05/volkswagen-becomes-rivians-top-shareholder-displacing-amazon/" target="_blank" rel="noopener noreferrer">Volkswagen becomes Rivian’s top shareholder, displacing Amazon</a></h3>
+    <p class="meta">TechCrunch | 05/05 19:58</p>
+    <p class="summary">フォルクスワーゲン（VW）が、米電気自動車（EV）メーカー、リビアンの筆頭株主になり、アマゾンを追い抜きました。これは両社の次世代EVプラットフォーム共同開発に向けた大規模出資の一環です。VWはリビアンのソフトウェア技術を活用して自社のEV開発を加速させ、リビアンはVWの潤沢な資金と生産ノウハウを得ることで、競争の激しい市場での生き残りを目指します。自動車業界における伝統的大手と新興勢力の提携を象徴する動きです。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cm2p186gyp2o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Hantavirus may have spread between passengers on cruise ship, WHO says</a></h3>
+    <p class="meta">BBC World News | 05/05 16:38</p>
+    <p class="summary">世界保健機関（WHO）は、クルーズ船の乗客の間でハンタウイルスがヒトからヒトへ感染した可能性があると発表しました。通常、ハンタウイルスは齧歯類から感染しますが、今回のケースでは密閉空間内での直接感染が疑われています。WHOは感染拡大防止に向けた調査を開始し、衛生管理の徹底を求めています。これまで稀とされていたヒト間感染が確認されれば、公衆衛生上の重大な懸念となり、新たな感染経路の解明が急がれます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c1e2zjz22p9o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Russian attacks kill more than 20 ahead of rival ceasefires proposed by Kyiv and Moscow</a></h3>
+    <p class="meta">BBC World News | 05/05 19:23</p>
+    <p class="summary">ウクライナとロシアがそれぞれ停戦案を提示し、協議が期待される中、ロシアによる新たな攻撃で20人以上が死亡しました。ウクライナ各地への空爆が続き、民間人にも犠牲が出ています。双方が提案する停戦条件には依然として大きな隔たりがあり、軍事行動が継続される中で外交的解決の糸口は見えていません。国際社会は停戦の実現を強く求めていますが、現場の戦闘激化が和平への道のりをさらに困難なものにしています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cdxpe02y05go?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Nine coal miners die in gas explosion in Colombia</a></h3>
+    <p class="meta">BBC World News | 05/05 10:09</p>
+    <p class="summary">コロンビアの炭鉱でガス爆発事故が発生し、少なくとも9人の作業員が死亡しました。当局によると、地下深くでメタンガスが充満して爆発が起きたとみられ、救助隊による懸命な捜索活動が続けられています。南米では小規模炭鉱での安全管理の不備が度々問題となっており、今回の事故を受けて政府は改めて採掘現場の安全基準の見直しと調査を命じました。遺族への支援とともに、事故の背景にある規制の徹底が問われています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260506/k10015115161000.html" target="_blank" rel="noopener noreferrer">マスク氏 米証券取引委員会と和解合意 2億3千万円余支払いへ</a></h3>
+    <p class="meta">NHK国際放送 | 05/05 20:22</p>
+    <p class="summary">イーロン・マスク氏は、自身のSNS投稿を巡る調査に関して米証券取引委員会（SEC）と和解合意に達しました。マスク氏は約2億3000万円の制裁金を支払うことになります。2022年のTwitter買収に関連する株式取得の報告遅延などが問題視されていました。和解により長期化していた法廷闘争は終結に向かいますが、当局によるマスク氏の監視体制は今後も継続される見通しで、企業統治や透明性の確保が改めて求められています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260506/k10015115131000.html" target="_blank" rel="noopener noreferrer">マレーシアで特殊詐欺摘発 日本人5人含む2200人余り拘束</a></h3>
+    <p class="meta">NHK国際放送 | 05/05 20:17</p>
+    <p class="summary">マレーシア当局は、大規模な特殊詐欺グループの拠点を摘発し、日本人5人を含む2200人以上を拘束しました。このグループはSNS等を通じて投資詐欺や還付金詐欺を組織的に行い、アジア全域で巨額の被害を出していたとみられています。各国の警察当局と連携した大規模な捜査の結果、複数の拠点が同時に強制捜査されました。グローバル化する組織犯罪の実態が浮き彫りになり、国際的な協力体制の重要性が改めて示された形です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260506/k10015115141000.html" target="_blank" rel="noopener noreferrer">ハンタウイルス 一部でヒトからヒトに感染の可能性も WHO</a></h3>
+    <p class="meta">NHK国際放送 | 05/05 20:09</p>
+    <p class="summary">世界保健機関（WHO）は、主にネズミから感染するハンタウイルスについて、クルーズ船内などの閉鎖空間でヒトからヒトへの感染が起きた可能性があると指摘しました。従来の「ネズミからの直接感染」という定説を覆す事例が懸念されており、WHOは加盟国に対し、監視体制の強化と迅速な報告を呼びかけています。これまで稀とされていた感染形態の変化に対し、公衆衛生当局は警戒を強め、詳細な調査を進めています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
