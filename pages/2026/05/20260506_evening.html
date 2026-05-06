@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月06日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月06日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月06日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.cloudflare.com/agents-stripe-projects/" target="_blank" rel="noopener noreferrer">Agents can now create Cloudflare accounts, buy domains, and deploy</a></h3>
+    <p class="meta">Hacker News | 05/06 12:10</p>
+    <p class="summary">CloudflareはStripeとの統合により、AIエージェントが自律的にCloudflareアカウントを作成し、ドメイン購入やデプロイを行える機能を発表した。StripeのAgent-to-Agent決済技術を活用し、エージェントがインフラ管理から支払いまでを完結できるようになる。これにより、開発者は初期設定や管理をAIに委ねることが可能になり、AIによる自律的なWebサイト構築やサービス展開の道が開かれた。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://us.starlabs.systems/pages/starfighter" target="_blank" rel="noopener noreferrer">StarFighter 16-Inch</a></h3>
+    <p class="meta">Hacker News | 05/06 11:03</p>
+    <p class="summary">Star Labsが発表した「StarFighter 16-Inch」は、高性能な16インチのLinuxノートPC。CPUはIntelまたはAMDの最新世代を選択でき、最大4Kのディスプレイや96GBのメモリを搭載可能。オープンソースのファームウェアであるcorebootを搭載し、高いカスタマイズ性とプライバシー保護を重視している。キーボードやポート構成も選択可能で、Linuxユーザーに特化したハイエンドなハードウェアとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.aaedmusa.com/projects/cara2" target="_blank" rel="noopener noreferrer">CARA 2.0 – “I Built a Better Robot Dog”</a></h3>
+    <p class="meta">Hacker News | 05/04 15:46</p>
+    <p class="summary">個人開発者によって制作された「CARA 2.0」は、従来のモデルを大幅に改良した四足歩行ロボット（ロボット犬）。3Dプリントパーツと安価な電子部品を使用しつつ、滑らかな動きと安定性を実現している。ハードウェアとソフトウェアの両面でアクセシビリティを重視しており、他の開発者が容易に再現できるよう設計されている。先代モデルからの教訓を活かし、耐久性やメンテナンス性が向上しているのが特徴。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://status.denic.de/pages/incident/592577eab611ce1e0d00046f/69fa60ef9d12f5057a974f38" target="_blank" rel="noopener noreferrer">DNSSEC disruption affecting .de domains – Resolved</a></h3>
+    <p class="meta">Hacker News | 05/06 05:16</p>
+    <p class="summary">ドイツの国別トップレベルドメイン「.de」を管理するDENICにおいて、DNSSEC（DNSセキュリティ拡張）に関連する障害が発生した。この影響で、一部の.deドメインの名前解決に支障が出たが、現在は解消されている。障害の原因はDNSSEC署名の不備にあり、検証に失敗したリゾルバが名前解決を拒否したことが主な要因。管理チームは迅速に対応を行い、現在はすべてのサービスが正常に復旧している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://coe.gatech.edu/news/2026/04/batteries-not-included-or-required-these-smart-home-sensors" target="_blank" rel="noopener noreferrer">Batteries Not Included, or Required, for These Smart Home Sensors</a></h3>
+    <p class="meta">Hacker News | 05/04 01:32</p>
+    <p class="summary">ジョージア工科大学の研究チームが、バッテリーを必要としないスマートホームセンサーを開発した。このセンサーは環境中のWi-Fi電波を反射して通信する「バックスキャッター技術」を利用しており、微弱なエネルギーで動作する。従来のスマートホームデバイスで課題となっていた定期的な電池交換や廃棄の問題を解決し、メンテナンスフリーで持続可能なIoT環境の構築を可能にする画期的な技術として期待されている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/chips0711/articles/b081f3ddb93040" target="_blank" rel="noopener noreferrer">AIエージェントの Skill は書くだけでは足りない ⇒ Waza で評価して APM で配ろう!【ハーネスエンジニアリング】</a></h3>
+    <p class="meta">Zenn トレンド | 05/05 18:41</p>
+    <p class="summary">AIエージェントに持たせる機能（Skill）の品質を担保するため、単に作成するだけでなく評価と配布のプロセスが重要であると提唱。評価ツール「Waza」を用いてスキルの精度や信頼性をテストし、パッケージマネージャー「APM」を通じて安定的に配布・管理する「ハーネスエンジニアリング」の手法を解説。これにより、AIエージェントの挙動を予測可能にし、プロダクション環境での安全な運用を実現することを目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/kusuke/articles/25330f7759eba4" target="_blank" rel="noopener noreferrer">外部からアクセス可能なhttpsサイトはドメイン設定後「即」攻撃にさらされる件</a></h3>
+    <p class="meta">Zenn トレンド | 05/05 14:51</p>
+    <p class="summary">公開したばかりのHTTPSサイトが、ドメイン設定直後から攻撃を受ける実態を報告。その主な要因は、SSL/TLS証明書の発行履歴を記録する「証明書透明性（CT）」ログにある。攻撃者はCTログを監視することで、新しく作成されたドメインを即座に特定し、脆弱性スキャンやブルートフォース攻撃を仕掛けてくる。たとえ知られていないはずのドメインでも、証明書を発行した瞬間に世界中から狙われる前提でのセキュリティ対策が必須であると警鐘を鳴らしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/toramutton/articles/uec-enoc2026" target="_blank" rel="noopener noreferrer">インフラ知識ゼロの学生が、イベントNOCで監視システム諸々をキメてきた話</a></h3>
+    <p class="meta">Zenn トレンド | 05/05 13:20</p>
+    <p class="summary">インフラ知識が乏しい学生が、大学のイベントにおいてネットワーク運用センター（NOC）に参加し、監視システムを構築・運用した体験記。PrometheusやGrafanaを用いた可視化や、SNMPによるトラフィック監視の実装に苦労しながら取り組んだ過程を詳述している。技術的な試行錯誤だけでなく、運用現場でのトラブル対応やチーム連携を通じて、短期間で実践的なインフラ知識を習得していく様子が描かれている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/fe1ix/items/cf13c7c70ae148146fd0?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">先輩のコードが1行も理解できなくて泣きそうだった新人が、「読み方」を教わって世界が変わった話</a></h3>
+    <p class="meta">Qiita トレンド | 05/04 02:52</p>
+    <p class="summary">熟練者のコードが理解できず挫折しそうになっていた新人が、先輩から「コードの読み方」のコツを教わり、理解を深めた体験談。具体的には、全体構造を把握してから細部へ入る、データフローを追う、エントリーポイントを特定するといった実践的なテクニックを紹介。コードを読むという行為を闇雲に行うのではなく、地図を持つように順序立てて解釈することで、初学者でも複雑なロジックを読み解けるようになることを示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/miruky/items/6fbb0c0e55835ea79e4d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【徹底解説】セキュリティスペシャリストが教える、セキュアプログラミングの教科書</a></h3>
+    <p class="meta">Qiita トレンド | 05/05 12:08</p>
+    <p class="summary">セキュリティスペシャリストの知見に基づき、セキュアなプログラミングを実現するための基本原則と具体的な対策を解説。SQLインジェクション、XSS、CSRFといった代表的な脆弱性の仕組みとその防ぎ方を体系的にまとめている。入力値のバリデーション、出力のエスケープ、認証・認可の適切な実装など、開発者が日常的に意識すべきベストプラクティスが網羅されており、安全なソフトウェア開発のためのバイブル的な内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/05/peter-sarlins-qutwo-reaches-380m-valuation-in-angel-round/" target="_blank" rel="noopener noreferrer">Peter Sarlin’s QuTwo reaches $380M valuation in angel round</a></h3>
+    <p class="meta">TechCrunch | 05/06 06:47</p>
+    <p class="summary">Silo AIのCEOであるPeter Sarlin氏が新たに立ち上げたAIスタートアップ「QuTwo」が、エンジェルラウンドで3億8000万ドルの評価額に達した。同社は金融や保険業界向けに特化した、定量的なAI分析プラットフォームの開発を目指している。Sarlin氏の実績と、複雑なデータ解析を自動化する革新的なアプローチが投資家の高い関心を集めた。調達した資金は、エンジニアリングチームの拡充と製品開発の加速に充てられる予定。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/05/marc-lore-says-that-ai-will-soon-enable-anyone-open-a-restaurant/" target="_blank" rel="noopener noreferrer">Marc Lore says that AI will soon enable anyone open a restaurant</a></h3>
+    <p class="meta">TechCrunch | 05/06 06:34</p>
+    <p class="summary">起業家のMarc Lore氏は、AI技術の進化によって、専門知識がなくても誰もが簡単にレストランを開業できる時代がまもなく到来すると予測している。AIがメニュー開発、サプライチェーン管理、調理プロセス、顧客対応などを最適化・自動化することで、飲食業界の参入障壁が劇的に下がるという。同氏は自身のプロジェクト「Wonder」を通じて、調理から配送までを効率化する新しい飲食モデルの構築を進めており、テクノロジーが食の民主化を促進すると主張している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/05/nuro-receives-driverless-testing-permit-ahead-of-uber-robotaxi-service-launch/" target="_blank" rel="noopener noreferrer">Nuro receives driverless testing permit ahead of Uber robotaxi service launch</a></h3>
+    <p class="meta">TechCrunch | 05/06 00:07</p>
+    <p class="summary">自動運転配送スタートアップのNuroが、Uberとの提携によるロボタクシーおよび配送サービスの開始に向け、完全無人走行の公道試験許可を取得した。この許可により、セーフティドライバーを同乗させない状態での運用が可能となる。Nuroは従来の小型配送車両に加え、Uberのプラットフォーム上で稼働する新しい自動運転車両の開発を進めており、都市部におけるラストワンマイルの物流・移動コストの削減と効率化を目指している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c893xj41zwdo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">To stay or risk the &#39;Road of Death&#39; - Ukrainian civilians trapped in frontline city</a></h3>
+    <p class="meta">BBC World News | 05/06 04:53</p>
+    <p class="summary">ウクライナ東部の最前線で、民間人が留まるか「死の道」と呼ばれる危険な脱出路を通って避難するかの究極の選択を迫られている。ロシア軍による継続的な砲撃とドローン攻撃により、避難ルートは常に命の危険にさらされている。避難をためらう高齢者や、住み慣れた土地を離れられない人々が過酷な地下生活を強いられる中、ボランティア団体による命がけの救助活動が続けられている状況が報じられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c202652vvnjo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">BBC traces how 10 minutes of Israeli bombing brought devastation to Lebanon</a></h3>
+    <p class="meta">BBC World News | 05/05 21:22</p>
+    <p class="summary">BBCは、イスラエル軍によるわずか10分間の爆撃が、レバノンの市街地にどれほどの壊滅的な被害をもたらしたかを詳細に追跡した。映像や証言に基づき、住宅地が瞬く間に瓦礫の山と化し、多くの民間人が犠牲になった様子を明らかにしている。イスラエル側は標的を精密に攻撃したと主張しているが、短時間の集中攻撃が地域コミュニティを破壊し、取り返しのつかない人道的危機を引き起こした実態が浮き彫りになった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cgrpnq00j5vo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Bowen: Strait of Hormuz standoff raises risk of sliding back into all-out war</a></h3>
+    <p class="meta">BBC World News | 05/05 11:38</p>
+    <p class="summary">ホルムズ海峡での対立激化を受け、中東地域が再び全面戦争に突入するリスクが高まっている。BBCのジェレミー・ボーエン記者は、主要な石油輸送ルートである同海峡での軍事的な緊張が、計算違いや偶発的な衝突によって大規模な紛争に発展する恐れがあると警告。各国の軍事的な示威行動や外交的な停滞が続く中、安定した国際情勢を維持するための瀬戸際の状態にあると分析している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260506/k10015115241000.html" target="_blank" rel="noopener noreferrer">ハンタウイルス集団感染疑いの船 カナリア諸島で受け入れへ</a></h3>
+    <p class="meta">NHK国際放送 | 05/06 08:44</p>
+    <p class="summary">ハンタウイルスによる集団感染の疑いが出ている船舶について、スペインのカナリア諸島当局が受け入れを表明した。船内では複数の乗組員が発熱などの症状を訴えており、寄港後に医療チームによる詳細な検査と隔離措置が行われる予定。当局は、公衆衛生上のリスクを最小限に抑えるための厳格なプロトコルを適用しつつ、人道的な観点から必要な医療支援を提供するとしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260506/k10015101791000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（5月6日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 05/06 06:10</p>
+    <p class="summary">ロシアによるウクライナ侵攻の5月6日の動向。東部や南部での激しい戦闘が継続しており、双方の軍事活動が活発化している。ロシア軍によるインフラ施設への攻撃が相次ぐ中、ウクライナ側は欧米からの支援を受けた反撃を試みている。また、国際社会による外交的な働きかけや制裁の状況、民間人の避難状況についても随時情報が更新されており、事態は依然として予断を許さない状況が続いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260506/k10015101781000.html" target="_blank" rel="noopener noreferrer">【詳細】ロシア ウクライナに軍事侵攻（5月5日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 05/06 05:51</p>
+    <p class="summary">5月5日におけるロシアのウクライナ侵攻に関する詳細な動き。最前線での攻防に加え、占領地域でのロシアによる統治強化の動きや、ウクライナ軍による後方支援拠点への攻撃などが報告された。特に、特定の戦略的拠点を巡る激防が焦点となっており、戦況の分析や現地の最新映像、各国の反応を含めた包括的な情報がまとめられている。依然として多くの民間人が戦闘に巻き込まれ、人道的支援の必要性が叫ばれている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
