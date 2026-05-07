@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月07日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月07日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月07日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://unsloth.ai/blog/nvidia-collab" target="_blank" rel="noopener noreferrer">How Unsloth and Nvidia made LLM training 25% faster on consumer GPUs</a></h3>
+    <p class="meta">Hacker News | 05/07 16:15</p>
+    <p class="summary">UnslothとNvidiaの協力により、家庭用GPUでのLLM学習速度が25％向上した。この最適化はメモリ使用量の削減と計算効率の改善を組み合わせることで実現され、特にRTX 4090などの消費者向けハードウェアでの学習を大幅に加速させる。開発チームはNvidiaのカーネル最適化技術とUnslothの実装を統合し、大規模言語モデルの微調整をより身近なものにした。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://permacomputing.net/principles/" target="_blank" rel="noopener noreferrer">Permacomputing Principles</a></h3>
+    <p class="meta">Hacker News | 05/07 11:18</p>
+    <p class="summary">パーマコンピューティングは、環境への影響を最小限に抑え、ハードウェアの長寿命化を目指すコンピューティングの設計思想である。主な原則として、廃止されるハードウェアの再利用、エネルギー効率の最大化、不必要な複雑さの排除などが挙げられる。持続可能なデジタル社会の構築に向け、使い捨て文化を脱却し、資源を大切にするコンピューティングの重要性を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://sqlite.org/locrsf.html" target="_blank" rel="noopener noreferrer">SQLite Is a Library of Congress Recommended Storage Format</a></h3>
+    <p class="meta">Hacker News | 05/07 06:58</p>
+    <p class="summary">米国議会図書館は、デジタル保存に推奨されるストレージ形式としてSQLiteを採用した。SQLiteは安定性、下位互換性、詳細なドキュメント化が評価されており、データの長期保存に適したオープンフォーマットとして認められた。この決定により、SQLiteは公的なデータアーカイブにおいて非常に信頼性の高い選択肢としての地位を確固たるものにした。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/karaage0703/articles/78056e4d3e07a2" target="_blank" rel="noopener noreferrer">ローカルのMarkdownワークスペース全体をブラウザで閲覧・編集できる軽量Webアプリを作った</a></h3>
+    <p class="meta">Zenn トレンド | 05/06 14:59</p>
+    <p class="summary">ローカル環境のMarkdownファイルをブラウザ上で直接閲覧・編集できる軽量なWebアプリが開発された。File System Access APIを活用することで、サーバーレスでローカルのディレクトリ構造をそのままブラウザに同期できるのが特徴である。VS Codeなどの重いツールを使わずに、手軽にメモやドキュメントを管理したいユーザーに適したツールとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/puddle/articles/13471879e86986" target="_blank" rel="noopener noreferrer">サイゼリヤAPI/CLI 騒動まとめ</a></h3>
+    <p class="meta">Zenn トレンド | 05/06 11:01</p>
+    <p class="summary">サイゼリヤのメニュー情報を取得する非公式APIやCLIツールを巡る騒動をまとめた記事。開発者が公開したツールが注目を集めたが、公式サイトの規約違反やスクレイピングの是非について議論が巻き起こった。最終的に開発者は公開を停止したが、この件は公開データの利用ルールとOSS開発、そして企業の知的財産保護の境界線について再考を促す事例となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/masa20057/items/f25a66f99edd5439f2ec?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【初学者向け】システム全体を理解するための5つの視点</a></h3>
+    <p class="meta">Qiita トレンド | 05/07 01:14</p>
+    <p class="summary">初学者がITシステムの全体像を把握するための5つの視点（目的、データ、機能、インフラ、セキュリティ）を解説した記事。各要素がどのように相互作用してシステムを構成しているかを整理している。単なるプログラミング知識を超えて、ビジネス要件から保守運用までを見据えた多角的な理解がエンジニアとしての成長に不可欠であることを強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/kitao/items/5361d45554872a39da92?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【公式】レトロゲームエンジンPyxelが動く仕組み</a></h3>
+    <p class="meta">Qiita トレンド | 05/06 07:20</p>
+    <p class="summary">レトロゲームエンジン「Pyxel」の内部構造と動作原理を開発者が解説した記事。Pythonで動作しつつ高速な描写を可能にする仕組みや、仮想的なディスプレイとサウンドチップのシミュレーション方法について触れている。シンプルながら洗練されたアーキテクチャにより、初心者が直感的にゲームを開発できる環境がどのように構築されているかが詳細に述べられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/06/five-architects-of-the-ai-economy-explain-where-the-wheels-are-coming-off/" target="_blank" rel="noopener noreferrer">Five architects of the AI economy explain where the wheels are coming off</a></h3>
+    <p class="meta">TechCrunch | 05/07 05:25</p>
+    <p class="summary">AI経済の主要な識者5人が、現在のAIブームにおける潜在的なリスクと課題を指摘した。電力供給の限界、高品質な学習データの不足、投資に対する収益性の不透明さなど、成長を阻害する要因を具体的に挙げている。技術的進歩の一方で、持続可能な経済モデルを構築するための根本的な問題が浮き彫りになっており、今後の業界の方向性に警鐘を鳴らしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/06/a-20-minute-pitch-wins-indian-startup-pronto-backing-from-lachy-groom/" target="_blank" rel="noopener noreferrer">A 20-minute pitch wins Indian startup Pronto backing from Lachy Groom</a></h3>
+    <p class="meta">TechCrunch | 05/06 22:30</p>
+    <p class="summary">インドのスタートアップProntoが、著名な投資家Lachy Groomから出資を獲得した。わずか20分間のピッチで投資を勝ち取ったことが話題となっており、Prontoの革新的なアプローチと将来性が高く評価された。この資金調達により、同社はさらなる技術開発と市場拡大を加速させる見込みであり、インドのテック市場における新興企業の勢いを示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/06/barry-diller-trusts-sam-altman-but-trust-is-irrelevant-as-agi-nears-he-says/" target="_blank" rel="noopener noreferrer">Barry Diller trusts Sam Altman. But ‘trust is irrelevant’ as AGI nears, he says.</a></h3>
+    <p class="meta">TechCrunch | 05/06 21:57</p>
+    <p class="summary">メディア界の大物バリー・ディラー氏は、サム・アルトマン氏を信頼しているものの、AGI（汎用人工知能）が実現に近づく中では「信頼は無意味である」と語った。AIが社会に及ぼす影響が巨大すぎるため、個人の人柄に頼るのではなく、厳格な規制と構造的な枠組みが必要であると主張している。AI開発におけるガバナンスと説明責任の重要性を強調する意見となっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/new-open-source-tool-uses-gradient-descent-to-determine-qsp-phase-angles/" target="_blank" rel="noopener noreferrer">New Open-Source Tool Uses Gradient Descent to Determine QSP Phase Angles</a></h3>
+    <p class="meta">Quantum Computing Report | 05/07 02:35</p>
+    <p class="summary">量子信号処理（QSP）における位相角の決定に勾配降下法を用いる、新しいオープンソースツールが登場した。これまで困難だった複雑なQSPアルゴリズムのパラメータ設計を自動化・効率化するもので、量子コンピューティングのソフトウェア開発を支える。量子ハードウェアの性能を最大限に引き出すための最適化が、より容易かつ正確に行えるようになると期待される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/bluefors-joins-chicago-quantum-exchange-to-strengthen-regional-cryogenic-infrastructure/" target="_blank" rel="noopener noreferrer">Bluefors Joins Chicago Quantum Exchange to Strengthen Regional Cryogenic Infrastructure</a></h3>
+    <p class="meta">Quantum Computing Report | 05/07 02:21</p>
+    <p class="summary">低温技術の主要企業Blueforsが、シカゴ量子エクスチェンジ（CQE）に加盟した。この提携により、地域内の極低温インフラが強化され、量子コンピューティングの研究開発が加速することが期待されている。量子システムの安定稼働に欠かせない冷却技術の知見を共有することで、エコシステム全体の技術底上げと、実用的な量子デバイスの実現に向けた協力体制を構築する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/ionq-reports-on-its-q1-2026-financial-results-historic-growth-and-blueprint-for-fault-tolerance/" target="_blank" rel="noopener noreferrer">IonQ Reports on Its Q1 2026 Financial Results: Historic Growth and Blueprint for Fault Tolerance</a></h3>
+    <p class="meta">Quantum Computing Report | 05/07 01:35</p>
+    <p class="summary">量子コンピューティング企業のIonQが2026年第1四半期の決算を発表し、歴史的な成長とフォールトトレラント（耐故障性）計算に向けた計画を明らかにした。売上高の大幅な増加に加え、エラー修正技術の進展や計算精度の向上が報告されている。ハードウェアのスケールアップに関する具体的なロードマップも提示され、業界におけるリーダーシップを強調した。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c5y093d5n9ko?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Hantavirus-hit cruise ship on way to Canary Islands after three evacuated</a></h3>
+    <p class="meta">BBC World News | 05/07 07:09</p>
+    <p class="summary">ハンタウイルスが発生したクルーズ船が、カナリア諸島に向けて航行中である。すでに3名の患者がヘリコプターで緊急移送されており、船内では感染源の調査と消毒作業が進められている。ハンタウイルスは主にげっ歯類を介して感染するため、船内の衛生管理状況が厳しく問われている。寄港先での検疫対応を含め、当局は警戒を強めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cj0pq2q8221o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Iran considering US proposal as Trump says war will be &#39;over quickly&#39;</a></h3>
+    <p class="meta">BBC World News | 05/07 04:06</p>
+    <p class="summary">イラン政府が米国の提案を検討していることが明らかになり、トランプ大統領は「戦争はすぐに終わるだろう」との見通しを述べた。中東情勢の緊張緩和に向けた外交的な動きが活発化しており、イラン側が提示された条件をどのように受け入れるかが焦点となっている。交渉の進展が注目される中、地域の安定を巡る国際社会の期待と不安が交錯している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/czj2emlv2kjo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Islamic State-linked women arrive home in Australia from Syria</a></h3>
+    <p class="meta">BBC World News | 05/07 08:06</p>
+    <p class="summary">過激派組織IS（イスラム国）に関与していた疑いのある女性たちが、シリアの収容キャンプからオーストラリアへ帰国した。政府による帰還支援プログラムの一環だが、国内では安全保障上の懸念から賛否が分かれている。当局は帰国した女性たちの監視と再統合のプロセスを進めるとしているが、過激思想の影響やテロのリスクに対し、厳しい目が向けられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260507/k10015115831000.html" target="_blank" rel="noopener noreferrer">エプスタイン問題 ラトニック商務長官が議会で証言 現職閣僚初</a></h3>
+    <p class="meta">NHK国際放送 | 05/07 06:50</p>
+    <p class="summary">ジェフリー・エプスタイン氏を巡る問題で、ラトニック商務長官が米議会で証言を行った。現職の閣僚がこの問題で証言するのは初めてであり、政治的にも大きな関心を集めている。ラトニック氏は自身の関与を否定しているが、議会は事件の背後にある政財界の繋がりを解明するため追及を強めており、さらなる事実解明と説明責任が求められている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260507/k10015115981000.html" target="_blank" rel="noopener noreferrer">ハンタウイルス確認のクルーズ船 3人移送 感染源調査も</a></h3>
+    <p class="meta">NHK国際放送 | 05/07 06:26</p>
+    <p class="summary">ハンタウイルスの感染が確認されたクルーズ船で、症状が悪化した乗客3人が医療機関へ緊急移送された。船内ではネズミなどのげっ歯類がウイルスを媒介した可能性があるとして、保健当局による調査と消毒が行われている。感染経路の特定を急ぐとともに、他の乗員乗客への健康状態の監視が続けられており、クルーズ船の衛生基準の見直しを求める声も上がっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260507/k10015115921000.html" target="_blank" rel="noopener noreferrer">NPT最終文書の草案 核とAI懸念 “人間の管理 維持を”</a></h3>
+    <p class="meta">NHK国際放送 | 05/07 06:22</p>
+    <p class="summary">核拡散防止条約（NPT）再検討会議の最終文書草案が公表され、核兵器運用におけるAI（人工知能）利用への懸念が盛り込まれた。草案では、AIの誤判断が核戦争を誘発するリスクを指摘し、兵器システムにおける「人間の管理」を維持することの重要性を強調している。最新技術の軍事転用を巡る国際的なルール作りが急務であることを示す内容となっている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
