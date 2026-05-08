@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月09日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月09日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月09日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://privatecaptcha.com/blog/google-cloud-fraud-defence-wei/" target="_blank" rel="noopener noreferrer">Google Cloud Fraud Defence is just WEI repackaged</a></h3>
+    <p class="meta">Hacker News | 05/08 22:56</p>
+    <p class="summary">Googleの「Fraud Defence」は、以前批判を浴びた「Web Environment Integrity (WEI)」の再パッケージ版であると指摘されています。WEIはウェブ版DRMのような仕組みで、非標準ブラウザを排除する恐れがあり、プライバシーや自由を損なうとして反対されていました。名称を変えてこの仕組みを推進しようとするGoogleの動きに対し、企業のウェブ制御力強化への懸念が示されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://discordstatus.com" target="_blank" rel="noopener noreferrer">Discord Incident</a></h3>
+    <p class="meta">Hacker News | 05/09 04:52</p>
+    <p class="summary">Discordのサービス状況に関する報告です。サーバー接続障害やメッセージ送受信の不具合、APIの遅延など、発生したインシデントの詳細と復旧プロセスについて説明されています。ユーザーへの影響を最小限に抑えるため、技術チームが対応にあたっており、現在の稼働ステータスがリアルタイムで更新されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.jefftk.com/p/ai-is-breaking-two-vulnerability-cultures" target="_blank" rel="noopener noreferrer">AI is breaking two vulnerability cultures</a></h3>
+    <p class="meta">Hacker News | 05/09 02:55</p>
+    <p class="summary">AIの普及が脆弱性発見の文化を変えつつあります。従来の「高品質な発見」を重視する文化に対し、AIは低品質な脆弱性レポートを大量生成することを可能にしました。これにより、メンテナーは膨大なノイズに埋もれ、正当な報告の精査が困難になるなど、従来のトリアージシステムが崩壊の危機に瀕しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.webdesignmuseum.org/flash-game-exhibitions/cartoon-network-flash-games" target="_blank" rel="noopener noreferrer">Cartoon Network Flash Games</a></h3>
+    <p class="meta">Hacker News | 05/09 01:29</p>
+    <p class="summary">かつてCartoon Networkで公開されていた懐かしいFlashゲームのアーカイブ展示です。Adobe Flashの終了により多くがプレイ不可となりましたが、本展示では当時のウェブデザインやゲーム体験を振り返ることができます。1990年代後半から2000年代にかけての、子供向けデジタルエンターテインメントの進化を示す貴重なコレクションです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.404media.co/man-finds-1-million-worth-of-yu-gi-oh-cards-in-a-dumpster/" target="_blank" rel="noopener noreferrer">Man Finds $1M Worth of Yu-Gi-Oh Cards in a Dumpster</a></h3>
+    <p class="meta">Hacker News | 05/06 22:54</p>
+    <p class="summary">ある男性がゴミ捨て場から、推定100万ドル（約1.5億円）相当の遊戯王カードを発見しました。廃棄されたコレクションの中には極めて希少なカードが含まれていました。カードゲームの二次市場が高騰する中、価値を知らずに捨てられたと思われるこの発見は、コレクターコミュニティや転売市場で大きな話題となっています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/intage_tech/articles/art018-intage-tech" target="_blank" rel="noopener noreferrer">Cortex Codeを組織で活用する際のポイント</a></h3>
+    <p class="meta">Zenn トレンド | 05/07 10:00</p>
+    <p class="summary">組織で「Cortex Code」を活用し、開発効率を向上させるための重要ポイントを解説しています。AIツール導入時のルール作りや品質管理、チーム内でのナレッジ共有方法について詳しく触れています。特にセキュリティリスクへの配慮や、AIの提案を人間がどう評価・修正すべきかという運用のコツがまとめられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tokium_dev/articles/20260427_ai_tech_researcher" target="_blank" rel="noopener noreferrer">1年間の育休に備えて「勝手に賢くなる」AI情報収集基盤を作った</a></h3>
+    <p class="meta">Zenn トレンド | 05/07 06:00</p>
+    <p class="summary">1年間の育休期間中に技術トレンドから取り残されないよう、自動で情報を収集・整理するAI基盤を構築した事例です。LLMを活用して日々のニュースを要約・分類し、自分専用のナレッジベースを更新する仕組みを作りました。育児で忙しい中でも効率的に最新技術をキャッチアップできる環境づくりの知見が共有されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prum_hitomi/items/30ed3d885da5bb605460?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">「自分にエンジニアなんて無理かも」と思ってる人へ。最初に知ってほしい“仕事の進め方”</a></h3>
+    <p class="meta">Qiita トレンド | 05/08 05:11</p>
+    <p class="summary">エンジニアへの適性に不安を感じている初心者向けに、技術力以前に重要な「仕事の進め方」を説いています。課題を細分化する考え方、適切なタイミングでの質問の重要性、そして完璧主義を捨ててサイクルを回すことの価値を解説。未経験からでも成果を出すためのマインドセットと具体的なアクションプランを提案しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/08/prime-video-follows-netflix-and-disney-by-adding-a-tiktok-like-clips-feed-in-its-app/" target="_blank" rel="noopener noreferrer">Prime Video follows Netflix and Disney by adding a TikTok-like ‘Clips’ feed in its app</a></h3>
+    <p class="meta">TechCrunch | 05/08 20:50</p>
+    <p class="summary">AmazonのPrime Videoが、NetflixやDisney+に続き、TikTok風の縦型ショート動画フィード「Clips」を導入しました。この機能は、映画やドラマの印象的なシーンを短く切り出して表示することで、ユーザーが新しいコンテンツを直感的に発見できるよう支援します。視聴者の注目を集めるため、SNSの形式を取り入れる動きが加速しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/08/intels-comeback-story-is-even-wilder-than-it-seems/" target="_blank" rel="noopener noreferrer">Intel’s comeback story is even wilder than it seems</a></h3>
+    <p class="meta">TechCrunch | 05/08 20:02</p>
+    <p class="summary">苦境に立たされていたIntelの復活劇に関する記事です。同社は製造部門の独立や他社への受託製造（ファウンドリ事業）の強化、AIチップ市場への本格参入など、抜本的な構造改革を進めています。政府の補助金活用や技術的な遅れの挽回策など、これまでの道のりと将来の展望を分析し、今後の市場への影響を考察しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/08/cloudflare-says-ai-made-1100-jobs-obsolete-even-as-revenue-hit-a-record-high/" target="_blank" rel="noopener noreferrer">Cloudflare says AI made 1,100 jobs obsolete, even as revenue hit a record high</a></h3>
+    <p class="meta">TechCrunch | 05/08 18:33</p>
+    <p class="summary">Cloudflareは、売上高が過去最高を記録する一方で、AIの導入により約1,100人分の業務が不要になったと発表しました。特にカスタマーサポートや営業分野での自動化が進んでいます。同社は人員削減そのものを目的とするのではなく、AIによる効率化で生じた余力を、より高度な業務や新規開発へシフトさせる戦略をとっています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c99lpn9ze8ro?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Iran accuses US of &#39;reckless military adventure&#39;</a></h3>
+    <p class="meta">BBC World News | 05/08 16:11</p>
+    <p class="summary">イラン政府は、米国による最近の軍事行動を「無謀な軍事的冒険」であると非難しました。中東地域での緊張が高まる中、イラン側は米国の動きが地域の安定を損ない、予期せぬ衝突を招く恐れがあると警告。米軍の展開を挑発行為と見なし、国際社会に対して米国の行動を抑止するよう求めています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c202zn5gg0lo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump says Russia and Ukraine to observe three-day ceasefire</a></h3>
+    <p class="meta">BBC World News | 05/08 18:59</p>
+    <p class="summary">トランプ氏は、ロシアとウクライナが3日間の停戦に合意したと述べました。この一時的な停戦は人道支援や対話のきっかけを作ることが目的とされていますが、実現可能性や持続性については懐疑的な見方も出ています。紛争の長期化を懸念する国際社会は、この動きが恒久的な和平交渉につながるかどうかを注視しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/clyp1505p84o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Worldwide race to trace passengers from hantavirus-hit cruise ship</a></h3>
+    <p class="meta">BBC World News | 05/08 14:47</p>
+    <p class="summary">ハンタウイルスの感染が発生したクルーズ船の乗客を追跡するため、世界的な取り組みが始まっています。船内で感染が確認されたことを受け、当局はすでに下船した乗客への連絡を急ぎ、感染拡大の防止に努めています。重症化の恐れがあるため、迅速な隔離と検査が求められており、各国の保健機関が連携して対応しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260509/k10015117291000.html" target="_blank" rel="noopener noreferrer">ハンタウイルス 下船した約30人の追跡調査を強化 WHO</a></h3>
+    <p class="meta">NHK国際放送 | 05/08 20:57</p>
+    <p class="summary">世界保健機関（WHO）は、ハンタウイルスの感染が確認された船舶から下船した約30人の追跡調査を強化しています。感染の広がりを防ぐため、健康状態の確認や検査が進められています。ハンタウイルスはネズミなどを介して感染し、発熱や腎不全を引き起こす可能性があるため、当局は警戒を呼びかけ、濃厚接触者の特定を急いでいます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260508/k10015117231000.html" target="_blank" rel="noopener noreferrer">米国務長官“8日中にイランから回答” イランの出方が焦点</a></h3>
+    <p class="meta">NHK国際放送 | 05/08 20:35</p>
+    <p class="summary">米国のブリンケン国務長官は、中東情勢の緊張緩和に向けた提案に対し、8日中にイランから回答があるとの見通しを示しました。核合意や拘束された米国民の解放などを巡る交渉が最終段階にあると見られ、イランの出方が今後の地域の安全保障を左右する焦点となっています。米国側は慎重に外交的解決の可能性を探っています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260509/k10015117241000.html" target="_blank" rel="noopener noreferrer">香港政府 今年度の青少年交流事業 助成対象に日本含まれず</a></h3>
+    <p class="meta">NHK国際放送 | 05/08 20:00</p>
+    <p class="summary">香港政府が今年度の青少年交流事業の助成対象から、日本を除外しました。これまでは日本への研修旅行などが支援されてきましたが、今回の決定により交流機会の減少が懸念されます。背景には原発処理水放出に伴う対立など政治的な緊張が影響しているとの見方もあり、香港の若者の国際交流のあり方に変化が生じています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
