@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月09日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月09日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月09日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://gowers.wordpress.com/2026/05/08/a-recent-experience-with-chatgpt-5-5-pro/" target="_blank" rel="noopener noreferrer">A recent experience with ChatGPT 5.5 Pro</a></h3>
+    <p class="meta">Hacker News | 05/09 11:41</p>
+    <p class="summary">著者はChatGPT 5.5 Proとの最近の対話を通じ、その数学的推論能力や複雑な問題解決の進化について述べている。以前のバージョンと比較して、より高度な概念の理解やエラーの少なさが際立っており、AIが専門的な研究補助として実用的な段階に達していることを示唆している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://reclaimthenet.org/google-broke-recaptcha-for-de-googled-android-users" target="_blank" rel="noopener noreferrer">Google broke reCAPTCHA for de-googled Android users</a></h3>
+    <p class="meta">Hacker News | 05/09 03:45</p>
+    <p class="summary">GoogleがreCAPTCHAの仕様を変更したことで、Google Playサービスを利用しない「脱Google化」されたAndroidデバイスで認証が機能しなくなる問題が発生している。これにより、プライバシーを重視して独自のROMを使用しているユーザーが多くのサイトやアプリにアクセスできなくなり、批判が集まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://twitter.com/trq212/status/2052809885763747935" target="_blank" rel="noopener noreferrer">Using Claude Code: The unreasonable effectiveness of HTML</a></h3>
+    <p class="meta">Hacker News | 05/09 13:53</p>
+    <p class="summary">Claude Codeを使用する際、HTML構造がLLMにとって非常に理解しやすいものであることが強調されている。複雑なUIやロジックを指示する際、HTMLのセマンティックな構造を活用することで、コード生成の精度や効率が劇的に向上するという実体験に基づいた知見が共有されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://martinfowler.com/bliki/MythicalManMonth.html" target="_blank" rel="noopener noreferrer">Mythical Man Month</a></h3>
+    <p class="meta">Hacker News | 05/07 16:20</p>
+    <p class="summary">ソフトウェア開発の名著『人月の神話』について解説。プロジェクトが遅れているからといって人員を投入しても、コミュニケーションコストの増大によりさらに遅延するという「ブルックスの法則」を提唱。ソフトウェア開発の本質的な複雑さと、管理における陥りがちな罠を指摘している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://moq.dev/blog/webrtc-is-the-problem/" target="_blank" rel="noopener noreferrer">OpenAI’s WebRTC problem</a></h3>
+    <p class="meta">Hacker News | 05/08 02:11</p>
+    <p class="summary">OpenAIのリアルタイム通信におけるWebRTCの採用に伴う技術的な課題を指摘。WebRTCは低遅延な通信を実現する一方で、スケーラビリティや接続の安定性において複雑な問題を抱えており、AIの応答性を高める上でのボトルネックになっている現状を分析し、改善策を考察している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/acntechjp/articles/2e8d38ad383dd3" target="_blank" rel="noopener noreferrer">AI時代こそ、エンジニアは「師匠」が要る</a></h3>
+    <p class="meta">Zenn トレンド | 05/08 10:19</p>
+    <p class="summary">AIの普及によりコード生成が容易になる中、エンジニアとしての本質的な成長には「師匠」となる経験豊富な指導者が不可欠であると説く。AIが答えを出すプロセスを理解し、設計思想やソフトスキルを磨くためには、人間同士のフィードバックを通じた学びが、単なる知識習得以上に重要であると論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/motowo/articles/anthropic-multi-agent-coordination-patterns-guide" target="_blank" rel="noopener noreferrer">Anthropic の 5 パターンで Claude Code エージェント設計を分類する</a></h3>
+    <p class="meta">Zenn トレンド | 05/08 09:00</p>
+    <p class="summary">Anthropicが提唱する「ワークフロー」と「エージェント」の設計パターンを用い、Claude Codeを活用した開発エージェントの設計手法を分類・解説。単純なプロンプトから複雑な自律型エージェントまで、目的やタスクの複雑さに応じた最適な構成パターンを選択することの重要性を示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tellernovel_inc/articles/fe4f4964b4f9e3" target="_blank" rel="noopener noreferrer">Expo SDK 56ベータから読み解く、Expo・React Nativeの「ネイティブ志向」な進化</a></h3>
+    <p class="meta">Zenn トレンド | 05/08 07:03</p>
+    <p class="summary">Expo SDK 56ベータ版のアップデート内容を分析。従来のJavaScript中心のアプローチから、よりネイティブ機能に深くアクセスし最適化する「ネイティブ志向」への進化を解説している。ビルド効率の向上や、React Nativeの最新アーキテクチャへの対応など、開発の柔軟性が高まっている点を強調。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/katohiro_fi/items/9acccd181ca2f1a75f3c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Copilot StudioをClaude Code化したら、Copilot Studio自身でPower Platformを構築できた話</a></h3>
+    <p class="meta">Qiita トレンド | 05/07 02:36</p>
+    <p class="summary">MicrosoftのCopilot StudioをClaude Codeのように高度な自律エージェントとして構成し、それ自身を使ってPower Platform上のアプリケーションを構築させた事例を紹介。適切なプロンプトエンジニアリングとツール連携により、ローコード開発の枠を超えた高度な自動化が可能になる実例を示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/08/laid-off-oracle-workers-tried-to-negotiate-better-severance-oracle-said-no/" target="_blank" rel="noopener noreferrer">Laid-off Oracle workers tried to negotiate better severance. Oracle said no.</a></h3>
+    <p class="meta">TechCrunch | 05/08 22:59</p>
+    <p class="summary">オラクルで解雇された従業員たちが、より良い退職金の条件を求めて交渉を試みたが、会社側がこれを拒否した。テック業界全体で人員削減が続く中、提示された標準的なパッケージ以上の補償を勝ち取ることの難しさが浮き彫りになり、企業側と従業員側の力関係の不均衡が改めて露呈している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/08/san-franciscos-housing-market-has-lost-its-mind/" target="_blank" rel="noopener noreferrer">San Francisco’s housing market has lost its mind</a></h3>
+    <p class="meta">TechCrunch | 05/08 22:32</p>
+    <p class="summary">サンフランシスコの住宅市場が異常な状態に陥っている。住宅価格の高騰が限界に達し、かつての活気ある都市から、富裕層以外は住めない場所へと変貌。空室率や治安悪化の問題を抱えつつも、不動産価格が乖離し続ける現状を「狂気の沙汰」として批判的に報じている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c626xjq0q0vo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Putin denounces Nato at scaled back Victory Day parade</a></h3>
+    <p class="meta">BBC World News | 05/09 08:27</p>
+    <p class="summary">ロシアのプーチン大統領は、規模を縮小して開催された対ドイツ戦勝記念日のパレードで演説し、NATOを改めて非難した。ウクライナ侵攻を正当化しつつ、西側諸国がロシアの存在を脅かしていると主張。核戦力の誇示も含め、強硬な姿勢を崩さない構えを鮮明にしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c5y0gkg038yo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Anger and resignation in Tenerife as hantavirus ship approaches</a></h3>
+    <p class="meta">BBC World News | 05/09 00:15</p>
+    <p class="summary">ハンタウイルスの感染者が発生した船舶がテネリフェ島に接近しており、地元住民の間で怒りと諦めの感情が広がっている。当局は検疫体制を強化しているが、観光業への影響や感染拡大への懸念が強く、感染者の受け入れを巡って緊張が高まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260509/k10015117411000.html" target="_blank" rel="noopener noreferrer">ハンタウイルス クルーズ船での感染確認は6人に WHO</a></h3>
+    <p class="meta">NHK国際放送 | 05/09 08:17</p>
+    <p class="summary">WHO（世界保健機関）は、特定のクルーズ船内でハンタウイルスの感染が確認された人数が計6人に達したと発表した。通常はネズミなどを介して感染するウイルスだが、船内という閉鎖空間での発生を受け、感染経路の特定とさらなる拡大防止のための調査が進められている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260509/k10015117451000.html" target="_blank" rel="noopener noreferrer">中国 4月の輸出額は14％余増加 原油高の影響が今後の焦点に</a></h3>
+    <p class="meta">NHK国際放送 | 05/09 06:09</p>
+    <p class="summary">中国の4月の輸出額は前年同月比で14％以上の伸びを記録し、世界経済の需要回復が追い風となった。しかし、輸入面では原油価格の高騰がコストを押し上げており、今後の貿易収支や国内のインフレ率にどのような影響を与えるかが経済予測の焦点となっている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
