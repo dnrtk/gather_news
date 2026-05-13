@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月14日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月14日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月14日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.dailyprincetonian.com/article/2026/05/princeton-news-adpol-proctoring-in-person-examinations-passed-faculty-133-years-precedent" target="_blank" rel="noopener noreferrer">Princeton mandates proctoring in-person exams, upending 133 years of precedent</a></h3>
+    <p class="meta">Hacker News | 05/14 05:12</p>
+    <p class="summary">プリンストン大学の教員会議は、対面試験における試験監督の立ち会いを義務付ける方針を可決した。これにより、133年間続いてきた「学生の自律的な誠実さに頼り、監督を置かない」という伝統が覆されることになる。近年、学内ではAIの普及や学業不正への懸念が高まっており、今回の決定はそれらに対応する形となった。長年守られてきた伝統の変更は、大学コミュニティに大きな波紋を広げている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://bitplane.net/log/2026/05/rars/" target="_blank" rel="noopener noreferrer">Rars: a Rust RAR implementation, mostly written by LLMs</a></h3>
+    <p class="meta">Hacker News | 05/14 04:59</p>
+    <p class="summary">RustによるRARファイルの展開ライブラリ「Rars」が公開された。特筆すべきは、そのコードの大部分が大規模言語モデル（LLM）によって作成された点である。開発者は、Rustの厳しいボローチェッカーや複雑なデータ構造を扱う際に、LLMがいかに強力な補助ツールになるかを実証している。既存のC++実装をRustへ移植するプロセスにおいて、AIを活用することで開発効率を大幅に向上させつつ、メモリ安全性を確保した実装を実現している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://fredchan.org/blog/locality-domains-guide/" target="_blank" rel="noopener noreferrer">Setting up a free *.city.state.us locality domain (2025)</a></h3>
+    <p class="meta">Hacker News | 05/13 23:45</p>
+    <p class="summary">米国で利用可能な「*.city.state.us」形式の無料の地域ドメインを取得・設定するための2025年版ガイド。このドメインは、特定の都市や州に紐づく公共性の高いアドレスとして古くから存在するが、設定方法が複雑で一般にはあまり知られていない。本記事では、レジストラへの申請プロセスやDNS設定の詳細、無料で運用し続けるための技術的な手順を解説しており、希少なドメインを活用したい技術愛好家向けの内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.xda-developers.com/linux-gaming-is-getting-faster-because-windows-apis-are-becoming-linux-kernel-features/" target="_blank" rel="noopener noreferrer">Linux gaming is faster because Windows APIs are becoming Linux kernel features</a></h3>
+    <p class="meta">Hacker News | 05/11 05:54</p>
+    <p class="summary">Linuxでのゲームパフォーマンスが向上している背景には、WindowsのAPIがLinuxカーネルの機能として組み込まれ始めていることがある。WineやProtonといった互換レイヤーを通じて、Windows向けのシステムコールをLinuxが直接、あるいは極めて効率的に処理できるようになった。これにより、オーバーヘッドが削減され、一部のタイトルではWindowsネイティブ環境を上回るフレームレートを記録するケースも出ている。LinuxがゲームOSとして有力な選択肢になりつつある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.jdhodges.com/blog/macbook-neo-benchmarks-analysis/" target="_blank" rel="noopener noreferrer">MacBook Neo Deep Dive: Benchmarks, Wafer Economics, and the 8GB Gamble</a></h3>
+    <p class="meta">Hacker News | 05/14 03:30</p>
+    <p class="summary">新型モデル「MacBook Neo」について、ベンチマークスコア、ウェハー製造の経済性、そして物議を醸している「8GBメモリ」の採用について深く分析している。Appleが最新チップを採用しながらもベースモデルのメモリを8GBに据え置く背景には、製造コストと利益率のバランスがある。記事では、メモリ帯域の向上やスワップ処理の効率化によって実用性は維持されているとする一方、将来的な負荷増大に対する懸念も指摘し、ユーザーの選択に一石を投じている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/masayan1126/books/claude-code-keyboard-shortcuts" target="_blank" rel="noopener noreferrer">Claude Codeキーボードショートカット17選、Tier別に全部教えたるで</a></h3>
+    <p class="meta">Zenn トレンド | 05/13 11:32</p>
+    <p class="summary">AIコーディングツール「Claude Code」を使いこなすために必須となる17のキーボードショートカットを、重要度別のティア形式で紹介している。基本的な操作から、開発効率を劇的に向上させる高度なコマンドまで網羅。ショートカットを活用することで、ターミナルからの対話やコード生成のプロセスをスムーズにし、マウス操作による中断を減らすことができる。初心者から上級者まで、Claude Codeをより直感的に操作したい開発者にとって実用的なガイドとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/microsoft/articles/aspire-favorite-points" target="_blank" rel="noopener noreferrer">AI と一緒に開発するときにも便利な Aspire の好きなところ</a></h3>
+    <p class="meta">Zenn トレンド | 05/12 13:47</p>
+    <p class="summary">クラウドネイティブなアプリ開発を支援する「.NET Aspire」の魅力を、特にAIを活用した開発の視点から解説している。Aspireは、分散アプリケーションの構成やオーケストレーションを簡素化し、ダッシュボードによる可視化を提供する。AIサービスとの連携や環境構築が容易になるため、プロンプトエンジニアリングやモデルの統合に集中できる点がメリットとして挙げられている。開発のライフサイクル全体を効率化するツールとしての有用性を強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/hitomin_poke/items/296886c435ebc79a667c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">1割の &#34;信頼される&#34; エンジニアが実行している 『止めないコミュニケーション』</a></h3>
+    <p class="meta">Qiita トレンド | 05/13 04:42</p>
+    <p class="summary">高い信頼を得ているエンジニアに共通する「止めないコミュニケーション」の秘訣を解説している。単に技術力が高いだけでなく、相手の懸念を先回りして解消する、不確実な状況でも迅速にレスポンスを返すといった、プロジェクトの停滞を防ぐための姿勢が重要であると説く。具体例として、質問の意図を汲み取った回答や、進捗の透明性を高める工夫などが挙げられており、チーム開発において「一緒に働きたい」と思われるための実践的なアドバイスがまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/13/musks-xai-is-running-nearly-50-gas-turbines-unchecked-at-its-mississippi-data-center/" target="_blank" rel="noopener noreferrer">Musk’s xAI is running nearly 50 gas turbines unchecked at its Mississippi data center</a></h3>
+    <p class="meta">TechCrunch | 05/13 19:49</p>
+    <p class="summary">イーロン・マスク氏率いるAI企業「xAI」が、ミシシッピ州のデータセンターにおいて、当局の適切な監視や許可を受けないまま約50基のガスタービンを稼働させていることが報じられた。この施設はAIモデルのトレーニングに膨大な電力を必要としており、既存の電力網では供給が追いつかないため自前で発電を行っている。しかし、排出ガスによる環境への影響や周辺住民への健康被害が懸念されており、環境規制当局との対立が深まる可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/13/anthropics-cat-wu-says-that-in-the-future-ai-will-anticipate-your-needs-before-you-know-what-they-are/" target="_blank" rel="noopener noreferrer">Anthropic’s Cat Wu says that, in the future, AI will anticipate your needs before you know what they are</a></h3>
+    <p class="meta">TechCrunch | 05/13 19:28</p>
+    <p class="summary">Anthropicのキャット・ウー氏は、将来のAIはユーザーが自覚する前にそのニーズを予測し、先回りして行動するようになると予測した。現在の対話型AIから、より「プロアクティブなエージェント」へと進化し、個人の好みや文脈を深く理解することで、日常生活や業務のタスクを自動的に管理・実行する未来を描いている。これにより、人間は意思決定や創造的な活動に集中できるようになるが、同時にプライバシーや制御のあり方についても新たな議論が必要になると述べている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/13/this-is-what-some-the-worlds-largest-banks-of-malware-look-like-stacked-as-hard-drives/" target="_blank" rel="noopener noreferrer">This is what some the world’s largest banks of malware look like stacked as hard drives</a></h3>
+    <p class="meta">TechCrunch | 05/13 18:12</p>
+    <p class="summary">世界最大級のマルウェアライブラリが、物理的なハードドライブの山としてどのような姿をしているかを視覚的に紹介している。サイバーセキュリティの研究機関や企業は、攻撃の分析や検知精度の向上のために膨大な数の有害コードを保管している。何ペタバイトにも及ぶこれらのデータは、過去から現在に至るサイバー攻撃の歴史そのものであり、デジタル上の「脅威の博物館」とも言える。記事では、これほど大量の危険なデータを安全に管理し、研究に活用する難しさについても触れている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c1w28qw1e0xo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trade, Iran and Taiwan on the agenda as Trump arrives in China for high-stakes talks with Xi</a></h3>
+    <p class="meta">BBC World News | 05/13 17:00</p>
+    <p class="summary">トランプ氏が中国を訪問し、習近平国家主席と貿易、イラン情勢、台湾問題などをめぐる重要な会談を行う。米中間の緊張が続く中、今回の首脳会談は経済的な摩擦の解消や、地政学的な安定に向けた道筋を探る重要な節目となる。特に、通商政策の再調整や軍事的な緊張緩和について、両リーダーがどのような妥協点を見出せるかに注目が集まっている。世界経済への影響も大きいことから、国際社会はこの会談の行方を注視している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cedpvnq7wn1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Court overturns Alex Murdaugh&#39;s murder convictions and orders new trial</a></h3>
+    <p class="meta">BBC World News | 05/13 15:36</p>
+    <p class="summary">アレックス・マードック被告の妻と息子に対する殺人罪の有罪判決を裁判所が覆し、再審を命じた。この事件は、かつての有力弁護士による凄惨な事件として全米の注目を集めていた。控訴裁判所は、一審のプロセスにおいて陪審員への不適切な干渉や証拠の取り扱いに問題があったと判断した。この決定により、一時は終身刑が確定していた被告の法的状況は白紙に戻り、再び公判が行われることになる。被害者家族や地域社会に大きな衝撃を与えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c1j2n008k5lo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Dozens of dogs rescued and suspect arrested in Uganda after BBC investigation</a></h3>
+    <p class="meta">BBC World News | 05/13 13:37</p>
+    <p class="summary">BBCの調査報道をきっかけに、ウガンダで数十匹の犬が救出され、容疑者が逮捕された。この事件は、犬が劣悪な環境で飼育され、虐待や不法な取引の対象となっていた疑いがあるもの。現地の保護団体と警察が連携し、摘発に踏み切った。救出された犬たちは適切な医療ケアを受けており、動物愛護の観点から法的な追及が進められている。この報道は、ウガンダ国内だけでなく国際的にも動物福祉への関心を高める結果となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260514/k10015121071000.html" target="_blank" rel="noopener noreferrer">ラブロフ外相 日本のロシア産原油輸入に反対しない考え示す</a></h3>
+    <p class="meta">NHK国際放送 | 05/13 20:25</p>
+    <p class="summary">ロシアのラブロフ外相は、日本がロシア産の原油を輸入し続けることについて、反対しない考えを示した。ウクライナ侵攻を受けた国際的な制裁の中で、日本はエネルギー安全保障の観点から「サハリン2」などのプロジェクトを通じた輸入を継続している。ラブロフ氏の発言は、エネルギー供給の維持を盾に日本側の出方を牽制し、経済的な繋がりを維持することで制裁網に楔を打ち込む意図があるものとみられる。日本政府は、慎重に状況を注視している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260514/k10015120991000.html" target="_blank" rel="noopener noreferrer">ロシア ウクライナ4州から軍が撤退すれば和平交渉可能に</a></h3>
+    <p class="meta">NHK国際放送 | 05/13 20:23</p>
+    <p class="summary">ロシア政府は、ウクライナが一方的に併合を宣言した東部・南部の4州から軍を完全に撤退させ、NATOへの加盟を断念することを条件に、即時の和平交渉に応じる用意があると表明した。しかし、これはウクライナ側に領土の放棄を迫る実質的な降伏勧告であり、ウクライナ側や欧米諸国は到底受け入れられないとして強く反発している。交渉の糸口は見えず、戦況が膠着する中で、ロシア側が自らの主張を改めて強調した形となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260514/k10015120971000.html" target="_blank" rel="noopener noreferrer">イギリス 閣僚が近く辞任し与党の党首選挙を働きかけか 報道</a></h3>
+    <p class="meta">NHK国際放送 | 05/13 20:18</p>
+    <p class="summary">イギリスで現職の閣僚が近く辞任し、与党内で党首選挙の実施を働きかける動きがあることが報じられた。現政権の支持率低迷や政策運営への不満から、党内での求心力が低下しており、トップの交代を求める声が強まっている。もし辞任と選挙の働きかけが現実となれば、政権の不安定化は避けられず、次期首相候補をめぐる激しい派閥争いに発展する可能性がある。イギリス政局は大きな転換点を迎えており、今後の展開が注視されている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
