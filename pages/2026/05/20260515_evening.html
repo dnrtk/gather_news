@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月15日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月15日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月15日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://dylan.gr/1775146616" target="_blank" rel="noopener noreferrer">Solar-based sleep patterns compared to modern norms</a></h3>
+    <p class="meta">Hacker News | 05/15 13:15</p>
+    <p class="summary">太陽光に基づいた睡眠パターンと現代の習慣を比較した記事。産業革命以前の人間は太陽の動きに合わせた睡眠をとっており、現代のような連続的な睡眠ではなく、夜間に一度目覚める「二相性睡眠」が一般的であった可能性を示唆している。現代社会における人工照明や不規則な生活習慣が、自然な睡眠サイクルをどのように変化させたかを考察している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://antirez.com/news/165" target="_blank" rel="noopener noreferrer">A few words on DS4</a></h3>
+    <p class="meta">Hacker News | 05/15 07:29</p>
+    <p class="summary">Redisの作者として知られるSalvatore Sanfilippo氏が、自身が開発しているプロジェクト「DS4」について述べた記事。DS4の設計思想や開発の背景、現在の進捗状況について著者の視点から解説されている。シンプルさと表現力のバランスを重視した開発の意図や、特定のプログラミング課題に対するアプローチが語られている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.tristandc.com/government/news-2026-05-11-airdrop.php" target="_blank" rel="noopener noreferrer">Details of the Daring Airdrop at Tristan Da Cunha</a></h3>
+    <p class="meta">Hacker News | 05/15 12:56</p>
+    <p class="summary">世界で最も孤立した有人島の一つであるトリスタン・ダ・クーニャで行われた、大胆な空中投下（エアドロップ）の詳細を報じる記事。厳しい気象条件や地理的な制約がある中で、島民への生活必需品や機材の供給を目的とした作戦がどのように実行されたかを説明している。この活動は、孤立したコミュニティを支援するための重要な取り組みである。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://hghalebi.github.io/category_theory_transformer_rs/" target="_blank" rel="noopener noreferrer">Building ML framework with Rust and Category Theory</a></h3>
+    <p class="meta">Hacker News | 05/15 01:24</p>
+    <p class="summary">Rustプログラミング言語と圏論（Category Theory）を組み合わせて、機械学習（ML）フレームワークを構築する試みについて解説した記事。数学的な厳密さとRustのメモリ安全性・実行速度を活かし、トランスフォーマーモデルなどの実装を行う手法を紹介している。抽象度の高い圏論の概念を実際のコードにどのように落とし込むか、その設計思想に焦点が当てられている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/aws_japan/articles/005-bedrock-agent-registry-dynamic-loading" target="_blank" rel="noopener noreferrer">Agent Registry で動的に Harness (MCP/Skill) や A2A Agent を検索・実行する Agent の実装</a></h3>
+    <p class="meta">Zenn トレンド | 05/14 22:04</p>
+    <p class="summary">Amazon Bedrockにおいて、Agent Registryを使用してHarnessや他のエージェント（A2A）を動的に検索・実行するエージェントの実装方法を解説した記事。特定のアクションを事前にハードコードするのではなく、レジストリを介して必要なスキルをオンデマンドで取得・利用することで、より柔軟で拡張性の高いAIエージェントシステムの構築が可能になることを示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/aldagram_tech/articles/3318a924758852" target="_blank" rel="noopener noreferrer">Amazon S3 Vectors で、ベクトル DB を立てずに画像検索 PoC を作る</a></h3>
+    <p class="meta">Zenn トレンド | 05/14 10:44</p>
+    <p class="summary">ベクトルデータベースを新規に構築することなく、Amazon S3の機能を活用して画像検索のプルーフ・オブ・コンセプト（PoC）を作成する手法を紹介した記事。低コストかつ迅速に検索システムを構築する方法として、S3上のデータをベクトルとして扱うメリットや、具体的な実装手順を解説している。小規模なプロジェクトやプロトタイプ開発において有効な選択肢を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prum_hitomi/items/a2238e2ac6d842581b2e?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AI時代に生き残る「最強の武器」</a></h3>
+    <p class="meta">Qiita トレンド | 05/15 05:23</p>
+    <p class="summary">急速に進化するAI時代において、エンジニアやビジネスパーソンが生き残るために必要な「最強の武器」について考察した記事。単なる技術習得にとどまらず、AIには代替できない人間特有の思考力や問題解決能力、創造性の重要性を強調している。変化の激しい環境で適応し続けるためのマインドセットや、具体的なスキルの磨き方について提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/14/what-the-jury-will-actually-decide-in-the-case-of-elon-musk-vs-sam-altman/" target="_blank" rel="noopener noreferrer">What the jury will actually decide in the case of Elon Musk vs. Sam Altman</a></h3>
+    <p class="meta">TechCrunch | 05/14 22:47</p>
+    <p class="summary">イーロン・マスク氏がサム・アルトマン氏およびOpenAIを訴えた裁判において、陪審員が実際に判断を下すことになる争点を解説した記事。契約違反の有無や、OpenAIが非営利の目的を逸脱してクローズドな営利活動を行っているかという主張に対し、法的な観点から何が焦点となるかを分析している。テック業界の未来を左右する可能性がある重要裁判の核心に迫る内容である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/14/elon-musks-spacexai-has-been-bleeding-staff-since-its-merger/" target="_blank" rel="noopener noreferrer">Elon Musk’s SpaceXAI has been bleeding staff since its merger</a></h3>
+    <p class="meta">TechCrunch | 05/14 21:30</p>
+    <p class="summary">イーロン・マスク氏のSpaceXAIが、合併以降に大幅な人材流出に見舞われている状況を報じた記事。主要なエンジニアや研究者が離職している背景として、組織再編に伴う文化の不一致や戦略の不確実性が指摘されている。AI開発競争が激化する中で、優秀な人材の確保が企業の競争力に直結するため、この流出が今後のプロジェクトに与える影響が懸念されている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cd7pyrj0vx7o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">CIA chief visits Cuba as energy crisis worsens</a></h3>
+    <p class="meta">BBC World News | 05/15 02:40</p>
+    <p class="summary">キューバでエネルギー危機が深刻化する中、CIA（米中央情報局）長官が同国を訪問したニュース。停電が頻発し社会的不安が高まっている状況下での異例の訪問であり、安全保障上の懸念や地域情勢の安定化に向けた協議が行われたと見られている。長年緊張関係にある米キューバ間の対話が、この危機的なタイミングでどのような意味を持つのかが注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cze2wpk7y76o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">New outbreak of Ebola kills 65 in eastern DR Congo</a></h3>
+    <p class="meta">BBC World News | 05/15 08:27</p>
+    <p class="summary">コンゴ民主共和国東部でエボラ出血熱の新たな流行が発生し、これまでに65人が死亡したことを伝える記事。保健当局が封じ込めを急いでいるが、現地の治安不安定やインフラ不足が対策の妨げとなっている。国際社会による支援が求められる中で、感染拡大の防止に向けたワクチン接種や接触者追跡の状況について報告されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c62e0p7rd2ro?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Five Italians die during cave scuba dive in Maldives</a></h3>
+    <p class="meta">BBC World News | 05/15 07:38</p>
+    <p class="summary">モルディブで洞窟ダイビングを行っていたイタリア人観光客5人が死亡した事故を報じる記事。事故の発生原因や状況について、現地の警察が調査を進めている。ダイビングスポットとしての魅力の裏にある危険性や、洞窟内という特殊な環境でのトラブル対応の難しさが浮き彫りとなっており、観光客の安全管理体制に注目が集まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260515/k10015122721000.html" target="_blank" rel="noopener noreferrer">ロシアの大規模攻撃 キーウで死者24人 各国に制裁徹底訴え</a></h3>
+    <p class="meta">NHK国際放送 | 05/15 08:23</p>
+    <p class="summary">ロシア軍によるウクライナの首都キーウへの大規模な攻撃により、24人が死亡した。ゼレンスキー大統領は、犠牲者への哀悼の意を表すとともに、ロシアへの制裁をさらに徹底するよう国際社会に訴えた。エネルギー関連施設や住宅地が標的となっており、甚大な被害が出ている。これを受け、西側諸国はさらなる支援と制裁の強化を検討している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260515/k10015107561000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（5月15日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 05/15 07:47</p>
+    <p class="summary">2026年5月15日のロシアによるウクライナ軍事侵攻に関する最新状況。前線での激しい戦闘や各地でのミサイル攻撃、国際社会による外交的動きが時系列でまとめられている。ウクライナ軍の抵抗状況や、民間人の避難状況、さらには周辺国の支援体制など、刻々と変化する戦況を網羅的に報告している。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
