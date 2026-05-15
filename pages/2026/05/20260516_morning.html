@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月16日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月16日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月16日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.gutenberg.org/" target="_blank" rel="noopener noreferrer">Project Gutenberg – keeps getting better</a></h3>
+    <p class="meta">Hacker News | 05/16 01:15</p>
+    <p class="summary">7万冊以上の無料電子書籍を提供するプロジェクト・グーテンベルクは、著作権の切れた古典文学などをデジタル化し、自由に閲覧・ダウンロード可能にしている。ボランティアによって運営され、アクセシビリティの向上や形式の多様化を継続的に進めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/ThroatyMumbo/WinCE64" target="_blank" rel="noopener noreferrer">WinCE64 – Windows CE 2.11 for N64</a></h3>
+    <p class="meta">Hacker News | 05/16 04:23</p>
+    <p class="summary">Windows CE 2.11をNINTENDO64で動作させるオープンソースプロジェクト。ハードウェアの制約を乗り越え、任天堂の家庭用ゲーム機上で旧式の組み込みOSを動かすためのリサーチと開発が進められている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.zulip.com/2026/05/15/announcing-zulip-foundation/" target="_blank" rel="noopener noreferrer">The Zulip Foundation</a></h3>
+    <p class="meta">Hacker News | 05/16 03:37</p>
+    <p class="summary">オープンソースのチャットプラットフォーム「Zulip」の持続可能性と透明性を確保するため、Zulip Foundationの設立が発表された。プロジェクトの中立性を維持し、コミュニティ主導のガバナンスと長期的な開発支援を目的としている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://projectzero.google/2026/05/pixel-10-exploit.html" target="_blank" rel="noopener noreferrer">A 0-click exploit chain for the Pixel 10</a></h3>
+    <p class="meta">Hacker News | 05/15 22:39</p>
+    <p class="summary">GoogleのProject Zeroが、Pixel 10における「0クリック」脆弱性エクスプロイトチェーンの詳細を公開した。ユーザーの操作を必要とせず、リモートでデバイスを制御される危険性があり、ハードウェアとソフトウェアの境界にある深刻な脆弱性が解説されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://sciencedemonstrations.fas.harvard.edu/presentations/microscale-thermite-reaction" target="_blank" rel="noopener noreferrer">Microscale Thermite Reaction</a></h3>
+    <p class="meta">Hacker News | 05/16 05:03</p>
+    <p class="summary">ハーバード大学による、少量の酸化鉄とアルミニウム粉末を用いた「マイクロスケール・テルミット反応」の実験デモンストレーション。従来の激しい反応を小規模化し、教育現場で安全かつ詳細に化学反応の熱と光を観察できるように設計されている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tsurubee/articles/llm-wiki-connecting-knowledge" target="_blank" rel="noopener noreferrer">Andrej Karpathy氏のLLM Wikiを1ヶ月運用してわかった、LLMの知識を『繋げる力』</a></h3>
+    <p class="meta">Zenn トレンド | 05/15 00:14</p>
+    <p class="summary">Andrej Karpathy氏のアイデアに基づき、LLMを用いたWikiを1ヶ月運用した経験談。個別の情報を蓄積するだけでなく、LLMが自律的に項目間の関連性を見出し、知識を「繋げる」ことで、単なる記録を超えた洞察が得られる可能性について考察している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/339/articles/e1d536aec1bf33" target="_blank" rel="noopener noreferrer">熟達と設計原則 - 圧縮型や展開型をレッテルにしない</a></h3>
+    <p class="meta">Zenn トレンド | 05/14 23:25</p>
+    <p class="summary">ソフトウェア設計において「圧縮型」や「展開型」といった概念を単なるレッテルとして扱うのではなく、熟達のプロセスとして捉える重要性を説く。設計原則を盲信するのではなく、文脈に応じて柔軟に適用し、コードの本質的な良さを追求する姿勢を論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/15/rj-scaringe-has-raised-more-than-12-billion-across-three-startups-and-investors-still-want-more/" target="_blank" rel="noopener noreferrer">RJ Scaringe has raised more than $12 billion across three startups and investors still want more</a></h3>
+    <p class="meta">TechCrunch | 05/15 20:30</p>
+    <p class="summary">電気自動車メーカー、リビアンのCEOであるRJ・スカリンジ氏が、3つのスタートアップを通じて120億ドル以上を調達した。依然として投資家からの関心は高く、厳しいEV市場環境下においても、彼のビジョンと実行力が評価され続けている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/15/general-catalyst-posted-vc-rage-bait-and-it-worked-especially-on-a16z/" target="_blank" rel="noopener noreferrer">General Catalyst posted VC rage bait and it worked, especially on a16z</a></h3>
+    <p class="meta">TechCrunch | 05/15 20:25</p>
+    <p class="summary">ベンチャーキャピタルのGeneral Catalystが投稿したコンテンツが「怒りの釣り（Rage Bait）」として話題となり、a16zをはじめとする競合他社から大きな反響を呼んだ。VC業界内の文化的な対立や、SNS上でのマーケティング手法の是非が注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/15/a-hotel-check-in-system-left-a-million-passports-and-drivers-licenses-open-for-anyone-to-see/" target="_blank" rel="noopener noreferrer">A hotel check-in system left a million passports and driver’s licenses open for anyone to see</a></h3>
+    <p class="meta">TechCrunch | 05/15 18:51</p>
+    <p class="summary">ホテルのチェックインシステムにおいて、100万件以上のパスポートや運転免許証のデータが誰でも閲覧可能な状態で放置されていたことが判明。セキュリティ上の不備により、宿泊客の機微な個人情報が深刻な流出リスクにさらされていた。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/equal1-unveils-rack-mounted-silicon-spin-quantum-computer/" target="_blank" rel="noopener noreferrer">Equal1 Unveils Rack-Mounted Silicon-Spin Quantum Computer</a></h3>
+    <p class="meta">Quantum Computing Report | 05/15 11:49</p>
+    <p class="summary">量子コンピューティング企業のEqual1が、ラックマウント型のシリコンスピン量子コンピュータを発表。標準的なデータセンター環境に統合可能な設計が特徴で、既存の半導体製造プロセスを活用することで商用化とスケーラビリティの向上を目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/google-launches-repliqa-to-integrate-quantum-ai-and-life-sciences/" target="_blank" rel="noopener noreferrer">Google Launches REPLIQA to Integrate Quantum AI and Life Sciences</a></h3>
+    <p class="meta">Quantum Computing Report | 05/15 11:30</p>
+    <p class="summary">Googleが、量子AIとライフサイエンスを統合する新プラットフォーム「REPLIQA」をローンチした。量子計算能力を生物学の研究や創薬に応用することで、複雑な分子構造のシミュレーションなどを加速させ、生命科学の進展に寄与することを目指す。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/ionq-establishes-advanced-quantum-rd-laboratory-in-boulder/" target="_blank" rel="noopener noreferrer">IonQ Establishes Advanced Quantum R&amp;D Laboratory in Boulder</a></h3>
+    <p class="meta">Quantum Computing Report | 05/15 11:23</p>
+    <p class="summary">量子コンピュータ開発のIonQが、コロラド州ボルダーに高度な量子研究開発（R&amp;D）研究所を設立した。最新の設備を備えた新拠点により、イオントラップ型量子コンピュータの性能向上と、量子技術の社会実装に向けた開発体制の強化を図る。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/ce8p61v7l68o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump warns Taiwan against declaring independence, hours after summit with China&#39;s Xi</a></h3>
+    <p class="meta">BBC World News | 05/15 17:50</p>
+    <p class="summary">トランプ前大統領が、中国の習近平国家主席との会談直後、台湾に対して独立を宣言しないよう警告を発した。米中関係の緊張緩和を狙った動きと見られるが、米国の対台湾政策の不確実性が高まり、国際社会に波紋を広げている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/clypj01189lo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump and Xi conclude &#39;very successful&#39; talks but no deals confirmed</a></h3>
+    <p class="meta">BBC World News | 05/15 15:03</p>
+    <p class="summary">トランプ氏と習近平氏による首脳会談が終了し、双方は「非常に成功した」と総括した。しかし、具体的な合意やディールについては確認されておらず、重要課題における進展があったかどうかについては懐疑的な見方も残っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cqlpzzl0d67o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Israel and Lebanon agree to extend ceasefire, US state department says</a></h3>
+    <p class="meta">BBC World News | 05/15 20:26</p>
+    <p class="summary">イスラエルとレバノンが停戦期間の延長に合意した。米国務省が発表したもので、武力衝突の再燃を防ぐための外交的成果とされる。地域情勢の安定化に向けたさらなる交渉の継続が期待されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260516/k10015123181000.html" target="_blank" rel="noopener noreferrer">トランプ大統領 中国訪問終え 台湾への武器売却判断へ</a></h3>
+    <p class="meta">NHK国際放送 | 05/15 20:48</p>
+    <p class="summary">中国訪問を終えたトランプ大統領は、台湾への武器売却を継続するかどうかの判断を下す見通し。米中首脳会談を経て、中国側が警戒する安全保障上の懸案事項に対し、米国がどのようなバランスで外交・防衛政策を進めるかが焦点となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260515/k10015123121000.html" target="_blank" rel="noopener noreferrer">北朝鮮 ウクライナ児童の再教育関与は“事実無根”</a></h3>
+    <p class="meta">NHK国際放送 | 05/15 14:52</p>
+    <p class="summary">北朝鮮は、ロシアに連れ去られたウクライナの子供たちの「再教育」に関与しているとの疑惑について、「事実無根」であると強く否定した。国際的な非難が高まる中、ロシアとの協力関係を巡る新たな疑惑に対し、関与を全面的に否定する姿勢を見せている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
