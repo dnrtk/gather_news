@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月19日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月19日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月19日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.anthropic.com/news/anthropic-acquires-stainless" target="_blank" rel="noopener noreferrer">Anthropic acquires Stainless</a></h3>
+    <p class="meta">Hacker News | 05/19 02:01</p>
+    <p class="summary">AIスタートアップのAnthropicは、APIのSDK生成を手掛けるStainlessの買収を発表した。StainlessはOpenAIやGoogleなどの主要企業に開発者ツールを提供していることで知られる。この買収により、Anthropicは自社モデルを利用する開発者向けのエクスペリエンスを強化し、より堅牢で使いやすいSDKの提供を目指す。StainlessチームはAnthropicのエンジニアリング組織に統合される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://hyperpolyglot.org/lisp" target="_blank" rel="noopener noreferrer">Hyperpolyglot Lisp: Common Lisp, Racket, Clojure, Emacs Lisp</a></h3>
+    <p class="meta">Hacker News | 05/19 04:27</p>
+    <p class="summary">Common Lisp、Racket、Clojure、Emacs Lispといった主要なLisp方言の構文や機能を比較したリファレンスガイド。変数宣言、データ構造、関数定義、マクロ、例外処理、モジュールシステムなどの項目ごとに各言語の書き方が並記されている。Lisp学習者や、複数のLisp方言を使い分ける開発者が、言語間の差異を素早く把握するための便利なチートシートとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://archestra.ai/blog/only-responsible-ai" target="_blank" rel="noopener noreferrer">We stopped AI bot spam in our GitHub repo using Git&#39;s –author flag</a></h3>
+    <p class="meta">Hacker News | 05/19 00:24</p>
+    <p class="summary">GitHubリポジトリにおけるAIエージェントによるスパム投稿の対策事例。AIが生成した無意味なプルリクエストが急増する中、筆者らはGitの`--author`フラグを用いて投稿者のメールアドレスやドメインを検証する仕組みを導入した。信頼できないソースからの投稿を自動でフィルタリングすることで、リポジトリのメンテナンス負荷を大幅に削減。既存のGit機能を活用したシンプルかつ効果的なスパム対策を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://andonlabs.com/blog/andon-fm" target="_blank" rel="noopener noreferrer">We let AIs run radio stations</a></h3>
+    <p class="meta">Hacker News | 05/19 03:12</p>
+    <p class="summary">AIがラジオ局を運営する実験プロジェクト「Andon.fm」の紹介。このシステムでは、AIが楽曲選定、曲紹介、ニュースの読み上げ、フリートークまでを24時間自動で行う。大規模言語モデル（LLM）と音声合成技術を組み合わせることで、文脈に沿ったパーソナライズされた放送を生成。AIによる即興的なエンターテインメントの可能性と、放送業界における自動化の新たな形を模索している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/18/elon-musk-has-lost-his-lawsuit-against-sam-altman-and-openai/" target="_blank" rel="noopener noreferrer">Elon Musk has lost his lawsuit against Sam Altman and OpenAI</a></h3>
+    <p class="meta">Hacker News | 05/19 02:38</p>
+    <p class="summary">イーロン・マスク氏がOpenAIとサム・アルトマンCEOを相手取って起こしていた訴訟で敗訴した。マスク氏は、OpenAIが非営利の理念を捨ててMicrosoftの利益を優先していると主張したが、裁判所はこれを退けた。判決では、マスク氏が主張する設立時の合意に法的拘束力があるとは認められないと結論づけられた。この結果、AI開発の公共性と営利性を巡る法的争いは一つの節目を迎えた。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/katzchang/articles/2786bf33bbed42" target="_blank" rel="noopener noreferrer">設計の境界線と、その手前にあるもの</a></h3>
+    <p class="meta">Zenn トレンド | 05/18 01:08</p>
+    <p class="summary">ソフトウェア設計における「境界線」の引き方と、その背景にある思考プロセスを解説した記事。単に技術的に分割するだけでなく、ビジネスドメインの理解や変更の頻度を考慮することが重要だと説く。設計を急ぐ前に、対象とする問題の本質を見極め、将来の拡張性を担保するための判断基準を持つべきだと指摘。実務経験に基づき、適切な抽象化と具象化のバランスをどう取るべきかを論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/finatext/articles/snowflake-managed-mcp-oauth-and-role-architecture" target="_blank" rel="noopener noreferrer">Snowflake-managed MCP ServerのOAuth認証への理解と権限設計</a></h3>
+    <p class="meta">Zenn トレンド | 05/18 00:59</p>
+    <p class="summary">Snowflakeが管理するMCP（Model Context Protocol）サーバーにおけるOAuth認証と権限設計の解説記事。LLMが外部ツールを安全に利用するためには、認証フローの理解と適切なロール（RBAC）の設定が不可欠である。アクセストークンの管理方法や、セキュリティを担保しつつ開発効率を高めるための具体的な設計パターンを紹介しており、Snowflake環境でAIアプリを構築するエンジニア向けの実践的な内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/masakura/articles/f0c65cfc06ce1e" target="_blank" rel="noopener noreferrer">技術的負債という言葉を本来の意味以外で使わないようにしよう</a></h3>
+    <p class="meta">Zenn トレンド | 05/17 23:40</p>
+    <p class="summary">「技術的負債」という言葉が、単なる「汚いコード」を指す言葉として誤用されている現状に警鐘を鳴らす記事。本来の定義は、スピードのために意図的に不完全な実装を選び、後に「利子」を払って修正するという戦略的判断を指す。言葉の定義を正しく理解し、ビジネス上のトレードオフとして負債を管理することで、開発現場と経営層のコミュニケーションの齟齬を解消すべきだと主張している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/18/anthropic-has-acquired-the-dev-tools-startup-used-by-openai-google-and-cloudflare/" target="_blank" rel="noopener noreferrer">Anthropic has acquired the dev tools startup used by OpenAI, Google, and Cloudflare</a></h3>
+    <p class="meta">TechCrunch | 05/18 19:27</p>
+    <p class="summary">Anthropicは、OpenAIやGoogleも利用しているSDK生成ツール企業のStainlessを買収した。StainlessはAPI開発を効率化する高品質なSDKを自動生成する技術を持つ。買収後も既存顧客へのサービスは継続される見込みだが、Anthropicは自社プラットフォームの開発者体験を強化し、競合他社に対する優位性を高める狙いがある。AI企業間での開発者囲い込み競争が激化していることを示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/18/elon-musk-has-lost-his-lawsuit-against-sam-altman-and-openai/" target="_blank" rel="noopener noreferrer">Elon Musk has lost his lawsuit against Sam Altman and OpenAI</a></h3>
+    <p class="meta">TechCrunch | 05/18 17:34</p>
+    <p class="summary">イーロン・マスク氏がOpenAIとそのCEOサム・アルトマン氏を提訴していた件で、裁判所はマスク氏の訴えを棄却した。マスク氏は「人類のためのAI開発」という設立時の誓約が破られたと主張したが、法的な契約違反を証明するには至らなかった。この判決により、OpenAIの営利モデルへの移行とMicrosoftとの提携は法的に容認された形となり、マスク氏側にとっては手痛い敗北となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/18/nyc-health-and-hospitals-says-hackers-stole-medical-data-and-fingerprints-during-breach-affecting-at-least-1-8-million-people/" target="_blank" rel="noopener noreferrer">NYC Health + Hospitals says hackers stole medical data and fingerprints during breach affecting at least 1.8 million people</a></h3>
+    <p class="meta">TechCrunch | 05/18 16:32</p>
+    <p class="summary">ニューヨーク市の公立病院システムがサイバー攻撃を受け、約180万人分の医療データと指紋情報が盗まれた。ハッカーは患者の氏名、住所、社会保障番号、生体データなどにアクセスした。病院側は被害者への通知と保護対策を開始している。指紋などの変更不可能な生体情報が流出したことは、長期的なID窃盗や詐欺のリスクを高める極めて深刻な事態として懸念されている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c7079e55zjro?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump says he called off new Iran attack at request of Gulf states</a></h3>
+    <p class="meta">BBC World News | 05/18 20:25</p>
+    <p class="summary">トランプ前大統領は、湾岸諸国からの要請を受け、イランへの新たな軍事攻撃計画を直前で中止したと述べた。トランプ氏によれば、同盟国から地域情勢の深刻な悪化を懸念する強い声があったという。この発言は、中東における米国の外交的立場と同盟国との調整の難しさを示唆している。ただし、政府による公式な発表はなく、トランプ氏独自の主張としての側面が強い。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cq6pz60p996o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">At least 100 dead in Ebola outbreak in DR Congo, official says</a></h3>
+    <p class="meta">BBC World News | 05/18 19:31</p>
+    <p class="summary">コンゴ民主共和国でのエボラ出血熱のアウトブレイクにより、少なくとも100人の死亡が確認された。感染は急速に拡大しており、現地の医療インフラの不足が封じ込めを困難にしている。紛争地帯に近いことが救助活動や感染追跡の妨げとなっており、国際的な緊急支援が求められている。当局はワクチン接種を強化しているが、地域全体への感染拡大が懸念されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cz72p75zg4qo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">What is Ebola and why is stopping this outbreak so difficult?</a></h3>
+    <p class="meta">BBC World News | 05/18 15:52</p>
+    <p class="summary">エボラ出血熱の基礎知識と、現在のアウトブレイクの阻止が困難な理由を解説。高い致死率と体液を介した感染が特徴だが、封じ込めを阻むのは医療の問題だけでなく、紛争によるアクセスの制限、住民の医療不信、伝統的な埋葬習慣などの社会・構造的な要因が大きい。効果的なワクチンは存在するものの、これらの課題を解決しない限り、流行を完全に鎮圧するのは難しいという現状を伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260519/k10015124971000.html" target="_blank" rel="noopener noreferrer">ロシア プーチン大統領 きょうから中国訪問 習主席と会談へ</a></h3>
+    <p class="meta">NHK国際放送 | 05/18 20:59</p>
+    <p class="summary">ロシアのプーチン大統領が19日から中国を訪問し、習近平国家主席と首脳会談を行う。ウクライナ侵攻の長期化を受けて、軍事・経済の両面で中国との連携を一層深め、西側諸国に対抗する狙いがある。会談では共同声明の発表も予定されており、多極化する世界秩序に向けた中露の結束が強調される見通しだ。両国の戦略的パートナーシップがどこまで具体化するかが注目される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260519/k10015125111000.html" target="_blank" rel="noopener noreferrer">トランプ大統領 “19日に予定のイランへの軍事攻撃 停止指示”</a></h3>
+    <p class="meta">NHK国際放送 | 05/18 20:23</p>
+    <p class="summary">トランプ大統領は、19日に予定していたイランへの報復的な軍事攻撃を停止するよう指示した。湾岸諸国からの自制を求める要請を受け、地域情勢の壊滅的な悪化を避けるための判断だとしている。攻撃はイランの挑発行為を受けて計画されていたが、トランプ氏は「平和と安定を優先した」と述べた。この決定により一時的に緊張は和らぐ可能性があるが、イラン情勢の先行きは依然として不透明である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260519/k10015124941000.html" target="_blank" rel="noopener noreferrer">きょう日韓首脳会談 エネルギー協力で政策対話立ち上げへ調整</a></h3>
+    <p class="meta">NHK国際放送 | 05/18 20:21</p>
+    <p class="summary">日韓両政府は、19日の首脳会談において、エネルギー分野の協力を強化するための閣僚級政策対話を新設することで合意する見通し。水素やアンモニアなど脱炭素燃料の供給網構築や、技術開発での連携を具体化させる。また、北朝鮮の脅威に対する安全保障協力も再確認される予定だ。シャトル外交を通じて改善が進む日韓関係を、経済安全保障の観点からもさらに強固にすることを目指す。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
