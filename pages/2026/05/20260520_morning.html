@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月20日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月20日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月20日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5/" target="_blank" rel="noopener noreferrer">Gemini 3.5 Flash</a></h3>
+    <p class="meta">Hacker News | 05/20 02:43</p>
+    <p class="summary">Googleは、次世代モデル「Gemini 3.5 Flash」を発表しました。このモデルは、高速かつ効率的な推論を実現することに特化しており、開発者や企業がAI機能をより低コストで迅速にアプリケーションへ統合できるよう設計されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://virtualosmuseum.org/" target="_blank" rel="noopener noreferrer">I’ve built a virtual museum with nearly every operating system you can think of</a></h3>
+    <p class="meta">Hacker News | 05/20 00:53</p>
+    <p class="summary">「Virtual OS Museum」は、歴史的なオペレーティングシステムをブラウザ上で体験できる仮想博物館です。過去のPC環境を再現し、当時のUIや操作感、技術の進化を誰でも手軽に振り返ることができるプロジェクトです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.google/products-and-platforms/products/search/search-io-2026/" target="_blank" rel="noopener noreferrer">Google changes its search box</a></h3>
+    <p class="meta">Hacker News | 05/20 03:34</p>
+    <p class="summary">Googleは検索機能を刷新し、ユーザー体験を改善するための新たなインターフェースを導入しました。より直感的で、AIを活用した回答やパーソナライズされた検索結果の表示を強化する設計となっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://openai.com/index/advancing-content-provenance/" target="_blank" rel="noopener noreferrer">OpenAI Adopts Google&#39;s SynthID Watermark for AI Images with Verification Tool</a></h3>
+    <p class="meta">Hacker News | 05/20 04:34</p>
+    <p class="summary">OpenAIは、AI生成画像を特定するための技術としてGoogleの「SynthID」を採用しました。透かし（ウォーターマーク）を埋め込み、検証ツールを通じてコンテンツの出自を証明することで、AI生成物の信頼性と透明性を向上させます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.emmi.ai/news/mistral-ai-acquires-emmi-ai" target="_blank" rel="noopener noreferrer">Mistral AI Acquires Emmi AI to Create the Leading AI Stack</a></h3>
+    <p class="meta">Hacker News | 05/20 04:14</p>
+    <p class="summary">Mistral AIがEmmi AIを買収しました。この戦略的買収により、Mistral AIは自社のAI技術スタックを強化し、業界における競争力と製品開発の加速を目指します。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/green_tea/articles/0bce4d47ab0674" target="_blank" rel="noopener noreferrer">回帰分析って知ってる？―完全に理解した人へ贈る絶望の谷</a></h3>
+    <p class="meta">Zenn トレンド | 05/19 02:50</p>
+    <p class="summary">回帰分析を習得したつもりでも、現実の複雑なデータ分析に直面すると深い挫折感を味わう「絶望の谷」について考察した記事。手法の理解だけでなく、ドメイン知識の重要性を説いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/pepabo/articles/9baa6271b2055d" target="_blank" rel="noopener noreferrer">AIを5本同時に走らせても、俺の脳みそは1個しかない</a></h3>
+    <p class="meta">Zenn トレンド | 05/19 00:15</p>
+    <p class="summary">複数のAIを同時に活用する環境下での作業体験記。ツールを増やすほど効率が上がるわけではなく、人間の脳が処理できる情報量には限界があるという現実的な課題に焦点を当てています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/platina/articles/speaker-inversion" target="_blank" rel="noopener noreferrer">Irodori-TTSを使って音声ファイルよりも軽い埋め込みだけで声を学習する</a></h3>
+    <p class="meta">Zenn トレンド | 05/18 15:44</p>
+    <p class="summary">「Irodori-TTS」を活用し、音声ファイルよりも軽量な埋め込みデータを使用して音声を学習させる手法を解説。低コストかつ効率的に特定の声を再現するための実践的なガイドです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/19/elon-musk-said-sam-altman-stole-a-non-profit-but-the-trial-showed-he-had-similar-aims/" target="_blank" rel="noopener noreferrer">Elon Musk said Sam Altman “stole” a non-profit — but the trial showed he had similar aims</a></h3>
+    <p class="meta">TechCrunch | 05/19 20:11</p>
+    <p class="summary">イーロン・マスク氏がサム・アルトマン氏を非難した裁判において、結果として両者の掲げるAI開発の目的には大きな差異がないことが示されました。非営利組織を巡る紛争の経緯と結末が報じられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/19/google-takes-a-page-out-of-metas-book-announces-new-audio-powered-smart-glasses/" target="_blank" rel="noopener noreferrer">Google takes a page out of Meta’s book, announces new audio-powered smart glasses</a></h3>
+    <p class="meta">TechCrunch | 05/19 19:15</p>
+    <p class="summary">Googleが、Metaの取り組みに追随する形で、オーディオ機能を搭載した新しいスマートグラスの開発を発表しました。ウェアラブルデバイスにおけるAI連携の可能性をさらに拡大する狙いです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/19/googles-genie-world-model-can-now-simulate-real-streets-with-street-view/" target="_blank" rel="noopener noreferrer">Google’s Genie world model can now simulate real streets with Street View</a></h3>
+    <p class="meta">TechCrunch | 05/19 17:51</p>
+    <p class="summary">Googleの世界モデル「Genie」が進化し、Googleストリートビューのデータを用いて現実世界の道路をシミュレーション可能になりました。環境認識と生成AIの融合が新たなフェーズに入っています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cvgzj0pqpyyo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">&#39;Ebola has tortured us&#39;: Fear grips eastern DR Congo as deadly virus spreads</a></h3>
+    <p class="meta">BBC World News | 05/19 18:05</p>
+    <p class="summary">コンゴ民主共和国東部でエボラ出血熱の感染が拡大し、住民の間に深い恐怖が広がっています。死に至るウイルスの拡散を抑えるための緊急かつ困難な対応が求められています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/ceqp11gn1l8o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Ebola outbreak may be spreading faster than first thought, WHO doctor warns</a></h3>
+    <p class="meta">BBC World News | 05/19 19:32</p>
+    <p class="summary">WHOの専門家は、エボラ出血熱の感染拡大速度が当初の予測を上回っている可能性を警告しました。感染封じ込めには国際社会のさらなる支援と迅速な対応が不可欠であると指摘しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c5yejzmvy56o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Key people smuggler arrested after BBC uncovered identity</a></h3>
+    <p class="meta">BBC World News | 05/19 17:05</p>
+    <p class="summary">BBCの調査報道によって正体が突き止められた主要な密入国斡旋業者が、当局によって逮捕されました。メディアによる追跡調査が治安維持に貢献した事例として報じられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260520/k10015126011000.html" target="_blank" rel="noopener noreferrer">トランプ大統領 イランへの攻撃再開言及も数日猶予で出方注視</a></h3>
+    <p class="meta">NHK国際放送 | 05/19 20:49</p>
+    <p class="summary">トランプ大統領はイランへの攻撃再開を示唆しつつも、外交的解決を探るためか数日間の猶予を設け、イラン側の出方を注視する姿勢を示しました。緊迫した中東情勢の動向が注目されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260520/k10015126001000.html" target="_blank" rel="noopener noreferrer">きょう北京で中ロ首脳会談 両国の結束確認か</a></h3>
+    <p class="meta">NHK国際放送 | 05/19 20:33</p>
+    <p class="summary">中国とロシアの首脳会談が北京で開催されました。両国は結束を改めて確認し、国際情勢に対する協力関係を維持・強化していく意向であるとみられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260520/k10015125951000.html" target="_blank" rel="noopener noreferrer">日韓首脳 エネルギー供給強じん化で一致 政策対話で具体化へ</a></h3>
+    <p class="meta">NHK国際放送 | 05/19 20:20</p>
+    <p class="summary">日韓両首脳は、エネルギー供給の強じん化に向けた連携で合意しました。両国は具体的な政策対話を進め、エネルギー安全保障の強化を目指す具体的な枠組みを構築する方針です。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
