@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月24日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月24日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月24日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://arstechnica.com/gadgets/2026/04/microsoft-open-sources-the-earliest-dos-source-code-discovered-to-date/" target="_blank" rel="noopener noreferrer">Microsoft open-sources &#34;the earliest DOS source code discovered to date&#34;</a></h3>
+    <p class="meta">Hacker News | 05/24 10:21</p>
+    <p class="summary">Microsoftは現存する最古のDOSソースコードである「86-DOS 0.1」をオープンソース化した。これは1980年にシアトル・コンピュータ・プロダクツによって開発された歴史的資料で、後にMS-DOSの基礎となった貴重な記録である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://adaptivesupport.amd.com/s/question/0D5Pd00001YQLdMKAX/why-is-vivado-20261-dropping-linux-support-for-free-tier-?language=en_US" target="_blank" rel="noopener noreferrer">Why is Vivado 2026.1 dropping Linux support for free tier?</a></h3>
+    <p class="meta">Hacker News | 05/24 13:14</p>
+    <p class="summary">AMDのVivado 2026.1において、無料のStandard EditionでLinuxサポートが廃止されるという情報があり、開発者の間で議論を呼んでいる。多くのユーザーがLinux上での開発継続への影響を懸念している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/21/scammers-are-abusing-an-internal-microsoft-account-to-send-spam/" target="_blank" rel="noopener noreferrer">Scammers are abusing an internal Microsoft account to send spam links</a></h3>
+    <p class="meta">Hacker News | 05/24 09:51</p>
+    <p class="summary">詐欺師がマイクロソフトの内部アカウントを悪用し、スパムリンクを含むメールを送信している。信頼されたドメインからの送信であるためセキュリティを回避しやすく、ユーザーの認証情報を狙った攻撃が行われている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://hellmood.111mb.de/wake_up_16b_writeup.html" target="_blank" rel="noopener noreferrer">Wake up! 16b</a></h3>
+    <p class="meta">Hacker News | 05/24 09:30</p>
+    <p class="summary">わずか16バイトという極限のサイズで作成されたデモ作品「Wake up!」の技術解説。x86アセンブリを駆使し、BIOSやビデオメモリを直接操作して最小限のコードで視覚効果を実現する手法が紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.masswerk.at/nowgobang/2026/c64-dead-test-font" target="_blank" rel="noopener noreferrer">The C64 Dead Test Font</a></h3>
+    <p class="meta">Hacker News | 05/24 12:57</p>
+    <p class="summary">コモドール64のハードウェア診断用カートリッジ「Dead Test」で使用されていたフォントの歴史とデザインに関する考察。当時の制限下で視認性を高めるための工夫や、そのフォントが持つ独特の美学が語られている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/yuitonn/articles/f88ddcf21ce172" target="_blank" rel="noopener noreferrer">【アーキテクチャ】大量の類似 Feature を持つ Enterprise なフロントエンド設計</a></h3>
+    <p class="meta">Zenn トレンド | 05/23 17:17</p>
+    <p class="summary">大規模なエンタープライズ向けフロントエンド開発において、類似した機能が大量に存在する場合の設計手法を提案。保守性と拡張性を両立させるためのコンポーネント分割やディレクトリ構造の最適化について詳しく解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/ju571n/articles/ai-agent-config-attack-surface" target="_blank" rel="noopener noreferrer">AIコーディングエージェントの本当の攻撃面は設定ファイルだった</a></h3>
+    <p class="meta">Zenn トレンド | 05/23 11:51</p>
+    <p class="summary">AIコーディングエージェントの脆弱性として設定ファイルが悪用されるリスクを指摘。リポジトリ内の設定ファイルを操作することで、AIに悪意あるコードを生成させたり秘密情報を漏洩させたりする攻撃手法とその対策について論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/ralutet/articles/20260523_samurai" target="_blank" rel="noopener noreferrer">日本人たるもの、業務BOTを武士とすべし。</a></h3>
+    <p class="meta">Zenn トレンド | 05/23 10:29</p>
+    <p class="summary">Slack等の業務ボットの口調を「武士」に設定することで、チームのコミュニケーションを円滑にする試みの紹介。ツールに愛着を持たせ、ユーモアを交えつつ業務を楽しく進めるための工夫が自身の経験をもとに綴られている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/yurizono/items/43a93d8ff3f7046b31e3?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">あれほど頼れるAIが、しょっぱいテストケースを作ってくる理由を考えた</a></h3>
+    <p class="meta">Qiita トレンド | 05/21 22:03</p>
+    <p class="summary">生成AIが期待外れのテストケースを作成してしまう原因と、その改善策を考察。AIの特性を理解し、文脈や目的を正しく伝えるためのプロンプトの工夫や、開発者がAIを適切に導く重要性について説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/ishi720/items/bac7a492b1b7d5ffe510?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Qiita記事の毎月投稿を三年間継続できたので振り返ります！</a></h3>
+    <p class="meta">Qiita トレンド | 05/23 10:13</p>
+    <p class="summary">Qiitaへの毎月投稿を3年間継続した著者の振り返り。アウトプットを習慣化するコツや、継続によって得られた知識の定着、コミュニティとの繋がりなど、継続的な学習と発信がもたらすメリットが共有されている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/surveying-the-california-quantum-ecosystem/" target="_blank" rel="noopener noreferrer">Surveying the California Quantum Ecosystem</a></h3>
+    <p class="meta">Quantum Computing Report | 05/24 03:39</p>
+    <p class="summary">カリフォルニア州における量子コンピュータのエコシステムに関する調査報告。主要なスタートアップ、大学の研究機関、政府の支援体制など、世界をリードする同地域の量子技術開発の現状と将来の展望がまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/emmanuel-macron-announces-an-additional-e1-billion-1-16b-usd-in-funding-for-frances-quantum-plan/" target="_blank" rel="noopener noreferrer">Emmanuel Macron Announces an Additional €1 Billion ($1.16B USD) in Funding for France’s Quantum Plan</a></h3>
+    <p class="meta">Quantum Computing Report | 05/23 03:21</p>
+    <p class="summary">フランスのマクロン大統領は、国家量子計画に対して新たに10億ユーロ（約11.6億ドル）の追加支援を発表した。欧州内での量子技術における主導権を確保し、スタートアップ育成や研究開発を加速させる狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/xanadu-establishes-a-synthetic-at-the-market-equity-facility-to-raise-up-to-300-million/" target="_blank" rel="noopener noreferrer">Xanadu Establishes a Synthetic At-the-Market Equity Facility to Raise up to $300 Million</a></h3>
+    <p class="meta">Quantum Computing Report | 05/22 23:28</p>
+    <p class="summary">量子コンピューティング企業のXanaduが、最大3億ドルの資金調達を目的とした株式発行枠を設定した。光量子コンピュータの開発加速と、商用化に向けたインフラ投資を強化する資金として活用される予定。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cjwp82ye4y3o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Suspect killed after opening fire on Secret Service near White House</a></h3>
+    <p class="meta">BBC World News | 05/24 06:15</p>
+    <p class="summary">ホワイトハウス近くでシークレットサービスに向けて発砲した容疑者の男が、反撃を受けて死亡した。事件当時、大統領の安全は確保されており、当局が詳しい動機や事件の背景について調査を進めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cvgz05jyrrpo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Rosenberg: Luhansk strike sparks Russian accusations and vow to retaliate</a></h3>
+    <p class="meta">BBC World News | 05/23 23:34</p>
+    <p class="summary">ルハンスク地域への攻撃を受け、ロシア側はウクライナによるものだと非難し、報復を宣言した。この攻撃は現地の緊張をさらに高めており、双方の軍事行動がさらに激化することが懸念されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260524/k10015130051000.html" target="_blank" rel="noopener noreferrer">ホワイトハウス近くで発砲 容疑者の男死亡 大統領に影響なし</a></h3>
+    <p class="meta">NHK国際放送 | 05/24 08:52</p>
+    <p class="summary">ホワイトハウス近辺で男が発砲し、シークレットサービスにより射殺された。当時、トランプ大統領はホワイトハウス内にいたが、安全に影響はなかった。警察が事件の動機や詳しい状況を調べている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260524/k10015130291000.html" target="_blank" rel="noopener noreferrer">サッカーW杯イラン代表キャンプ地 メキシコに変更 イラン報道</a></h3>
+    <p class="meta">NHK国際放送 | 05/24 08:50</p>
+    <p class="summary">サッカーW杯のイラン代表が、キャンプ地を当初の予定からメキシコに変更したと現地メディアが報じた。政治的または物流的な理由によるものと見られ、大会に向けた準備調整への影響が注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260524/k10015129981000.html" target="_blank" rel="noopener noreferrer">トランプ大統領 イランとの合意に向け最終調整か</a></h3>
+    <p class="meta">NHK国際放送 | 05/24 02:54</p>
+    <p class="summary">トランプ大統領がイランとの新合意に向けて最終調整に入っているとの報道。核合意離脱後の緊張状態を緩和し、外交的な成果を目指す狙いがあると見られ、今後の国際情勢への影響が注視される。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
