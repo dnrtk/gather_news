@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月26日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月26日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月26日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://mullvad.net/en/help/exit-ip-vpn-servers-mitigation-rollout" target="_blank" rel="noopener noreferrer">Exit IP VPN servers mitigation rollout</a></h3>
+    <p class="meta">Hacker News | 05/26 02:45</p>
+    <p class="summary">Mullvad VPNは、VPNの出口IPアドレスがユーザーの特定に悪用されるリスクを軽減するための緩和策を導入した。この取り組みは、ネットワークトラフィックの処理方法を改善することで、ユーザーのプライバシー保護を強化することを目的としている。特定のサーバー構成において、より安全な匿名性を確保するための段階的なロールアウトが行われている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.tomshardware.com/software/linux/california-moves-to-exempt-linux-from-its-upcoming-age-verification-law-after-backlash-over-forcing-operating-systems-to-collect-users-ages-amendment-proposed-by-the-same-lawmaker-who-wrote-the-original-law" target="_blank" rel="noopener noreferrer">California moves to exempt Linux from its age-verification law after backlash</a></h3>
+    <p class="meta">Hacker News | 05/26 03:19</p>
+    <p class="summary">カリフォルニア州の議員は、OSにユーザーの年齢確認を義務付ける新法から、Linuxなどのオペレーティングシステムを除外する修正案を提出した。当初の法案はOSレベルでのデータ収集を強いるもので、プライバシー保護団体や技術コミュニティから強い反発を受けていた。修正案は、OS開発者がユーザーの個人情報を収集しなくて済むように配慮したものとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.blocksandfiles.com/flash/2026/05/22/norways-2-petabytes-of-huawei-flash-storage-and-llm-training/5244910" target="_blank" rel="noopener noreferrer">Norway&#39;s 2 petabytes of Huawei flash storage and LLM training</a></h3>
+    <p class="meta">Hacker News | 05/26 04:37</p>
+    <p class="summary">ノルウェーのSigma2は、大規模言語モデル（LLM）のトレーニングを含む研究用インフラに、ファーウェイ製の2ペタバイトのフラッシュストレージを採用した。地政学的な懸念があるものの、同社は技術的な性能とコスト効率を重視してこの選択を行った。これはノルウェーの研究能力を強化し、AI分野での競争力を維持するための戦略的な投資の一環である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html" target="_blank" rel="noopener noreferrer">Magnifica Humanitas</a></h3>
+    <p class="meta">Hacker News | 05/25 19:11</p>
+    <p class="summary">教皇レオ14世による回勅「Magnifica Humanitas」は、現代社会における人間の尊厳と技術の進歩の関係について論じている。技術が人間性を損なうのではなく、共通の善に奉仕すべきであることを強調し、倫理的な指針に基づいた社会発展を呼びかけている。信仰と現代の課題を調和させ、すべての人が尊厳を持って生きられる世界を目指す内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://lemon.rip/w/6-c-extensions-compilers/" target="_blank" rel="noopener noreferrer">C extensions, portability, and alternative compilers</a></h3>
+    <p class="meta">Hacker News | 05/25 23:15</p>
+    <p class="summary">C言語による拡張機能が、プログラミング言語のポータビリティや代替コンパイラの開発に与える影響を考察している。PythonやRubyなどの言語において、C拡張は高いパフォーマンスを実現する一方で、異なる実行環境や最適化コンパイラへの移行を困難にする。技術的な負債としての側面を指摘し、将来の言語設計における互換性と柔軟性の重要性を説いている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/peoplex_blog/articles/f2cfcd8b625202" target="_blank" rel="noopener noreferrer">AI時代の競争優位は「統合」にしかない —— エンジニアと組織が、今投資すべきもの</a></h3>
+    <p class="meta">Zenn トレンド | 05/25 02:16</p>
+    <p class="summary">AIの普及により個別の作業が自動化される時代において、真の競争優位性は「統合」にあると提唱。エンジニアや組織は、単一の技術導入に留まらず、ビジネスロジック、ユーザー体験、AIをいかにシームレスに結びつけるかに投資すべきである。組織全体での一貫した設計思想と実行力が、変化の激しい市場での生存戦略となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/sakui2i/items/e7939e9f2a8b3e8177f8?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">[初心者]Linuxと仲良くなれるコマンド3選</a></h3>
+    <p class="meta">Qiita トレンド | 05/25 00:38</p>
+    <p class="summary">Linux初心者向けに、まず覚えるべき3つの基本コマンド（ls、cd、cat）を紹介。ファイル一覧を表示する「ls」、ディレクトリを移動する「cd」、ファイル内容を表示する「cat」について、それぞれの使い方と役割を簡潔に解説している。これらのコマンドを習得することで、Linux環境での基本的な操作に自信を持てるようになることを目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/25/what-clickups-mass-layoff-tells-us-about-the-future-of-work/" target="_blank" rel="noopener noreferrer">What ClickUp’s mass layoff tells us about the future of work</a></h3>
+    <p class="meta">TechCrunch | 05/25 16:00</p>
+    <p class="summary">ClickUpで実施された大規模なレイオフは、テック業界が「成長至上主義」から「効率と収益性の重視」へと転換していることを示している。AIの導入による業務の効率化が進む中で、企業は人員構成を再考し、より少ないリソースで成果を出す体制への移行を模索している。これは将来の働き方や組織のあり方に大きな影響を与える変化である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/25/the-popes-ai-encyclical-isnt-really-about-ai/" target="_blank" rel="noopener noreferrer">The pope’s AI encyclical isn’t really about AI</a></h3>
+    <p class="meta">TechCrunch | 05/25 15:09</p>
+    <p class="summary">教皇によるAIに関する回勅は、技術そのものよりも、それが人間に与える倫理的な影響に焦点を当てている。AIを単なる道具として捉えるのではなく、人間関係、社会的な平等、そして尊厳を脅かさないための指針を提示。技術の進歩が暴走するのではなく、人類全体の幸福と倫理的な責任に根ざしたものであるべきだと説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/25/the-pitch-trick-that-helped-an-esports-startup-raise-20m-when-vcs-only-wanted-ai/" target="_blank" rel="noopener noreferrer">The pitch trick that helped an eSports startup raise $20M when VCs only wanted AI</a></h3>
+    <p class="meta">TechCrunch | 05/25 15:00</p>
+    <p class="summary">投資家の関心がAI分野に集中する厳しい市場環境下で、あるeスポーツ企業が2000万ドルの資金調達に成功した戦略を解説。同社は単なる技術アピールではなく、熱狂的なコミュニティと独自のライフスタイルブランドとしての価値を強調。流行に左右されない強固なビジネスモデルを示すことが、VCから資金を引き出す鍵となったことを示唆している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c1e22n55zn4o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Russia threatens more Kyiv strikes and tells foreign nationals to leave</a></h3>
+    <p class="meta">BBC World News | 05/25 17:42</p>
+    <p class="summary">ロシアはウクライナの首都キーウに対する攻撃を強化する姿勢を見せ、外国籍の住民に対し速やかな退避を警告した。この動きは、戦況のさらなる激化を示唆しており、国際社会に緊張が走っている。ウクライナ側はロシアの威嚇に強く反発しており、各国の外交関係者や民間人の安全確保が急務となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260526/k10015131341000.html" target="_blank" rel="noopener noreferrer">日インド外相 中東情勢受けエネルギー安定供給などで連携確認</a></h3>
+    <p class="meta">NHK国際放送 | 05/25 20:41</p>
+    <p class="summary">日本とインドの外相が会談を行い、緊迫する中東情勢を受けて、エネルギーの安定供給に向けた連携を強化することで一致した。「自由で開かれたインド太平洋」の実現に向け、安全保障や経済分野での協力を深化させることも確認。両国の戦略的パートナーシップを基盤に、地域と世界の安定に寄与していく方針を打ち出した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260526/k10015131331000.html" target="_blank" rel="noopener noreferrer">ロシア 在キーウ外交官らに退避を警告 ウクライナ側は強く反発</a></h3>
+    <p class="meta">NHK国際放送 | 05/25 20:38</p>
+    <p class="summary">ロシア政府がキーウに駐在する各国の外交官らに対し、避難を勧告する警告を出した。ウクライナ政府はこれを不当な威嚇であるとして激しく非難。ロシア側による大規模な攻撃が懸念される中、国際社会では緊張が一段と高まっており、現地の外交使節団の安全保護や今後の事態推移が注視されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260526/k10015131251000.html" target="_blank" rel="noopener noreferrer">トランプ大統領“交渉は順調” イランとの駆け引き続く</a></h3>
+    <p class="meta">NHK国際放送 | 05/25 20:30</p>
+    <p class="summary">トランプ大統領は、イランとの間で行われている外交交渉について「順調に進展している」との見解を示した。核開発問題や制裁解除を巡る複雑な駆け引きが続く中、対話の継続を強調することで外交的な成果をアピールする狙いがある。しかし、具体的な合意条件については依然として不透明であり、今後の動向が注目される。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
