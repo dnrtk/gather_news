@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年06月05日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年06月05日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年06月05日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://ladybird.org/posts/changing-how-we-develop-ladybird/" target="_blank" rel="noopener noreferrer">Changing How We Develop Ladybird</a></h3>
+    <p class="meta">Hacker News | 06/05 16:26</p>
+    <p class="summary">Ladybirdブラウザの開発体制の変更に関する報告。元々はSerenityOSのプロジェクトとして始まったが、独立したクロスプラットフォームのブラウザとして進化させるため、C++から新言語「Jakt」への移行やビルドシステムの刷新、依存関係の整理を行う。特定のOSに依存しない独自のウェブエンジン開発を加速させ、ウェブ標準への準拠を強化する狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://herbsutter.com/2026/06/04/c-the-documentary-released-today/" target="_blank" rel="noopener noreferrer">C++: The Documentary</a></h3>
+    <p class="meta">Hacker News | 06/05 13:37</p>
+    <p class="summary">C++の歴史と進化、そしてソフトウェア開発の世界に与えた影響を探るドキュメンタリー映画が公開された。Bjarne Stroustrupら主要な貢献者たちのインタビューを通じ、初期の誕生秘話から現代の標準化に至るまでの道のりを描く。技術的な背景だけでなく、コミュニティの熱意や将来の展望についても触れられており、開発者にとって興味深い内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://passo.uno/fine-tuning-docs-llm/" target="_blank" rel="noopener noreferrer">Fine-tuning an LLM to write docs like it&#39;s 1995</a></h3>
+    <p class="meta">Hacker News | 06/05 14:46</p>
+    <p class="summary">1990年代のソフトウェアドキュメントの文体を再現するため、LLMをファインチューニングした試みの記録。当時のマニュアルやヘルプファイル特有の言い回し、技術用語の使い方、レイアウトを学習させることで、レトロな雰囲気を持つドキュメント生成を可能にした。特定のニッチなスタイルにLLMを適応させる手法のデモンストレーションとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://fb.watch/HxPu0fSyeH/" target="_blank" rel="noopener noreferrer">Meta enables ADB on deprecated Portal devices [video]</a></h3>
+    <p class="meta">Hacker News | 06/05 09:44</p>
+    <p class="summary">サポートが終了したスマートディスプレイ「Meta Portal」において、ADB（Android Debug Bridge）が有効化された。これにより、ユーザーは開発者モードを利用してアプリのサイドロードや詳細なデバッグが可能になり、ハードウェアの寿命を延ばしたり、独自の用途に転用したりする道が開かれた。公式サポート終了後のデバイス活用を支援する動きとして注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://spectrum.ieee.org/faster-dna-synthesis-sidewinder" target="_blank" rel="noopener noreferrer">Leap in DNA synthesis slashes time to build new genetic sequences</a></h3>
+    <p class="meta">Hacker News | 06/05 02:51</p>
+    <p class="summary">新しいDNA合成技術「Sidewinder」により、遺伝子配列の構築時間が劇的に短縮された。従来の化学的手法に代わる酵素を用いたアプローチなどにより、これまでは数週間かかっていた長鎖DNAの合成が、数時間から数日で完了可能になるという。合成生物学や個別化医療、データストレージとしてのDNA利用など、幅広い分野での研究開発が加速することが期待される。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/kairim/articles/35dd71c526b64f" target="_blank" rel="noopener noreferrer">AWS Innovation Sandbox (ISB) を構築してみた！</a></h3>
+    <p class="meta">Zenn トレンド | 06/04 11:52</p>
+    <p class="summary">AWSの検証環境を安全かつ迅速に構築できるフレームワーク「AWS Innovation Sandbox (ISB)」の導入・構築レポート。組織内の開発者が自由にリソースを試せる環境を作りつつ、コスト制限やセキュリティガードレールを設ける方法を解説している。IaCを用いた自動デプロイ手順や、実際に構築してみた際の注意点、利用上のメリットが詳細にまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/kaz20/articles/1e622ef249d133" target="_blank" rel="noopener noreferrer">CUDA Programming Guide Part 1</a></h3>
+    <p class="meta">Zenn トレンド | 06/04 11:10</p>
+    <p class="summary">NVIDIAのGPUコンピューティングプラットフォーム「CUDA」のプログラミングガイド。第1部では、GPUの並列計算アーキテクチャの基本概念から、ホストとデバイス間のメモリ転送、カーネル関数の実行モデルまでを解説している。AIや科学計算で必須となるGPU活用の第一歩として、開発環境の構築や簡単なコード例を交えた入門者向けの内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/innovation/articles/3fe337358aa759" target="_blank" rel="noopener noreferrer">【失敗談】大規模開発をして残ったのは技術負債だけだった話 〜作らないことの重要性〜</a></h3>
+    <p class="meta">Zenn トレンド | 06/04 06:00</p>
+    <p class="summary">大規模なシステム開発を完遂したものの、結果として膨大な技術負債を抱えてしまった失敗談。過剰な機能要件の追求や複雑なアーキテクチャが、運用保守のコストを増大させた経緯を分析している。教訓として、本当に必要な機能を見極める「作らない勇気」や、シンプルさを維持することの重要性、ビジネス価値に直結する開発の重要性を強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prum_hitomi/items/01defe8188de2123b25c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AI時代、“ITを知らない”が普通に危険になってきた話</a></h3>
+    <p class="meta">Qiita トレンド | 06/05 04:33</p>
+    <p class="summary">生成AIの普及により、非エンジニアであっても最低限のITリテラシーがないことがリスクになる現状を指摘。AIを使いこなすには、仕組みの理解やプロンプトエンジニアリングだけでなく、セキュリティや情報の真偽を判断する力が不可欠であると説く。ITスキルの有無が業務効率やキャリアの格差に直結する時代の生存戦略について考察している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/yamadagenki/items/bc59607d940a9e87c189?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">非エンジニアでもAIで小さなシステム修正はできる。Claude Code・Cursor時代の依頼術</a></h3>
+    <p class="meta">Qiita トレンド | 06/05 00:50</p>
+    <p class="summary">Claude CodeやCursorなどのAIツールを活用し、非エンジニアが自らコードの修正を行うための実践的なテクニックを紹介。具体的な「依頼の出し方」や、AIが生成したコードの動作確認、エンジニアとの円滑な連携のコツを解説している。小さな修正を自分で行うことで開発サイクルを早め、エンジニアがより高度な課題に集中できる体制の構築を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/04/mira-murati-steps-back-into-the-spotlight-carefully/" target="_blank" rel="noopener noreferrer">Mira Murati steps back into the spotlight, carefully</a></h3>
+    <p class="meta">TechCrunch | 06/05 05:06</p>
+    <p class="summary">OpenAIを去った後、沈黙を保っていたミラ・ムラティが再び注目を集めている。彼女の今後の動向や、AI業界におけるリーダーシップ、新たなスタートアップ設立の可能性について分析。これまでの彼女のキャリアと、急速に変化するAI競争環境の中で彼女がどのような役割を果たすのか、業界関係者が慎重かつ熱心に注視している様子を描いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/04/founders-fund-launches-game-show-starring-sam-altman-palmer-luckey-and-other-tech-elites/" target="_blank" rel="noopener noreferrer">Founders Fund launches game show starring Sam Altman, Palmer Luckey, and other tech elites</a></h3>
+    <p class="meta">TechCrunch | 06/05 00:06</p>
+    <p class="summary">ベンチャーキャピタルのFounders Fundが、サム・アルトマンやパルマー・ラッキーら著名なテックリーダーが出演するゲームショーを制作。技術や投資、スタートアップ文化をテーマにしたエンターテインメント番組で、業界のエリートたちが競い合う。テック業界のスター性を活用し、一般層へのアピールやコミュニティ形成を狙った新しい形のプロモーションとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/04/ahead-of-its-ipo-anthropics-daniela-amodei-shrugs-off-doubts-about-ais-returns/" target="_blank" rel="noopener noreferrer">Ahead of its IPO, Anthropic’s Daniela Amodei shrugs off doubts about AI’s returns</a></h3>
+    <p class="meta">TechCrunch | 06/04 22:43</p>
+    <p class="summary">AnthropicのIPOを控え、共同創業者ダニエラ・アモデイはAIへの巨額投資に対するリターンの疑念を一蹴した。モデルの性能向上と企業向け市場の成長により、投資を正当化できる収益性が確保されると自信を見せている。AIバブルへの警戒感が強まる中で、同社の技術的優位性と倫理性、そして持続可能なビジネスモデルを改めて強調する内容となっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cwy2ypyp4x4o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Zelensky proposes face-to-face talks in open letter to Putin</a></h3>
+    <p class="meta">BBC World News | 06/05 08:03</p>
+    <p class="summary">ウクライナのゼレンスキー大統領が、ロシアのプーチン大統領に対し、対面での和平交渉を提案する公開書簡を送った。長期化する戦争を終結させるための直接対話を呼びかけたものだが、領土問題や安全保障を巡る両国の溝は依然として深く、実現の可能性やロシア側の反応が注目されている。国際社会に和平への意欲を示す政治的メッセージの側面もある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cnvpvd52j95o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">How Trump&#39;s White House ballroom plan has doubled in size and cost over a year</a></h3>
+    <p class="meta">BBC World News | 06/04 23:53</p>
+    <p class="summary">トランプ前大統領が構想していたホワイトハウスの大宴会場建設計画が、この1年で規模と予算の両面で倍増したことが判明した。豪華な装飾や最新設備の追加によりコストが跳ね上がっており、公費負担や歴史的建造物への影響を懸念する声も上がっている。政治的な象徴としての意味合いも強く、今後の計画進行を巡り議論を呼びそうだ。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260605/k10015137941000.html" target="_blank" rel="noopener noreferrer">世界銀行総裁 日本とどう連携？ 途上国の若者の雇用不足に警鐘</a></h3>
+    <p class="meta">NHK国際放送 | 06/05 08:12</p>
+    <p class="summary">世界銀行の総裁が来日し、途上国における深刻な若者の雇用不足について警告した。日本との連携を強化し、教育支援やデジタル技術を活用した産業振興を通じて、年間数億人規模で必要となる新たな雇用の創出を目指す方針を示した。急速な人口増が続くアフリカなどの地域安定には、若者への経済的機会の提供が不可欠であると訴えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260605/k10015141781000.html" target="_blank" rel="noopener noreferrer">中国 習近平国家主席が8日から北朝鮮訪問へ 2019年以来</a></h3>
+    <p class="meta">NHK国際放送 | 06/05 08:01</p>
+    <p class="summary">中国の習近平国家主席が6月8日から北朝鮮を訪問することが発表された。2019年以来の訪朝となり、金正恩総書記との首脳会談を通じて、両国の伝統的な友好関係を誇示するとともに、地域の安定や経済協力について協議する見通し。北朝鮮を巡る情勢や、対米関係を睨んだ中朝の結束強化の動きとして、各国の外交当局が注視している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260605/k10015128861000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（6月5日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 06/05 07:11</p>
+    <p class="summary">6月5日のロシア・ウクライナ情勢の動き。前線での激しい戦闘が続く中、エネルギー施設を標的としたロシアによる断続的な攻撃や、それに対するウクライナ軍の反撃状況を報じている。また、西側諸国による追加の軍事支援の動向や、避難民の現状、停戦に向けた国際的な外交努力の最新情報を随時更新形式で伝えている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
