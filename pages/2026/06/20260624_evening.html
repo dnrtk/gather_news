@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年06月24日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年06月24日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年06月24日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://words.filippo.io/vuln-reports/" target="_blank" rel="noopener noreferrer">Vulnerability reports are not special anymore</a></h3>
+    <p class="meta">Hacker News | 06/24 08:42</p>
+    <p class="summary">脆弱性報告の現状が変化し、かつてのような「特別」な扱いが難しくなっていると指摘。自動化ツールによる大量の報告や報奨金目的の質の低い報告が増えたことで、メンテナにとって負担となっている。報告者は丁寧な説明と実証コードの提供を心がけるべきであり、開発側も脆弱性を通常のバグ報告と同様のプロセスで扱うべきだと提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://gitlab.com/baiyibai/pico-usb-wifi" target="_blank" rel="noopener noreferrer">Raspberry Pi Pico W as USB Wi-Fi Adapter</a></h3>
+    <p class="meta">Hacker News | 06/24 12:17</p>
+    <p class="summary">Raspberry Pi Pico WをUSB Wi-Fiアダプターとして利用可能にするプロジェクト。Pico WのWi-Fi機能を活用し、RNDIS（Remote Network Driver Interface Specification）を介してホストデバイスにネットワーク接続を提供する。安価なPico Wを既存デバイスの無線化に転用できる実用的な試みとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://glyphcss.com" target="_blank" rel="noopener noreferrer">Show HN: An ASCII 3D Rendering Engine</a></h3>
+    <p class="meta">Hacker News | 06/21 04:10</p>
+    <p class="summary">HTMLとCSSを用いて、ブラウザ上で動作するASCII文字ベースの3Dレンダリングエンジン。JavaScriptによる複雑な計算を介さず、文字の影や色を利用して立体感を表現している。低スペックな環境でも動作し、レトロなスタイルとモダンなウェブ技術を組み合わせたユニークなショーケースとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://thomasliao.com/eval-startups" target="_blank" rel="noopener noreferrer">Why eval startups fail (2025)</a></h3>
+    <p class="meta">Hacker News | 06/23 08:20</p>
+    <p class="summary">AIモデルの評価（Eval）を専門とするスタートアップが直面する困難を2025年の視点で解説。主な失敗要因として、主要なAIベンダーが独自の評価ツールを提供し始めたことや、評価基準の標準化が難しく、顧客ごとの個別対応が必要になる点が挙げられる。単なる評価ツールの提供を超えた、独自価値の創出が重要であると説く。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/olibrauma/articles/tauri-library-for-cli-tool" target="_blank" rel="noopener noreferrer">Tauri ライブラリの意外な使い道 — headless な CLI を作ってみた</a></h3>
+    <p class="meta">Zenn トレンド | 06/23 12:10</p>
+    <p class="summary">本来デスクトップGUIアプリ構築のためのフレームワークであるTauriを、あえてヘッドレスなCLIツールの開発に活用する試みを紹介。Tauriの強力なエコシステムやRustライブラリを活用しつつ、フロントエンドを表示させずにバックエンドのロジックのみを動かす手法を解説。GUI・CLIの共通化や、Rustの学習リソースとしてのTauriの価値を再発見している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/nomhiro/articles/poc-develop-use-github-copilot-app" target="_blank" rel="noopener noreferrer">GAしたGitHub Copilot Appを触ってみた　～Issueから実装・PR・マージまでをエージェントに任せる～</a></h3>
+    <p class="meta">Zenn トレンド | 06/23 09:25</p>
+    <p class="summary">一般提供が開始されたGitHub Copilot App（旧Copilot Workspace）の活用レポート。GitHubのIssueから自動でコードの実装、プルリクエストの作成、そしてマージまでの一連のフローをAIエージェントに任せる体験を紹介。人間が指示を与え、AIが自律的にタスクを完遂する新しい開発スタイルの可能性と、現時点での精度や課題をまとめている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/honey_aws/articles/certifications-and-tradeoff-judgment" target="_blank" rel="noopener noreferrer">AWS13冠は、何を証明して、何を証明しないのか</a></h3>
+    <p class="meta">Zenn トレンド | 06/23 07:44</p>
+    <p class="summary">全13種類のAWS認定資格をすべて取得した著者が、その価値と限界を考察。資格取得はAWSの広範なサービスに対する知識と学習意欲を証明するが、現場での複雑な設計判断やトレードオフの最適化といった、実務経験に裏打ちされたスキルまでは証明できないと強調。資格を足掛かりに、いかに実務で知見を深化させるかが重要であると説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prum_hitomi/items/d06e7479122150ee0ad9?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">「言った・言わない」を防ぐ。要件定義で使うべき質問の技術</a></h3>
+    <p class="meta">Qiita トレンド | 06/24 04:13</p>
+    <p class="summary">要件定義におけるコミュニケーションのすれ違いを防ぐための具体的な質問技術を解説。「言った・言わない」のトラブルを回避するため、抽象的な言葉を具体化する問いかけや、目的と手段を混同させないための確認方法を提案。顧客の真のニーズを引き出し、プロジェクトを円滑に進めるための思考フレームワークが紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/23/how-to-invest-when-everything-is-moving-too-fast/" target="_blank" rel="noopener noreferrer">How to invest when everything is moving too fast</a></h3>
+    <p class="meta">TechCrunch | 06/24 06:26</p>
+    <p class="summary">AIを中心とした技術革新のスピードが加速する中での投資戦略を考察。変化が速すぎる環境では、個別のトレンドを追うよりも、技術の基盤となるインフラや、長期的な勝者を見極める洞察力が不可欠となる。不確実性が高い時期だからこそ、分散投資の重要性と、情報のノイズを排除して本質を見抜く姿勢が投資家に求められている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/23/walmart-backed-flipkart-expands-quick-commerce-push-as-amazon-ramps-up-in-india/" target="_blank" rel="noopener noreferrer">Walmart-backed Flipkart expands quick-commerce push as Amazon ramps up in India</a></h3>
+    <p class="meta">TechCrunch | 06/24 00:30</p>
+    <p class="summary">インド市場において、ウォルマート傘下のフリップカート（Flipkart）が、アマゾンとの競争激化を受けてクイックコマース事業を拡大。日用品などを短時間で配送するサービスの需要が高まっており、物流網の強化や配送スピードの向上に注力している。巨大資本を背景とした両社の争いは、インドの小売市場全体のデジタル化を加速させている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/23/indias-moengage-bets-marketings-future-on-millions-of-ai-agents/" target="_blank" rel="noopener noreferrer">India’s MoEngage bets that the future of marketing is millions of AI agents</a></h3>
+    <p class="meta">TechCrunch | 06/23 23:30</p>
+    <p class="summary">インドのマーケティング支援プラットフォーム、MoEngageがAIエージェントによる未来像を提示。数百万単位の自律型AIが、個々のユーザーに最適化されたマーケティング施策をリアルタイムで実行する仕組みを構想。従来の手動セグメント化から、AIが予測と実行を担うパーソナライズの自動化への移行を目指し、競争優位性を確立しようとしている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/ce8j6g3v3r4o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Congress passes war powers measure for first time, breaking with Trump over Iran</a></h3>
+    <p class="meta">BBC World News | 06/24 03:57</p>
+    <p class="summary">米議会は、イランに対する軍事行動における大統領の権限を制限する決議案を可決した。トランプ大統領の方針に反し、議会の承認なしに武力行使を行うことを抑制する狙いがある。超党派の支持を得て成立したこの措置は、戦争権限における議会の関与を再確認する歴史的な動きであり、イラン情勢を巡る緊張緩和への期待も含まれている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260624/k10015158481000.html" target="_blank" rel="noopener noreferrer">中国 李首相 AIなど開発加速を強調 “夏のダボス会議”で</a></h3>
+    <p class="meta">NHK国際放送 | 06/24 08:45</p>
+    <p class="summary">中国の李強首相は、大連で開催された「夏のダボス会議」で、AIや新エネルギー車などの先端技術開発をさらに加速させる方針を強調した。中国経済の底堅さをアピールするとともに、グローバルな協力の重要性を訴え、貿易摩擦の中での外資誘致を狙う。また、イノベーションを通じた持続可能な成長を国家戦略として推進する姿勢を示した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260624/k10015158231000.html" target="_blank" rel="noopener noreferrer">北朝鮮で新型駆逐艦の就役式 キム総書記は海軍力の増強強調</a></h3>
+    <p class="meta">NHK国際放送 | 06/24 05:44</p>
+    <p class="summary">北朝鮮で新型駆逐艦の就役式が行われ、金正恩総書記が出席した。金総書記は海軍力の増強が国家の生存と主権を守るための最優先課題であると強調し、さらなる最新装備の導入を指示。周辺国への警戒心を示しつつ、海上戦闘能力の大幅な向上を誇示した。朝鮮半島の緊張が続く中、軍備の近代化を加速させる姿勢が鮮明になっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260624/k10015132941000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（6月24日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 06/24 05:04</p>
+    <p class="summary">ロシアによるウクライナ侵攻の2026年6月24日の状況。東部および南部での激しい戦闘が続いており、双方に甚大な被害が出ている。インフラ施設への攻撃や民間人の犠牲が相次ぐ中、国際社会からの軍事支援の継続と、和平交渉への糸口を模索する動きが交錯している。戦況は依然として不透明であり、長期化する紛争の影響が各地で深刻化している。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
