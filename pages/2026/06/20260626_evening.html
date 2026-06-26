@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年06月26日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年06月26日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年06月26日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://aditya.patadia.org/p/ai-and-cloud-costs" target="_blank" rel="noopener noreferrer">Why current LLM costs are not sustainable</a></h3>
+    <p class="meta">Hacker News | 06/26 16:44</p>
+    <p class="summary">現在のLLM（大規模言語モデル）の運用コストは非常に高く、持続不可能であると指摘。特にクラウド費用や推論コストが収益を圧迫しており、効率的なモデルの開発やインフラの最適化が急務である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://om.co/2026/06/24/1966-2026/" target="_blank" rel="noopener noreferrer">Om Malik has died</a></h3>
+    <p class="meta">Hacker News | 06/26 05:33</p>
+    <p class="summary">テクノロジー界の著名なジャーナリストであり、Gigaomの創設者であるOm Malik氏の逝去を伝える記事。1966年から2026年までの彼の生涯と、テック業界における多大な貢献を偲んでいる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://akrites.org/letter/" target="_blank" rel="noopener noreferrer">We All Depend on Open Source. We Will Defend It Together</a></h3>
+    <p class="meta">Hacker News | 06/26 14:40</p>
+    <p class="summary">私たちのデジタル基盤がオープンソースに依存していることを強調し、それを守るための共同声明。ライセンスの変更や企業による独占からオープンソースの理念を守り、持続可能なエコシステムを維持することを呼びかけている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://graphicore.github.io/librebarcode/" target="_blank" rel="noopener noreferrer">Libre Barcode Project</a></h3>
+    <p class="meta">Hacker News | 06/26 12:12</p>
+    <p class="summary">オープンソースで利用可能なバーコードフォントを提供するプロジェクト。Code 39、Code 128、EAN-13などの主要な規格に対応しており、Webフォントとしても利用可能で、誰もが自由にバーコードを生成できる環境を目指している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/yukorido/articles/23befd1166c0a5" target="_blank" rel="noopener noreferrer">【AWS Summit Japan 2026】 1日目参加レポート</a></h3>
+    <p class="meta">Zenn トレンド | 06/25 12:26</p>
+    <p class="summary">AWS Summit Japan 2026の初日の参加レポート。基調講演での生成AIに関する最新アップデートや、展示ブースでのデモ、セッションを通じて得られた知見をまとめている。AI活用の具体例が豊富に紹介された。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/emuni/articles/5edab377da1074" target="_blank" rel="noopener noreferrer">インターンを経て起業した目線から——2026年、インターンに挑む学生へ</a></h3>
+    <p class="meta">Zenn トレンド | 06/25 08:00</p>
+    <p class="summary">インターン経験を活かして起業した筆者が、2026年にインターンを目指す学生に向けてアドバイス。単なる就業体験に留まらず、当事者意識を持って課題解決に取り組む姿勢の重要性や、現場での人脈形成が将来の糧になることを説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/ruriopcode/articles/289f829fa84f21" target="_blank" rel="noopener noreferrer">Iceberg化できていないデータをどうIceberg化するか</a></h3>
+    <p class="meta">Zenn トレンド | 06/25 07:00</p>
+    <p class="summary">Apache Iceberg形式に変換できていない既存のデータ（Parquet等）を、どのように効率的にIcebergへ移行するかを解説。カタログ管理やテーブルのスキーマ進化、パフォーマンス向上のための変換手法について技術的な観点から詳述している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/n-isd/items/46eeee2dbc282cb16e2f?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">読み方を間違えがちなエンジニア用語集 ~ 会議で恥ずかしい思いをしないために ~</a></h3>
+    <p class="meta">Qiita トレンド | 06/25 08:39</p>
+    <p class="summary">エンジニアが読み間違えやすい用語（例：Kubernetes, Nginx, Schemaなど）をまとめた記事。正しい読み方を知ることで、会議や技術的な議論においてスムーズなコミュニケーションを図ることを目的としている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/25/the-white-house-is-asking-openai-to-slow-roll-the-release-of-its-new-model-over-safety-concerns/" target="_blank" rel="noopener noreferrer">The White House is asking OpenAI to slow roll the release of its new model over safety concerns</a></h3>
+    <p class="meta">TechCrunch | 06/25 23:34</p>
+    <p class="summary">ホワイトハウスは、安全上の懸念からOpenAIに対し、新しいAIモデルのリリースを慎重に進めるよう要請した。政府はAIの急速な発展によるリスクを懸念しており、十分な検証と安全な展開プロセスの確保を求めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/25/youtube-shorts-are-getting-even-shorter-with-an-update-that-lets-you-double-the-playback-speed/" target="_blank" rel="noopener noreferrer">YouTube Shorts are getting even shorter with an update that lets you double the playback speed</a></h3>
+    <p class="meta">TechCrunch | 06/25 22:02</p>
+    <p class="summary">YouTube Shortsに再生速度を2倍にする新機能が追加された。これにより、ユーザーは短い動画をさらに効率的に視聴可能となる。短時間でより多くのコンテンツを消費したいという需要に応えるアップデートとなっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cjegdqw5d3yo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Rescuers search rubble for survivors as Venezuela earthquakes kill at least 235</a></h3>
+    <p class="meta">BBC World News | 06/26 03:24</p>
+    <p class="summary">ベネズエラで発生した地震により、少なくとも235人の死亡が確認された。救助隊が瓦礫の中から生存者の捜索を続けている。大きな被害が出ており、現地では懸命な救助活動と支援体制の構築が進められている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260626/k10015132961000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（6月26日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 06/26 06:51</p>
+    <p class="summary">ロシアによるウクライナ侵攻に関する2026年6月26日の動向。前線での戦闘状況や国際社会の対応、市民への影響など、刻々と変化する現地の情勢を随時更新形式で伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260626/k10015161271000.html" target="_blank" rel="noopener noreferrer">韓国イ・ジェミョン大統領の支持率過去最低 物価高騰など受け</a></h3>
+    <p class="meta">NHK国際放送 | 06/26 06:32</p>
+    <p class="summary">韓国のイ・ジェミョン大統領の支持率が過去最低を記録した。主な要因として物価高騰による国民生活への圧迫や経済不安が挙げられており、政権運営にとって極めて厳しい局面を迎えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260626/k10015161041000.html" target="_blank" rel="noopener noreferrer">北朝鮮 キム総書記 韓国首都圏を射程の兵器発射実験を視察</a></h3>
+    <p class="meta">NHK国際放送 | 06/26 04:52</p>
+    <p class="summary">北朝鮮のキム・ジョンウン総書記が、韓国の首都圏を射程に収める兵器の発射実験を視察した。軍事的な挑発を強めることで存在感を示しており、周辺地域の緊張が一段と高まっている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
