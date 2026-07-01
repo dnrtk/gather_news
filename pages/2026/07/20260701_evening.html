@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月01日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月01日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月01日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.conception.bio/science-and-updates/the-first-early-human-eggs-from-stem-cells" target="_blank" rel="noopener noreferrer">The first early human eggs from stem cells</a></h3>
+    <p class="meta">Hacker News | 07/01 14:09</p>
+    <p class="summary">Conception社は、幹細胞から初となる初期段階のヒト卵子（卵母細胞）を作製することに成功した。これは体外配偶子形成（IVG）技術における重要な進展であり、不妊に悩む人々が自身の遺伝子を受け継ぐ子供を持てる可能性を拓くものである。研究では、幹細胞を始原生殖細胞様細胞へ誘導し、さらに卵母細胞へと分化させている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.arxiv.org/2026/06/30/arxivs-next-chapter/" target="_blank" rel="noopener noreferrer">ArXiv&#39;s Next Chapter</a></h3>
+    <p class="meta">Hacker News | 07/01 11:51</p>
+    <p class="summary">論文リポジトリのarXivは「次の章」として、近代化と持続可能性に向けた新たな計画を発表した。インフラの刷新、アクセシビリティの向上、高度な検索機能の実装などが含まれる。研究成果のオープンアクセスという核となる使命を維持しつつ、増加し続けるプレプリントに対応し、科学コミュニティへのサービス向上を目指す。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/google/copybara" target="_blank" rel="noopener noreferrer">Google copybara: moving code between repositories</a></h3>
+    <p class="meta">Hacker News | 07/01 08:45</p>
+    <p class="summary">Googleが公開しているCopybaraは、複数のリポジトリ間でコードを変換・移動するためのツールである。社内のモノリポと公開リポジトリ（GitHubなど）を同期させる際に役立ち、履歴を保持したまま自動でコードの変換や反映を行うことができる。複雑なワークフローをプログラムで制御し、コードの一貫性を維持するのに適している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/ivry/articles/dais-2026-report" target="_blank" rel="noopener noreferrer">Data + AI Summit 2026 現地参加レポート：データ基盤は「AIがビジネスで意思決定する基盤」へ</a></h3>
+    <p class="meta">Zenn トレンド | 07/01 02:37</p>
+    <p class="summary">Data + AI Summit 2026の参加レポート。データ基盤が単なる集計の場から「AIがビジネス上の意思決定を自律的に行うための基盤」へと進化している現状を報告している。データ品質の重要性や、AIエージェントが活躍するためのアーキテクチャ設計、およびデータとAIを統合的に管理するガバナンスのあり方が主要な論点となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/gamedev_toollab/articles/4fceb9127d8085" target="_blank" rel="noopener noreferrer">C#のDisposeを深掘りする：GC、finalizer、UnityEngine.Objectの破棄を整理する</a></h3>
+    <p class="meta">Zenn トレンド | 07/01 01:00</p>
+    <p class="summary">C#におけるメモリ管理とリソース破棄の仕組みを解説した記事。ガベージコレクション（GC）の基本から、IDisposableインターフェースの実装、ファイナライザの役割、そしてUnity特有のUnityEngine.Objectにおける破棄の挙動の違いを整理している。適切にリソースを解放し、メモリリークを防ぐための実践的な知識を提供している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/cscloud_blog/articles/929c31dadb2245" target="_blank" rel="noopener noreferrer">5年9か月ぶりの転職｜EM × DevHR × DevRel を一本でやる理由</a></h3>
+    <p class="meta">Zenn トレンド | 07/01 00:24</p>
+    <p class="summary">5年9か月ぶりに転職した著者が、エンジニアリングマネージャー（EM）、技術人事（DevHR）、技術広報（DevRel）の3つの役割を横断して担う理由を綴った記事。採用から組織開発、外部発信までを一体化させることで、エンジニア組織の課題をより本質的に解決できるという信念と、新天地での挑戦について語っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/masa20057/items/8de518e172395d48a269?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">「何の言語を学べばいいかわからない」と迷う方へ — Web開発の主要5言語を整理してみた</a></h3>
+    <p class="meta">Qiita トレンド | 07/01 00:24</p>
+    <p class="summary">Web開発を始めたい初心者向けに、主要な5つのプログラミング言語（JavaScript、Python、Ruby、PHP、Go）の特徴を整理した解説記事。それぞれの言語の得意分野や学習難易度、市場需要を比較しており、自分の目的に合った言語選びの指針を示している。バックエンドからフロントエンドまで、現代の開発シーンでの立ち位置を解説する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/30/the-father-of-the-internet-is-finally-retiring/" target="_blank" rel="noopener noreferrer">The ‘Father of the Internet’ is finally retiring</a></h3>
+    <p class="meta">TechCrunch | 07/01 03:15</p>
+    <p class="summary">インターネットの礎を築き「インターネットの父」と呼ばれる人物が、ついに引退を発表した。長年にわたりネットワーク技術の標準化や普及に尽力し、現代のデジタル社会の基盤を構築した功労者である。記事では、これまでの輝かしいキャリアを振り返るとともに、技術界に残した多大な功績と、今後のインターネットの発展に向けたメッセージを伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/30/trump-drops-restrictions-on-anthropics-mythos-and-fable-models/" target="_blank" rel="noopener noreferrer">Trump drops restrictions on Anthropic’s Mythos and Fable models</a></h3>
+    <p class="meta">TechCrunch | 07/01 02:16</p>
+    <p class="summary">トランプ大統領は、Anthropic社が開発したAIモデル「Mythos」および「Fable」に対する制限を解除した。政権側はAI競争力の強化を目的としているが、安全性や倫理的観点からの懸念を指摘する声もあり、今後の規制のあり方と技術開発のバランスが議論の焦点となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/30/wayve-launches-85m-employee-tender-offer-at-8-5b-valuation/" target="_blank" rel="noopener noreferrer">Wayve launches $85M employee tender offer at $8.5B valuation</a></h3>
+    <p class="meta">TechCrunch | 07/01 02:04</p>
+    <p class="summary">自動運転スタートアップのWayveは、評価額85億ドルに基づき、8500万ドルの従業員向け株式公開買付け（テンダーオファー）を実施した。従業員は保有株を現金化する機会を得る。WayveはAI主導の自動運転技術を開発しており、今回の動きは人材の維持と、同社の市場における高い評価を反映したものとなっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cvgmv98ez3zo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump made more than $1bn from crypto in first year back in office</a></h3>
+    <p class="meta">BBC World News | 07/01 07:30</p>
+    <p class="summary">トランプ大統領が再就任後1年間で、暗号資産関連から10億ドル以上の収益を上げていたことが判明した。保有する資産の価値上昇や関連事業からの収入が主な要因とされる。現職大統領が多額の暗号資産を保有・運用していることは、政策への影響や利益相反の観点から大きな議論を呼ぶ可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c1jykwk8n18o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Three-year-old rescued and taken to hospital six days after Venezuela quake</a></h3>
+    <p class="meta">BBC World News | 07/01 06:03</p>
+    <p class="summary">ベネズエラで発生した地震から6日後、3歳の男児が瓦礫の中から救出され、病院へ搬送された。絶望的な状況下での奇跡的な救出劇は大きな注目を集めている。男児は脱水症状などの治療を受けており、容体は安定に向かっているという。現地の救助隊は引き続き、行方不明者の捜索を懸命に続けている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cgmepnx1wzzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">US Supreme Court upholds birthright citizenship in blow to Trump</a></h3>
+    <p class="meta">BBC World News | 07/01 05:32</p>
+    <p class="summary">米連邦最高裁判所は、出生地主義に基づく市民権付与を支持する判断を下した。これは、同制度の廃止や制限を求めていたトランプ政権にとって打撃となる。憲法修正第14条の解釈を巡る重要な判決であり、移民政策や市民権の定義に関する今後の政治的議論に大きな影響を与えることが予想される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260701/k10015166051000.html" target="_blank" rel="noopener noreferrer">高市首相 インドに向け出発 経済安全保障など協力進展目指す</a></h3>
+    <p class="meta">NHK国際放送 | 07/01 07:31</p>
+    <p class="summary">高市首相はインドを訪問するため羽田空港を出発した。モディ首相との首脳会談では、サプライチェーンの強化や経済安全保障分野での協力進展を目指す。自由で開かれたインド太平洋の実現に向けた連携や、防衛装備品・技術協力についても協議する予定で、両国の戦略的パートナーシップをより強固にする狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260701/k10015166021000.html" target="_blank" rel="noopener noreferrer">米大統領 資産報告書公開“主要収益は暗号資産関連 2300億円”</a></h3>
+    <p class="meta">NHK国際放送 | 07/01 06:40</p>
+    <p class="summary">アメリカのトランプ大統領が公開した資産報告書により、主な収益源が暗号資産関連であり、その額が約2300億円（15億ドル以上）に上ることが分かった。大統領就任後の暗号資産市場の活況が背景にあると見られる。多額の個人資産と政策決定の透明性を巡り、透明性の確保を求める声も上がっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260701/k10015165951000.html" target="_blank" rel="noopener noreferrer">トランプ大統領  “中間選挙前に初の共和党大会開催へ”</a></h3>
+    <p class="meta">NHK国際放送 | 07/01 05:30</p>
+    <p class="summary">トランプ大統領は、秋の中間選挙を前に、自身が主導する形での共和党大会を開催する方針を固めた。異例のタイミングでの開催は、党内の結束を固め、選挙戦に向けた求心力を高める狙いがある。支持層へのアピールを強めるとともに、中間選挙での勝利を確実にし、政権運営の基盤をより強固なものにしたい考えだ。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
