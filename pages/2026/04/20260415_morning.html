@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月15日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月15日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月15日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://code.claude.com/docs/en/routines" target="_blank" rel="noopener noreferrer">Claude Code Routines</a></h3>
+    <p class="meta">Hacker News | 04/15 01:54</p>
+    <p class="summary">Claude Codeは、テスト、リンティング、PR説明の生成といった繰り返しのタスクを自動化するためのカスタム「ルーチン」を定義できる機能を導入しました。これにより、開発者は自身のワークフローに合わせた定型作業をコマンド一つで実行可能になり、開発の効率化と一貫性の向上が期待できます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.hollywoodreporter.com/business/digital/youtube-worlds-largest-media-company-2025-tops-disney-1236525130/" target="_blank" rel="noopener noreferrer">YouTube now world&#39;s largest media company, topping Disney</a></h3>
+    <p class="meta">Hacker News | 04/10 00:50</p>
+    <p class="summary">YouTubeは2025年に時価総額やリーチにおいてディズニーを抜き、世界最大のメディア企業となりました。これはデジタルプラットフォームが伝統的なメディア大手を凌駕したことを象徴しており、コンテンツ消費の主軸が完全に移行したことを示しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://bandaancha.eu/articulos/telefonica-consigue-bloqueos-ips-11731" target="_blank" rel="noopener noreferrer">Spain to expand internet blocks to tennis, golf, movies broadcasting times</a></h3>
+    <p class="meta">Hacker News | 04/15 01:59</p>
+    <p class="summary">スペインの裁判所は、テニスやゴルフの試合、映画の放送時間中に、海賊版を配信している特定のIPアドレスを遮断する措置の拡大を認めました。通信大手テレフォニカの訴えが認められた形であり、リアルタイムでの著作権侵害対策がさらに強化されます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://openai.com/index/scaling-trusted-access-for-cyber-defense/" target="_blank" rel="noopener noreferrer">Trusted access for the next era of cyber defense</a></h3>
+    <p class="meta">Hacker News | 04/15 05:07</p>
+    <p class="summary">OpenAIは、サイバー防衛の次なる時代に向けた「信頼できるアクセス」の拡大策を発表しました。AIを活用した防御用ツールの開発を支援する助成プログラムを強化し、サイバー攻撃から社会を守るための防御側（ブルーチーム）の能力向上を目指します。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mimochiz/articles/2c27b16a3e03fd" target="_blank" rel="noopener noreferrer">AIエージェントと組んだら、データサイエンスプロジェクトはどう変わる？実験してみた（前半戦）</a></h3>
+    <p class="meta">Zenn トレンド | 04/13 12:26</p>
+    <p class="summary">データサイエンスプロジェクトにAIエージェントを導入する実験の記録です。AIとの協業がデータ分析のワークフローをどのように変化させ、分析の質やスピード、さらには人間の役割にどのような影響を与えるかを、実験の前半戦として詳しく検証しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/14/someone-planted-backdoors-in-dozens-of-wordpress-plugins-used-in-thousands-of-websites/" target="_blank" rel="noopener noreferrer">Someone planted backdoors in dozens of WordPress plug-ins used in thousands of websites</a></h3>
+    <p class="meta">TechCrunch | 04/14 18:31</p>
+    <p class="summary">数千のウェブサイトで使用されている数十のWordPressプラグインに、バックドアが仕掛けられていたことが判明しました。攻撃者はこれによりサイトへの不正アクセスを可能にしており、セキュリティ専門家は利用者にプラグインの即時更新を呼びかけています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/14/anthropic-co-founder-confirms-the-company-briefed-the-trump-administration-on-mythos/" target="_blank" rel="noopener noreferrer">Anthropic co-founder confirms the company briefed the Trump administration on Mythos</a></h3>
+    <p class="meta">TechCrunch | 04/14 18:09</p>
+    <p class="summary">Anthropicの共同創業者は、トランプ政権に対し、同社の次世代AIプロジェクト「Mythos」に関する説明を行ったことを認めました。AIの国家安全保障への利用や規制のあり方について、政府との間で戦略的な対話が行われた可能性が示唆されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/14/london-gets-closer-to-its-first-robotaxi-service-as-waymo-begins-testing/" target="_blank" rel="noopener noreferrer">London gets closer to its first robotaxi service as Waymo begins testing</a></h3>
+    <p class="meta">TechCrunch | 04/14 18:00</p>
+    <p class="summary">自動運転開発のWaymoがロンドンでの走行テストを開始し、同市初のロボタクシーサービス実現に向けて大きく前進しました。複雑な都市部でのデータを収集し、安全性を検証することで、米国以外でのサービス展開に向けた足がかりを築く狙いです。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cn4vvxxg8lgo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Hamas rejects Gaza disarmament plan, Palestinian official says</a></h3>
+    <p class="meta">BBC World News | 04/14 14:01</p>
+    <p class="summary">ハマスの当局者は、ガザ地区の非武装化案を拒否すると表明しました。停戦交渉が継続する中で、武装解除を巡る条件が大きな障害となっており、地域情勢の安定化に向けた道のりは依然として厳しい状況が続いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c8dll93j7d5o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">JD Vance defends backing &#39;great guy&#39; Orbán&#39;s campaign after landslide defeat</a></h3>
+    <p class="meta">BBC World News | 04/14 15:04</p>
+    <p class="summary">JD・ヴァンス氏は、選挙での敗北後もハンガリーのオルバン首相を「素晴らしい人物」と称賛し、同氏への支持を改めて表明しました。保守的な価値観や政治姿勢を共有するリーダーとしての連帯を強調し、批判に対して自身の立場を擁護しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c78rr9r4e5po?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Another woman accuses Swalwell of drugging and raping her in 2018</a></h3>
+    <p class="meta">BBC World News | 04/14 20:30</p>
+    <p class="summary">エリック・スウォルウェル米下院議員に対し、別の女性から2018年に薬物を飲まされ性的暴行を受けたとする新たな告発がありました。被害を主張する女性は提訴に踏み切っていますが、スウォルウェル議員側は一連の疑惑を全面的に否定しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260415/k10015099451000.html" target="_blank" rel="noopener noreferrer">高市首相 総額100億ドル程度支援表明へ エネルギー供給の強化</a></h3>
+    <p class="meta">NHK国際放送 | 04/14 20:59</p>
+    <p class="summary">高市首相は、エネルギー供給の強化と安全保障の向上を目的に、総額約100億ドルの支援を表明する方針を固めました。国際的なエネルギー市場の安定化に寄与するとともに、日本のエネルギー資源の確保に向けた基盤を固める狙いがあります。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260414/k10015099621000.html" target="_blank" rel="noopener noreferrer">IMF 世界経済の成長率 イラン情勢影響で引き下げ見通し</a></h3>
+    <p class="meta">NHK国際放送 | 04/14 20:03</p>
+    <p class="summary">IMF（国際通貨基金）は、イラン情勢の緊迫化に伴う原油価格の上昇や供給網への影響を懸念し、世界経済の成長率見通しを引き下げる見通しを明らかにしました。地政学的なリスクが世界経済の回復に影を落としていると指摘しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260414/k10015099611000.html" target="_blank" rel="noopener noreferrer">中国習主席 スペイン首相と会談 国際法と国際秩序重視を確認</a></h3>
+    <p class="meta">NHK国際放送 | 04/14 13:27</p>
+    <p class="summary">中国の習近平国家主席はスペイン首相と会談し、国際法と国際秩序を尊重する重要性を互いに確認しました。両首脳は経済分野での協力を深めるとともに、多国間主義を維持し、グローバルな課題に対して連携して取り組む姿勢を強調しました。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

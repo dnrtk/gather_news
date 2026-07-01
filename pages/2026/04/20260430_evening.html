@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月30日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月30日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月30日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://openai.com/index/where-the-goblins-came-from/" target="_blank" rel="noopener noreferrer">Where the goblins came from</a></h3>
+    <p class="meta">Hacker News | 04/30 12:21</p>
+    <p class="summary">OpenAIは、AIモデル「Sora」を用いて制作された短編作品「Where the goblins came from」を紹介している。このプロジェクトは、AIがクリエイターの想像力をどのように形にし、従来の映像制作の限界を押し広げるかを示す実例となっている。制作過程におけるプロンプトの工夫や、AIと人間の共同作業による新しい表現手法の可能性が強調されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.noctua.at/en/3d-cad-models" target="_blank" rel="noopener noreferrer">Noctua releases official 3D CAD models for its cooling fans</a></h3>
+    <p class="meta">Hacker News | 04/28 06:35</p>
+    <p class="summary">冷却ファンメーカーのNoctuaは、自社製ファンの公式3D CADモデル（STEPファイル）を公開した。これにより、PCケースの設計者や3Dプリンターを利用するユーザーが、より正確にパーツの干渉をチェックしたり、カスタムマウントを設計したりすることが可能になる。DIYコミュニティからの要望に応えたもので、主要な製品ラインナップがカバーされている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://simonwillison.net/2026/Apr/30/zig-anti-ai/" target="_blank" rel="noopener noreferrer">The Zig project&#39;s rationale for their anti-AI contribution policy</a></h3>
+    <p class="meta">Hacker News | 04/30 11:15</p>
+    <p class="summary">プログラミング言語Zigの開発プロジェクトは、AIが生成したコードの寄稿を禁止する方針を掲げている。その理由は、AI生成コードの品質や保守性の懸念に加え、著作権やライセンスに関する法的なリスクを回避するためである。また、開発者がコードの内容を完全に理解し、自らの責任で貢献するというオープンソースコミュニティの基本原則を重視している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.jcvi.org/media-center/j-craig-venter-genomics-pioneer-and-founder-jcvi-and-diploid-genomics-inc-dies-79" target="_blank" rel="noopener noreferrer">Craig Venter has died</a></h3>
+    <p class="meta">Hacker News | 04/30 10:44</p>
+    <p class="summary">ヒトゲノムの解読で先駆的な役割を果たした科学者、J. クレイグ・ベンター氏が79歳で死去した。彼は民間企業セレーラ・ジェノミクスを率い、国際プロジェクトと競いながらヒトゲノム配列を決定したことで知られる。また、合成生物学の分野でも人工細胞の作成に成功するなど、現代の遺伝学とバイオテクノロジーに計り知れない貢献を残した。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tasuku/articles/73bf8c7274208f" target="_blank" rel="noopener noreferrer">1m精度の標高データを使って、全国の前方後円墳を探してみた</a></h3>
+    <p class="meta">Zenn トレンド | 04/29 10:02</p>
+    <p class="summary">1メートル精度の高解像度な標高データ（DEM）を活用し、日本全国の前方後円墳を自動的に探索する試みに関する記事。QGISなどのツールを用い、地形の微細な起伏から古墳特有の形状を抽出する手法を解説している。これまで樹木に覆われて発見が困難だった遺構や、市街地に埋もれた小規模な古墳の特定に役立つ可能性が示されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/wakame_atsushi/articles/e9b754160d1469" target="_blank" rel="noopener noreferrer">&#34;array[i++] = null; は本当に GC を促進するのか — Node.js で実測して確かめる</a></h3>
+    <p class="meta">Zenn トレンド | 04/29 06:30</p>
+    <p class="summary">Node.js（V8エンジン）において、配列の要素にnullを代入することがガベージコレクション（GC）を促進し、メモリ管理を改善するのかを実測で検証した記事。メモリプロファイラを用いた分析の結果、特定の条件下では有効であるものの、エンジンの最適化や代入のオーバーヘッドにより、期待したほどの効果が得られない場合もあるという実態を明らかにしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/unhappychoice/articles/splashboard-introduction" target="_blank" rel="noopener noreferrer">シェル起動時と cd のたびにダッシュボードを描く CLI「splashboard」を作りました</a></h3>
+    <p class="meta">Zenn トレンド | 04/29 05:45</p>
+    <p class="summary">シェルの起動時やディレクトリ移動（cd）のたびに、システム情報やカスタム情報を視覚的なダッシュボードとして表示するCLIツール「splashboard」の紹介。Go言語で開発されており、任意のコマンド実行結果をタイル状に配置できる。作業環境の状況をリアルタイムで把握しやすくすることで、開発効率の向上とターミナル環境のパーソナライズを実現する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/masa20057/items/b1a956add6ec342f31b5?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【初学者向け】「なんとなくコード書く」を卒業するためのアルゴリズム入門</a></h3>
+    <p class="meta">Qiita トレンド | 04/30 02:17</p>
+    <p class="summary">プログラミング初学者を対象に、場当たり的なコーディングを脱却するためのアルゴリズム入門記事。計算量の概念や、探索・ソートといった基本的なアルゴリズムの仕組みを、図解や具体例を用いて分かりやすく解説している。効率的なコードを書くための論理的思考力を養うことを目的としており、ステップアップを目指すエンジニアにとって有用な内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/29/softbank-is-creating-a-robotics-company-that-builds-data-centers-and-already-eyeing-a-100b-ipo/" target="_blank" rel="noopener noreferrer">SoftBank is creating a robotics company that builds data centers — and already eyeing a $100B IPO</a></h3>
+    <p class="meta">TechCrunch | 04/30 03:58</p>
+    <p class="summary">ソフトバンクは、データセンターの建設を自動化するロボティクス企業を設立し、1,000億ドル規模の新規株式公開（IPO）を視野に入れている。AI需要の爆発的な増加に伴うインフラ不足を解消するため、ロボットを活用して建設コストの削減と工期短縮を図る。この動きは、ソフトバンクがAIおよびインフラ分野での覇権を狙う戦略の一環である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/29/amazon-meta-join-fight-to-end-google-pay-phonepe-dominance-in-india/" target="_blank" rel="noopener noreferrer">Amazon, Meta join fight to end Google Pay, PhonePe dominance in India</a></h3>
+    <p class="meta">TechCrunch | 04/30 01:00</p>
+    <p class="summary">インドのデジタル決済市場において、Google PayとPhonePeの圧倒的なシェアを切り崩すため、AmazonとMeta（WhatsApp）が攻勢を強めている。両社はインド独自の決済基盤「UPI」を活用したサービスを拡充し、自社プラットフォームの利用者を取り込もうとしている。インド政府による独占禁止を目的とした市場占有率制限も、後発企業にチャンスを与えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/29/amazons-cloud-business-is-surging-and-so-is-its-capital-spending/" target="_blank" rel="noopener noreferrer">Amazon’s cloud business is surging — and so is its capital spending</a></h3>
+    <p class="meta">TechCrunch | 04/30 00:14</p>
+    <p class="summary">Amazonのクラウド事業（AWS）が、生成AIの急速な普及により好調な成長を遂げている。これに伴い、AIインフラの構築に向けた設備投資額も大幅に増加しており、サーバーやデータセンターへの巨額投資が継続されている。同社は、AI市場での優位性を確保するために、今後数年間は高い水準の投資を維持する方針を示している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/ibm-expands-quantum-and-ai-footprint-with-chicago-hub-and-mit-research-lab/" target="_blank" rel="noopener noreferrer">IBM Expands Quantum and AI Footprint with Chicago Hub and MIT Research Lab</a></h3>
+    <p class="meta">Quantum Computing Report | 04/30 00:54</p>
+    <p class="summary">IBMは量子コンピューティングとAIの分野での足跡を拡大するため、シカゴに新たな拠点を設立し、MITとの共同研究ラボを拡張すると発表した。シカゴの拠点は、地域大学との連携を通じて量子ネットワークの実用化を目指す。また、MITとのラボではAIの安全性と効率性の向上に注力する。これらの投資により、次世代の計算基盤における技術革新を加速させる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/mandeville-ventures-to-acquire-quantropi-in-qualifying-transaction/" target="_blank" rel="noopener noreferrer">Mandeville Ventures to Acquire Quantropi in Qualifying Transaction</a></h3>
+    <p class="meta">Quantum Computing Report | 04/29 16:29</p>
+    <p class="summary">カナダの投資会社Mandeville Venturesは、量子セキュリティ企業のQuantropiを買収することで合意した。Quantropiは、量子コンピュータの登場による脅威からデータを保護する次世代の暗号化ソリューションを提供している。この買収を通じて、Mandevilleは成長著しい量子安全技術市場での存在感を高め、サイバーセキュリティ分野での競争力を強化する。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cx21m88rd14o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Oil price hits highest since 2022 after report Trump to be briefed on new Iran options</a></h3>
+    <p class="meta">BBC World News | 04/30 08:44</p>
+    <p class="summary">トランプ大統領（再選後を想定）が対イラン政策の新たな選択肢について報告を受けるとの報道を受け、原油価格が2022年以来の高値を記録した。中東での緊張が高まり、供給が滞るとの懸念が市場に広がったことが要因。投資家は、米国の制裁強化や地政学的リスクがエネルギー市場に与える影響を注視しており、世界経済へのさらなる波及が警戒されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cdjpw0n889yo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Jewish agency warned of &#39;high&#39; threat level ahead of Bondi shooting, report finds</a></h3>
+    <p class="meta">BBC World News | 04/30 06:16</p>
+    <p class="summary">オーストラリアのボンダイで発生した銃撃事件の前に、ユダヤ系団体が脅威レベルが「高い」との警告を発していたことが報告書で判明した。警告は治安当局にも共有されていたが、事件の阻止には至らなかった。報告書は、特定のコミュニティを標的とした攻撃のリスク評価の精度向上と、法執行機関との迅速な情報共有体制の改善が必要であると指摘している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260430/k10015111601000.html" target="_blank" rel="noopener noreferrer">商船三井社長 ペルシャ湾外への1日も早い船舶移動で政府と連携</a></h3>
+    <p class="meta">NHK国際放送 | 04/30 08:30</p>
+    <p class="summary">商船三井の社長は、中東情勢の緊迫化に伴い、ペルシャ湾付近を航行する船舶の安全を確保するため、政府と連携して速やかに湾外へ移動させる方針を示した。乗組員の安全と安定的な輸送の維持を最優先し、運航ルートの変更や警戒態勢の強化を継続的に実施する。地政学的リスクが海上物流に与える影響を最小限に抑えるための対策を講じるとしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260430/k10015111681000.html" target="_blank" rel="noopener noreferrer">米 選挙区割りフロリダ州も変更承認 中間選挙で共和党有利に</a></h3>
+    <p class="meta">NHK国際放送 | 04/30 07:13</p>
+    <p class="summary">米フロリダ州において、新たな連邦下院の選挙区割りが承認された。この変更は中間選挙で共和党に有利に働くとみられており、民主党側は公平性を欠くとして反発している。選挙区割り（ゲリマンダリング）を巡る法廷闘争を経て決定されたもので、今後の議会勢力図に大きな影響を与える可能性がある。全米の政治バランスを左右する動きとして注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260430/k10015082771000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（4月30日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 04/30 06:35</p>
+    <p class="summary">ロシアによるウクライナ軍事侵攻の4月30日の状況。ウクライナ各地で戦闘が継続しており、ロシア軍のミサイル攻撃による被害や、それに対するウクライナ軍の応戦が報じられている。また、国際社会による軍事・人道支援の動向や、停戦に向けた外交的な動きについても随時更新されている。緊迫した情勢が続いており、人道状況のさらなる悪化が懸念されている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月14日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月14日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月14日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.anthropic.com/news/claude-for-small-business" target="_blank" rel="noopener noreferrer">Claude for Small Business</a></h3>
+    <p class="meta">Hacker News | 05/14 12:59</p>
+    <p class="summary">Anthropicは、中小企業向けにAIアシスタント「Claude」を導入しやすくする新機能を発表しました。チーム内での知識共有や業務効率化を支援するツールが含まれており、専門知識がなくてもAIをビジネスに活用できる環境を整えることを目指しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www.scorch2000.com/web/" target="_blank" rel="noopener noreferrer">Scorched Earth 2000 – Web</a></h3>
+    <p class="meta">Hacker News | 05/14 09:41</p>
+    <p class="summary">往年の名作ゲーム「Scorched Earth」をWebブラウザ上で遊べるようにリメイクしたプロジェクトです。2000年代初頭のスタイルを保ちつつ、オンラインでマルチプレイヤー対戦を楽しめるようになっており、レトロゲーム愛好家にとって懐かしい体験を提供します。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://classic7.lol/" target="_blank" rel="noopener noreferrer">Classic 7 is a Windows 10 LTSC mod to look 1:1 to Windows 7</a></h3>
+    <p class="meta">Hacker News | 05/14 16:03</p>
+    <p class="summary">Windows 10 LTSCをカスタマイズして、Windows 7の外観を完璧に再現するMOD「Classic 7」のサイトです。スタートメニュー、アイコン、ウィンドウの透明感など、細部まで当時のデザインにこだわりつつ、最新OSの機能性を維持することを目指しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://mayerwin.github.io/AI-Arena-History/" target="_blank" rel="noopener noreferrer">Arena AI Model ELO History</a></h3>
+    <p class="meta">Hacker News | 05/14 12:19</p>
+    <p class="summary">AIモデルの比較サイト「Chatbot Arena」における、各モデルのELOレーティング（実力指数）の推移を時系列で可視化したページです。GPT-4やClaudeなど、最新AIがどのように進化し、順位が入れ替わってきたかをグラフで一目で確認できます。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tasuku/articles/04f39f7e31c1d0" target="_blank" rel="noopener noreferrer">Qt 6 を Zephyr で動くようにしました</a></h3>
+    <p class="meta">Zenn トレンド | 05/13 11:34</p>
+    <p class="summary">組み込み向けOS「Zephyr」上で、GUIフレームワーク「Qt 6」を動作させるための手順と解説です。ビルド構成の工夫やドライバの対応など、実際にデバイス上でリッチなUIを動かすための技術的な知見が共有されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/optimisuke/articles/40529cd970cbf0" target="_blank" rel="noopener noreferrer">ログイン済みの Chrome をそのまま Claude Code から操作する — playwright-cli attach</a></h3>
+    <p class="meta">Zenn トレンド | 05/13 11:00</p>
+    <p class="summary">AnthropicのCLIツール「Claude Code」とPlaywrightを組み合わせ、既にログインしている状態のGoogle Chromeブラウザを操作する方法を紹介しています。これにより、認証が必要なウェブサイト上でのタスク自動化が容易になります。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/jinxin4869/items/786af70f2697dfac4329?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AIにコードを書かせ続けて気づいた、エンジニアの&#34;分かったつもり&#34;の怖さ</a></h3>
+    <p class="meta">Qiita トレンド | 05/13 23:06</p>
+    <p class="summary">AIにコードを生成させる中で、エンジニアが「なぜそのコードが動くのか」を深く理解せず、表面上の解決で満足してしまう「分かったつもり」の危険性について指摘しています。AI時代における基礎知識と深い理解の重要性を説いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/13/who-decides-what-ai-tells-you-campbell-brown-once-metas-news-chief-has-thoughts/" target="_blank" rel="noopener noreferrer">Who decides what AI tells you? Campbell Brown, once Meta’s news chief, has thoughts</a></h3>
+    <p class="meta">TechCrunch | 05/14 06:05</p>
+    <p class="summary">Metaの元ニュース責任者キャンベル・ブラウン氏が、AIが配信する情報の信頼性とその決定権について意見を述べました。メディアとテック企業の力関係や、アルゴリズムが人々の情報摂取に与える影響、透明性の確保について議論されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/13/clios-500m-milestone-arrives-just-as-anthropic-ups-the-ante/" target="_blank" rel="noopener noreferrer">Clio’s $500M milestone arrives just as Anthropic ups the ante</a></h3>
+    <p class="meta">TechCrunch | 05/14 05:24</p>
+    <p class="summary">法務テックのClioが5億ドルの資金調達を達成した一方で、Anthropicも企業向けAI機能を強化しています。AIが法律業務をいかに変えるか、そして巨額の資金が動くこの分野での競争がいかに激化しているかを報じています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/13/notion-just-turned-its-workspace-into-a-hub-for-ai-agents/" target="_blank" rel="noopener noreferrer">Notion just turned its workspace into a hub for AI agents</a></h3>
+    <p class="meta">TechCrunch | 05/13 21:45</p>
+    <p class="summary">Notionがワークスペースを「AIエージェントの拠点」へとアップデートしました。単なる文章作成の補助ではなく、散らばった情報の整理やタスクの自律的な実行をAIが行うことで、チームの生産性を根本から向上させることを狙っています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/videos/c707xn4ew3po?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Pomp and pageantry: Key moments from day one of Trump&#39;s visit to China</a></h3>
+    <p class="meta">BBC World News | 05/14 07:13</p>
+    <p class="summary">トランプ氏の訪中初日の様子を伝えるニュースです。豪華な歓迎式典や首脳同士の会談を通じ、米中間の通商問題や外交課題についてどのようなやり取りが行われたか、象徴的な場面とともに報じられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260514/k10015121151000.html" target="_blank" rel="noopener noreferrer">【速報中】米中首脳「イラン 核兵器保有してはならない」一致</a></h3>
+    <p class="meta">NHK国際放送 | 05/14 08:57</p>
+    <p class="summary">米中首脳会談で、イランが核兵器を保有すべきではないという認識で一致しました。中東情勢が緊迫する中、大国間での協調姿勢を示した形です。核不拡散の重要性を再確認し、地域安定化への協力を模索しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260514/k10015121691000.html" target="_blank" rel="noopener noreferrer">カゴメ ケチャップのトマトのイラスト減らす インク調達不安定</a></h3>
+    <p class="meta">NHK国際放送 | 05/14 07:57</p>
+    <p class="summary">カゴメは、トマトケチャップのパッケージにあるトマトのイラストを減らすことを決定しました。原材料となるインクの調達が世界的に不安定になっていることが理由です。デザインを簡素化することで、安定的な供給の維持を目指します。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260514/k10015107551000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（5月14日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 05/14 07:38</p>
+    <p class="summary">5月14日時点のロシアによるウクライナ侵攻の状況をまとめています。戦地での激しい攻防や、市民への影響、国際社会による制裁と支援の最新動向など、事態の推移を時系列で詳しく報じています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月18日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月18日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月18日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://abuseofnotation.github.io/category-theory-illustrated/04_order/" target="_blank" rel="noopener noreferrer">Category Theory Illustrated – Orders</a></h3>
+    <p class="meta">Hacker News | 04/18 15:40</p>
+    <p class="summary">圏論における「順序」の概念を視覚的に解説する記事。順序を特定の条件を満たす圏（対象間に最大1つの射が存在する圏）として定義し、前順序、半順序、全順序の違いを説明している。反射律や推移律といった数学的性質が、圏論の文脈でどのように解釈されるかを具体的な例を用いて示している。数学的な概念を直感的に理解することを目指した内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://amiga.lychesis.net/" target="_blank" rel="noopener noreferrer">Amiga Graphics</a></h3>
+    <p class="meta">Hacker News | 04/18 15:20</p>
+    <p class="summary">1980年代後半から90年代にかけて人気を博したPC、Amiga（アミガ）のグラフィックスとデジタルアートのアーカイブサイト。当時のクリエイターが描いた作品や、ゲーム、デモシーンの画像が多数収録されている。Amiga特有の色彩感覚やドット絵の技術を紹介しており、デジタルアートの歴史を視覚的に振り返ることができる貴重なリソースとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://victorpoughon.github.io/interval-calculator/" target="_blank" rel="noopener noreferrer">Show HN: I made a calculator that works over disjoint sets of intervals</a></h3>
+    <p class="meta">Hacker News | 04/18 10:15</p>
+    <p class="summary">互いに素な区間の集合を計算できるオンライン計算機を紹介する記事。通常の数値計算ではなく、「[1,5] かつ [10,12]」といった複数の区間に対して、和集合、共通部分、補集合、対称差などの集合演算を行うことができる。スケジュールの空き時間計算や数値範囲の管理など、特定の範囲を扱う必要があるエンジニアや数学者に向けたツールとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://sandboxspirit.com/blog/simple-geometry-of-roads/" target="_blank" rel="noopener noreferrer">The simple geometry behind any road</a></h3>
+    <p class="meta">Hacker News | 04/16 12:09</p>
+    <p class="summary">道路設計に隠された幾何学的な原理を解説する記事。道路は単純な直線と円弧の組み合わせではなく、安全な走行のために「クロソイド曲線」などの緩和曲線が使われている。ハンドルの回転速度と曲率の変化を一致させる設計や、視認性を確保するための縦断曲線の重要性について説明。私たちが普段何気なく通っている道路が、高度な数学的・物理的計算に基づいていることを示している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/sangun/articles/159e7676a2e949" target="_blank" rel="noopener noreferrer">AIの素敵なプランに「ズン」とハンコを押したい</a></h3>
+    <p class="meta">Zenn トレンド | 04/17 08:32</p>
+    <p class="summary">AIが提案したプランに対して、人間が最終的な承認（ハンコ）を容易に行えるシステムの構築について考察した記事。LLMを用いて複雑なタスクの実行計画を自動生成し、人間はそれを確認・承認するだけで業務が進むようなワークフローの実現を目指している。AIによる自動化と人間の責任の所在をどうバランスさせるか、具体的な実装イメージや利便性について論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/masa_ClaudeCodeLab/items/8c22966fbd3c125c53dc?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Claude Codeで実際に起きたセキュリティ事故7選と防止策</a></h3>
+    <p class="meta">Qiita トレンド | 04/17 05:38</p>
+    <p class="summary">AnthropicのCLIツール「Claude Code」の使用中に発生し得るセキュリティ事故と、その防止策をまとめた記事。環境変数の漏洩、重要な設定ファイルの意図しない上書き、不適切なコマンド実行によるデータ消失など、実際の事例に基づいたリスクを詳述している。これらを防ぐための設定ファイル（.claudecodeignore）の活用や、権限管理、実行前のレビューといった具体的な対策が紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/17/once-close-enough-for-an-acquisition-stripe-and-airwallex-are-now-going-after-each-other/" target="_blank" rel="noopener noreferrer">Once close enough for an acquisition, Stripe and Airwallex are now going after each other</a></h3>
+    <p class="meta">TechCrunch | 04/18 05:20</p>
+    <p class="summary">かつては買収交渉を行うほど近い関係だった決済大手のStripeとAirwallexが、現在は熾烈な競合関係にあることを報じる記事。両社はグローバルな決済インフラ市場で直接対決しており、特にアジア市場やクロスボーダー決済でのシェア争いが激化している。Stripeの圧倒的な市場地位に対し、Airwallexが独自の強みでどのように対抗しているかの背景を探っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/17/sam-altmans-project-world-looks-to-scale-its-human-verification-empire-first-stop-tinder/" target="_blank" rel="noopener noreferrer">Sam Altman’s project World looks to scale its human verification empire. First stop: Tinder.</a></h3>
+    <p class="meta">TechCrunch | 04/17 22:34</p>
+    <p class="summary">サム・アルトマン氏のプロジェクト「World（旧Worldcoin）」が、Tinderと提携して本人確認機能を拡大しようとしているニュース。虹彩スキャンによる生体認証を用いて、マッチングアプリ上のなりすましやボットを排除することを目指す。Worldは、インターネット上の「人間性」を証明する包括的なインフラへの進化を図っており、今回の提携はその普及を加速させる一歩となる。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260418/k10015102561000.html" target="_blank" rel="noopener noreferrer">NATO加盟国の大使ら日本訪問 「異例」の規模で日米連携を視察</a></h3>
+    <p class="meta">NHK国際放送 | 04/18 08:30</p>
+    <p class="summary">NATO加盟国の常駐代表（大使級）ら30人以上が日本を訪問し、日米の軍事連携を視察したニュース。これほど大規模なNATO関係者の訪日は異例。中国、ロシア、北朝鮮を巡る厳しい安全保障環境を背景に、北大西洋とインド太平洋の安全保障が不可分であることを強調した。自衛隊基地の視察などを通じ、法の支配に基づく国際秩序の維持に向けた協力関係を強化する狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260418/k10015102521000.html" target="_blank" rel="noopener noreferrer">イラン革命防衛隊元司令官“米が脅すかぎりホルムズ海峡封鎖”</a></h3>
+    <p class="meta">NHK国際放送 | 04/18 08:21</p>
+    <p class="summary">イラン革命防衛隊の元司令官が、米国がイランへの威嚇を続けるのであれば、石油輸送の要衝であるホルムズ海峡を封鎖すると警告したニュース。米国による海上封鎖の可能性に対抗する姿勢を示したもので、地域の緊張がさらに高まっている。封鎖が現実となれば世界のエネルギー供給に甚大な影響が及ぶため、国際社会はイランと米国の動向を注視しており、外交的な解決が急務となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260418/k10015102261000.html" target="_blank" rel="noopener noreferrer">イラン側「米海上封鎖なら自由通航認めず」数日以内に協議か</a></h3>
+    <p class="meta">NHK国際放送 | 04/18 07:56</p>
+    <p class="summary">米国がイランに対し海上封鎖を強行する場合、イラン側も船舶の自由な通航を認めない構えを見せているニュース。ホルムズ海峡周辺での緊張が極限に達する中、事態を打開するための協議が数日以内に行われる可能性が報じられている。中東情勢の不安定化を避けるため、軍事的な衝突を回避する枠組みが構築できるかが焦点となっており、各国の外交当局が調整を続けている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

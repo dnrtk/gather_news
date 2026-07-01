@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月25日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月25日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月25日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://seriot.ch/computation/jira.html" target="_blank" rel="noopener noreferrer">Jira Is Turing-Complete</a></h3>
+    <p class="meta">Hacker News | 05/25 12:54</p>
+    <p class="summary">Jiraの自動化ルールを利用して、Jiraがチューリング完全であることを示した記事。ユニバーサル・チューリング・マシンをJira上でシミュレート可能であることを証明し、理論上、Jiraであらゆる計算が実行できることを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC1360393/" target="_blank" rel="noopener noreferrer">Didgeridoo playing as alternative treatment for obstructive sleep apnea(2006)</a></h3>
+    <p class="meta">Hacker News | 05/23 10:37</p>
+    <p class="summary">2006年の研究で、ディジュリドゥの演奏が閉塞性睡眠時無呼吸症候群（OSA）の代替療法として有効である可能性が示された。循環呼吸による練習が上気道の筋肉を強化し、日中の眠気改善やいびきの軽減に寄与すると結論づけている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://liquidbrain.net/blog/i-love-my-bluetooth-keyboard/" target="_blank" rel="noopener noreferrer">I love my Bluetooth keyboard</a></h3>
+    <p class="meta">Hacker News | 05/23 04:04</p>
+    <p class="summary">Bluetoothキーボード、特にLogi Keys-To-Goの利便性を綴った記事。軽量で持ち運びやすく、スマホやタブレットなど複数デバイスで活用できる点や、画面とキーボードを自由に配置できる快適さが、モバイル環境の生産性を向上させると述べている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://audiomass.co/?multitrack=1" target="_blank" rel="noopener noreferrer">Show HN: Audiomass – a free, open-source multitrack audio editor for the web</a></h3>
+    <p class="meta">Hacker News | 05/25 00:25</p>
+    <p class="summary">ブラウザ上で動作する無料・オープンソースのマルチトラック・オーディオエディタ「AudioMass」の紹介。インストール不要で録音、カット、フェード、コンプレッサー等の編集が可能。手軽に高度な音声編集ができる便利なウェブツールである。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/nstock/articles/ui-change-notifier" target="_blank" rel="noopener noreferrer">AIで加速するプロダクトの変化を、開発チームの外に届ける仕組みづくり</a></h3>
+    <p class="meta">Zenn トレンド | 05/24 23:58</p>
+    <p class="summary">AI活用で加速するプロダクトのUI変更を、開発チーム外の営業やCSへ迅速に共有するための「UI Change Notifier」という仕組みづくりの事例。変更を自動検知して通知することで、情報の非対称性を解消し、全社的なプロダクト理解を深める取り組みを紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/haruto_miyakawa/articles/4b7754712b7585" target="_blank" rel="noopener noreferrer">WhisperローカルとGemini 2.5 Flashで講義録アプリを作った──構成と技術選定の解説</a></h3>
+    <p class="meta">Zenn トレンド | 05/24 17:51</p>
+    <p class="summary">ローカルで動作するWhisperによる文字起こしと、Gemini 2.5 Flashを活用した講義録アプリの構成解説。プライバシーに配慮したローカル処理と、最新AIによる高度な要約を組み合わせることで、効率的な学習支援を実現する技術選定の背景を説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tomodo_ysys/articles/socket-github-supply-chain-attack" target="_blank" rel="noopener noreferrer">GitHub サプライチェーン攻撃が怖すぎるので Socket.dev を試してみた</a></h3>
+    <p class="meta">Zenn トレンド | 05/24 12:22</p>
+    <p class="summary">GitHubを標的としたサプライチェーン攻撃の対策として「Socket.dev」を試用した記録。依存パッケージの悪意ある挙動やリスクを、既知の脆弱性データベースに頼らず動的に解析することで、開発環境の安全性を高める有用性を評価している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prum_hitomi/items/9eafa7854f27055a7a07?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">ITって結局なんのためにあるの？</a></h3>
+    <p class="meta">Qiita トレンド | 05/25 04:19</p>
+    <p class="summary">ITの本質的な目的を考察した記事。ITは単なる技術ではなく、人間の困りごとを解決し生活を豊かにするために存在すると説く。生産性向上や価値提供という原点に立ち返り、何のために開発するのかという視点を持つことの重要性を強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/yomch703/items/f493dac42a3efaf4ec42?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Cisco IOSモードの超ザックリとした覚え方</a></h3>
+    <p class="meta">Qiita トレンド | 05/25 00:05</p>
+    <p class="summary">Cisco IOSの各種モード（ユーザー実行モード、特権実行モード、グローバルコンフィギュレーションモード）の役割と遷移を初心者向けに解説。階層構造をシンプルにイメージすることで、ネットワーク機器のコマンド操作における混乱を防ぐ覚え方を提示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/24/everyone-is-navigating-ai-security-in-real-time-even-google/" target="_blank" rel="noopener noreferrer">Everyone is navigating AI security in real time — even Google</a></h3>
+    <p class="meta">TechCrunch | 05/24 21:39</p>
+    <p class="summary">AIセキュリティの脅威に対し、Googleを含む全企業がリアルタイムで対応を模索している現状を報告。プロンプトインジェクションやデータ漏洩などの新たなリスクに対し、業界全体でセキュリティフレームワークの構築と対策の共有が急務となっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cglpp2yk336o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Rubio says &#39;solid&#39; Iran deal may come on Monday</a></h3>
+    <p class="meta">BBC World News | 05/25 08:28</p>
+    <p class="summary">米国のルビオ上院議員が、イランとの間で「堅実な」合意が早ければ月曜日にも成立する可能性があると述べた。外交交渉が進展しており、核問題や地域情勢を巡る緊張緩和に向けた重要な局面を迎えていることを示唆している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c809m7g29r7o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Oil prices slide on hopes of US-Iran peace deal</a></h3>
+    <p class="meta">BBC World News | 05/25 08:38</p>
+    <p class="summary">米国とイランの和平合意への期待から、原油価格が下落した。合意によってイラン産原油への制裁が解除され、世界的な供給量が増加するとの見通しが強まったことで、市場の需給逼迫懸念が和らぎ、価格の押し下げ要因となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/ce3pgn48wnqo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">She was told to marry in a country which bans girls&#39; education. So she got in a taxi and fled</a></h3>
+    <p class="meta">BBC World News | 05/24 21:02</p>
+    <p class="summary">女子教育が禁止され強制結婚を迫られたアフガニスタンの女性が、タクシーで国外へ脱出した体験談。タリバン政権下での過酷な女性の権利抑圧の現状と、自由と教育を求めて命がけで逃れる女性たちの困難な状況を浮き彫りにしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260525/k10015130831000.html" target="_blank" rel="noopener noreferrer">真珠湾に原爆の残り火 日米の関係者が平和願う式典</a></h3>
+    <p class="meta">NHK国際放送 | 05/25 08:55</p>
+    <p class="summary">ハワイの真珠湾で、広島の原爆の残り火を灯し、日米の関係者が平和を願う式典が開催された。戦争の惨禍を繰り返さないという決意と、かつての敵国同士が和解し、共に平和を祈る象徴的な行事として、友好関係の深化を強調している。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

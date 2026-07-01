@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月10日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月10日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月10日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://cacm.acm.org/news/how-nasa-built-artemis-iis-fault-tolerant-computer/" target="_blank" rel="noopener noreferrer">How NASA built Artemis II’s fault-tolerant computer</a></h3>
+    <p class="meta">Hacker News | 04/10 00:12</p>
+    <p class="summary">NASAのアルテミスIIミッションで使用される耐故障性コンピュータの構築について。深宇宙の放射線環境下でも正確に動作するため、冗長性を備えたアーキテクチャが採用されている。ハードウェアの故障を検出し、ミッションの安全性を確保するための高度な設計プロセスや、過酷な条件下での信頼性維持に向けた取り組みが詳細に解説されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://david.coffee/i-still-prefer-mcp-over-skills/" target="_blank" rel="noopener noreferrer">I still prefer MCP over skills</a></h3>
+    <p class="meta">Hacker News | 04/10 11:01</p>
+    <p class="summary">筆者はAIエージェントの機能拡張において、特定のプラットフォームに依存する「Skills」よりも、オープン標準であるModel Context Protocol（MCP）を支持している。MCPは標準化されたインターフェースを提供し、異なるAIモデルやツール間での互換性を高める。これによりベンダーロックインを回避し、開発者がより柔軟にエコシステムを構築できる利点を強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.gitbutler.com/series-a" target="_blank" rel="noopener noreferrer">We&#39;ve raised $17M to build what comes after Git</a></h3>
+    <p class="meta">Hacker News | 04/10 10:52</p>
+    <p class="summary">GitButlerは、Gitに代わる次世代のバージョン管理ツールを構築するため、1700万ドルの資金調達を実施した。従来のGitが持つブランチ管理の複雑さを解消し、複数の作業を並行して行える「バーチャルブランチ」などの革新的なワークフローの提供を目指している。開発者の生産性向上と、より直感的で現代的なコード管理体験の実現に注力している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.veitheller.de/Generative_art_over_the_years.html" target="_blank" rel="noopener noreferrer">Generative art over the years</a></h3>
+    <p class="meta">Hacker News | 04/07 23:25</p>
+    <p class="summary">長年にわたるジェネレーティブ・アートの進化を振り返る記事。初期の単純なアルゴリズムやノイズを用いた表現から、近年の高度なAI技術による生成まで、その変遷を辿っている。技術的な進歩が芸術的表現にどのような影響を与えてきたか、そして制約の中から生まれる美しさや創造性について、歴史的な視点から考察している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/layerx/articles/cd04dd1350bac5" target="_blank" rel="noopener noreferrer">&#34;なんとなく改善&#34;からの脱却。Langfuseで作る、精度を改善し続けられるAI開発基盤</a></h3>
+    <p class="meta">Zenn トレンド | 04/09 11:00</p>
+    <p class="summary">LayerX社による、LLM開発における精度改善の取り組みを紹介。感覚的な評価から脱却するため、Langfuseを導入して「可視化・評価・改善」のサイクルを構築した。トレースの記録やフィードバックの収集により、課題の特定と効果的な改善が可能になり、持続的に精度を向上させられるAI開発基盤を実現している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/takikomi/articles/a74948684b5e88" target="_blank" rel="noopener noreferrer">Lightdash on SPCS</a></h3>
+    <p class="meta">Zenn トレンド | 04/09 09:02</p>
+    <p class="summary">オープンソースのBIツール「Lightdash」を、SnowflakeのSnowpark Container Services（SPCS）上で構築・運用する方法を解説した記事。SPCSを活用することで、Snowflakeのセキュアな環境内でBIを実行でき、データの移動を最小限に抑えた分析環境を実現できる。環境構築の手順や設定のポイントが具体的に紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/wata-sho/items/d3f222758833cb694672?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【35歳未経験でも理解できた】Web API</a></h3>
+    <p class="meta">Qiita トレンド | 04/10 01:22</p>
+    <p class="summary">35歳未経験から学習を始めた著者が、Web APIの仕組みを初心者向けに分かりやすく解説した記事。レストランの注文に例えて、リクエストとレスポンスの流れや、APIが提供する役割（データのやり取り）を噛み砕いて説明している。ITの基礎知識として欠かせないAPIの概念を、身近な例で理解できるよう工夫されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prum_hitomi/items/79f74ec8cd016172619b?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">“書けるだけ”じゃ足りない。今どきエンジニアに必要なスキルの話</a></h3>
+    <p class="meta">Qiita トレンド | 04/10 04:17</p>
+    <p class="summary">現代のエンジニアには、単にコードが書けるだけでなく、周辺スキルの重要性が高まっていることを説く記事。具体的には、ビジネスへの理解、チーム内でのコミュニケーション能力、プロダクト全体の価値を考える視点などが挙げられている。技術を目的ではなく手段と捉え、課題解決に貢献できるエンジニアとしての在り方を提示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/yuji-arakawa/items/2ad0240c56eb7507b261?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">日本発、LLMの推論を「桁違い」に効率化する新アーキテクチャ「PHOTON」の論文が面白かったのでまとめてみた</a></h3>
+    <p class="meta">Qiita トレンド | 04/08 15:40</p>
+    <p class="summary">日本発のLLM推論高速化アーキテクチャ「PHOTON」に関する論文の解説記事。従来の推論手法と比較して、計算効率を大幅に向上させ、メモリ使用量を削減しつつ高速なレスポンスを実現する。独自の技術により推論プロセスを最適化しており、今後のLLM活用におけるインフラコスト削減やパフォーマンス向上への貢献が期待される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/09/florida-ag-to-probe-openai-alleging-possible-connection-to-fsu-shooting/" target="_blank" rel="noopener noreferrer">Florida AG to probe OpenAI, alleging possible connection to FSU shooting</a></h3>
+    <p class="meta">TechCrunch | 04/09 22:13</p>
+    <p class="summary">フロリダ州司法長官が、フロリダ州立大学（FSU）で発生した銃撃事件とOpenAIの関連性を調査している。銃撃犯がChatGPTを使用して犯行を計画、あるいは動機づけられた可能性があるとの主張に基づく。この調査は、AI技術が悪用された際の法的責任や、プラットフォームの安全性確保、犯罪防止に向けた対策のあり方を問うものとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/09/chatgpt-pro-plan-100-month-codex/" target="_blank" rel="noopener noreferrer">ChatGPT finally offers $100/month Pro plan</a></h3>
+    <p class="meta">TechCrunch | 04/09 21:29</p>
+    <p class="summary">OpenAIが月額100ドルの「ChatGPT Pro」プランの提供を開始した。この新プランは、より高い利用制限や優先的なアクセス、特定の高度な機能へのアクセスを必要とするプロフェッショナルなユーザーやパワーユーザー向けに設計されている。既存のPlusプランを超えるパフォーマンスとリソースの提供を目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/09/eff-is-the-latest-organization-to-leave-x/" target="_blank" rel="noopener noreferrer">EFF is the latest organization to leave X</a></h3>
+    <p class="meta">TechCrunch | 04/09 21:26</p>
+    <p class="summary">電子フロンティア財団（EFF）が、ソーシャルメディア「X（旧Twitter）」からの撤退を発表した。近年のXにおけるプライバシー保護の懸念、モデレーションの方針変更、プラットフォームの不安定さなどを理由に挙げている。表現の自由やデジタル権利を擁護する団体として、より信頼できる代替プラットフォームへの移行を推進する動きの一環である。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cp3l4yk5rlgo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Ceasefire or no ceasefire, the Middle East&#39;s reshuffling is not yet done</a></h3>
+    <p class="meta">BBC World News | 04/09 23:01</p>
+    <p class="summary">中東情勢において、停戦の成否に関わらず、地域全体の再編が続いている。イスラエルと周辺勢力の対立、各国の同盟関係の変化、そして大国の影響力が複雑に絡み合っている。一時的な戦闘停止が恒久的な平和を保証するものではなく、地域のパワーバランスが根本から変化しつつある現状と、将来の不確実性について分析している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c3ex07l1qvpo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Melania Trump denies ties to Jeffrey Epstein and urges hearing for survivors</a></h3>
+    <p class="meta">BBC World News | 04/10 08:37</p>
+    <p class="summary">メラニア・トランプ氏が、ジェフリー・エプスタイン氏との不適切な関係を否定するとともに、性犯罪被害者のための公聴会開催を求めた。自身の過去に関する憶測を晴らし、被害者の声が届く正義の重要性を強調している。彼女の発言は政治的な文脈も含め、注目と議論を集めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260410/k10015096671000.html" target="_blank" rel="noopener noreferrer">日印外相が電話会談 エネルギー供給力の強じん化へ協力で一致</a></h3>
+    <p class="meta">NHK国際放送 | 04/10 08:53</p>
+    <p class="summary">日本とインドの外相が電話会談を行い、エネルギー供給網の強靭化に向けて協力することで一致した。不安定な国際情勢を背景に、クリーンエネルギー分野やインフラ整備での連携を強化する。両国は「自由で開かれたインド太平洋」の実現に向けたパートナーシップを再確認し、安全保障と経済の両面で協力を深める姿勢を示した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260410/k10015096291000.html" target="_blank" rel="noopener noreferrer">ことしの外交青書 中国“最も重要な二国間関係の一つ”見送る</a></h3>
+    <p class="meta">NHK国際放送 | 04/10 08:35</p>
+    <p class="summary">日本政府が発表した2024年版の外交青書において、中国との関係を「最も重要な二国間関係の一つ」とする従来の表現が見送られた。中国による海洋進出や安全保障上の懸念を反映し、警戒感を優先した形となる。一方で、対話と協力の必要性も記されており、複雑化する日中関係の現状を象徴する内容となっている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

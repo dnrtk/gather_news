@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月02日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月02日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月02日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.nasa.gov/blogs/missions/2026/04/01/live-artemis-ii-launch-day-updates/" target="_blank" rel="noopener noreferrer">Live: Artemis II Launch Day Updates</a></h3>
+    <p class="meta">Hacker News | 04/02 02:11</p>
+    <p class="summary">NASAのアルテミスIIミッションの打ち上げ当日の最新情報。有人月面探査に向けた重要な一歩として、打ち上げの状況やミッションの詳細がリアルタイムで発信されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blogit.michelin.io/clojure-programming/" target="_blank" rel="noopener noreferrer">Bringing Clojure programming to Enterprise (2021)</a></h3>
+    <p class="meta">Hacker News | 04/02 17:19</p>
+    <p class="summary">企業環境におけるClojureプログラミングの導入について考察した記事。関数型言語であるClojureを採用するメリットや、大規模開発における利点、導入時の課題などが論じられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://spencermortensen.com/articles/email-obfuscation/" target="_blank" rel="noopener noreferrer">Email obfuscation: What works in 2026?</a></h3>
+    <p class="meta">Hacker News | 04/02 12:35</p>
+    <p class="summary">2026年現在のメールアドレス難読化手法についての分析。ボットによるスクレイピングを防ぐための効果的な対策と、現在の技術環境下で有効な手法について解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.phoronix.com/news/Steam-On-Linux-Tops-5p" target="_blank" rel="noopener noreferrer">Steam on Linux Use Skyrocketed Above 5% in March</a></h3>
+    <p class="meta">Hacker News | 04/02 12:12</p>
+    <p class="summary">3月の統計において、Linux上でのSteam利用率が5%を超えたことを報告。Linuxゲーミングの普及が加速しており、プラットフォームとしての存在感が高まっていることを示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://scottaaronson.blog/?p=9665" target="_blank" rel="noopener noreferrer">Quantum computing bombshells that are not April Fools</a></h3>
+    <p class="meta">Hacker News | 04/02 09:24</p>
+    <p class="summary">量子コンピューティング分野における衝撃的なニュースのまとめ。エイプリルフールのジョークではなく、実際に業界に影響を与える重要な進展や研究結果について解説している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/cycloud_blog/articles/5ce66daf4bd0cb" target="_blank" rel="noopener noreferrer">npm をセキュアな挙動にするために .npmrc に記述する最小設定</a></h3>
+    <p class="meta">Zenn トレンド | 04/01 07:30</p>
+    <p class="summary">npmをよりセキュアに使用するために、.npmrcファイルに記述しておくべき最小限の設定項目を紹介。セキュリティリスクを軽減するための具体的な設定値とその理由を解説する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/kt3k/articles/74785af8436b1e" target="_blank" rel="noopener noreferrer">ReAct (Reason+Act) パターンを TypeScript だけで実装する</a></h3>
+    <p class="meta">Zenn トレンド | 04/01 05:14</p>
+    <p class="summary">AIの思考と行動を組み合わせる「ReAct」パターンを、TypeScriptのみで実装する方法を解説。外部ライブラリに頼らず、言語の基本機能でロジックを構築する手法を提示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/loglass/articles/c2db7e85702571" target="_blank" rel="noopener noreferrer">主キーはもう「UUIDv7」一択なのか？ 〜 ID技術の歴史的変遷と現時点の最適解 〜</a></h3>
+    <p class="meta">Zenn トレンド | 04/01 04:46</p>
+    <p class="summary">主キー選定におけるUUIDv7の優位性について解説。従来のUUIDや連番IDと比較した歴史的背景を紐解き、現在におけるデータベース設計の最適解としてなぜUUIDv7が推奨されるのかを詳説する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/nogataka/items/d6c83ea50b82e1c2602c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">100行のCLAUDE.mdより35行が効く理由 — 公式仕様で解く設定の最適化</a></h3>
+    <p class="meta">Qiita トレンド | 03/31 00:18</p>
+    <p class="summary">AI開発ツール設定ファイル「CLAUDE.md」の最適化に関する知見。冗長な記述を避け、35行程度に凝縮することでAIの挙動を効率的に制御する手法と、その重要性を論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/wata-sho/items/a185ecd13bf4be6cf65c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【35歳未経験でも理解できた】Webシステムの全体像</a></h3>
+    <p class="meta">Qiita トレンド | 04/02 01:31</p>
+    <p class="summary">未経験者に向けてWebシステムの全体像を分かりやすく解説した記事。クライアント、サーバー、データベースなどの各要素がどのように連携してサービスが動いているのか、仕組みを紐解く。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/01/de-fi-platform-drift-suspends-deposits-and-withdrawals-after-millions-in-crypto-stolen-in-hack/" target="_blank" rel="noopener noreferrer">De-fi platform Drift suspends deposits and withdrawals after millions in crypto stolen in hack</a></h3>
+    <p class="meta">TechCrunch | 04/01 22:58</p>
+    <p class="summary">DeFiプラットフォーム「Drift」がハッキング被害を受け、数百万ドル相当の暗号資産が流出した。現在、同社は預入および引き出しを停止する措置を講じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/01/anthropic-took-down-thousands-of-github-repos-trying-to-yank-its-leaked-source-code-a-move-the-company-says-was-an-accident/" target="_blank" rel="noopener noreferrer">Anthropic took down thousands of GitHub repos trying to yank its leaked source code — a move the company says was an accident</a></h3>
+    <p class="meta">TechCrunch | 04/01 22:12</p>
+    <p class="summary">Anthropicが漏洩したソースコードを削除しようとして、誤って数千件のGitHubリポジトリを不当に削除した。同社はこれを事故であったと説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/01/the-reputation-of-troubled-yc-startup-delve-has-gotten-even-worse/" target="_blank" rel="noopener noreferrer">The reputation of troubled YC startup Delve has gotten even worse</a></h3>
+    <p class="meta">TechCrunch | 04/01 21:23</p>
+    <p class="summary">トラブルを抱えるY Combinator出身のスタートアップ「Delve」の評判がさらに悪化している現状を報告。同社の経営姿勢や市場からの信頼低下について詳述している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/videos/cwydnrmggnno?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Watch the moment Artemis II blasts into space</a></h3>
+    <p class="meta">BBC World News | 04/01 23:00</p>
+    <p class="summary">アルテミスIIミッションのロケット打ち上げの瞬間を捉えた映像。歴史的な有人月周回飛行の幕開けとなる迫力ある発射の様子を伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cnv81ven263o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump leaves key questions unanswered as he seeks to calm nerves over Iran war</a></h3>
+    <p class="meta">BBC World News | 04/02 03:22</p>
+    <p class="summary">イランとの戦争懸念に対し、トランプ大統領が国民の不安を鎮めようと演説を行った。しかし、具体的な今後の対応や戦略について核心的な疑問が残されたままであると報じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cn53krrrr24o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Magnitude 7.4 earthquake hits off Indonesia, killing one</a></h3>
+    <p class="meta">BBC World News | 04/02 04:00</p>
+    <p class="summary">インドネシア沖でマグニチュード7.4の地震が発生。この地震により1名の死亡が確認されており、被害状況の調査が続けられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260402/k10015090401000.html" target="_blank" rel="noopener noreferrer">【演説詳細】トランプ大統領 “今後2～3週間 激しい攻撃行う”</a></h3>
+    <p class="meta">NHK国際放送 | 04/02 08:36</p>
+    <p class="summary">トランプ大統領は演説において、今後2〜3週間のうちに激しい攻撃を行う方針を明らかにした。緊張が高まる情勢下での異例の言及として注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260402/k10015090331000.html" target="_blank" rel="noopener noreferrer">「アルテミス計画」打ち上げ成功 人類 約半世紀ぶり月へ</a></h3>
+    <p class="meta">NHK国際放送 | 04/02 08:09</p>
+    <p class="summary">アルテミス計画の打ち上げが成功した。人類が約半世紀ぶりに月を目指すこのプロジェクトは、宇宙開発における歴史的な節目となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260402/k10015090461000.html" target="_blank" rel="noopener noreferrer">【解説】トランプ大統領演説 日本経済への影響は</a></h3>
+    <p class="meta">NHK国際放送 | 04/02 06:56</p>
+    <p class="summary">トランプ大統領による今後の軍事行動を示唆する演説が、日本経済に与える影響についての解説。地政学的なリスクの高まりが市場やサプライチェーンに及ぼす懸念を分析している。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

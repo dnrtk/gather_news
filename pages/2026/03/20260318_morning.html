@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月18日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月18日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月18日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://terathon.com/blog/decade-slug.html" target="_blank" rel="noopener noreferrer">A Decade of Slug</a></h3>
+    <p class="meta">Hacker News | 03/18 03:59</p>
+    <p class="summary">高性能なGPUベースのフォント・ベクトルグラフィックス描画ライブラリ「Slug」の10周年を振り返る記事。サブピクセル配置やメモリ効率、数学的な最適化など、Slugが解決してきた技術的課題について詳述されている。多くの著名なAAAゲームエンジンで採用されており、高品質なテキスト表示と高速なレンダリングを両立させるための設計思想が解説されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cqj9kgxqjwjo" target="_blank" rel="noopener noreferrer">Meta, TikTok let harmful content rise after evidence outrage drove engagement</a></h3>
+    <p class="meta">Hacker News | 03/18 05:24</p>
+    <p class="summary">MetaとTikTokが、怒りを煽るコンテンツがエンゲージメントを高めるという証拠があるにもかかわらず、有害な内容の拡散を許容していたことが内部文書で明らかになった。公聴会での証言によれば、アルゴリズムの調整が若者のメンタルヘルスに悪影響を及ぼすと知りながら、収益性を優先して対策を遅らせたという。両社は安全性への取り組みを主張しているが、規制強化を求める声が強まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.tomshardware.com/video-games/console-gaming/microsofts-unhackable-xbox-one-has-been-hacked-by-bliss-the-2013-console-finally-fell-to-voltage-glitching-allowing-the-loading-of-unsigned-code-at-every-level" target="_blank" rel="noopener noreferrer">Microsoft&#39;s &#39;unhackable&#39; Xbox One has been hacked by &#39;Bliss&#39;</a></h3>
+    <p class="meta">Hacker News | 03/18 00:16</p>
+    <p class="summary">2013年に発売され「ハック不可能」とされてきたMicrosoftのXbox Oneが、ハッカー「Bliss」によってついに攻略された。電圧グリッチという手法を用いることで、システムの全レベルにおいて未署名のコードを実行することが可能になった。ハードウェアレベルの脆弱性を突いたものであり、ソフトウェアアップデートでの修正は困難とされる。発売から10年以上を経て、ついに自作ソフトの動作に道が開かれた。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://fidget-spinner.github.io/posts/jit-on-track.html" target="_blank" rel="noopener noreferrer">Python 3.15&#39;s JIT is now back on track</a></h3>
+    <p class="meta">Hacker News | 03/18 03:37</p>
+    <p class="summary">Python 3.15に向けたJIT（Just-In-Time）コンパイラの開発が再び軌道に乗ったことが報告された。前バージョンでの実験的な導入を経て、新しい「copy-and-patch」方式のJITの実装が進んでおり、コンパイル時間の短縮とメモリ使用量の削減が期待されている。開発チームは課題となっていたパフォーマンスの安定化に注力しており、標準機能としての完成度が向上している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/gsd-build/get-shit-done" target="_blank" rel="noopener noreferrer">Get Shit Done: A Meta-Prompting, Context Engineering and Spec-Driven Dev System</a></h3>
+    <p class="meta">Hacker News | 03/18 05:23</p>
+    <p class="summary">「Get Shit Done (GSD)」は、メタプロンプティング、コンテキストエンジニアリング、仕様駆動開発（Spec-Driven Dev）を組み合わせた開発システム。AIを活用した開発プロセスを効率化するため、明確な仕様定義から実行までを一貫して管理する。GitHub上のリポジトリでは、AIエージェントの能力を最大限に引き出し、プロジェクトの生産性を向上させるためのフレームワークとツールキットが提供されている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/churadata/articles/3a1382e4f6990f" target="_blank" rel="noopener noreferrer">今更ですが、Claude Codeで、ミュージックプレイヤーみたいなものを作ってみた</a></h3>
+    <p class="meta">Zenn トレンド | 03/16 13:00</p>
+    <p class="summary">Anthropicが公開した「Claude Code」を使用し、Webベースのミュージックプレイヤーを作成する過程を解説した記事。Claude CodeはコマンドラインからAIと対話してコーディングを進められるツールで、本記事ではSpotifyのようなUIの設計や再生機能の実装を短時間で行う様子を紹介している。AIによる自動生成の精度の高さや、開発サイクルの迅速化が評価されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/masa20057/items/838bc1b59a84b16820a9?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">エンジニア初学者に知ってほしい。プログラミングすることより大切な成長を加速させる4つの指針</a></h3>
+    <p class="meta">Qiita トレンド | 03/17 02:56</p>
+    <p class="summary">エンジニア初学者の成長を加速させるための4つの指針を提案する記事。具体的には「一次情報に当たる」「意図を言語化する」「課題解決に焦点を当てる」「他者と対話する」ことの重要性が説かれている。単にコードを書く技術を磨くだけでなく、技術の背景を理解し、コミュニケーションを通じてチームや顧客に価値を提供できるエンジニアになるためのマインドセットを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/morishift/items/a2c5012d496312358323?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【Unity】演出スキップがつらすぎたので、ChainRacePattern という仕組みを作った</a></h3>
+    <p class="meta">Qiita トレンド | 03/15 21:56</p>
+    <p class="summary">Unityでのゲーム開発において、煩雑になりがちな「演出スキップ」機能を効率的に実装するための新手法「ChainRacePattern」を紹介している。従来の非同期処理での課題を解決し、複数の演出が連鎖する中でも、スキップが指示された瞬間に全工程を適切に終了させる仕組みを考案。キャンセル処理の記述を簡略化しつつ、バグの混入を防ぐ実装パターンとして提案されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/17/why-garry-tans-claude-code-setup-has-gotten-so-much-love-and-hate/" target="_blank" rel="noopener noreferrer">Why Garry Tan’s Claude Code setup has gotten so much love, and hate</a></h3>
+    <p class="meta">TechCrunch | 03/17 20:50</p>
+    <p class="summary">Y CombinatorのCEOギャリー・タン氏による「Claude Code」の活用例が大きな注目と議論を呼んでいる。このAI開発ツールは圧倒的なスピードでアプリを構築できる可能性を示す一方、エンジニアの役割の変化や生成されたコードの品質、知的財産への影響を巡って賛否が分かれている。AIが開発現場に浸透する中で、プログラミング教育や実務にどのような変化をもたらすか、業界全体で関心が高まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/17/apple-rolls-out-first-background-security-update-for-iphones-ipads-and-macs-to-fix-safari-bug/" target="_blank" rel="noopener noreferrer">Apple rolls out first ‘background security’ update for iPhones, iPads, and Macs to fix Safari bug</a></h3>
+    <p class="meta">TechCrunch | 03/17 20:10</p>
+    <p class="summary">AppleがiPhone、iPad、Mac向けに、Safariの脆弱性を修正するための初の「バックグラウンド・セキュリティ・アップデート」を配信した。これは再起動を必要とせず、バックグラウンドで自動的にパッチを適用する新しい仕組みの一環。ユーザーの手間を省きつつ、積極的に悪用される恐れのある深刻なバグに対して、より迅速な対応を可能にすることを目的としている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/17/kagi-small-web-human-authored-indie-internet-mobile-ios-android-devices/" target="_blank" rel="noopener noreferrer">Kagi brings its ‘small web’ of a human-only internet to mobile devices</a></h3>
+    <p class="meta">TechCrunch | 03/17 20:03</p>
+    <p class="summary">有料検索エンジンのKagiが、人間が書いた質の高いコンテンツのみを集めた「Small Web」機能をモバイル向けに提供開始した。AI生成コンテンツや広告重視のサイトが溢れる中で、個人ブログや小規模なウェブサイトの情報を優先的に表示し、インターネットの「人間らしさ」を再発見することを目指している。プライバシーを重視し、ユーザーの検索体験を最適化する新たな試み。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/scaleway-qaas-achieves-full-nvidia-cuda-q-compatibility-for-hybrid-quantum-development/" target="_blank" rel="noopener noreferrer">Scaleway QaaS Achieves Full NVIDIA CUDA-Q Compatibility for Hybrid Quantum Development</a></h3>
+    <p class="meta">Quantum Computing Report | 03/17 19:37</p>
+    <p class="summary">クラウドプロバイダーのScalewayが、量子コンピューティング・アズ・ア・サービス（QaaS）において、NVIDIAのCUDA-Qプラットフォームとの完全な互換性を達成した。これにより、開発者は従来のGPUと量子プロセッサ（QPU）を組み合わせたハイブリッド・アプリケーションをより効率的に開発できるようになる。量子アルゴリズムのシミュレーションから実機での実行まで、一貫したワークフローの提供が期待されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/quantum-emotion-and-jmem-tek-partner-for-quantum-secure-soc-platform/" target="_blank" rel="noopener noreferrer">Quantum eMotion and JMEM Tek Partner for Quantum-Secure System-on-Chip Platform</a></h3>
+    <p class="meta">Quantum Computing Report | 03/17 19:27</p>
+    <p class="summary">Quantum eMotion社とJMEM Tek社が提携し、量子安全なシステム・オン・チップ（SoC）プラットフォームを開発することを発表した。Quantum eMotionの量子乱数生成技術と、JMEM Tekのハードウェアセキュリティ技術を統合し、IoT機器やエッジデバイスにおけるデータ保護を強化する。量子コンピュータの脅威に対抗できる高度な暗号セキュリティを、チップレベルで提供することを目指す。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/qblox-launches-u-s-manufacturing-for-quantum-control-systems/" target="_blank" rel="noopener noreferrer">Qblox Launches U.S. Manufacturing for Quantum Control Systems</a></h3>
+    <p class="meta">Quantum Computing Report | 03/17 19:10</p>
+    <p class="summary">量子制御システムのリーダーであるQbloxが、米国での製造拠点を開設した。量子コンピュータの制御に必要な高度な電子機器の生産能力を北米で拡大することで、急速に成長する米国の量子技術市場の需要に応えるとともに、現地のサプライチェーンの強化を図る。顧客への迅速な製品供給と、密接な技術サポート体制の構築が狙い。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cg4g66r3z40o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Top US counterterrorism official resigns over Iran war, urging Trump to &#39;reverse course&#39;</a></h3>
+    <p class="meta">BBC World News | 03/17 16:43</p>
+    <p class="summary">米国の対テロ対策のトップ高官が、トランプ政権のイラン政策および戦争への動きに反対して辞任した。この高官は、現在の対立路線が国益を損ない地域の不安定化を招くと警告し、トランプ大統領に対し「方針を転換すべきだ」と強く促した。政権内部における中東戦略を巡る亀裂が浮き彫りになり、今後の外交・安全保障への影響が懸念されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/ckg1kgz6wkgo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Air strike hit Kabul rehab centre as patients ate dinner, survivor tells BBC</a></h3>
+    <p class="meta">BBC World News | 03/17 18:45</p>
+    <p class="summary">カブールのリハビリ施設が空爆を受け、患者たちが夕食を食べていた際に被害に遭ったことが、生存者の証言により明らかになった。この攻撃により多数の死傷者が出たが、標的や攻撃の主体についての詳細は依然として錯綜している。アフガニスタンの治安悪化が続く中で、民間人が集まる施設への攻撃が繰り返されている実態が浮き彫りになっており、国際社会からの批判が高まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c24deezq6meo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Israel says it killed Iranian security chief Ali Larijani in air strike</a></h3>
+    <p class="meta">BBC World News | 03/17 20:08</p>
+    <p class="summary">イスラエル軍は、空爆によってイランの安全保障当局のトップ、アリ・ラリジャニ氏を殺害したと発表した。ラリジャニ氏はイランの地域戦略において重要な役割を担っていた人物であり、この殺害は両国間の緊張を極限まで高める恐れがある。イラン側は報復を示唆しており、中東全域での軍事的衝突が拡大するリスクについて、国際社会は強い懸念を表明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260318/k10015078211000.html" target="_blank" rel="noopener noreferrer">高市首相 19日に日米首脳会談 イラン情勢への対応も焦点に</a></h3>
+    <p class="meta">NHK国際放送 | 03/17 20:23</p>
+    <p class="summary">高市首相は19日に米国を訪問し、トランプ大統領との日米首脳会談に臨む。会談では、緊迫するイラン情勢への対応が最大の焦点の一つとなる。日本政府は中東の安定に向けて、同盟国である米国との連携を強化しつつ、独自の外交努力を通じた緊張緩和への貢献を模索する方針。経済安全保障や防衛協力の深化についても議論される見通し。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260318/k10015078281000.html" target="_blank" rel="noopener noreferrer">中国の景気減速 現地進出の日本企業で戦略見直す動き</a></h3>
+    <p class="meta">NHK国際放送 | 03/17 20:12</p>
+    <p class="summary">中国の景気減速を受け、現地に進出している日本企業の間で事業戦略を見直す動きが広がっている。不動産不況や消費の低迷が長期化する中で、設備投資の抑制や、中国以外の市場へのリソースシフトを検討する企業が増えている。これまで中国を成長の柱としてきた製造業や小売業などは、リスク管理の徹底とサプライチェーンの再構築を迫られている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260318/k10015078321000.html" target="_blank" rel="noopener noreferrer">トランプ氏 ホルムズ海峡船舶護衛 “支援は不要” NATOを批判</a></h3>
+    <p class="meta">NHK国際放送 | 03/17 17:16</p>
+    <p class="summary">トランプ大統領は、ホルムズ海峡での船舶護衛について「他国の支援は不要だ」と述べ、NATO加盟国を批判した。米国が多大なコストを負担している現状を不満とし、自国の石油輸送を守るために他国も相応の負担をすべきだと主張。これまでの国際的な協力枠組みを否定する発言であり、同盟国との間に波紋を広げている。中東の安定に責任を持つ国々の姿勢が問われている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

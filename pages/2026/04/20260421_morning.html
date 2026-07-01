@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月21日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月21日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月21日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.apple.com/newsroom/2026/04/tim-cook-to-become-apple-executive-chairman-john-ternus-to-become-apple-ceo/" target="_blank" rel="noopener noreferrer">Tim Cook to become Apple Executive Chairman</a></h3>
+    <p class="meta">Hacker News | 04/21 05:39</p>
+    <p class="summary">Appleは、長年CEOを務めたティム・クック氏が退任し、エグゼクティブ・チェアマンに就任することを発表した。後任のCEOには、現在ハードウェアエンジニアリング担当シニアバイスプレジデントを務めるジョン・ターナス氏が指名された。この経営体制の刷新により、Appleは新たな成長フェーズへと移行する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://stephvee.ca/blog/artificial%20intelligence/ai-resistance-is-growing/" target="_blank" rel="noopener noreferrer">AI Resistance Is Growing</a></h3>
+    <p class="meta">Hacker News | 04/21 05:19</p>
+    <p class="summary">急速に進化するAI技術に対し、社会的な抵抗運動が拡大している。著作権侵害への懸念や雇用の喪失、プライバシー問題など、AIの導入がもたらす副作用に対する批判や規制を求める声が高まっており、AIと人間が共存するための倫理的かつ法的な議論がかつてないほど重要になっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qwen.ai/blog?id=qwen3.6-max-preview" target="_blank" rel="noopener noreferrer">Qwen3.6-Max-Preview: Smarter, Sharper, Still Evolving</a></h3>
+    <p class="meta">Hacker News | 04/20 23:05</p>
+    <p class="summary">Qwenチームは最新モデル「Qwen3.6-Max-Preview」を発表した。前世代から推論能力と精度が大幅に向上しており、複雑な課題解決や創造的なタスクにおいて、より高いパフォーマンスを発揮する。継続的なアップデートにより、AI開発の最前線で進化を続けている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.kimi.com/blog/kimi-vendor-verifier" target="_blank" rel="noopener noreferrer">Kimi vendor verifier – verify accuracy of inference providers</a></h3>
+    <p class="meta">Hacker News | 04/21 03:39</p>
+    <p class="summary">Kimiが導入した「Vendor Verifier」は、複数のAI推論プロバイダーの回答精度を検証・比較するためのツールである。ユーザーが利用するAIモデルの信頼性を客観的に評価し、精度の高い回答を確実に選択できる環境を提供することで、実務でのAI活用における品質管理を支援する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/Luce-Org/lucebox-hub" target="_blank" rel="noopener noreferrer">We got 207 tok/s with Qwen3.5-27B on an RTX 3090</a></h3>
+    <p class="meta">Hacker News | 04/21 03:46</p>
+    <p class="summary">Lucebox-hubプロジェクトにより、RTX 3090環境でQwen3.5-27Bモデルを運用した際、207 tok/sという高い推論速度を達成したことが報告された。高性能なローカル環境でのLLM活用が、個人レベルでも非常に高速かつ実用的になっていることを示している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/ultimatile/articles/neovim-lsp-ime-switch-autocmd-conflict" target="_blank" rel="noopener noreferrer">ブラウザで日本語入力中にIMEが勝手に切り替わると思ったらNeovimのLSPが原因だった</a></h3>
+    <p class="meta">Zenn トレンド | 04/19 14:55</p>
+    <p class="summary">ブラウザでの日本語入力中にIMEが意図せず切り替わる現象の原因が、NeovimのLSP設定とIMEの自動切替設定の競合にあることが判明した。記事では、NeovimのautocmdとLSPの振る舞いがどのように影響を与えているかを解説し、その解決策を提示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/aki_artisan/articles/2ef58663ecf20b" target="_blank" rel="noopener noreferrer">GoのWebフレームワークEcho のコードを読んでみた</a></h3>
+    <p class="meta">Zenn トレンド | 04/19 12:27</p>
+    <p class="summary">Go言語の人気Webフレームワーク「Echo」のソースコードを読み解いた解説記事。ルーターの設計やコンテキストの扱い、ミドルウェアの仕組みなど、Echoがどのように効率的かつ軽量なWeb開発を実現しているかを技術的な視点から考察し、設計思想を学べる内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/htani0817/items/0cb5e8f91fa64fb9ba8c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Claude Code × Obsidian Vault で作る「何でも相談」プロジェクト ― フォルダ構成・CLAUDE.md・MCP設定まで全公開</a></h3>
+    <p class="meta">Qiita トレンド | 04/18 14:27</p>
+    <p class="summary">Claude CodeとObsidian Vaultを統合し、あらゆる相談に応じる「何でも相談」プロジェクトの構築ガイド。効率的なフォルダ構成や設定ファイル（CLAUDE.md）、MCP（Model Context Protocol）の設定方法を全公開しており、AIを個人の知識ベースとして最大限活用する手法を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/20/tim-cook-stepping-down-as-apple-ceo-john-ternus-taking-over/" target="_blank" rel="noopener noreferrer">Tim Cook stepping down as Apple CEO, John Ternus taking over</a></h3>
+    <p class="meta">TechCrunch | 04/20 20:42</p>
+    <p class="summary">Appleのティム・クックCEOが退任し、ジョン・ターナス氏が後任としてCEOに就任する。クック氏は今後、エグゼクティブ・チェアマンとしてAppleに関与し続ける。長年同社を牽引したクック氏から若手のターナス氏への交代は、次世代のAppleにおける経営方針の転換点として注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/20/google-photos-adds-new-touch-up-tools-for-quick-fixes/" target="_blank" rel="noopener noreferrer">Google Photos adds new touch-up tools for ‘quick’ fixes</a></h3>
+    <p class="meta">TechCrunch | 04/20 20:20</p>
+    <p class="summary">Googleフォトに、手軽に写真の微調整を行える新しい編集ツールが追加された。AIを活用した「クイック修正」機能により、複雑な操作を必要とせず、ユーザーは迅速に写真の画質や色調を改善できるようになった。日常的な写真管理をより効率化・高度化させるツールである。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/20/ai-writing-its-not-just-this-its-that-barrons/" target="_blank" rel="noopener noreferrer">It’s not just one thing — it’s another thing</a></h3>
+    <p class="meta">TechCrunch | 04/20 19:37</p>
+    <p class="summary">AIによる生成コンテンツが溢れる現代において、情報の真偽や質の判断がますます困難になっている。特定のAIツールに依存することの危険性や、連続して発生する技術的課題について論じ、AIを活用する際には単一の解決策に頼らず、批判的かつ多角的な視点を持つことの重要性を説いている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cpd575n1znzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Outrage over Israeli soldier&#39;s vandalism of Jesus statue in Lebanon</a></h3>
+    <p class="meta">BBC World News | 04/20 18:57</p>
+    <p class="summary">レバノンにおいて、イスラエル軍兵士がイエスの像を破壊・冒涜したとされる映像が拡散し、激しい非難を浴びている。宗教的なシンボルに対するこの行為は、紛争地での倫理や国際的な宗教感情を大きく揺るがしており、各方面から厳格な調査と対応を求める声が上がっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/crr1v4gzkvlo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">US singer D4vd charged with murder stemming from death of missing teenage girl</a></h3>
+    <p class="meta">BBC World News | 04/20 19:23</p>
+    <p class="summary">米国の歌手D4vdが、行方不明となっていた10代の少女の死亡に関連し、殺人罪で起訴された。この事件は全米で大きな衝撃を与えており、警察による詳細な捜査が進行中である。今後、法廷で事件の全容と容疑者の関与について審理が行われる見通しとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/czd7m7d699do?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Japan on high alert for &#39;huge&#39; second quake after issuing tsunami warning</a></h3>
+    <p class="meta">BBC World News | 04/20 14:54</p>
+    <p class="summary">日本国内で巨大地震の発生が予測され、津波警報が発令されるなど、警戒態勢が最高レベルに引き上げられた。政府は住民に対して迅速な避難を呼びかけるとともに、二次災害の発生に最大限の注意を払うよう警告している。被害を最小限に抑えるため、自治体と住民が緊密な連携をとっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260421/k10015104081000.html" target="_blank" rel="noopener noreferrer">英エリザベス女王 生誕100年で展示会 国内外から大勢の参加者</a></h3>
+    <p class="meta">NHK国際放送 | 04/20 20:44</p>
+    <p class="summary">英エリザベス女王の生誕100年を記念する展示会が開催され、国内外から大勢の参加者が訪れている。女王の軌跡を辿る貴重な資料や遺品が公開され、人々にその生涯と功績を改めて伝えている。多くの市民が記念のイベントに足を運び、敬意を表している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260421/k10015104171000.html" target="_blank" rel="noopener noreferrer">米大統領“停戦期間延長の可能性極めて低い”協議実現が焦点</a></h3>
+    <p class="meta">NHK国際放送 | 04/20 20:43</p>
+    <p class="summary">米大統領は、現在進行中の停戦交渉について「停戦期間が延長される可能性は極めて低い」との見解を示した。協議が難航する中、和平実現に向けた具体的な合意形成が焦点となっている。国際社会は事態の悪化を懸念し、外交努力による早期の解決を強く求めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260421/k10015103991000.html" target="_blank" rel="noopener noreferrer">レアアース「サマリウム」 近く日本に輸入へ 豪企業が商業生産</a></h3>
+    <p class="meta">NHK国際放送 | 04/20 20:41</p>
+    <p class="summary">次世代技術に不可欠なレアアース「サマリウム」が、近く日本に輸入される見通しとなった。オーストラリアの企業が商業生産を開始したことで、供給網の多様化が進む。日本にとって資源の安定調達は重要であり、今後、国内産業における活用が期待されている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

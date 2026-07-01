@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月08日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月08日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月08日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.theverge.com/tech/926458/canvas-shinyhunters-breach" target="_blank" rel="noopener noreferrer">Canvas is down as ShinyHunters threatens to leak schools’ data</a></h3>
+    <p class="meta">Hacker News | 05/08 07:22</p>
+    <p class="summary">教育プラットフォーム「Canvas」でシステム障害が発生した。ハッカー集団「ShinyHunters」が攻撃を主張しており、学校側のデータを流出させると脅迫している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://xeiaso.net/blog/2026/abstain-from-install/" target="_blank" rel="noopener noreferrer">Maybe you shouldn&#39;t install new software for a bit</a></h3>
+    <p class="meta">Hacker News | 05/08 08:02</p>
+    <p class="summary">ソフトウェア供給網への攻撃やセキュリティ上の懸念から、信頼できるソースであっても、新しいソフトウェアのインストールを一時的に控えるべきだという注意喚起のブログ記事。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.reuters.com/business/world-at-work/cloudflare-cut-over-1100-jobs-2026-05-07/" target="_blank" rel="noopener noreferrer">Cloudflare to cut about 20% workforce</a></h3>
+    <p class="meta">Hacker News | 05/08 05:23</p>
+    <p class="summary">クラウドフレアは、2026年中に全従業員の約20％にあたる1,100人以上の人員削減を行うことを発表した。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/turing_motors/articles/5d0e3e86c91c46" target="_blank" rel="noopener noreferrer">自動運転E2Eモデルは何を見ているのか — Integrated Gradientsによる解釈</a></h3>
+    <p class="meta">Zenn トレンド | 05/07 06:08</p>
+    <p class="summary">チューリング社による、自動運転のエンドツーエンド（E2E）モデルの判断根拠を「Integrated Gradients」を用いて可視化・解析した記事。モデルが注視している領域を特定する手法を解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/cybozu_frontend/articles/web_standards_trends_202604" target="_blank" rel="noopener noreferrer">Web 標準動向 2026年4月版</a></h3>
+    <p class="meta">Zenn トレンド | 05/07 03:38</p>
+    <p class="summary">2026年4月時点のWeb標準に関する最新動向レポート。ブラウザの仕様変更や新機能の標準化、アクセシビリティやプライバシーに関する最新の議論をまとめている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/pepabo/articles/74653f4d78eb7b" target="_blank" rel="noopener noreferrer">AIにUIを作らせる前に、デザインの土台を自分で決めるツールを作った</a></h3>
+    <p class="meta">Zenn トレンド | 05/07 00:50</p>
+    <p class="summary">GMOペパボが開発した、AIによるUI生成の前に人間がデザインの土台（色や余白など）を定義するためのツールの紹介。AIの出力に一貫性を持たせ、質の高いデザインを実現することを目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/Ameyanagi/items/fd31a46683bba8bf55b7?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">配色に悩む時間をゼロに。自然界モチーフのデザインシステム集「Morphos」を作りました</a></h3>
+    <p class="meta">Qiita トレンド | 05/05 19:04</p>
+    <p class="summary">自然界の色彩をモチーフにしたデザインシステム集「Morphos」の紹介。配色の決定プロセスを効率化し、誰でも短時間で一貫性のある美しいデザインを作成できるように設計されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/Syoitu/items/5022be3615ecd8b5337c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AWS MCPサーバー超進化してGAしたらしい</a></h3>
+    <p class="meta">Qiita トレンド | 05/07 10:18</p>
+    <p class="summary">AWSの「Model Context Protocol (MCP)」サーバーが大幅な進化を遂げ、正式リリース（GA）されたことの紹介。AIが特定のコンテキストをより正確に扱えるようになり、開発効率の向上が期待される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/07/the-back-office-problem-that-explains-why-specialists-never-call-you-back/" target="_blank" rel="noopener noreferrer">Why you can never get your doctor to call you back</a></h3>
+    <p class="meta">TechCrunch | 05/08 04:42</p>
+    <p class="summary">医療業界で専門医からの折り返し電話が来ない背景にある「バックオフィス業務の非効率性」を指摘。データ管理の分断や過度な事務作業が、円滑なコミュニケーションを阻害している実態を解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/07/ramp-in-talks-to-hit-40b-valuation-6-months-after-reaching-32b/" target="_blank" rel="noopener noreferrer">Ramp in talks to hit $40B+ valuation, 6 months after reaching $32B</a></h3>
+    <p class="meta">TechCrunch | 05/07 23:11</p>
+    <p class="summary">フィンテック企業のRampが、評価額400億ドル以上での資金調達に向けて協議中。半年前の評価額320億ドルから急成長を続けており、さらなる時価総額の向上を目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/07/openai-launches-new-voice-intelligence-features-in-its-api/" target="_blank" rel="noopener noreferrer">OpenAI launches new voice intelligence features in its API</a></h3>
+    <p class="meta">TechCrunch | 05/07 22:24</p>
+    <p class="summary">OpenAIがAPIに新しい音声知能機能を導入した。高度な音声認識や自然な対話、リアルタイム解析が可能になり、開発者はより洗練された音声AIインターフェースを構築できるようになる。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/south-korea-expands-pqc-pilot-to-telecommunications-finance-and-defense/" target="_blank" rel="noopener noreferrer">South Korea Expands PQC Pilot to Telecommunications, Finance, and Defense</a></h3>
+    <p class="meta">Quantum Computing Report | 05/07 19:37</p>
+    <p class="summary">韓国政府が、量子コンピュータによる解読に耐える「耐量子計算機暗号（PQC）」の実証実験を、通信、金融、防衛の主要分野へ拡大した。量子時代に向けたセキュリティ強化を目的としている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/sic-systems-and-orca-computing-partner-to-integrate-quantum-enhanced-agentic-ai/" target="_blank" rel="noopener noreferrer">SiC Systems and ORCA Computing Partner to Integrate Quantum-Enhanced Agentic AI</a></h3>
+    <p class="meta">Quantum Computing Report | 05/07 19:16</p>
+    <p class="summary">SiC SystemsとORCA Computingが提携し、量子コンピュータで強化された「エージェンティックAI（自律型AI）」の開発を発表。量子計算を活用し、高度な推論と意思決定の実現を目指す。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/chattanooga-establishes-nations-first-quantum-pre-apprenticeship-program/" target="_blank" rel="noopener noreferrer">Chattanooga Establishes Nation’s First Quantum Pre-Apprenticeship Program</a></h3>
+    <p class="meta">Quantum Computing Report | 05/07 19:09</p>
+    <p class="summary">米テネシー州チャタヌーガで、全米初となる「量子分野のプレ見習いプログラム」が設立。次世代の量子技術人材を育成するため、若年層に教育と実務経験の機会を提供する。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c626zyywxjno?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump says US-Iran ceasefire still in place after exchange of fire in Strait of Hormuz</a></h3>
+    <p class="meta">BBC World News | 05/08 05:57</p>
+    <p class="summary">ホルムズ海峡で米イラン両軍による砲撃戦が発生したが、トランプ大統領は両国間の停戦状態は依然として維持されていると表明した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c86dp85g59xo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Oil prices rise after US and Iran exchange fire in Hormuz strait</a></h3>
+    <p class="meta">BBC World News | 05/08 08:43</p>
+    <p class="summary">ホルムズ海峡における米国とイランの交戦を受け、原油価格が上昇。世界のエネルギー輸送の要衝での情勢不安が供給リスクとして意識され、市場に影響を与えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c5yr41vq2ero?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Third British national has suspected hantavirus infection, UK government says</a></h3>
+    <p class="meta">BBC World News | 05/08 06:03</p>
+    <p class="summary">英国政府は、3人目の英国人によるハンタウイルス感染の疑いがあることを発表した。公衆衛生当局が警戒を強め、感染経路の調査を進めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260508/k10015116921000.html" target="_blank" rel="noopener noreferrer">ハンタウイルス 感染した乗客と接触の客室乗務員 陰性確認</a></h3>
+    <p class="meta">NHK国際放送 | 05/08 08:57</p>
+    <p class="summary">ハンタウイルスに感染した乗客と接触した客室乗務員について、検査の結果、陰性が確認された。現時点で二次感染の拡大は報告されていないが、当局による監視が続いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260508/k10015116031000.html" target="_blank" rel="noopener noreferrer">【動画】ビーチリゾート バリ島に異変？</a></h3>
+    <p class="meta">NHK国際放送 | 05/08 08:39</p>
+    <p class="summary">バリ島で起きている環境破壊やゴミ問題、過度な観光開発による異変を追った動画ニュース。リゾート地の裏側で直面している深刻な課題を報じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260508/k10015116831000.html" target="_blank" rel="noopener noreferrer">アメリカ キューバへの圧力強化 軍傘下企業の資産凍結</a></h3>
+    <p class="meta">NHK国際放送 | 05/08 07:00</p>
+    <p class="summary">アメリカ政府はキューバへの圧力を強化し、キューバ軍傘下企業の資産を凍結する措置をとった。制裁を通じて政権の資金源を絶ち、人権改善や民主化を促す狙いがある。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

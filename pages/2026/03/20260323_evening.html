@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月23日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月23日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月23日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://indieweb.org/POSSE" target="_blank" rel="noopener noreferrer">POSSE – Publish on your Own Site, Syndicate Elsewhere</a></h3>
+    <p class="meta">Hacker News | 03/23 17:29</p>
+    <p class="summary">POSSE（自分のサイトで公開し、他で配信する）は、コンテンツ作成者が自身のウェブサイトで最初に内容を公開し、その後他のソーシャルメディア等にコピーやリンクを配信するコンテンツ公開戦略。これにより、データの所有権を自ら保持しつつ、既存のプラットフォームのリーチも活用できる。IndieWebの核となる概念であり、特定の中央集権的なプラットフォームへの依存を減らすことを目的としている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.businessinsider.com/tin-can-landline-kids-cellphone-cell-alternative-how-2025-9" target="_blank" rel="noopener noreferrer">Tin Can, a &#39;landline&#39; for kids</a></h3>
+    <p class="meta">Hacker News | 03/20 23:02</p>
+    <p class="summary">「Tin Can」は、スマートフォンを持たせるには早い子供向けに設計された「現代版の固定電話」のようなデバイス。インターネット接続やSNS機能を排除し、あらかじめ登録された連絡先との音声通話のみが可能。子供が安全にコミュニケーションを学べる環境を提供しつつ、保護者が管理しやすい設計となっている。デジタルデバイスへの依存やリスクを抑えつつ、家族や友人との繋がりを維持できる新たな選択肢として提案されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.da.vidbuchanan.co.uk/blog/dram-emfi.html" target="_blank" rel="noopener noreferrer">Can you get root with only a cigarette lighter? (2024)</a></h3>
+    <p class="meta">Hacker News | 03/20 21:11</p>
+    <p class="summary">安価な100円ライターの電子着火ユニットから発生する電磁干渉を利用し、DRAM内のビット反転を引き起こしてルート権限を取得する実験が紹介された。これは「電磁故障注入（EMFI）」の一種であり、高価な機材を使わずとも、日用品でハードウェアの脆弱性を突き、システムのセキュリティを突破できる可能性を示している。物理的なアクセスが可能な状況におけるハードウェアレベルの防御の重要性を再認識させる内容となっている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/dp_techblog/articles/5ab783ef029d44" target="_blank" rel="noopener noreferrer">PO・PdMが感じるスクラムの限界</a></h3>
+    <p class="meta">Zenn トレンド | 03/22 15:24</p>
+    <p class="summary">プロダクトオーナー（PO）やプロダクトマネージャー（PdM）が直面するスクラムの限界を考察した記事。フレームワークが開発の「ベロシティ」に集中しすぎることで、真の顧客価値（アウトカム）の追求が疎かになりやすい点を指摘している。スプリントの固定サイクルが、不確実性の高い開発において柔軟な方向転換を妨げる要因になる場合もあり、チームの状況に合わせて形骸化したプロセスを見直す必要性を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/purupurupu/articles/css-noop-checker" target="_blank" rel="noopener noreferrer">適用されていないCSSを検出するChrome拡張を作った</a></h3>
+    <p class="meta">Zenn トレンド | 03/22 13:16</p>
+    <p class="summary">Webサイト上で実際に適用されていない不要なCSSを検出するためのChrome拡張機能の開発記録。大規模なプロジェクトで肥大化しがちなCSSの中から、現在使われていないスタイルをリアルタイムで特定し、視覚的に確認できる。これによりコードのクリーンアップやパフォーマンス改善を支援する。ブラウザのレンダリング情報を活用した実装の詳細や、開発の背景にある課題意識についても触れられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/lambdalisue/articles/introduce-arto-markdown-reader" target="_blank" rel="noopener noreferrer">AI 駆動開発全盛期を生き抜くために Markdown を「読む」ためだけのアプリ Arto を作った</a></h3>
+    <p class="meta">Zenn トレンド | 03/22 11:28</p>
+    <p class="summary">AI駆動開発によって大量に生成されるドキュメントを効率よく「読む」ことに特化したMarkdownリーダーアプリ「Arto」の紹介。編集機能を削ぎ落とし、閲覧の快適さと高速な動作を追求している。AIが生成したテキストを素早く確認し、必要な情報を取捨選択する作業を最適化するためのミニマルなインターフェースが特徴。情報過多な時代において、書くことよりも読むことのストレスを軽減することを目指して開発された。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/kenken38/items/1d6e71aed59920c642a4?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【AWS学習の最適解】AWS全冠がお届けする、無料学習サイト「AWS認定合格ナビゲーター」のご紹介</a></h3>
+    <p class="meta">Qiita トレンド | 03/21 11:04</p>
+    <p class="summary">AWS認定資格をすべて取得した著者が公開した、無料学習サイト「AWS認定合格ナビゲーター」の紹介。各試験の合格に必要な知識や効率的な学習ロードマップを体系的にまとめている。初心者から上級者まで、目標とする資格に合わせた教材や対策方法が提供されており、公式ドキュメントだけでは理解しにくいポイントをわかりやすく解説。AWS学習の挫折を防ぎ、最短ルートで合格を目指すためのリソースとなっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cy01g522ww4o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Plane and ground vehicle collide at New York&#39;s LaGuardia Airport halting flights</a></h3>
+    <p class="meta">BBC World News | 03/23 07:53</p>
+    <p class="summary">ニューヨークのラガーディア空港で、航空機と地上車両が衝突する事故が発生し、フライトが一時停止される事態となった。この事故により多くの便に遅れや欠航が生じ、利用客に大きな影響が出た。幸いにも重傷者は報告されていないが、当局が事故の詳しい原因を調査している。混雑する主要空港での地上事故は運航スケジュールに甚大な混乱を招くため、地上作業の安全管理体制が改めて問われている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/czex56kwxxzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Asia stocks slide as US and Iran threaten to escalate war</a></h3>
+    <p class="meta">BBC World News | 03/23 08:11</p>
+    <p class="summary">米国とイランの間で軍事的緊張が高まり、紛争拡大への懸念からアジア市場の株価が下落した。両国が互いに挑発的な発言を行い、情勢が不安定化していることを受けて、投資家の間でリスク回避の動きが広がっている。また、エネルギー供給への影響懸念から原油価格も変動しており、世界経済への悪影響が危惧されている。今後の事態の推移次第では、さらなる市場の混乱が予想される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260323/k10015082001000.html" target="_blank" rel="noopener noreferrer">IEA事務局長“必要応じ さらなる石油備蓄 放出行う用意ある”</a></h3>
+    <p class="meta">NHK国際放送 | 03/23 08:48</p>
+    <p class="summary">国際エネルギー機関（IEA）の事務局長は、緊迫する中東情勢に伴うエネルギー供給不安に対応するため、必要に応じてさらなる石油備蓄の放出を行う準備があると表明した。供給不足による価格急騰を抑制し、市場の安定化を図る狙いがある。IEAは加盟各国と連携しており、今後の市場動向を注視しながら、迅速に追加措置を講じる構えを見せている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260323/k10015081981000.html" target="_blank" rel="noopener noreferrer">高市首相 “ホルムズ海峡で要請 できることできないこと説明”</a></h3>
+    <p class="meta">NHK国際放送 | 03/23 08:38</p>
+    <p class="summary">高市首相は、中東情勢の緊迫化を受けてホルムズ海峡での船舶の安全確保が課題となる中、他国からの協力要請に対して、日本ができることとできないことを明確に説明していく考えを示した。憲法や現行法の枠内での対応を前提としつつ、エネルギー安全保障の観点から国際社会とどのように連携すべきか、慎重に判断を下す姿勢を強調している。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

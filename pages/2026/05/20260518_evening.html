@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月18日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月18日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月18日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://gencad.github.io/" target="_blank" rel="noopener noreferrer">GenCAD</a></h3>
+    <p class="meta">Hacker News | 05/18 06:40</p>
+    <p class="summary">GenCADは、プログラムコードを通じてCAD設計を行うためのオープンソース・フレームワークです。エンジニアがコードを記述してパラメータやルールを定義することで、機械部品や複雑な形状を効率的かつ反復可能に生成することを可能にします。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.scientificamerican.com/article/strange-crystals-found-inside-wreckage-from-the-first-nuclear-bomb-test/" target="_blank" rel="noopener noreferrer">Crystals found inside wreckage from the first nuclear bomb test</a></h3>
+    <p class="meta">Hacker News | 05/16 08:54</p>
+    <p class="summary">人類初の核実験「トリニティ実験」の現場で見つかった残骸から、珍しい準結晶が発見されました。この結晶は、核爆発による超高温・高圧の過酷な環境下で生成されたものであり、核兵器の歴史や物理学の知見に新たな洞察を与えています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.noemamag.com/there-is-no-hard-problem-of-consciousness/" target="_blank" rel="noopener noreferrer">It is time to give up the dualism introduced by the debate on consciousness</a></h3>
+    <p class="meta">Hacker News | 05/18 11:59</p>
+    <p class="summary">本記事は、意識に関する「ハード・プロブレム」という二元論的な議論を再考するよう主張しています。著者は、意識の主観的な経験を物理現象と分離して捉える現代の論法に対し、科学的・哲学的な観点から異を唱え、従来の二元論を捨て去るべきだと説いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://askanastronaut.issinrealtime.org/" target="_blank" rel="noopener noreferrer">Ask an Astronaut: 333 hours of Q&amp;A footage with astronauts</a></h3>
+    <p class="meta">Hacker News | 05/16 04:25</p>
+    <p class="summary">「Ask an Astronaut」は、宇宙飛行士たちが語る333時間にも及ぶQ&amp;A映像を網羅したアーカイブサイトです。宇宙での生活、訓練、ミッションの過酷さや裏話など、一般からの質問に答える貴重な記録が公開されており、宇宙開発の教育や好奇心を満たす場として活用されています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/hiromoo/articles/5f127b5459d490" target="_blank" rel="noopener noreferrer">コーディングエージェント時代にエンジニアは必要なのか本気で考えてみる</a></h3>
+    <p class="meta">Zenn トレンド | 05/17 14:50</p>
+    <p class="summary">コーディングエージェントが台頭する中で、エンジニアの存在意義を考察しています。単なるコード記述から、要件定義、システム設計、エージェントを使いこなす判断力への役割シフトが不可欠であり、技術の本質を理解したエンジニアこそが今後も価値を発揮し続けると結論づけています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/levtech/articles/pjm-rutine-and-template" target="_blank" rel="noopener noreferrer">プロジェクトマネジメントするときのテンプレとルーティンを紹介します</a></h3>
+    <p class="meta">Zenn トレンド | 05/17 13:18</p>
+    <p class="summary">小規模プロジェクトから大規模案件まで対応可能なプロジェクトマネジメントのテンプレートとルーティンを紹介。進捗管理、タスクの可視化、チーム内でのコミュニケーション設計など、実用的なフレームワークを用いて効率的かつ安定したプロジェクト運営を実現する手法を伝えています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/snowflakejp/articles/794ce748589765" target="_blank" rel="noopener noreferrer">Snowflake AI_COMPLETE 関数で動画と音声を直接分析</a></h3>
+    <p class="meta">Zenn トレンド | 05/17 12:13</p>
+    <p class="summary">Snowflakeの「AI_COMPLETE」関数を活用し、動画や音声を直接分析する手法を解説しています。従来のテキスト処理に加え、マルチモーダルなデータを統合的に処理することで、インフラ構築の負荷を抑えつつAIによる迅速な解析・インサイト抽出が可能になりました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/masakai/items/d55a39ac35dca575b8ce?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">専任情シスがいない20人規模の町工場で、自分たちでランサムウェア対策基盤を組む</a></h3>
+    <p class="meta">Qiita トレンド | 05/17 07:35</p>
+    <p class="summary">情シス専任者が不在の20人規模の町工場において、低予算でランサムウェア対策基盤を構築した実例。既存のクラウドサービスやオープンソース技術を駆使し、専門家がいない環境でも堅牢なセキュリティ体制を維持するための運用設計と思考プロセスが詳しく記されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/hitomin_poke/items/5d00c7dd1d690ee4f9bf?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">1割の“信頼される”エンジニアが実行している『ズレを防ぐ途中共有』</a></h3>
+    <p class="meta">Qiita トレンド | 05/18 05:05</p>
+    <p class="summary">信頼されるエンジニアが実践する「ズレを防ぐ途中共有」の重要性を説いています。完成直前の報告ではなく、作業の早期段階でアウトプットや意図を共有することで、手戻りを防ぎ、期待値を管理するコミュニケーション技術こそが、プロジェクトの成功と信頼に繋がると強調しています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cd0p4y9y48xo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump warns &#39;clock is ticking&#39; for Iran as peace progress stalls</a></h3>
+    <p class="meta">BBC World News | 05/18 03:53</p>
+    <p class="summary">トランプ氏は、イランとの平和プロセスが停滞していることを受け、「時間は限られている」と警告を発しました。核合意や地域紛争をめぐる外交的な膠着状態に対し、同氏が強硬な態度で早期の進展を求めている姿勢が浮き彫りになっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c3v2ngnpgl9o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Driver of crashed train tested positive for drugs, Thai police say</a></h3>
+    <p class="meta">BBC World News | 05/18 07:03</p>
+    <p class="summary">タイで発生した列車衝突事故に関し、警察は運転士から薬物の陽性反応が出たと発表しました。当局は事故の原因を詳しく調査しており、公共交通機関の安全性管理や運転者のコンプライアンス体制が厳しく問われる事態となっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260518/k10015124761000.html" target="_blank" rel="noopener noreferrer">東南アジア GDP 1月～3月 燃料高で多くの国で伸び率が縮小</a></h3>
+    <p class="meta">NHK国際放送 | 05/18 08:37</p>
+    <p class="summary">2026年1月～3月期の東南アジア諸国において、燃料価格の高騰を背景にGDP成長率が軒並み鈍化しました。インフレによる消費の落ち込みと物流コストの上昇が経済全体に影を落としており、今後の景気回復に向けた各国の政策対応が注目されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260518/k10015124741000.html" target="_blank" rel="noopener noreferrer">赤澤経産相 ブラジル外相に原油調達に対する協力を要請</a></h3>
+    <p class="meta">NHK国際放送 | 05/18 08:29</p>
+    <p class="summary">赤澤経済産業大臣は、来日中のブラジル外相と会談し、原油の安定調達に向けた協力体制の構築を要請しました。資源エネルギーの確保が喫緊の課題となる中、日本とブラジルは経済的な結びつきを深め、供給網の多角化を目指す方針を確認しました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260518/k10015124711000.html" target="_blank" rel="noopener noreferrer">日韓両政府 山口 宇部「長生炭鉱」人の骨のDNA鑑定で協力へ</a></h3>
+    <p class="meta">NHK国際放送 | 05/18 08:18</p>
+    <p class="summary">日韓両政府は、山口県宇部市の「長生炭鉱」水没事故で犠牲となった遺骨について、DNA鑑定による身元確認で協力することを決定しました。歴史的な経緯がある遺骨の返還に向け、両国の専門家が連携し、人道的な観点から真摯に取り組む姿勢が示されています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

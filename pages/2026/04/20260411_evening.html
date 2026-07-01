@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月11日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月11日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月11日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://kentwalters.com/posts/corners/" target="_blank" rel="noopener noreferrer">Filing the corners off my MacBooks</a></h3>
+    <p class="meta">Hacker News | 04/11 07:16</p>
+    <p class="summary">著者は、現代のMacBookの角が鋭すぎて手首に食い込み、不快に感じていた。そこで、実際に金属やすりを使ってノートパソコンの角を削るという大胆な解決策を実行した。記事では、MacBook AirとProの両方で行った削り作業のプロセスや、その結果としての手触りの改善、外観への影響について説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://playstarfling.com" target="_blank" rel="noopener noreferrer">Starfling: A one-tap endless orbital slingshot game in a single HTML file</a></h3>
+    <p class="meta">Hacker News | 04/09 10:52</p>
+    <p class="summary">「Starfling」は、ワンタップで遊べるエンドレスな軌道スリングショットゲームである。最大の特徴は、ゲーム全体が単一のHTMLファイル内に収まっている点だ。プレイヤーは惑星から惑星へとタイミングよくジャンプし、重力を利用して進んでいく。シンプルながら中毒性のある仕組みを、軽量なファイル構成で実現している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.cbsnews.com/live-updates/artemis-ii-splashdown-return/" target="_blank" rel="noopener noreferrer">Artemis II safely splashes down</a></h3>
+    <p class="meta">Hacker News | 04/11 09:10</p>
+    <p class="summary">NASAのアルテミス2号が、月を周回する歴史的な有人ミッションを終え、太平洋への着水に成功した。これは半世紀以上ぶりとなる有人月探査に向けた重要な一歩である。宇宙船オリオンに乗船していた4人の宇宙飛行士は無事に帰還し、回収作業が進められている。この成功により、将来の月面着陸ミッションへの道が拓かれた。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://jack.cab/blog/every-firefox-extension" target="_blank" rel="noopener noreferrer">Installing every* Firefox extension</a></h3>
+    <p class="meta">Hacker News | 04/11 06:56</p>
+    <p class="summary">Firefoxの全拡張機能をインストールしようと試みた実験の記録である。数千個もの拡張機能を一斉に導入した際、ブラウザがどのように挙動し、パフォーマンスがどの程度低下するかを検証した。技術的な限界や、アドオンマネージャーの動作、メモリ消費量の激増など、極端な負荷条件下でのブラウザの振る舞いについて詳細に報告されている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/sonneko/articles/004b051a805687" target="_blank" rel="noopener noreferrer">関数型って結局なんやねん！どないして活用せえっちゅうねん！</a></h3>
+    <p class="meta">Zenn トレンド | 04/10 13:40</p>
+    <p class="summary">関数型プログラミングの概念を関西弁で親しみやすく解説した記事。副作用の排除、不変性（イミュータブル）、純粋関数といった基本的な考え方を説明し、それらがプログラムの予測可能性や保守性にどう貢献するかを説いている。オブジェクト指向との対比を交えつつ、実務でどう活用すべきかという視点で書かれている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/dely_jp/articles/b8da42a57bbc39" target="_blank" rel="noopener noreferrer">Claude Code + Obsidian — Daily Note の下書きを自動生成し、週次・月次レビューまで積み上げる仕組みを作った</a></h3>
+    <p class="meta">Zenn トレンド | 04/10 09:32</p>
+    <p class="summary">AIエージェント「Claude Code」とメモアプリ「Obsidian」を組み合わせ、デイリーノートの下書きを自動生成する仕組みを構築した事例紹介。日々の記録を自動でまとめ、さらに週次・月次レビューまで段階的に積み上げていくワークフローを解説している。AIを活用して内省を効率化し、継続的な記録をサポートする実践的な自動化手法となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/oukayuka/books/353ad112b88613" target="_blank" rel="noopener noreferrer">Jujutsu はなぜ AI 時代に急に評価され始めたのか</a></h3>
+    <p class="meta">Zenn トレンド | 04/10 04:35</p>
+    <p class="summary">Git互換の次世代バージョン管理システム「Jujutsu (jj)」が、なぜ今注目を集めているのかを解説。操作ミスを即座に解消できるファーストクラスのUndo機能や、コンフリクトを「状態」として保持する仕組みなど、従来のGitにはない革新的な機能を備えている。特に、試行錯誤が多いAI時代の開発スタイルとの親和性の高さが評価されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/teppei19980914/items/36404f9ec9c786cde671?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">マークダウン記法は奥深く、楽しい — テキストだけで「伝わるドキュメント」を作る技術</a></h3>
+    <p class="meta">Qiita トレンド | 04/10 09:34</p>
+    <p class="summary">テキストだけで読みやすいドキュメントを作成するための、マークダウン記法の活用術を解説した記事。単なる構文の紹介にとどまらず、情報の構造化、可読性を高める書き方のコツ、ドキュメント作成におけるマインドセットなどを詳しく説明している。シンプルながらも強力なマークダウンの可能性を再発見し、より伝わる文書作成を目指す内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/10/nasa-artemis-ii-landing-pacific-ocean-splash-down/" target="_blank" rel="noopener noreferrer">NASA Artemis II splashes down in Pacific Ocean in ‘perfect’ landing for Moon mission</a></h3>
+    <p class="meta">TechCrunch | 04/11 00:44</p>
+    <p class="summary">NASAのアルテミス2号のオリオン宇宙船が、月周回ミッションを完遂し太平洋に着水した。「完璧」と評される着陸により、4人の宇宙飛行士は無事地球へ帰還した。今回の成功は、1972年のアポロ計画以来となる有人月探査の復活に向けた大きな進歩であり、次は有人月面着陸を目指すアルテミス3号へとバトンが渡されることになる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/10/how-to-watch-nasa-artemis-ii-landing/" target="_blank" rel="noopener noreferrer">How to watch NASA’s Artemis II splash back down to Earth</a></h3>
+    <p class="meta">TechCrunch | 04/10 21:18</p>
+    <p class="summary">NASAのアルテミス2号が月周回ミッションを終え、地球に帰還・着水する様子を視聴する方法を紹介したガイド。NASAの公式ウェブサイトやYouTubeチャンネルでのライブ配信スケジュール、回収作業の様子、ミッションの歴史的背景などを解説している。宇宙ファンがこの重要な瞬間をリアルタイムで見守るための情報を提供している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cn9qzl12537o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Lyse Doucet: Historic US-Iran talks must bridge deep distrust</a></h3>
+    <p class="meta">BBC World News | 04/10 23:46</p>
+    <p class="summary">米国とイランの間で行われている歴史的な協議について、BBC記者が分析。数十年にわたる深い不信感をどう克服するかが最大の課題であると指摘している。核問題や中東情勢を巡る複雑な利害関係が絡み合う中、対話の進展が期待される一方で、双方の国内事情や強硬派の存在が合意への道筋を困難にしている現状を詳報している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c0q9527y41lo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Final push for votes as challenger to Hungary&#39;s Orbán senses victory</a></h3>
+    <p class="meta">BBC World News | 04/11 00:17</p>
+    <p class="summary">ハンガリーの選挙で、長期政権を維持するオルバン首相に対し、野党候補のペーテル・マジャル氏が勢いを強めている。投票日直前の最終局面で、マジャル氏は変化を求める有権者からの支持を集め、勝利への期待感を高めている。政治の腐敗打破を訴える野党側と、政権維持を目指すオルバン氏による激しい選挙戦の様子が伝えられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cj0v119zp19o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Artemis II mission was a triumph - now comes the hard part</a></h3>
+    <p class="meta">BBC World News | 04/11 00:38</p>
+    <p class="summary">アルテミス2号のミッション成功を「勝利」と評しつつ、今後の更なる困難を分析した記事。今回の月周回ミッションの成功は重要だが、次のアルテミス3号では実際に月面に着陸するという遥かに難易度の高い課題が待ち構えている。着陸船の開発遅延や技術的な障壁など、人類を再び月に立たせるための現実的な課題について論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260411/k10015097161000.html" target="_blank" rel="noopener noreferrer">トランプ政権が徴収した相互関税など 返還申請受け付けへ</a></h3>
+    <p class="meta">NHK国際放送 | 04/11 03:05</p>
+    <p class="summary">トランプ政権が「相互主義」を掲げて他国からの輸入製品に課した関税について、米政府が還付の申請受け付けを開始する。対象は、特定の製品分野で過剰に徴収された関税などで、企業の負担軽減を目的としている。貿易政策の転換を示す動きとして注目されており、日本企業を含む輸出企業への影響や手続きの詳細が関心を集めている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

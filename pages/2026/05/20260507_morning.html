@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月07日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月07日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月07日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.digitalfoundry.net/news/2026/05/valve-releases-steam-controller-cad-files-under-creative-commons-license" target="_blank" rel="noopener noreferrer">Valve releases Steam Controller CAD files under Creative Commons license</a></h3>
+    <p class="meta">Hacker News | 05/07 00:44</p>
+    <p class="summary">ValveはSteamコントローラーのCADファイルをクリエイティブ・コモンズ・ライセンスで公開した。これにより、ユーザーはコントローラーのパーツを自ら3Dプリントしたり、独自に改造したバリエーションを作成・共有したりすることが可能になる。ハードウェアのオープンソース化を推進し、コミュニティによるカスタマイズを支援する動きとして注目される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://nooneshappy.com/article/appearing-productive-in-the-workplace/" target="_blank" rel="noopener noreferrer">Appearing productive in the workplace</a></h3>
+    <p class="meta">Hacker News | 05/07 01:18</p>
+    <p class="summary">職場において「生産的に見える」ことの心理や戦略について考察した記事。実際の仕事の成果そのものよりも、周囲からの見え方やオフィス文化における「視認性」の管理がいかに重要視されているかを論じている。効率性よりも表面的な活動が評価されがちな現代の労働環境における、従業員の振る舞いやマネジメント側の課題に焦点を当てている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.cnn.com/2026/05/06/us/ted-turner-death" target="_blank" rel="noopener noreferrer">Ted Turner has died</a></h3>
+    <p class="meta">Hacker News | 05/06 23:56</p>
+    <p class="summary">24時間ニュース放送を世界で初めて開始したCNNの創設者であり、メディア界の大物であるテッド・ターナー氏が死去した。彼はテレビニュースのあり方を根底から変えただけでなく、慈善活動やプロスポーツ界への貢献でも知られていた。メディアの歴史に多大な影響を残した先駆者の訃報に、多くの追悼の言葉が寄せられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://cloud.google.com/blog/products/identity-security/introducing-google-cloud-fraud-defense-the-next-evolution-of-recaptcha/" target="_blank" rel="noopener noreferrer">Google Cloud fraud defense, the next evolution of reCAPTCHA</a></h3>
+    <p class="meta">Hacker News | 05/07 02:59</p>
+    <p class="summary">Google Cloudは、reCAPTCHAの進化形となる「Fraud Defense」を発表した。これは高度な機械学習を活用し、オンライン詐欺、アカウント乗っ取り、ボット攻撃などからプラットフォームを包括的に保護する。従来の人間認証の枠を超え、ビジネス全体を脅威から守るための次世代セキュリティソリューションとして位置づけられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://elonlit.com/scrivings/a-theory-of-deep-learning/" target="_blank" rel="noopener noreferrer">A Theory of Deep Learning</a></h3>
+    <p class="meta">Hacker News | 05/06 04:38</p>
+    <p class="summary">ディープラーニングに関する理論的な考察をまとめた記事。ニューラルネットワークがどのように学習し、複雑なシステムがなぜ新しいデータに対して高い汎用性を持つのか、その数学的背景や最適化のメカニズムを解説している。AIのブラックボックス化を防ぎ、学習の効率と信頼性を向上させるための理論的枠組みを提示している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/masayan1126/books/claude-code-subagents-master" target="_blank" rel="noopener noreferrer">Claude Codeサブエージェント完全マスター、設計4原則から公式プラグイン解読までぜんぶ教えたるで</a></h3>
+    <p class="meta">Zenn トレンド | 05/06 07:30</p>
+    <p class="summary">Claude Codeのサブエージェント機能を使いこなすための技術解説。設計における4つの原則や、公式プラグインのコード解読を通じた実装方法まで、実践的な知識を網羅している。効率的なエージェント構築と運用を目指す開発者向けに、技術的な詳細を分かりやすくまとめたガイドとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/kimuson/articles/pi-coding-agent-with-opencode-go" target="_blank" rel="noopener noreferrer">OpenCode Go + pi-coding-agent のすゝめ</a></h3>
+    <p class="meta">Zenn トレンド | 05/06 02:36</p>
+    <p class="summary">OpenCode Goとpi-coding-agentを併用した開発スタイルの提案。これらのツールを組み合わせることで、コーディング支援環境をいかに効率化し、AIエージェントを活用した開発プロセスを改善できるかを解説している。開発者の生産性を向上させるための具体的な設定や活用法に焦点を当てた記事。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/microsoft/articles/b081f3ddb93040" target="_blank" rel="noopener noreferrer">AIエージェントの Skill は書くだけでは足りない ⇒ Waza で評価して APM で配ろう!【ハーネスエンジニアリング】</a></h3>
+    <p class="meta">Zenn トレンド | 05/05 18:41</p>
+    <p class="summary">AIエージェント開発において、スキルの記述だけでなく評価と配布の仕組みが重要であることを説く。エンジニアリング的な観点から「Waza」による品質評価と、「APM」を用いたデプロイ管理を提唱。単なる実装にとどまらず、エージェントを安定して運用・配布するためのハーネスエンジニアリングの重要性を強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/tuanphan/items/b05513ade79cef735f90?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">[Frontend Performance - Part 12] React最適化の完成：再レンダリング・メモ化・State設計を完全制覇</a></h3>
+    <p class="meta">Qiita トレンド | 05/06 03:47</p>
+    <p class="summary">Reactフロントエンドのパフォーマンス最適化を完結させるための技術記事。不要な再レンダリングの抑制、適切なメモ化（Memoization）の実施、効率的なState設計など、開発者が直面する課題を網羅的にカバー。実践的なコード例とともに、最高の結果を出すための手法を解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/06/insurance-startup-corgi-hits-1-3b-valuation-4-months-after-its-series-a/" target="_blank" rel="noopener noreferrer">Insurance startup Corgi hits $1.3B valuation 4 months after its Series A</a></h3>
+    <p class="meta">TechCrunch | 05/06 20:39</p>
+    <p class="summary">保険スタートアップのCorgiが、シリーズA調達からわずか4ヶ月で評価額13億ドルに達し、ユニコーン企業の仲間入りを果たした。従来の保険業界を破壊する革新的なソリューションが投資家から高く評価された結果であり、インシュアテック分野における異例の急成長事例として注目を集めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/06/microsofts-ai-data-center-push-is-colliding-with-its-clean-power-goals/" target="_blank" rel="noopener noreferrer">Microsoft’s AI data center push is colliding with its clean power goals</a></h3>
+    <p class="meta">TechCrunch | 05/06 19:57</p>
+    <p class="summary">MicrosoftがAIデータセンターの拡充を急ぐ一方で、クリーンエネルギー化という環境目標との間で矛盾が生じている。AI向けチップの膨大な電力消費が同社の持続可能性への取り組みを困難にしており、テック大手の成長戦略とカーボンニュートラル目標の両立という深刻な課題が浮き彫りになっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/06/robinhoods-venture-fund-ipo-attracted-150000-retail-investors-ceo-says/" target="_blank" rel="noopener noreferrer">Robinhood’s venture fund IPO attracted 150,000+ retail investors, CEO says</a></h3>
+    <p class="meta">TechCrunch | 05/06 19:10</p>
+    <p class="summary">RobinhoodのベンチャーファンドIPOに、15万を超える個人投資家が参加した。CEOはこの結果について、これまで富裕層や機関投資家に限られていたプライベート・マーケット（未公開市場）への投資を一般個人に開放し、投資の民主化を前進させた大きな成功であると強調している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c4g8zejyyr3o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Oil prices drop and stock markets rise after reports of deal to end Iran war</a></h3>
+    <p class="meta">BBC World News | 05/06 16:11</p>
+    <p class="summary">イラン情勢を巡る紛争終結の合意報道を受け、世界の原油価格が下落し、株式市場は上昇した。投資家は中東地域の緊張緩和による供給安定化と地政学的リスクの低下を好感しており、世界経済へのプラスの影響が期待されている。市場は引き続き合意の進展と詳細な条件に注視している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c1k2jnx8gmlo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Ted Turner, media mogul who revolutionised TV news by launching CNN, dies at 87</a></h3>
+    <p class="meta">BBC World News | 05/06 15:46</p>
+    <p class="summary">CNNを創設し、24時間体制のテレビニュースという概念を定着させたメディア界の巨星テッド・ターナー氏が87歳で死去した。彼はテレビ報道の歴史を塗り替えただけでなく、慈善家としての顔も持ち、メディア産業のグローバル化に決定的な役割を果たした。その先見性は現代のメディア環境の礎となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c1m253033m4o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Massive Alaska megatsunami was second largest ever recorded</a></h3>
+    <p class="meta">BBC World News | 05/06 12:00</p>
+    <p class="summary">アラスカで発生した巨大津波（メガツナミ）が、観測史上2番目の規模であったことが判明した。地滑りによって引き起こされたこの津波は、人里離れたフィヨルドで数百メートルの高さに達した。科学者たちは、気候変動による氷河融解がこうした大規模な津波のリスクを高めていると警告している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260507/k10015115501000.html" target="_blank" rel="noopener noreferrer">トルコで防衛装備品の展示会 日本とトルコ間で協力関係確認も</a></h3>
+    <p class="meta">NHK国際放送 | 05/06 20:00</p>
+    <p class="summary">トルコで防衛装備品の展示会が開催され、日本とトルコの当局者が防衛協力の強化を確認した。展示会では最新の軍事技術が披露され、両国間での技術交流や共同開発の可能性についても議論された。地政学的な状況を背景に、防衛産業における二国間のパートナーシップ深化を目指す動きといえる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260506/k10015115041000.html" target="_blank" rel="noopener noreferrer">トランプ大統領 海峡での取り組み短期停止 イランは中国と協議</a></h3>
+    <p class="meta">NHK国際放送 | 05/06 14:42</p>
+    <p class="summary">トランプ大統領が海峡における軍事的・外交的な取り組みを一時停止すると発表した。一方で、イラン側は中国との協議を進めており、国際社会の勢力図に変化が生じる可能性がある。米国の一時的な関与停止と中イの接近が、今後の地域情勢や外交関係に与える影響が注目される。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

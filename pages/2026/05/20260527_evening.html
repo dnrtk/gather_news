@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月27日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月27日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月27日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://thereader.mitpress.mit.edu/the-strange-melancholy-of-slaying-monsters/" target="_blank" rel="noopener noreferrer">The Melancholy of Slaying Monsters</a></h3>
+    <p class="meta">Hacker News | 05/27 04:25</p>
+    <p class="summary">文学やメディアにおける「怪物退治」という行為が持つ、哲学的・心理的な側面を考察する記事。単なる善悪の対立ではなく、怪物を倒すことが相手への共感や自己の変容、そして奇妙な憂鬱（メランコリー）を伴う背景を探っている。英雄と怪物の境界が曖昧になる物語構造を分析し、読者がその複雑な感情に惹かれる理由を解き明かす。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://developers.cloudflare.com/flagship/" target="_blank" rel="noopener noreferrer">Cloudflare Flagship</a></h3>
+    <p class="meta">Hacker News | 05/27 08:36</p>
+    <p class="summary">Cloudflareが提供する、アーリーステージのスタートアップ企業を支援するためのプログラム「Cloudflare Flagship」のドキュメント。同社のプラットフォームを活用してスケーラブルなアプリを構築するための技術支援、リソース、クレジット提供などを通じ、起業家が迅速にビジネスを成長させるためのエコシステムについて解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.newyorker.com/culture/the-weekend-essay/what-jack-kerouac-left-behind" target="_blank" rel="noopener noreferrer">What Gets Kept</a></h3>
+    <p class="meta">Hacker News | 05/25 01:46</p>
+    <p class="summary">作家ジャック・ケルアックが残した遺品やアーカイブを通じて、彼の人生と文学的遺産を振り返るエッセイ。衣類やノートといった物理的な持ち物がいかに個人の記憶を保持し、後世にその人物像を伝えるのかを考察する。単なる収集品を超え、ケルアックの執筆活動や生活の痕跡が現代において持つ意味を深く掘り下げている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://badhost.org/" target="_blank" rel="noopener noreferrer">BadHost – CVE-2026-48710: Starlette Host-Header Auth Bypass</a></h3>
+    <p class="meta">Hacker News | 05/26 18:07</p>
+    <p class="summary">PythonのウェブフレームワークStarletteで発見された脆弱性「CVE-2026-48710（BadHost）」に関する技術解説。特定のHostヘッダー操作により認証をバイパスできる可能性があり、不正アクセスを許すリスクがある。開発者に対し、最新バージョンへの更新や適切なホスト検証設定の適用を強く推奨している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://arxiv.org/abs/2510.04950" target="_blank" rel="noopener noreferrer">Prompt Politeness Affects LLM Accuracy (2025)</a></h3>
+    <p class="meta">Hacker News | 05/26 16:43</p>
+    <p class="summary">大規模言語モデル（LLM）に対するプロンプトの「丁寧さ」が回答の正確性に与える影響を調査した研究。丁寧な依頼と高圧的な指示でモデルの推論能力に有意な差が生じることを示している。特定の文脈では丁寧な表現が精度を向上させる一方、過度な装飾がノイズになる可能性についても言及し、最適な指示の出し方を考察している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/melonps/articles/b3b7f6d3014c3d" target="_blank" rel="noopener noreferrer">TsKaigi 2026の振り返りをします。自分の登壇の反省など。</a></h3>
+    <p class="meta">Zenn トレンド | 05/26 10:40</p>
+    <p class="summary">技術カンファレンス「TsKaigi 2026」に登壇した著者が、自身のセッションを振り返る記事。スライド作成の工夫や当日の発表で感じた手応え、改善点などの反省を詳細に綴っている。他の登壇者から受けた刺激やイベント全体の熱気にも触れ、今後の登壇活動に向けた前向きな抱負をまとめている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/fuji_1218/articles/67c734d19dd1b8" target="_blank" rel="noopener noreferrer">なけなしの130万を使って、Cloud Praticaに人生をオールインした話</a></h3>
+    <p class="meta">Zenn トレンド | 05/26 10:31</p>
+    <p class="summary">著者が自己資金130万円を投じ、クラウド学習プラットフォーム「Cloud Pratica」に全力を注いだ体験談。多額の投資に伴うリスクや不安を抱えながらも、クラウド技術の可能性を信じてキャリアを賭けたプロセスを語っている。挑戦を通じて得られた成果や教訓を、熱意を持って伝える内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mavericks/articles/c40ef0a0652a64" target="_blank" rel="noopener noreferrer">「話しやすいエンジニア」になる価値。心理的安全性を自ら作る。</a></h3>
+    <p class="meta">Zenn トレンド | 05/26 09:00</p>
+    <p class="summary">エンジニアが技術力だけでなく「話しやすさ」を備えることの重要性を説く記事。円滑なコミュニケーションがチームの心理的安全性を高め、結果として開発効率や品質の向上に繋がることを解説している。リアクションの工夫や情報共有の姿勢など、具体的に「話しやすい」と思われるための習慣を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/emi_ndk/items/a36051a97d3b0670bedd?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【完全版】AIセキュリティ地獄絵図2026 - CVE・攻撃手法・防御策を全部解説する</a></h3>
+    <p class="meta">Qiita トレンド | 05/26 09:51</p>
+    <p class="summary">2026年時点におけるAIセキュリティの現状を網羅した解説記事。LLMに対するプロンプトインジェクションやデータ汚染といった最新の攻撃手法（CVE含む）を紹介し、具体的な防御策を提示している。AIの普及に伴い複雑化するリスクを「地獄絵図」と称し、開発者が意識すべき重要事項を詳細にまとめている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/hitomin_poke/items/a8c2c14a72a417619c1d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">1割の“信頼される”エンジニアがやっている「何の話かを省略しない説明」</a></h3>
+    <p class="meta">Qiita トレンド | 05/27 05:52</p>
+    <p class="summary">周囲から信頼されるエンジニアが実践しているコミュニケーション術を解説。専門用語や文脈を省略せず、相手が理解できる前提を共有してから本題に入る「丁寧な説明」の重要性を説いている。説明不足が招く誤解や手戻りを防ぎ、非エンジニアや他部署との連携をスムーズにするための具体的な伝え方を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/karusifa2/items/75b8ff55095604bd48b5?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">PythonとJavaのコードの違い</a></h3>
+    <p class="meta">Qiita トレンド | 05/27 00:03</p>
+    <p class="summary">プログラミング言語であるPythonとJavaのコード記述における主な違いを比較した記事。動的型付けのPythonと静的型付けのJavaの構文の差異や、記述量の多寡、標準ライブラリの使い分けなどを具体例を交えて解説。それぞれの言語の特性を理解し、用途に応じて最適な選択をするための基礎知識を提供している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/27/airbnb-backed-weroad-raises-58m-to-take-its-group-travel-platform-to-the-us/" target="_blank" rel="noopener noreferrer">Airbnb-backed WeRoad raises $58M to take its group travel platform to the US</a></h3>
+    <p class="meta">TechCrunch | 05/27 08:00</p>
+    <p class="summary">Airbnbが支援するグループ旅行プラットフォーム「WeRoad」が、5800万ドルの資金調達を実施した。この資金は主に米国市場への進出と事業拡大に充てられる。同社はミレニアル世代をターゲットに、見知らぬ人同士がグループで旅をする体験を提供しており、欧州での成功を背景に世界最大の旅行市場での成長を目指す。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/26/uk-visa-portal-spilled-thousands-of-applicants-passports-and-selfies-online-and-hasnt-fixed-the-leak/" target="_blank" rel="noopener noreferrer">UK Visa Portal spilled thousands of applicants’ passports and selfies online — and hasn’t fixed the leak</a></h3>
+    <p class="meta">TechCrunch | 05/26 23:49</p>
+    <p class="summary">英国のビザ申請ポータルにおいて、数千人分の申請者のパスポート情報やセルフィー画像がオンライン上に流出していたことが判明した。さらに重大なのは、現時点でこの情報漏洩が完全に修正されていない点である。機密性の高い個人情報が危険にさらされており、当局の対応の遅さとセキュリティ管理の甘さが批判されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/26/what-were-looking-for-in-startup-battlefield-2026-and-how-to-apply-in-time-for-the-may-27-deadline/" target="_blank" rel="noopener noreferrer">What we’re looking for in Startup Battlefield 2026, and how to apply in time for the May 27 deadline</a></h3>
+    <p class="meta">TechCrunch | 05/26 22:55</p>
+    <p class="summary">TechCrunch主催のスタートアップの祭典「Startup Battlefield 2026」の募集要項。審査員が注目する革新的な技術やビジネスモデル、5月27日の締め切りに向けた応募手続きについて説明している。優勝者には多額の賞金と投資家からの注目が集まるため、世界中の野心的な起業家に向けて参加を呼びかけている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/oracle-and-classiq-integrate-quantum-ai-agents-with-oci-for-36-qubit-portfolio-optimization-hpc-simulation/" target="_blank" rel="noopener noreferrer">Oracle and Classiq Integrate Quantum AI Agents with OCI for 36-Qubit Portfolio Optimization HPC Simulation</a></h3>
+    <p class="meta">Quantum Computing Report | 05/27 08:53</p>
+    <p class="summary">OracleとClassiqが、Oracle Cloud Infrastructure（OCI）上で量子AIエージェントを統合し、36量子ビットのポートフォリオ最適化シミュレーションを実施した。HPC環境で量子アルゴリズムを活用し、金融分野などの複雑な計算課題を解決することを目指す。量子コンピューティングとクラウドの融合による実用化への大きな一歩となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/d-wave-systematically-rebuts-flatiron-claims-reaffirming-beyond-classical-simulation-milestones/" target="_blank" rel="noopener noreferrer">D-Wave Systematically Rebuts Flatiron Claims, Reaffirming Beyond-Classical Simulation Milestones</a></h3>
+    <p class="meta">Quantum Computing Report | 05/27 03:14</p>
+    <p class="summary">D-Wave社が、フラットアイアン研究所による自社技術への批判に対し系統的な反論を行った。D-Waveは、自社の量子アニーリングマシンが古典的なコンピュータを超えるシミュレーション能力を示したマイルストーンを再確認し、データの正当性を主張。量子超越性を巡る学術的な議論と、同社の技術的優位性を改めて強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/business-finland-allocates-e2-79-million-3-25-million-usd-to-underwrite-qmill-and-esl-shipping-industrial-quantum-simulation-projects/" target="_blank" rel="noopener noreferrer">Business Finland Allocates €2.79 Million ($3.25 Million USD) to Underwrite QMill and ESL Shipping Industrial Quantum Simulation Projects</a></h3>
+    <p class="meta">Quantum Computing Report | 05/27 03:07</p>
+    <p class="summary">フィンランドの政府機関Business Finlandが、QMill社とESL Shipping社の産業用量子シミュレーションプロジェクトに279万ユーロ（約325万ドル）を支援すると発表した。海運業界などの複雑なロジスティクス課題を量子技術で解決する研究に充てられる。フィンランドが量子技術の産業応用を国として強力に推進する姿勢を示した。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cjwppj1yn7go?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Israeli strike in Gaza City kills new head of Hamas&#39;s military wing</a></h3>
+    <p class="meta">BBC World News | 05/27 08:59</p>
+    <p class="summary">ガザ市へのイスラエル軍による空爆により、イスラム組織ハマスの軍事部門の新たな指導者が殺害された。イスラエル軍はハマスの指揮系統を標的とした作戦を継続しており、今回の殺害はその一環である。ガザ地区での戦闘は激化しており、指導者の喪失がハマスの軍事能力や今後の交渉に与える影響が注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cx211rgngp0o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Dozens killed in Lebanon as Israel intensifies strikes</a></h3>
+    <p class="meta">BBC World News | 05/27 04:07</p>
+    <p class="summary">イスラエルがレバノンへの空爆を激化させ、数十人の死者が発生した。イスラエル軍はヒズボラの拠点を狙った攻撃としているが、民間人の犠牲も増えており、周辺地域への戦闘拡大が強く懸念されている。国際社会からは即時停戦を求める声が上がっているが、現地の緊張状態は依然として極めて高いままである。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c39228nxyr4o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Nasa unveils next steps to build permanent Moon base</a></h3>
+    <p class="meta">BBC World News | 05/26 20:25</p>
+    <p class="summary">NASAは月面に恒久的な基地を建設するための次なるステップを発表した。アルテミス計画の一環として、居住モジュールやインフラ整備、持続可能な資源利用に関する詳細な計画が示された。この基地は将来の有人火星探査に向けた重要な足掛かりとなる。国際協力を通じて人類の宇宙進出を加速させる野心的なプロジェクトである。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260527/k10015132621000.html" target="_blank" rel="noopener noreferrer">天皇皇后両陛下 皇居でフィリピン大統領夫妻の歓迎式典に</a></h3>
+    <p class="meta">NHK国際放送 | 05/27 06:29</p>
+    <p class="summary">天皇皇后両陛下は、来日したフィリピンのマルコス大統領夫妻を皇居に迎え、歓迎式典に臨まれた。式典では両国の友好関係を深めるための懇談が行われ、伝統的な儀礼をもって出迎えられた。大統領の訪日は経済や安全保障分野での協力強化が目的であり、皇室との交流も両国の親密さを象徴するものとなった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260527/k10015132821000.html" target="_blank" rel="noopener noreferrer">米中間選挙予備選 注目のテキサス州でトランプ支持候補勝利</a></h3>
+    <p class="meta">NHK国際放送 | 05/27 06:07</p>
+    <p class="summary">米国中間選挙に向けたテキサス州の予備選で、トランプ前大統領が支持した候補が勝利を収めた。共和党内におけるトランプ氏の影響力が依然として強いことを示す結果となり、本選挙に向けた党内の主導権争いに影響を与えると見られる。支持者の結束が確認される一方、穏健派との溝も改めて浮き彫りになった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260527/k10015112861000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（5月27日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 05/27 04:41</p>
+    <p class="summary">2026年5月27日のロシアによるウクライナ軍事侵攻に関する最新状況。各地で激しい戦闘が続いており、インフラ被害や民間人の避難状況がリアルタイムで更新されている。国際的な支援の動きや、ロシア側の軍事戦略の変化についても触れ、刻一刻と変わる戦況の全体像を伝えている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

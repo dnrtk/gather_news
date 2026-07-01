@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月27日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月27日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月27日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://micahkepe.com/blog/jsongrep/" target="_blank" rel="noopener noreferrer">A Faster Alternative to Jq</a></h3>
+    <p class="meta">Hacker News | 03/27 16:12</p>
+    <p class="summary">jsongrepは、大規模なJSONデータのフィルタリングにおいてjqよりも高速な代替手段として紹介されています。SIMDアクセラレーションを活用し、パフォーマンスに特化して設計されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://code.claude.com/docs/en/web-scheduled-tasks" target="_blank" rel="noopener noreferrer">Schedule tasks on the web</a></h3>
+    <p class="meta">Hacker News | 03/27 13:47</p>
+    <p class="summary">Web環境でタスクをスケジュールするためのドキュメントです。定期的な実行や遅延実行など、自動化されたワークフローを構築する方法について解説しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.allsky7.net/#archive" target="_blank" rel="noopener noreferrer">The European AllSky7 fireball network</a></h3>
+    <p class="meta">Hacker News | 03/27 16:00</p>
+    <p class="summary">全天を監視するカメラネットワーク「AllSky7」についてのサイトです。欧州を中心に設置されたカメラで火球や流星を観測・記録し、アーカイブとして公開しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://jacobfilipp.com/yu/" target="_blank" rel="noopener noreferrer">21,864 Yugoslavian .yu Domains</a></h3>
+    <p class="meta">Hacker News | 03/24 00:30</p>
+    <p class="summary">消滅した旧ユーゴスラビアのトップレベルドメイン「.yu」に登録されていた21,864個のドメインに関する調査記録です。歴史的なデジタル資産の変遷を辿っています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://9to5mac.com/2026/03/26/apple-discontinues-the-mac-pro/" target="_blank" rel="noopener noreferrer">Apple discontinues the Mac Pro</a></h3>
+    <p class="meta">Hacker News | 03/27 06:04</p>
+    <p class="summary">AppleがMac Proの販売を終了したとの報道です。プロ向けデスクトップのラインナップはMac Studioへ集約され、一つの製品ラインの歴史に幕が下ろされました。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/coji/articles/takt-multi-agent-coding-experience" target="_blank" rel="noopener noreferrer">takt で Codex・Cursor・Claude Code を協調させてみた ― 5回 ABORT して気づいた設計の急所</a></h3>
+    <p class="meta">Zenn トレンド | 03/26 13:05</p>
+    <p class="summary">ツール「takt」を用いて、Codex、Cursor、Claude Codeなどの複数のAIエージェントを協調させた開発体験記です。5回の失敗から得られた設計上の注意点がまとめられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/trkbt10/articles/a6618a35dd49f8" target="_blank" rel="noopener noreferrer">私のClaudeCodeによるアプリ実装方法の紹介</a></h3>
+    <p class="meta">Zenn トレンド | 03/26 10:43</p>
+    <p class="summary">Anthropicが提供するCLIツール「Claude Code」を活用したアプリケーションの実装手法を紹介しています。開発効率を向上させる具体的なワークフローが解説されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prum_hitomi/items/07b7926408a3447b6665?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">「エンジニアは難しい」は本当か？― 未経験の自分が勘違いしていた“難しさ”の正体 ―</a></h3>
+    <p class="meta">Qiita トレンド | 03/27 03:18</p>
+    <p class="summary">未経験者が抱いていた「エンジニア職の難しさ」に対する誤解と、実際に直面して分かった真の難しさについて考察しています。技術そのものより思考プロセスが重要と説いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/26/david-sacks-is-done-as-ai-czar-heres-what-hes-doing-instead/" target="_blank" rel="noopener noreferrer">David Sacks is done as AI czar — here’s what he’s doing instead</a></h3>
+    <p class="meta">TechCrunch | 03/27 01:26</p>
+    <p class="summary">デビッド・サックス氏がAI担当の責任者（AI czar）を退任しました。今後は新たなベンチャー投資や戦略的アドバイザーとしての活動に注力する予定です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/26/anthropic-wins-injunction-against-trump-administration-over-defense-department-saga/" target="_blank" rel="noopener noreferrer">Anthropic wins injunction against Trump administration over Defense Department saga</a></h3>
+    <p class="meta">TechCrunch | 03/27 01:18</p>
+    <p class="summary">Anthropicが、国防総省を巡る争いに関連してトランプ政権に対し差し止め命令を勝ち取りました。政府による技術利用制限に対する重要な司法的判断となります。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/26/you-can-now-transfer-your-chats-and-personal-information-from-other-chatbots-directly-into-gemini/" target="_blank" rel="noopener noreferrer">You can now transfer your chats and personal information from other chatbots directly into Gemini</a></h3>
+    <p class="meta">TechCrunch | 03/26 23:47</p>
+    <p class="summary">GoogleのGeminiにおいて、他のチャットボットから会話履歴や個人情報を直接移行できる機能が追加されました。ユーザーの利便性とプラットフォーム移行を容易にする狙いです。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/resource-estimates-for-quantum-discrete-logarithm-computations-on-256-bit-elliptic-curves/" target="_blank" rel="noopener noreferrer">Resource Estimates for Quantum Discrete Logarithm Computations on 256-bit Elliptic Curves</a></h3>
+    <p class="meta">Quantum Computing Report | 03/26 23:04</p>
+    <p class="summary">256ビット楕円曲線暗号における離散対数問題を解くために必要な量子コンピュータのリソース見積もりに関するレポートです。将来的な暗号の安全性を評価しています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cg73znr1vj7o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Panic buying prompts PM to reassure Australians over fuel supply</a></h3>
+    <p class="meta">BBC World News | 03/27 06:32</p>
+    <p class="summary">オーストラリアで燃料のパニック買いが発生し、首相が供給量は十分であるとして国民に冷静な対応を呼びかけました。供給不安の解消に努めています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c8957dxjvkxo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Belarus leader gifts rifle to North Korea&#39;s Kim as they sign friendship treaty</a></h3>
+    <p class="meta">BBC World News | 03/27 03:14</p>
+    <p class="summary">ベラルーシのルカシェンコ大統領が北朝鮮を訪問し、金正恩総書記にライフルを贈呈しました。両国は友好条約を締結し、関係を強化しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cz0el909yp3o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump&#39;s signature to appear on US dollars in first for sitting president</a></h3>
+    <p class="meta">BBC World News | 03/26 23:36</p>
+    <p class="summary">トランプ大統領の署名が米ドル紙幣に記載されることになりました。現職大統領の署名が紙幣に採用されるのは米史上初めてのことです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260327/k10015085681000.html" target="_blank" rel="noopener noreferrer">経産相 “アジア諸国に備蓄石油提供求められても協力難しい”</a></h3>
+    <p class="meta">NHK国際放送 | 03/27 07:51</p>
+    <p class="summary">日本の経産相は、アジア諸国から備蓄石油の提供を求められても、国内供給の優先や法的な制約から協力は難しいとの見解を示しました。エネルギー安全保障の厳しさを示唆しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260327/k10015085811000.html" target="_blank" rel="noopener noreferrer">ガソリン 香港 1リットル650円まで上昇 オーストラリアも高値</a></h3>
+    <p class="meta">NHK国際放送 | 03/27 07:45</p>
+    <p class="summary">香港でガソリン価格が1リットル650円まで高騰し、オーストラリアなど各地でも価格上昇が続いています。世界的な供給不安が市民生活を直撃しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260327/k10015085251000.html" target="_blank" rel="noopener noreferrer">トランプ氏“エネルギー施設攻撃再延期” イラン 協議に関心か</a></h3>
+    <p class="meta">NHK国際放送 | 03/27 07:44</p>
+    <p class="summary">トランプ氏がイランのエネルギー施設への攻撃を再び延期しました。これに対しイラン側は協議に関心を示しているとみられ、緊張緩和に向けた動きが注目されます。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

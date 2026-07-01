@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年06月12日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年06月12日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年06月12日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://brew.sh/2026/06/11/homebrew-6.0.0/" target="_blank" rel="noopener noreferrer">Show HN: Homebrew 6.0.0</a></h3>
+    <p class="meta">Hacker News | 06/11 22:24</p>
+    <p class="summary">Homebrew 6.0.0がリリースされました。今回のメジャーアップデートでは、macOS 15 Sequoiaのサポートに加え、ARMベースのLinuxへの正式対応やインストールプロセスの高速化が実現しています。また、不要な古いパッケージを自動でクリーンアップする機能が強化され、ディスク使用量の最適化が図られました。開発チームはパフォーマンス向上と安定性の確保を強調しており、全ユーザーに更新を推奨しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://mimo.xiaomi.com/mimocode" target="_blank" rel="noopener noreferrer">MiMo Code is now released and open-source</a></h3>
+    <p class="meta">Hacker News | 06/11 23:27</p>
+    <p class="summary">Xiaomiは、新しいコーディングプラットフォーム「MiMo Code」をオープンソースとして正式にリリースしました。このプラットフォームは、開発者が効率的にコードの記述、管理、共有を行えるよう設計されており、共同開発を促進する強力なツールを提供します。ソースコードを公開することで、開発者コミュニティからのフィードバックを取り込み、機能の拡張やバグ修正を加速させ、エコシステムを強化する狙いがあります。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.ourcommons.ca/petitions/en/Petition/Sign/e-7416" target="_blank" rel="noopener noreferrer">Petition to Withdraw Canada&#39;s Bill C-22</a></h3>
+    <p class="meta">Hacker News | 06/12 00:37</p>
+    <p class="summary">カナダのBill C-22（障害者給付金法案）の撤回を求める請願活動が展開されています。この請願は、現在の法案で定められた支給額が不十分であり、受給資格の基準も厳しすぎるため、障害を持つ人々の貧困を解消するには至らないと主張しています。多くの市民が署名を通じて、より公正で包括的な支援制度の再構築と、障害者の生活の実態に即した抜本的な見直しを政府に求めています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://mrbruh.com/amd2/" target="_blank" rel="noopener noreferrer">The RCE that AMD wouldn&#39;t fix</a></h3>
+    <p class="meta">Hacker News | 06/12 01:03</p>
+    <p class="summary">AMDのハードウェアやドライバに見つかったリモートコード実行（RCE）の脆弱性について、同社が適切な修正を拒否しているとする報告が物議を醸しています。発見者はAMDに問題を報告したものの、同社が脆弱性を認めなかったり対応を放置したりした経緯を詳しく公開しました。この欠陥が悪用されると攻撃者にシステムを制御される恐れがあり、セキュリティコミュニティからは企業の対応の不透明さを懸念する声が上がっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://ianyepan.github.io/posts/emacs-in-pop-culture/" target="_blank" rel="noopener noreferrer">Emacs appearances in pop culture</a></h3>
+    <p class="meta">Hacker News | 06/10 19:37</p>
+    <p class="summary">長年愛されているテキストエディタ「Emacs」が、映画やテレビドラマなどのポップカルチャーにどのように登場してきたかを振り返る記事です。ハッカー文化の象徴として、細部まで正確に描かれたシーンから、単なる視覚的な小道具として利用されている例まで、様々な登場場面を収集・解説しています。エンジニアの間で根強い人気を誇るツールが、エンターテインメントの世界でどのようなイメージを付与されてきたかが興味深くまとめられています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/sukimaengineer/items/15ddf5601ff29ef8d376?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">会社で Microsoft 365 Copilot しか使えない人のための「エージェントビルダー」入門 ── 宣言型エージェントを最新版で作る</a></h3>
+    <p class="meta">Qiita トレンド | 06/08 23:50</p>
+    <p class="summary">Microsoft 365 Copilotを利用している企業環境向けに、最新の「エージェントビルダー」を用いて宣言型エージェントを作成する方法を解説した入門記事です。外部AIツールの利用が制限されている場合でも、この機能を活用すれば独自の業務に特化したAIエージェントをノーコードに近い形で構築できます。具体的な設定手順や実用的な活用例が紹介されており、社内業務の自動化や効率化を目指すユーザーにとって有益なガイドとなっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/11/spacex-officially-prices-shares-at-135-in-the-largest-ipo-ever/" target="_blank" rel="noopener noreferrer">SpaceX officially prices shares at $135 in the largest IPO ever</a></h3>
+    <p class="meta">TechCrunch | 06/11 20:33</p>
+    <p class="summary">SpaceXは新規株式公開（IPO）において、株価を1株135ドルに設定したと正式に発表しました。これは史上最大規模のIPOになると予測されています。同社の宇宙輸送事業や衛星通信サービス「Starlink」への高い期待が反映された形となり、市場から大きな注目を集めています。今回のIPOで調達された膨大な資金は、次世代ロケットの開発や火星探査計画、さらなる衛星コンステレーションの構築に向けた投資に充てられる予定です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/11/oracle-warns-of-security-bug-that-hackers-abused-to-breach-100-companies/" target="_blank" rel="noopener noreferrer">Oracle warns of security bug that hackers abused to breach 100+ companies</a></h3>
+    <p class="meta">TechCrunch | 06/11 20:27</p>
+    <p class="summary">オラクルは、100社以上の企業への不正侵入に悪用された重大なセキュリティ脆弱性について警告を発しました。ハッカーはこの欠陥を突いて企業の機密データにアクセスしており、被害の全容把握が急がれています。オラクルは既に修正パッチを公開しており、さらなる被害拡大を防ぐため、該当製品を利用しているすべての企業に対して直ちにアップデートを適用するよう強く求めています。攻撃の手口についても詳細な分析が進められています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/11/spacex-spv-investors-wont-know-their-true-holdings-until-post-ipo-lock-ups-lift/" target="_blank" rel="noopener noreferrer">SpaceX SPV investors won’t know their true holdings until post-IPO lock-ups lift</a></h3>
+    <p class="meta">TechCrunch | 06/11 19:58</p>
+    <p class="summary">SpaceXのIPOに関連し、特別目的会社（SPV）を通じて投資している投資家たちが、上場後のロックアップ期間が終了するまで自らの正確な保有資産額を把握できない状況にあることが報じられました。複雑な投資構造や分配プロセスの不透明さが原因で、一部の投資家からは懸念の声が上がっています。大規模なIPOにおいて、SPVのような間接的な投資形態が抱える特有のリスクと、情報開示の難しさが浮き彫りになった形です。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c75ylx7g00xo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">El Niño under way and threatens weather extremes, scientists say</a></h3>
+    <p class="meta">BBC World News | 06/11 13:26</p>
+    <p class="summary">科学者たちは、現在エルニーニョ現象が発生しており、世界各地で異常気象を引き起こすリスクが高まっていると警告しています。この現象により、一部の地域では記録的な豪雨や洪水が発生する一方で、別の地域では深刻な干ばつや熱波に見舞われる可能性があります。地球温暖化の進行と重なることで影響がさらに増幅される懸念もあり、各国の食料安全保障やインフラへの備えが緊急の課題となっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c70yeee2jvqo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Deadly Sudan drone strike targets funeral procession</a></h3>
+    <p class="meta">BBC World News | 06/11 15:57</p>
+    <p class="summary">内戦が続くスーダンにおいて、葬儀の参列者を標的とした凄惨なドローン攻撃が発生しました。この攻撃により、多くの民間人が死傷したと伝えられています。戦闘の激化に伴い、一般市民が犠牲になるケースが後を絶たず、国際社会からは人権侵害を非難する声が急速に高まっています。人道的支援の経路確保と、即時停戦に向けた国際的な圧力の強化が求められる緊迫した状況が続いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c2ly928xz8go?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">World Cup kicks off in Mexico with Shakira, performers and vibrant fans</a></h3>
+    <p class="meta">BBC World News | 06/11 20:26</p>
+    <p class="summary">メキシコでサッカー・ワールドカップが開幕し、華やかな開会式が行われました。式典には世界的歌手のシャキーラなど多くのパフォーマーが登場し、メキシコ特有の鮮やかな色彩と熱狂に包まれた演出で観客を魅了しました。スタジアムは世界中から集まった熱狂的なファンで埋め尽くされ、祭典の始まりを祝いました。今後数週間にわたり、世界一の座をかけた激しい戦いが各地で繰り広げられます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260612/k10015148011000.html" target="_blank" rel="noopener noreferrer">イギリス 国防相が辞任 スターマー政権に打撃</a></h3>
+    <p class="meta">NHK国際放送 | 06/11 20:42</p>
+    <p class="summary">イギリスの国防相が突如辞任を発表し、スターマー政権にとって大きな打撃となっています。辞任の具体的な背景は明かされていませんが、閣内での方針対立や政権運営をめぐる不和が原因との見方が出ています。国防政策の継続性に懸念が生じる中、野党からは政府の管理能力を問う批判が相次いでいます。首相は早期に後任を指名し、体制の立て直しを図る意向ですが、政権への信頼回復が急務となっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260612/k10015147961000.html" target="_blank" rel="noopener noreferrer">中国 フィリピンのテオドロ国防相に入国禁止などの制裁</a></h3>
+    <p class="meta">NHK国際放送 | 06/11 20:29</p>
+    <p class="summary">中国政府は、フィリピンのテオドロ国防相に対し、入国禁止などの制裁を科すと発表しました。南シナ海の領有権問題で緊張が続く中、フィリピンが米国との軍事協力を強めていることへの対抗措置と見られます。中国側はフィリピンの行動が地域の安定を損なうと主張していますが、今回の制裁措置によって両国間の対立はさらに深まることが予想されます。南シナ海の安全保障環境への影響が注視されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260612/k10015147711000.html" target="_blank" rel="noopener noreferrer">天皇皇后両陛下 13日からオランダ・ベルギーを公式訪問</a></h3>
+    <p class="meta">NHK国際放送 | 06/11 20:27</p>
+    <p class="summary">天皇皇后両陛下は、今月13日からオランダとベルギーを公式訪問されます。今回の訪問は、両国の王室との深い親交を礎に、国際親善と友好関係のさらなる増進を目的としています。現地では歓迎式典への出席や文化交流行事などが予定されており、日本と欧州諸国との絆を深める重要な機会となります。両陛下にとって思い入れのある国々への訪問であり、国民の間でも大きな関心が寄せられています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

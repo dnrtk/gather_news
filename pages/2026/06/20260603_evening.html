@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年06月03日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年06月03日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年06月03日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.ammaraskar.com/github-token-stealing/" target="_blank" rel="noopener noreferrer">1-Click GitHub Token Stealing via a VSCode Bug</a></h3>
+    <p class="meta">Hacker News | 06/03 00:29</p>
+    <p class="summary">VSCodeの脆弱性を利用し、ワンクリックでGitHubトークンを盗む攻撃手法についての解説。URIハンドラーの処理不備を突き、悪意のあるリンクを踏ませることで認証情報を外部に送信させるリスクを指摘しており、開発ツールのセキュリティの重要性を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/s-macke/Test-Drive-3-Maps" target="_blank" rel="noopener noreferrer">Show HN: I reverse-engineered the world maps of Test Drive III (1990 DOS game)</a></h3>
+    <p class="meta">Hacker News | 05/31 18:45</p>
+    <p class="summary">1990年に発売されたDOS用レースゲーム「Test Drive III」のワールドマップをリバースエンジニアリングしたプロジェクトの紹介。バイナリデータを解析して当時の座標系や描画の仕組みを解明し、オープンワールドの構造を視覚化している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://dmanco.dev/2025/08/17/fear-not-even-ai-engineers-will-be-replaced-by-ai.html" target="_blank" rel="noopener noreferrer">AI Engineers aren&#39;t safe from being replaced by AI</a></h3>
+    <p class="meta">Hacker News | 06/03 16:27</p>
+    <p class="summary">AIエンジニアであってもAIによる代替から逃れられない可能性を論じた記事。AIモデルの進化が開発プロセスの自動化を加速させる中、エンジニアは単純な実装を超えた高度な問題解決やシステム設計、変化への適応能力がより重要になると示唆している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/c0dejedi/nbd-vram" target="_blank" rel="noopener noreferrer">Use your Nvidia GPU&#39;s VRAM as swap space on Linux</a></h3>
+    <p class="meta">Hacker News | 06/03 07:55</p>
+    <p class="summary">Linuxにおいて、NVIDIA製GPUのビデオメモリ（VRAM）をスワップ領域として利用可能にするツール「nbd-vram」の紹介。システムメモリが不足している際に、高速なVRAMを有効活用してパフォーマンス低下を抑えるための仕組みを解説している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/uhyo/articles/declarative-partial-updates-react" target="_blank" rel="noopener noreferrer">Declarative Partial UpdatesをストリーミングSSRに使う</a></h3>
+    <p class="meta">Zenn トレンド | 06/02 13:58</p>
+    <p class="summary">ReactのストリーミングSSRにおいて、「Declarative Partial Updates（宣言的部分更新）」を活用する手法の解説。ページ遷移なしにサーバーから送られたHTMLの断片でUIの一部を更新するアプローチについて、その設計思想や利点を技術的に深掘りしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/shoota/articles/e4595637a190f4" target="_blank" rel="noopener noreferrer">薄明かりの読書のためのshadcn/ui テーマをつくりました</a></h3>
+    <p class="meta">Zenn トレンド | 06/02 13:43</p>
+    <p class="summary">shadcn/uiを用いて、暗い場所での読書に最適化した目に優しいカスタムテーマを制作した事例。視認性を保ちつつコントラストを抑えた配色設定など、電子書籍や文書閲覧に特化したUIデザインの工夫について詳述している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/layerx/articles/18ebc16b172861" target="_blank" rel="noopener noreferrer">Goの型安全性で実現する、複数プロダクトを横断する権限管理</a></h3>
+    <p class="meta">Zenn トレンド | 06/02 08:00</p>
+    <p class="summary">Go言語の型安全性を活かして、複数のプロダクトを横断する複雑な権限管理システムを構築したLayerXの事例。動的な認可ロジックを型で表現することで、実装ミスをコンパイル時に防ぎ、スケーラブルで安全なシステム設計を実現している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/hitomin_poke/items/334b0b9c3ee457dfa8c7?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【環境構築不要】誰かのためにアプリを作ってみよう #1</a></h3>
+    <p class="meta">Qiita トレンド | 06/03 04:15</p>
+    <p class="summary">開発環境の構築を行わずに、Google Apps Script（GAS）などを活用してアプリ開発を始めるための入門記事。身近な誰かの課題を解決するツールを作る楽しさを通じて、プログラミング初心者が挫折せずに「形にする」までのステップを紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/02/squishmallows-dentures-and-an-i-heart-hot-dads-bag-uber-has-found-thousands-of-items-left-in-robotaxis/" target="_blank" rel="noopener noreferrer">Squishmallows, dentures, and an ‘I Heart Hot Dads’ bag: Uber has found thousands of items left in robotaxis</a></h3>
+    <p class="meta">TechCrunch | 06/02 23:25</p>
+    <p class="summary">Uberのロボタクシー（無人タクシー）内で見つかった、数千件に及ぶ多様な忘れ物についての報道。ぬいぐるみや入れ歯、個性的なバッグなど、ドライバーが不在の環境で発生した忘れ物の傾向や、その回収プロセスにおける実態を伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/02/cyera-eyes-12b-valuation-at-80x-arr-multiple-despite-operating-losses/" target="_blank" rel="noopener noreferrer">Cyera eyes $12B valuation at 80x ARR multiple despite operating losses</a></h3>
+    <p class="meta">TechCrunch | 06/02 22:50</p>
+    <p class="summary">セキュリティ企業のCyeraが、営業損失を出している状況ながら、年間経常収益（ARR）の80倍という極めて高い評価倍率で120億ドルの時価総額を目指しているとの報道。データセキュリティ市場への強い期待と、強気な投資環境が注目されている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c5yx135yg53o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">US and Iran launch new strikes, as Kuwait says airport hit by Iranian drones</a></h3>
+    <p class="meta">BBC World News | 06/03 06:54</p>
+    <p class="summary">米国とイランが互いに新たな攻撃を行い、軍事的緊張が激化している。クウェート当局は自国の空港がイランのドローンによる攻撃を受けたと発表。中東地域での報復の応酬が続き、国際社会に懸念が広がっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cp3peyykxd5o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Seven killed after drone hits bus in Russia-controlled part of Ukraine</a></h3>
+    <p class="meta">BBC World News | 06/03 08:23</p>
+    <p class="summary">ロシア占領下のウクライナ地域において、走行中のバスにドローンが直撃し、7人が死亡した。地元当局の報告として、戦闘が続く前線付近で民間人が巻き込まれた凄惨な被害状況を伝えており、市民生活への深刻な影響が浮き彫りになっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260603/k10015139801000.html" target="_blank" rel="noopener noreferrer">米政府が日本などに12.5％の関税措置検討 通商法301条</a></h3>
+    <p class="meta">NHK国際放送 | 06/03 08:25</p>
+    <p class="summary">米政府が通商法301条に基づき、日本などの同盟国に対して最大12.5％の関税を課す検討を開始した。デジタルサービス税などへの対抗措置とみられ、日本の輸出産業への打撃や、国際的な貿易摩擦の再燃が懸念されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260603/k10015139861000.html" target="_blank" rel="noopener noreferrer">日本生命 米投資会社と資産運用で提携 運用多角化の動き進む</a></h3>
+    <p class="meta">NHK国際放送 | 06/03 07:59</p>
+    <p class="summary">日本生命保険が米国の投資会社と資産運用分野で業務提携することを発表した。国内の低金利環境が続く中、海外の運用ノウハウを取り入れることで資産運用の多角化と収益性の向上を目指し、グローバルな運用体制を強化する狙いがある。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

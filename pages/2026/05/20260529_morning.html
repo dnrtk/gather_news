@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月29日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月29日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月29日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.anthropic.com/news/claude-opus-4-8" target="_blank" rel="noopener noreferrer">Claude Opus 4.8</a></h3>
+    <p class="meta">Hacker News | 05/29 01:49</p>
+    <p class="summary">Anthropicは、最新かつ最も強力なAIモデル「Claude 4.8 Opus」を発表しました。このモデルは、高度な推論、コーディング、および多言語能力において、以前のバージョンを大幅に上回る性能を発揮します。特に数学的思考や複雑な指示の遵守において飛躍的な向上が見られ、企業レベルのワークフローにおける信頼性が高まりました。また、安全性と倫理性に関する最新のガードレールも統合されており、より洗練された対話体験を提供します。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://mybricklog.com/blog/bricks-minifigs-corporate-stole-old-mans-200000-lego-collection" target="_blank" rel="noopener noreferrer">Bricks and Minifigs Stole a Man&#39;s $200k Lego Collection</a></h3>
+    <p class="meta">Hacker News | 05/29 04:24</p>
+    <p class="summary">オレゴン州の高齢男性が、自身の20万ドル相当のレゴコレクションを「Bricks and Minifigs」のフランチャイズ店に騙し取られたと訴えています。男性は病気の治療費を賄うために売却を試みましたが、店側が不当に低い価格を提示した上に、約束された支払いも行われていないと主張しています。このニュースはレゴ愛好家のコミュニティで大きな物議を醸しており、企業の運営姿勢や透明性に対する批判が急増しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.dbos.dev/blog/postgres-is-all-you-need-for-durable-execution" target="_blank" rel="noopener noreferrer">Just Use Postgres for Durable Workflows</a></h3>
+    <p class="meta">Hacker News | 05/29 03:41</p>
+    <p class="summary">耐久性のあるワークフローを構築する際、専用の複雑なエンジンを導入するのではなく、PostgreSQLを活用すべきだと論じる記事です。DBOS（Database-Oriented Operating System）のフレームワークを用いることで、Postgresの強力なトランザクション機能をベースに、信頼性の高い状態管理や自動リトライ機能を簡潔に実装できると説明しています。インフラの複雑さを最小限に抑えつつ、標準的なSQLで堅牢な分散システムを運用できるメリットを強調しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://justine.lol/animus/" target="_blank" rel="noopener noreferrer">Social Animus</a></h3>
+    <p class="meta">Hacker News | 05/29 05:20</p>
+    <p class="summary">エンジニアのJustine Tunney氏による、SNSにおける敵意や攻撃性についての考察です。オンラインコミュニティでの批判や攻撃が開発者の精神に与える影響と、それに対処しながら自身のプロジェクト（llamafileなど）に集中し続けることの重要性を説いています。技術的な成果だけでなく、開発者が健全な創造性を維持するために、どのように情報のノイズや否定的な感情を管理し、自分の道を進むべきかという哲学的な視点を提供しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.chiark.greenend.org.uk/~sgtatham/quasiblog/tron-legacy/" target="_blank" rel="noopener noreferrer">Nitpicking the shell history scene in &#39;Tron: Legacy&#39;</a></h3>
+    <p class="meta">Hacker News | 05/29 04:15</p>
+    <p class="summary">映画『トロン：レガシー』に登場するシェルの操作画面について、技術的な矛盾や演出の細部を検証した記事です。主人公が「history」コマンドを実行するシーンに焦点を当て、表示されるコマンドリストの順序や内容、UNIXシステムとしての整合性をエンジニアの視点で鋭く指摘しています。映画の演出としての意図を汲み取りつつも、実際の計算機科学の観点から見た「おかしな点」をユーモアを交えて解説しています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/truestar/articles/72183e3b2e619c" target="_blank" rel="noopener noreferrer">お前達にも教えよう。SnowflakeのAgent Sharingがすごくすごいことを。</a></h3>
+    <p class="meta">Zenn トレンド | 05/28 02:30</p>
+    <p class="summary">Snowflakeの新機能「Agent Sharing」の革新性を解説する記事。Snowflake上で作成したAIエージェントを、データと機能をパッケージ化したまま他組織へ安全に共有できる仕組みを高く評価しています。従来の単なるデータ共有から一歩進み、「知見や処理能力の共有」を可能にすることで、ビジネスエコシステム内での高度な連携が加速する可能性を指摘。エンジニアにとっての利便性や将来の展望が熱く語られています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/yabu_p/articles/03fbebc16fb865" target="_blank" rel="noopener noreferrer">Laravel Live Japan 行ってきたぞー！</a></h3>
+    <p class="meta">Zenn トレンド | 05/27 12:59</p>
+    <p class="summary">日本で開催されたPHP/Laravelのカンファレンス「Laravel Live Japan」の参加レポートです。イベントの熱気、登壇者による技術セッションの内容、コミュニティの交流の様子が詳しく綴られています。最新のLaravel 11に関連する知見や、開発を効率化するツールの紹介など、現場で役立つ情報が得られたことに加え、オフラインでのネットワーキングが自身のモチベーションに大きな刺激を与えたことが述べられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/4q_sano/items/dc26f7468dcd39fbe62f?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">16万スター超のCLAUDE.mdに学ぶ、Claude Codeを暴走させない運用術</a></h3>
+    <p class="meta">Qiita トレンド | 05/26 13:39</p>
+    <p class="summary">GitHubで16万スターを超える「CLAUDE.md」の構成を参考に、AI開発ツール「Claude Code」を適切に運用するための手法を紹介した記事。AIがコードを勝手に書き換えたり暴走したりするのを防ぐため、明確な指示の定義、プロジェクト構造の共有、制約条件の明文化といったプラクティスを解説しています。AIを信頼できる「共同開発者」にするためのドキュメント運用の重要性と、具体的なファイル作成のコツがまとめられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/28/slate-auto-will-announce-pricing-and-take-preorders-for-its-ev-on-june-24/" target="_blank" rel="noopener noreferrer">Slate Auto will announce pricing and take preorders for its EV on June 24</a></h3>
+    <p class="meta">TechCrunch | 05/28 20:29</p>
+    <p class="summary">電気自動車（EV）メーカーのSlate Autoが、6月24日に新型EVの価格発表と先行予約の受付を開始すると発表しました。同社は革新的な設計とコスト効率の良さを武器に、既存のEV市場に一石を投じることを目指しています。予約開始日には、走行距離や最高速度などの詳細なスペックに加え、納車スケジュールも公開される予定です。市場では、同社がテスラなどの既存大手に対し、どのような競争力を発揮するかが注目されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/28/asana-acquires-no-code-agent-builder-stack-ai/" target="_blank" rel="noopener noreferrer">Asana acquires no-code agent-builder Stack AI</a></h3>
+    <p class="meta">TechCrunch | 05/28 20:06</p>
+    <p class="summary">ワークマネジメントツールのAsanaが、ノーコードでAIエージェントを構築できる「Stack AI」を買収しました。この買収により、Asanaのユーザーは専門的なプログラミング知識がなくても、自社の業務プロセスに最適化したAIエージェントを作成し、ワークフローを自動化できるようになります。企業のAI活用をより身近にし、反復的なタスクの削減と意思決定の迅速化を支援する戦略的な動きとして、業界の関心を集めています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/28/bluesky-embraces-long-form-content-to-counter-x-articles/" target="_blank" rel="noopener noreferrer">Bluesky embraces long-form content to counter X Articles</a></h3>
+    <p class="meta">TechCrunch | 05/28 19:27</p>
+    <p class="summary">分散型SNSのBlueskyが、長文投稿機能（ロングフォームコンテンツ）の導入を決定しました。これは、競合するX（旧Twitter）の「記事」機能に対抗する動きです。ユーザーは従来の文字数制限に縛られず、詳細な論考や物語を直接プラットフォーム上で公開できるようになります。クリエイターやジャーナリストがより深い発信を行える環境を整えることで、既存のSNSからのユーザー移行を促し、プラットフォームの価値を高める狙いがあります。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cn9p40en4ngo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Gaza City hospitals say several killed in strike, as Israel targets Hamas leaders</a></h3>
+    <p class="meta">BBC World News | 05/28 16:20</p>
+    <p class="summary">ガザ市の病院当局は、イスラエル軍による空爆の結果、複数の死者が出たことを明らかにしました。イスラエル軍はハマスの指導者を標的とした攻撃であると発表していますが、医療施設周辺への着弾により民間人の犠牲者が増えています。現地の医療体制は限界に達しており、国際社会からは人道的危機の深刻化を懸念する声と、戦闘の一時停止や民間人保護を求める要請が一段と強まっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cze29764067o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Are US and Iran close to peace or sliding back to war?</a></h3>
+    <p class="meta">BBC World News | 05/28 16:56</p>
+    <p class="summary">米国とイランの関係が、和平に向けた対話か、あるいは軍事衝突への逆行かの岐路に立たされている現状を分析しています。核合意の再建交渉が停滞し、地域的な代理戦争や制裁が続くなか、両国間の緊張は依然として極めて高い状態です。外交的なチャンネルは維持されているものの、双方の国内政治や不信感が障壁となっており、偶発的な事故が全面的な戦争に発展するリスクをはらんでいることを指摘しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260529/k10015134511000.html" target="_blank" rel="noopener noreferrer">スウェーデン ウクライナに戦闘機の納入方針を発表</a></h3>
+    <p class="meta">NHK国際放送 | 05/28 20:47</p>
+    <p class="summary">スウェーデン政府は、ロシアの侵攻が続くウクライナに対し、自国製のサーブ39「グリペン」戦闘機を供与する方針を固めました。これにはパイロットの訓練やメンテナンス支援も含まれ、ウクライナの防空および制空権確保の能力を大幅に強化することを目的としています。欧米各国によるF-16の供与計画に続くこの決定は、北欧諸国によるウクライナ支援の強い決意を示すものであり、戦況に与える影響が注目されます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260529/k10015134541000.html" target="_blank" rel="noopener noreferrer">米関係者 停戦延長“担当者間で覚書合意も大統領承認はまだ”</a></h3>
+    <p class="meta">NHK国際放送 | 05/28 20:44</p>
+    <p class="summary">ガザ情勢における停戦延長交渉に関し、米政府関係者は実務担当者間で覚書が合意されたものの、バイデン大統領の最終承認はまだ下りていないと述べました。交渉の焦点は、人質の解放継続とガザへの人道支援物資の搬入拡大にあります。仲介国を通じた複雑な調整が続いており、大統領の承認が得られれば一時的な停戦が維持される見通しですが、合意に至るまでには依然として予断を許さない状況が続いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260529/k10015134421000.html" target="_blank" rel="noopener noreferrer">「アジア安全保障会議」シンガポールできょうから開催</a></h3>
+    <p class="meta">NHK国際放送 | 05/28 20:12</p>
+    <p class="summary">アジア太平洋地域の安全保障を話し合う「アジア安全保障会議（シャングリラ・ダイアローグ）」が、シンガポールで開幕しました。会議には米国や中国の国防相を含む各国代表が出席し、南シナ海の軍事拠点化や台湾海峡の安定、北朝鮮のミサイル問題などについて議論が行われます。特に対立を深める米中両国の代表が直接対話を行うか、また緊張緩和に向けた具体的な合意が得られるかが、会議の大きな焦点となっています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月15日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月15日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月15日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://iczelia.net/posts/e16-20-year-old-bug/" target="_blank" rel="noopener noreferrer">Fixing a 20-year-old bug in Enlightenment E16</a></h3>
+    <p class="meta">Hacker News | 04/15 13:47</p>
+    <p class="summary">Enlightenment E16という20年以上前のウィンドウマネージャーに存在する、マウスフォーカスに関するバグを修正した記録です。特定のアプリでウィンドウをクリックしてもイベントが正しく処理されず、フォーカスが移らない問題が発生していました。著者はX11のイベント処理のソースコードを深く掘り下げ、問題の原因がイベントの伝搬を妨げるフラグにあることを突き止め、修正パッチを作成しました。長年放置されていた技術的負債を解消する過程が詳細に綴られています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/steipete/wacli" target="_blank" rel="noopener noreferrer">Wacli – WhatsApp CLI: sync, search, send</a></h3>
+    <p class="meta">Hacker News | 04/15 16:04</p>
+    <p class="summary">Wacliは、WhatsAppをターミナルから操作するためのコマンドラインインターフェース（CLI）ツールです。Go言語とWhatsmeowライブラリを使用して構築されており、メッセージの同期、検索、送信といった基本機能をサポートしています。デスクトップアプリやWebブラウザを開かずにWhatsAppを利用したい開発者向けに設計されており、軽量で効率的なコミュニケーションを可能にします。GitHub上でオープンソースとして公開されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://vjay15.github.io/blog/apikeys/" target="_blank" rel="noopener noreferrer">My adventure in designing API keys</a></h3>
+    <p class="meta">Hacker News | 04/12 22:17</p>
+    <p class="summary">セキュアで使い勝手の良いAPIキーの設計に関する試行錯誤をまとめた記事です。Stripeなどの事例を参考に、キーに「sk_live_」のようなプレフィックスを付けて用途を識別しやすくし、末尾にチェックサムを付与して誤入力を即座に検知する工夫を紹介しています。また、データベースへの保存方法やセキュリティ向上のためのローテーション、平文での保存を避ける設計など、開発者が考慮すべき実務的なポイントが詳しく解説されています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/ubie_dev/articles/sec-agent-harness-eng" target="_blank" rel="noopener noreferrer">セキュリティ分析AIエージェント実装にみるハーネスエンジニアリング</a></h3>
+    <p class="meta">Zenn トレンド | 04/14 23:24</p>
+    <p class="summary">セキュリティ分析を自動化するAIエージェントの実装において重要な「ハーネス（馬具）エンジニアリング」という概念を解説しています。AIが勝手な行動をしないよう、外部ツールへのアクセスを制限し、実行環境を隔離する制御の重要性を説いています。また、AIの出力を構造化し、人間がレビュー可能な形式で検証プロセスを構築することで、信頼性と安全性を担保したセキュリティ運用を実現する手法が紹介されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/playree/articles/2376eee1d9d24d" target="_blank" rel="noopener noreferrer">VRAM(ビデオメモリ)32GBのローカルLLM環境(AI PC)をコスパ重視で構築してみる</a></h3>
+    <p class="meta">Zenn トレンド | 04/14 12:36</p>
+    <p class="summary">ローカル環境で大規模言語モデル（LLM）を動かすため、コストパフォーマンスを重視してVRAM 32GBのPCを構築した記録です。高価なRTX 4090を避けるため、RTX 4060 Ti 16GBモデルを2枚差しする構成を採用。パーツ選定から組み立て、Ubuntu上での動作確認までを詳しく説明しています。約20万円という予算内で、Llama 3などの中規模モデルを快適に動作させるための現実的な選択肢を提案しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/yend724/articles/20260414-195637896vp2b6jp" target="_blank" rel="noopener noreferrer">エフェクトイベントとは何か？useEffectEventを理解する</a></h3>
+    <p class="meta">Zenn トレンド | 04/14 09:02</p>
+    <p class="summary">Reactの試験的な新機能である「useEffectEvent」フックについて解説しています。useEffect内で特定の依存関係の変化には反応させたくないが、最新の値を参照したいという課題を解決します。これまでは依存配列の管理や古いクロージャの問題に悩まされることがありましたが、エフェクトイベントを使うことで、リアクティブなロジックと非リアクティブなロジックを分離し、より安全でクリーンなコードが書けるようになる仕組みを具体例とともに説明しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/hokutoh/items/cd68b09eccb18c1f7f3d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AIコーディング時代に必要なプログラミングスキル</a></h3>
+    <p class="meta">Qiita トレンド | 04/13 14:11</p>
+    <p class="summary">AIコーディングツールの普及により、エンジニアに求められるスキルが変化していることを論じています。コードを書く能力以上に、AIが生成したコードの正確性を検証する「コードレビュー能力」や、システム全体の設計を考える「アーキテクチャ設計力」が重要になります。また、AIに的確な指示を出すプロンプトエンジニアリング力に加え、基本的なコンピュータサイエンスの知識が依然として不可欠であると説いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/hitomin_poke/items/b2bb7163d278ee8cae42?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【時間感覚論 #1】新人エンジニアの「明日中に終わります」って、結局いつやねん！！問題</a></h3>
+    <p class="meta">Qiita トレンド | 04/15 03:49</p>
+    <p class="summary">新人エンジニアが口にする「明日中に終わります」という言葉の曖昧さが招くトラブルと、その解決策を考察した記事です。「明日中」が定時までなのか、深夜までなのかといった認識の齟齬を防ぐため、具体的な時刻を提示することや、作業の細分化による進捗把握の重要性を指摘しています。新人側は「完了」の定義を明確にし、上司側は心理的安全性を確保しながら定量的・定性的な見積もりを促すコミュニケーションのコツを紹介しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/14/anthropics-rise-is-giving-some-openai-investors-second-thoughts/" target="_blank" rel="noopener noreferrer">Anthropic’s rise is giving some OpenAI investors second thoughts</a></h3>
+    <p class="meta">TechCrunch | 04/15 02:31</p>
+    <p class="summary">AIスタートアップのAnthropicが急速に台頭しており、一部のOpenAI投資家が戦略の再考を迫られています。Claude 3シリーズの性能がGPT-4に匹敵、あるいは凌駕する場面も見られる中、Anthropicへの出資を検討する動きが活発化しています。OpenAIの内部混乱や構造への不透明感も一因となり、投資家たちはAI市場における覇権争いの行方を注視し、ポートフォリオの多様化を模索している現状が報じられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/14/ai-datacenter-startup-fluidstack-in-talks-for-1b-round-at-18b-valuation-months-after-hitting-7-5b-says-report/" target="_blank" rel="noopener noreferrer">AI data center startup Fluidstack in talks for $1B round at $18B valuation months after hitting $7.5B, says report</a></h3>
+    <p class="meta">TechCrunch | 04/14 21:33</p>
+    <p class="summary">AIデータセンター向けのクラウド基盤を提供するFluidstackが、10億ドルの資金調達に向けた交渉中であると報じられました。企業評価額は、わずか数ヶ月前の75億ドルから180億ドル（約2.7兆円）へと急上昇する見通しです。GPUリソースの世界的な不足を背景に、分散型コンピューティング資源を効率的に提供する同社のサービスへの需要が爆発しており、AIインフラ市場の急速な成長を象徴する動きとなっています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c4g66p2q075o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">&#39;Bit of pain&#39; worth long-term security from Iran, Bessent tells BBC</a></h3>
+    <p class="meta">BBC World News | 04/14 19:47</p>
+    <p class="summary">米国の経済顧問ベセント氏はBBCに対し、対イラン制裁に伴う経済的な「多少の痛み」は、長期的な安全保障を確保するために払う価値があるとの見解を示しました。原油価格の上昇や市場の混乱といった副作用が懸念されるものの、イランの核開発や地域的な不安定化を阻止することが最優先であると強調。同氏は、次期政権においても強力な経済圧力を維持しつつ、同盟国との連携を通じてエネルギー市場の安定化を図る姿勢を打ち出しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cp8ddydl18vo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Israel and Lebanon hold first direct talks since 1993</a></h3>
+    <p class="meta">BBC World News | 04/14 20:42</p>
+    <p class="summary">イスラエルとレバノンが、1993年以来となる直接会談を実施しました。両国間では長らく国境画定や治安を巡る緊張が続いてきましたが、今回の会談は緊張緩和に向けた歴史的な一歩と目されています。背景には、米国による仲介外交の活発化や、経済的な安定を求める双方の思惑があると考えられます。依然として大きな隔たりはあるものの、対話のテーブルに着いたこと自体が、中東地域の安定に向けた重要なシグナルとなっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cy01d1g0rrjo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Three years of messages at once - a chronicle of Sudan&#39;s war pours in as trapped reporter&#39;s phone turns on</a></h3>
+    <p class="meta">BBC World News | 04/14 23:13</p>
+    <p class="summary">内戦下のスーダンで通信手段を失っていた記者の携帯電話が久しぶりに開通し、3年分ものメッセージが一気に届いた壮絶な記録です。届いたメッセージには、親族の安否確認や友人からの別れの言葉、凄惨な現地の状況を伝える報告が詰まっており、長期間の封鎖がいかに人々の絆を断絶させていたかを浮き彫りにしています。この記事は、情報の空白期間に起きた戦争の悲劇を、一個人の視点から生々しく物語るドキュメンタリーとなっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260415/k10015100101000.html" target="_blank" rel="noopener noreferrer">タイ国籍少女に児童買春あっせんの罪 初公判で被告は無罪主張</a></h3>
+    <p class="meta">NHK国際放送 | 04/15 08:52</p>
+    <p class="summary">タイ国籍の少女に対し、児童買春をあっせんした罪に問われている被告の初公判が行われました。検察側は、被告が営利目的で少女をスカウトし、客に引き合わせたと指摘していますが、これに対し被告側は「売春の事実を知らなかった」として無罪を主張しています。外国人労働者や未成年者が搾取される事件が後を絶たない中、事件の真相究明とともに、背後にある組織的な関与や国際的な人身取引の実態についても厳しい追及が求められています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260415/k10015099491000.html" target="_blank" rel="noopener noreferrer">トランプ大統領 近くイランとの再協議示唆 仲介外交も活発に</a></h3>
+    <p class="meta">NHK国際放送 | 04/15 08:47</p>
+    <p class="summary">トランプ大統領は、対立が続くイランとの間で、近いうちに新たな協議を行う可能性を示唆しました。核開発問題や中東情勢の安定化を巡り、これまでの強硬姿勢から一転、対話による解決を模索する動きを見せています。これに合わせ、日本や欧州諸国による仲介外交も活発化しており、緊張状態にある米イラン関係が転換期を迎えるか注目されています。一方で、イラン側は経済制裁の解除を前提条件に掲げており、交渉の行方は予断を許しません。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260415/k10015100031000.html" target="_blank" rel="noopener noreferrer">イラン情勢 ナフサ価格高騰が日用品に影響 値上げの動きも…</a></h3>
+    <p class="meta">NHK国際放送 | 04/15 08:20</p>
+    <p class="summary">イラン情勢の緊迫化に伴い、石油製品の原料となるナフサの価格が高騰しており、日本国内の日用品価格に影響を及ぼし始めています。プラスチック容器や衣料用洗剤など、石油由来の製品を製造するメーカー各社は、コスト上昇を抑えきれず値上げを検討・実施しています。エネルギー価格の変動が、家計に直結する生活必需品の価格を押し上げる形となっており、物流コストの増加と相まって、消費者の負担増が懸念される事態となっています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

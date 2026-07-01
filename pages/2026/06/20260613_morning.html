@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年06月13日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年06月13日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年06月13日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://innovativegenomics.org/news/crispr-technique-selectively-shreds-cancer-cells/" target="_blank" rel="noopener noreferrer">CRISPR tech selectively shreds cancer cells, including &#34;undruggable&#34; cancers</a></h3>
+    <p class="meta">Hacker News | 06/13 00:15</p>
+    <p class="summary">CRISPR技術を活用し、これまで治療薬の開発が困難とされていた「治療不能」な癌細胞を選択的に破壊する新たな手法が開発されました。この技術は、がん細胞特有の遺伝的脆弱性を標的にすることで、副作用を最小限に抑えつつ効果的に癌を排除できる可能性を示しており、次世代の癌治療として大きな期待が寄せられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.miguelgrinberg.com/post/i-am-not-a-reverse-centaur" target="_blank" rel="noopener noreferrer">I Am Not a Reverse Centaur</a></h3>
+    <p class="meta">Hacker News | 06/13 02:53</p>
+    <p class="summary">「私は逆ケンタウロスではない」というタイトルで、AIと人間が融合した存在に対する比喩や定義について考察するブログ記事。AI支援を受けたプログラミングや創作活動において、人間が主体性を失わず、どのようにツールを制御すべきかという哲学的かつ実用的な視点が語られています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://twitter.com/jsrailton/status/2064661778978533571" target="_blank" rel="noopener noreferrer">Malware developers added nuclear and biological weapons text to to their spyware</a></h3>
+    <p class="meta">Hacker News | 06/12 05:24</p>
+    <p class="summary">マルウェア開発者が、自身のスパイウェアの中に核兵器や生物兵器に関するテキストを埋め込んでいたことが判明しました。セキュリティ研究者は、この不可解な行為の背後にある意図について調査を進めており、サイバー攻撃が物理的な脅威を示唆するプロパガンダに利用される懸念が高まっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://ikyle.me/blog/2026/how-to-setup-a-local-coding-agent-on-macos" target="_blank" rel="noopener noreferrer">How to setup a local coding agent on macOS</a></h3>
+    <p class="meta">Hacker News | 06/13 02:34</p>
+    <p class="summary">macOS環境でローカルなコーディングエージェントを構築・セットアップする方法を解説する技術ガイド。特定のAIモデルや開発支援ツールをローカル環境で動かすことで、プライバシーを保護しつつ開発効率を高めるための手順や推奨ツール、注意点がステップバイステップで紹介されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://piwodlaiwo.github.io/pirates/" target="_blank" rel="noopener noreferrer">Pirates, a naval warfare game inspired by Sid Meier&#39;s Pirates</a></h3>
+    <p class="meta">Hacker News | 06/13 02:07</p>
+    <p class="summary">Sid Meierのゲーム『Pirates!』にインスパイアされた海戦ゲーム『Pirates』の紹介。帆船の操縦や海戦、探索といったクラシックな要素を再現しており、Webブラウザ上で手軽に遊べるゲーム開発の取り組みや、そのゲームメカニクスの詳細について説明されています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/imaimai17468/articles/c5440b98a6e766" target="_blank" rel="noopener noreferrer">別モデルによるクロスレビューは有効なのか？同一モデルの継続セッション・別セッションと比較する（React習熟度スコア基準）</a></h3>
+    <p class="meta">Zenn トレンド | 06/12 06:24</p>
+    <p class="summary">Reactの習熟度スコアを基準に、AIモデルによるクロスレビューの有効性を検証した記事。同一モデルの継続セッションと別セッション、あるいは異なるモデル間でのレビュー結果を比較分析しています。AIによるコードレビューの質を定量的に評価し、効率的な活用法を考察しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/counterworks/articles/1887cb36a1b701" target="_blank" rel="noopener noreferrer">アプリ層とDB層の二重防御でテナント分離を担保する（マルチテナント化連載 第3回・二重防御編）</a></h3>
+    <p class="meta">Zenn トレンド | 06/12 02:01</p>
+    <p class="summary">マルチテナント化を進めるSaaS開発において、アプリ層とデータベース層の二重防御でテナント分離を確実に担保する手法を解説。データ漏洩リスクを低減するための具体的な設計アーキテクチャや、各層での実装上の注意点、セキュリティ戦略がまとめられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/shirok/items/06f3bca71ae6378a844e?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Oracle AI Database@AWS で Autonomous AI Database Serverless  を作成してみてみた</a></h3>
+    <p class="meta">Qiita トレンド | 06/11 05:57</p>
+    <p class="summary">Oracle AI Database@AWS上で、Autonomous AI Database Serverlessを構築する手順をまとめたハンズオン記事。クラウド環境での高度なデータベースサービスの展開方法について、具体的な操作画面とともに設定のポイントやメリットが解説されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/12/chinese-cybercrime-operation-that-used-ai-to-scam-hundreds-of-thousands-of-victims-sued-by-google/" target="_blank" rel="noopener noreferrer">Chinese cybercrime operation that used AI to scam ‘hundreds of thousands of victims’ sued by Google</a></h3>
+    <p class="meta">TechCrunch | 06/12 20:38</p>
+    <p class="summary">Googleが、AIを悪用して数十万人の被害者から金銭を詐取したとされる中国のサイバー犯罪グループを提訴しました。この犯罪組織は、偽のオンラインストアや投資プラットフォームを利用して広範囲に詐欺を展開しており、テック企業がAI時代における犯罪抑止に乗り出した事例として注目されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/12/spacex-ipo-closes-up-19-and-delivers-the-worlds-first-trillionaire/" target="_blank" rel="noopener noreferrer">SpaceX IPO closes up 19% and delivers the world’s first trillionaire</a></h3>
+    <p class="meta">TechCrunch | 06/12 20:20</p>
+    <p class="summary">SpaceXのIPO（新規株式公開）が成功し、初日の株価は19%上昇しました。これにより、同社の創業者であるイーロン・マスク氏の資産が劇的に増加し、史上初の兆万長者（トリリオネア）が誕生したと報じられています。宇宙開発産業の経済的インパクトの大きさが改めて浮き彫りとなりました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/12/spacex-ipo-live-updates-on-everything-you-need-to-know/" target="_blank" rel="noopener noreferrer">SpaceX IPO: Live updates on everything you need to know</a></h3>
+    <p class="meta">TechCrunch | 06/12 20:04</p>
+    <p class="summary">SpaceXの上場に関するライブアップデート情報。IPOの詳細、株価の推移、市場の反応、および今後の宇宙開発計画への影響について網羅的にまとめています。投資家や業界関係者にとって不可欠な、今回の上場に伴う最新データと分析がリアルタイムで更新されています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c39y02x98k8o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Iran says deal to end fighting with US has &#39;never been closer&#39;</a></h3>
+    <p class="meta">BBC World News | 06/12 18:20</p>
+    <p class="summary">イラン政府が、米国との紛争を終結させるための合意について「これまでにないほど近づいている」と発表しました。長年の緊張状態が緩和に向かう兆しが見えており、外交的な解決に向けた両国間の交渉進展に対する期待が報じられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cy9rq21dqego?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">French town buries murdered child as questions mount over police failings</a></h3>
+    <p class="meta">BBC World News | 06/12 16:19</p>
+    <p class="summary">フランスの街で殺害された子どもの葬儀が行われ、市民からは警察の対応に対する激しい批判と不信感の声が上がっています。事件の捜査過程において警察側に重大な過失があったのではないかという疑念が深まっており、当局への説明責任を求める動きが強まっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cjeg9p1xqdwo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Discovery of €1.2m jewellery prompts fresh probe into former Spanish PM</a></h3>
+    <p class="meta">BBC World News | 06/12 15:55</p>
+    <p class="summary">スペインの元首相が、120万ユーロ相当の宝石が発見されたことを受けて、新たな汚職調査に直面しています。過去の疑惑が再燃する形となっており、司法当局は当該宝石の出所や所有経緯について徹底的な解明を進める方針です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260613/k10015148811000.html" target="_blank" rel="noopener noreferrer">“ロシア軍の兵士の死者数 22万人以上” BBCなどの調査報道</a></h3>
+    <p class="meta">NHK国際放送 | 06/12 20:33</p>
+    <p class="summary">BBCなどの調査報道により、ロシア軍の兵士の死者が22万人を超えた可能性があることが報じられました。紛争の長期化により双方に甚大な被害が出ている現状が浮き彫りとなっており、独立したメディアによる犠牲者数の推計が、実態の把握に大きな影響を与えています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260613/k10015148781000.html" target="_blank" rel="noopener noreferrer">高市首相 重要鉱物「共同備蓄連携構想」提案へ G7サミット</a></h3>
+    <p class="meta">NHK国際放送 | 06/12 20:32</p>
+    <p class="summary">高市首相はG7サミットにおいて、重要鉱物の安定供給を確保するための「共同備蓄連携構想」を提案しました。特定国への依存を脱却し、経済安全保障を強化するために、G7各国間で鉱物資源を戦略的に備蓄・共有する体制構築を目指す姿勢を示しました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260612/k10015148891000.html" target="_blank" rel="noopener noreferrer">「スペースX」が上場 調達資金 約12兆円は過去最大規模</a></h3>
+    <p class="meta">NHK国際放送 | 06/12 19:37</p>
+    <p class="summary">スペースXが上場し、調達資金は約12兆円に達し、過去最大規模のIPOとなりました。宇宙開発の商業化が急速に進む中、この巨大な資金調達が今後の火星探査や衛星通信ビジネスにどのような影響を与えるか、世界中から関心が集まっています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年05月29日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年05月29日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年05月29日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/robinostlund/homeassistant-volkswagencarnet/issues/967" target="_blank" rel="noopener noreferrer">Volkswagen blocks Home Assistant by requiring client assertion</a></h3>
+    <p class="meta">Hacker News | 05/29 14:45</p>
+    <p class="summary">フォルクスワーゲンがAPIの認証仕様を変更し、クライアントアサーションを必須としたことで、スマートホーム管理ツール「Home Assistant」の非公式連携機能が利用不能になった。多くのユーザーからログインエラーが報告されており、自動車メーカーによるサードパーティ製ツールの制限という課題が浮き彫りになっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://nick.winans.io/blog/nice-nano/" target="_blank" rel="noopener noreferrer">I made a million dollar product from my dorm room (2025)</a></h3>
+    <p class="meta">Hacker News | 05/29 05:25</p>
+    <p class="summary">著者が大学の寮で開発したワイヤレスキーボード用コントローラー「nice!nano」が、100万ドルの売上を達成するまでの経緯をまとめた記事。部品選定から製造、コミュニティの活用、物流の苦労、そしてオープンソースプロジェクトとしての成功までが詳細に記されており、ニッチな市場で個人開発が成功を収めた事例を紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://buildingbetter.tech/p/i-read-the-claude-code-source-code" target="_blank" rel="noopener noreferrer">Claude Code – Everything You Can Configure That the Docs Don&#39;t Tell You</a></h3>
+    <p class="meta">Hacker News | 05/29 11:13</p>
+    <p class="summary">AnthropicのCLIツール「Claude Code」のソースコードを解析し、公式ドキュメントに未記載の設定項目を解説した記事。内部プロンプトの調整、トークン制限、プライバシー設定、デバッグモードなど、詳細なカスタマイズオプションが判明した。ツールの動作を深く理解し、最適化したい開発者にとって有益な情報となっている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/karaage0703/articles/1e7106add712d1" target="_blank" rel="noopener noreferrer">Karpathy氏の200行GPT「microGPT」を1行1行読み解く</a></h3>
+    <p class="meta">Zenn トレンド | 05/28 16:08</p>
+    <p class="summary">Andrej Karpathy氏が公開した約200行のGPT実装「microGPT」を、1行ずつ丁寧に解説した記事。Transformerの構造や自己注意機構、訓練の仕組みなど、大規模言語モデルの核心部分を最小構成で学ぶことができる。AIの仕組みを根本から理解したい学習者にとって非常に有用な教材となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/grahamian/articles/003_data_platform_build_small_first" target="_blank" rel="noopener noreferrer">データ分析基盤はまず動くものを作れ</a></h3>
+    <p class="meta">Zenn トレンド | 05/28 08:19</p>
+    <p class="summary">データ分析基盤の構築において、最初から完璧な構成を目指すのではなく「まず動くものを作る」ことの重要性を説いた記事。複雑なツール選定に時間をかける前に、最小限の構成で価値を検証し、徐々に拡張するアプローチを推奨している。早期にビジネス価値を創出し、技術的な負債を適切に管理するための知見が共有されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/sdb_blog/articles/dded156f2106d3" target="_blank" rel="noopener noreferrer">【Laravel 13】Laravel AI SDK を試してみた</a></h3>
+    <p class="meta">Zenn トレンド | 05/28 08:00</p>
+    <p class="summary">Laravel 13で導入された「Laravel AI SDK」の使用感をレビューした記事。OpenAIやAnthropicなどのLLMを統一的なインターフェースで利用でき、ベクトル検索やエージェント機能も備えている。設定方法からコード例まで解説されており、LaravelアプリにAI機能を容易に統合できる可能性を示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/hitomin_poke/items/48b1eca9c48f05839692?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">1割の“信頼される”エンジニアが実行している『問題の出し方』</a></h3>
+    <p class="meta">Qiita トレンド | 05/29 05:26</p>
+    <p class="summary">信頼されるエンジニアが実践している「問題の伝え方」を解説した記事。単に事実を述べるのではなく、期待値と現状の差分を明確にし、自分なりの仮説や解決策を提示する重要性を説いている。相手の時間を尊重し、円滑なコミュニケーションを通じてプロジェクトを前進させるための具体的なソフトスキルを紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/28/blue-origins-new-glenn-rocket-explodes-during-testing-in-florida/" target="_blank" rel="noopener noreferrer">Blue Origin’s New Glenn rocket explodes during testing in Florida</a></h3>
+    <p class="meta">TechCrunch | 05/29 01:22</p>
+    <p class="summary">フロリダ州での試験中に、ブルーオリジンの新型ロケット「ニューグレン」が爆発した。この爆発は地上テスト中に発生したもので、有人飛行に向けた開発スケジュールに影響を与える可能性がある。SpaceXに対抗する大型ロケットとして期待されていたが、今回の事故は同社にとって大きな挫折となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/28/gleans-top-line-crosses-300m-as-ai-budget-cutting-becomes-its-major-selling-point/" target="_blank" rel="noopener noreferrer">Glean’s top line crosses $300M as AI budget-cutting becomes its major selling point</a></h3>
+    <p class="meta">TechCrunch | 05/29 00:44</p>
+    <p class="summary">AI検索スタートアップのGleanが、年間経常収益（ARR）3億ドルを突破した。企業のAI予算削減が進む中、同社の製品は業務効率化とコスト削減を直接的に実現するツールとして強力な支持を得ている。エンタープライズ向けAI市場において、実利を提供するソリューションとしての地位を確立している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/05/28/waymo-dominates-texas-autonomous-vehicle-registrations-as-tesla-trails-behind/" target="_blank" rel="noopener noreferrer">Waymo dominates autonomous vehicle registrations as Tesla trails behind</a></h3>
+    <p class="meta">TechCrunch | 05/29 00:14</p>
+    <p class="summary">自動運転車の登録台数において、Waymoが首位を独走している。一方で、完全自動運転を掲げてきたテスラは後塵を拝している。テキサス州などでの展開が進む中、Waymoのライダー（Lidar）ベースの技術が規制当局や市場からの信頼を得ているのに対し、カメラのみを使用するテスラの戦略は苦戦を強いられている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c87qng40wz9o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">US and Iran &#39;very close&#39; to deal but &#39;not there yet&#39;, Vance says</a></h3>
+    <p class="meta">BBC World News | 05/28 23:32</p>
+    <p class="summary">バンス米副大統領は、米国とイランが核合意や緊張緩和に向けた合意に「非常に近づいている」ものの、最終合意には至っていないと述べた。両国間の交渉は重要な局面を迎えており、中東情勢の安定化に期待がかかる一方、最終合意の成立にはまだ克服すべき課題が残っていることを示唆している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/ceqpelq5reqo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Netanyahu says he has directed IDF to increase control of Gaza to 70%</a></h3>
+    <p class="meta">BBC World News | 05/29 02:24</p>
+    <p class="summary">イスラエルのネタニヤフ首相は、ガザ地区の制圧範囲を70%まで拡大するよう軍に指示したことを明らかにした。軍事的勝利を優先し攻勢を強める方針を示しており、人道状況のさらなる悪化が懸念されている。この発言は、国際社会からの停戦要求が高まる中でも強硬姿勢を維持することを改めて強調したものだ。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260529/k10015135151000.html" target="_blank" rel="noopener noreferrer">大リーグ機構 選手会に“サラリーキャップ”提案 交渉難航へ</a></h3>
+    <p class="meta">NHK国際放送 | 05/29 08:14</p>
+    <p class="summary">メジャーリーグ機構（MLB）が、年俸総額に上限を設ける「サラリーキャップ制」を選手会に提案した。戦力の均衡を図る狙いがあるが、選手の年俸抑制につながるとして選手会は強く反発している。次回の労使協定改定に向けた交渉は難航が予想され、将来的なストライキへの懸念も浮上している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260529/k10015135171000.html" target="_blank" rel="noopener noreferrer">ミャンマー 軍の影響力強い政権トップがインド首相と会談へ</a></h3>
+    <p class="meta">NHK国際放送 | 05/29 08:12</p>
+    <p class="summary">ミャンマーの軍事政権トップ、ミン・アウン・フライン氏がインドを訪問し、モディ首相と会談する見通しとなった。クーデター以降、国際的に孤立している軍政にとって、隣国インドとの対話は正当性を誇示する機会となる。国境地帯の治安維持や経済協力が議題になる見込みだが、国内外からの批判も予想される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260529/k10015135011000.html" target="_blank" rel="noopener noreferrer">4月石油統計速報 日本の原油輸入量は1989年以降最少に</a></h3>
+    <p class="meta">NHK国際放送 | 05/29 07:22</p>
+    <p class="summary">4月の石油統計速報によると、日本の原油輸入量が1989年以降で最少となった。省エネの進展や脱炭素に向けた燃料転換、人口減少による需要減が主な要因。エネルギー構造の変化が鮮明になっており、国内製油所の再編や石油元売り各社による新事業への転換が加速する可能性がある。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

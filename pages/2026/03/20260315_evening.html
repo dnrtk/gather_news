@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月15日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月15日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月15日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://sa.lj.am/rack-mount-hydroponics/" target="_blank" rel="noopener noreferrer">Rack-mount hydroponics</a></h3>
+    <p class="meta">Hacker News | 03/15 13:23</p>
+    <p class="summary">19インチのサーバーラック内に水耕栽培システムを構築するDIYプロジェクトの紹介。標準的なラックコンポーネント、LED照明、ウォーターポンプなどを活用し、バジルなどの植物を室内で育てる方法を解説している。サーバーラックの構造を植物育成に転用するユニークな試みである。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.johndcook.com/blog/2026/03/10/sinh-arccosh/" target="_blank" rel="noopener noreferrer">Why Mathematica does not simplify sinh(arccosh(x))</a></h3>
+    <p class="meta">Hacker News | 03/11 22:30</p>
+    <p class="summary">数学ソフトMathematicaが、sinh(arccosh(x))を単純に√(x²-1)へと簡略化しない理由を解説。この等式は複素数平面における分枝切断の扱いに依存するため、すべての数域で常に成立するわけではない。ソフトが数学的な厳密性を保つために、安易な簡略化を避けている背景が説明されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cg4g7kn99q3o" target="_blank" rel="noopener noreferrer">Treasure hunter freed from jail after refusing to turn over shipwreck gold</a></h3>
+    <p class="meta">Hacker News | 03/15 11:48</p>
+    <p class="summary">19世紀の沈没船から大量の金貨を発見したトレジャーハンター、トミー・トンプソン氏が約9年ぶりに釈放された。彼は金貨の隠し場所の証言を拒んだため法廷侮辱罪で収監されていたが、裁判官は「これ以上の拘禁は説得としての効果がない」と判断。長年の黄金を巡る法的争いに区切りがついた。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://robertsdotpm.github.io/cryptography/tcp_hole_punching.html" target="_blank" rel="noopener noreferrer">A most elegant TCP hole punching algorithm</a></h3>
+    <p class="meta">Hacker News | 03/15 12:29</p>
+    <p class="summary">NATを越えてP2P接続を確立するための、TCPホールパンチングの洗練されたアルゴリズムについて解説。TCPの「同時オープン」機能を活用し、中央のリレーサーバーを介さずに2つのホストを同期させて接続する方法に焦点を当てている。信頼性の高い通信を実現するための技術的な詳細がまとめられている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/komatsuh/articles/komatsuh_ime_news_2026_02" target="_blank" rel="noopener noreferrer">2026年2月のIMEに関するできごと</a></h3>
+    <p class="meta">Zenn トレンド | 03/14 13:30</p>
+    <p class="summary">2026年2月における入力メソッド（IME）関連の動向をまとめた記事。Google日本語入力のアップデートやATOKの新機能、各OS標準IMEの挙動変更など、日本語入力環境に関する最新ニュースが網羅されている。開発者やタイピング効率を重視するユーザー向けの技術的なトピックが中心となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/miruky/items/51db293a7a7d0d277a5d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【2026年最新版】Claude Codeで行うべきセキュリティ設定 10選</a></h3>
+    <p class="meta">Qiita トレンド | 03/14 13:06</p>
+    <p class="summary">AnthropicのAIツール「Claude Code」を安全に利用するための10のセキュリティ設定を解説。APIキーの適切な管理、ファイルアクセス権限の制限、機密情報のフィルタリング設定など、開発環境でAIを活用する際のデータ漏洩リスクを最小限に抑えるための実践的なガイドとなっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cd039n9vj3vo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump urges UK and other nations to send warships to Strait of Hormuz</a></h3>
+    <p class="meta">BBC World News | 03/14 20:33</p>
+    <p class="summary">トランプ大統領は、ホルムズ海峡での航行の自由を確保するため、英国を含む同盟国に対して軍艦の派遣を求めた。中東の緊張が高まる中、米国の負担を軽減し、国際的な協力体制を構築する狙いがある。これに対し、各国がどのような実効的な対応を取るかが今後の焦点となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260315/k10015076161000.html" target="_blank" rel="noopener noreferrer">トランプ大統領 戦闘終結に向けた条件「まだ整っていない」</a></h3>
+    <p class="meta">NHK国際放送 | 03/15 04:04</p>
+    <p class="summary">トランプ大統領は、現在進行中の紛争の戦闘終結に向けた条件が「まだ整っていない」との認識を示した。自身の掲げる「力による平和」を強調し、妥協のない交渉姿勢を維持する構え。国際社会からは早期停戦への期待が高まっているが、合意に向けたハードルは依然として高いことが示唆された。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260315/k10015076211000.html" target="_blank" rel="noopener noreferrer">WBC マイアミの学校に通う子どもたちが日本代表 応援寄せ書き</a></h3>
+    <p class="meta">NHK国際放送 | 03/15 03:49</p>
+    <p class="summary">WBC（ワールド・ベースボール・クラシック）の開催地マイアミの学校で、現地の子供たちが日本代表「侍ジャパン」へ向けた応援の寄せ書きを作成した。野球を通じた国際交流の一環であり、子供たちの熱いメッセージが日本チームの励みとなっている。現地での日本代表への関心の高さがうかがえる。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

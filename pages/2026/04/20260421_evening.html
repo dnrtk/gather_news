@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月21日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月21日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月21日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://docs.openclaw.ai/providers/anthropic" target="_blank" rel="noopener noreferrer">Anthropic says OpenClaw-style Claude CLI usage is allowed again</a></h3>
+    <p class="meta">Hacker News | 04/21 12:43</p>
+    <p class="summary">Anthropicは、OpenClawスタイルのClaude CLIツールの利用を再び許可した。以前は利用規約の解釈により制限されていた可能性があるが、現在は公式ドキュメントでプロバイダーとしての利用が認められている。これにより、ユーザーはターミナル等のCLI環境からClaudeをより柔軟に活用できるようになる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://webmatrices.com/post/how-a-roblox-cheat-and-one-ai-tool-brought-down-vercel-s-entire-platform" target="_blank" rel="noopener noreferrer">A Roblox cheat and one AI tool brought down Vercel&#39;s platform</a></h3>
+    <p class="meta">Hacker News | 04/21 13:12</p>
+    <p class="summary">人気ゲーム「Roblox」のチートツールとAIツールの組み合わせが原因で、Vercelのプラットフォーム全体がダウンする事態が発生した。この記事では、どのようにしてこれらが予期せぬ負荷や脆弱性を引き起こし、大規模なインフラに影響を与えたのか、その技術的な背景や経緯について解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://icv2.com/articles/news/view/62176/r-i-p-louis-zocchi-the-godfather-dice" target="_blank" rel="noopener noreferrer">Louis Zocchi, inventor of the d100, has died</a></h3>
+    <p class="meta">Hacker News | 04/21 15:19</p>
+    <p class="summary">100面ダイス（d100）の発明者として知られ、「サイコロ界のゴッドファーザー」と称されたルイス・ゾッキ氏が逝去した。彼はゲーム用ダイスの精密な製造に情熱を注ぎ、Zocchihedronなどの革新的な製品を通じてTRPG業界に多大な貢献をした。業界全体がその死を悼んでいる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://longwoodgardens.org/blog/2023-05-17/beauty-bonsai-styles" target="_blank" rel="noopener noreferrer">The Beauty of Bonsai Styles</a></h3>
+    <p class="meta">Hacker News | 04/21 13:31</p>
+    <p class="summary">盆栽の多様なスタイルとその美学について解説する記事。直幹（ちょっかん）や斜幹（しゃかん）、懸崖（けんがい）など、自然の風景を鉢の中で表現するための代表的な樹形を紹介している。それぞれのスタイルが持つ歴史的背景や、初心者が鑑賞・育成する際のポイントについても触れられている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/acntechjp/articles/da229b919d512a" target="_blank" rel="noopener noreferrer">「いきなり作る」前に考えたいCI/CDパイプラインの設計と運用プラクティス</a></h3>
+    <p class="meta">Zenn トレンド | 04/20 04:10</p>
+    <p class="summary">開発の初期段階で陥りがちな「とりあえずCI/CDを作る」ことの危険性を指摘し、設計と運用のベストプラクティスを提案する記事。保守性やセキュリティを考慮したパイプラインの構成、自動化の範囲、チームでの運用ルールなど、長期的に安定した開発環境を維持するための具体的な視点がまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/coconala/articles/9b1d05be257b90" target="_blank" rel="noopener noreferrer">言語化に苦しむ全ての人(エンジニア？)へ。今日から変わるコミュニケーション術補遺</a></h3>
+    <p class="meta">Zenn トレンド | 04/20 02:20</p>
+    <p class="summary">言語化に苦手意識を持つエンジニアに向けて、コミュニケーションの質を改善するための具体的なテクニックを解説。情報を整理して伝えるためのフレームワークや、相手のコンテキストを考慮した伝え方など、日々の業務ですぐに実践できる補足的なアドバイスが提供されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/bussystem_take/articles/2026-03-18-beyond-code-in-contract-agile" target="_blank" rel="noopener noreferrer">【準委任契約ってマジ？】受託アジャイル開発をやって感じた&#34;開発以外&#34;について考える</a></h3>
+    <p class="meta">Zenn トレンド | 04/20 00:59</p>
+    <p class="summary">準委任契約での受託アジャイル開発において、コードを書くこと以外の重要性に焦点を当てた記事。クライアントとの信頼関係構築や期待値調整、チームビルディングなど、契約形態ならではの難しさと、プロジェクトを成功に導くための「開発以外」の立ち回りの重要性について実体験を基に綴っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/masa20057/items/acc90d24eb083dba9462?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【初心者エンジニア向け】開発を前に進めるための行動3選</a></h3>
+    <p class="meta">Qiita トレンド | 04/21 03:58</p>
+    <p class="summary">初心者エンジニアが開発で行き詰まった際、状況を打開して前に進めるための3つの具体的な行動を提案。質問の仕方の工夫、ドキュメントの読み込み、小さな成功体験の積み重ねなど、技術力だけでなくマインドセットや習慣の観点から、効率的に成長し成果を出すためのヒントをまとめている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/20/who-is-john-ternus-the-incoming-apple-ceo/" target="_blank" rel="noopener noreferrer">Who is John Ternus, the incoming Apple CEO?</a></h3>
+    <p class="meta">TechCrunch | 04/21 01:02</p>
+    <p class="summary">Appleの次期CEOに就任するジョン・ターナス氏の経歴と人物像を紹介。ハードウェアエンジニアリング担当シニアバイスプレジデントとして、iPhoneやMacの主要な刷新を主導してきた実績を持つ。ティム・クック氏の後継者として、彼がAppleの将来をどのように担っていくのか注目が集まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/20/anthropic-takes-5b-from-amazon-and-pledges-100b-in-cloud-spending-in-return/" target="_blank" rel="noopener noreferrer">Anthropic takes $5B from Amazon and pledges $100B in cloud spending in return</a></h3>
+    <p class="meta">TechCrunch | 04/20 23:10</p>
+    <p class="summary">AnthropicはAmazonから50億ドルの追加出資を受ける一方で、今後数年間で計1,000億ドルをクラウドインフラ支出に充てることを約束した。この巨額提携により、AnthropicはAWSを主要なクラウドプロバイダーとして活用し、AIモデルのトレーニングと推論の規模を大幅に拡大する狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/20/google-rolls-out-gemini-in-chrome-in-seven-new-countries/" target="_blank" rel="noopener noreferrer">Google rolls out Gemini in Chrome in 7 new countries</a></h3>
+    <p class="meta">TechCrunch | 04/20 22:00</p>
+    <p class="summary">Googleは、ブラウザ「Chrome」内でAIツール「Gemini」を利用できる機能を、新たに7か国で展開することを発表した。これにより、より多くのユーザーがサイドパネル等から直接AIの支援を受け、情報の要約やメールの執筆、検索の効率化を行えるようになる。段階的なロールアウトが進められている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/quantum-emotion-expands-security-stack-with-skv-acquisition-and-new-iso-certifications/" target="_blank" rel="noopener noreferrer">Quantum eMotion Expands Security Stack with SKV Acquisition and New ISO Certifications</a></h3>
+    <p class="meta">Quantum Computing Report | 04/21 01:44</p>
+    <p class="summary">量子暗号ソリューションを手掛けるQuantum eMotion社が、SKV社の買収と新たなISO認証の取得を発表し、セキュリティ製品群を大幅に強化した。量子耐性を持つ暗号技術の開発を加速させるとともに、国際的な標準規格への準拠を通じて、金融や政府機関などへの進出を狙う。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/quera-harvard-and-mit-demonstrate-21-physical-to-logical-qubit-ratio/" target="_blank" rel="noopener noreferrer">QuEra, Harvard, and MIT Demonstrate 2:1 Physical-to-Logical Qubit Ratio</a></h3>
+    <p class="meta">Quantum Computing Report | 04/21 01:05</p>
+    <p class="summary">QuEra、ハーバード大学、MITの研究チームが、わずか2個の物理量子ビットから1個の論理量子ビットを生成する2:1の比率での量子エラー訂正に成功した。従来は膨大な物理ビットが必要とされていたが、この成果により、誤り耐性量子コンピュータの実用化に向けた効率が飛躍的に向上することが期待される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/podcast-with-dorit-dor-co-founder-of-qbeat-ventures/" target="_blank" rel="noopener noreferrer">Podcast with Dorit Dor, co-founder of QBeat Ventures</a></h3>
+    <p class="meta">Quantum Computing Report | 04/20 22:52</p>
+    <p class="summary">QBeat Venturesの共同創設者ドリット・ドール氏へのインタビュー。量子技術分野における投資の現状やスタートアップが直面する課題、将来の展望について語っている。チェック・ポイント社での豊富な経験を持つ彼女の視点から、量子エコシステムの成長戦略と市場の成熟に向けた道のりが示唆されている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cdxd88r2wjzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump says US will not lift Hormuz blockade until deal made with Iran</a></h3>
+    <p class="meta">BBC World News | 04/20 21:52</p>
+    <p class="summary">トランプ大統領は、イランとの新たな合意が成立するまでホルムズ海峡の封鎖を解除しない方針を明言した。世界の原油輸送の要所である同海峡の緊張を高める可能性がある強硬姿勢だ。米政府はイランに対し核開発停止を含む厳しい条件を突きつけており、国際社会の懸念が広がっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c1kr19lry18o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">New era as Apple names new boss to replace Tim Cook after 15 years</a></h3>
+    <p class="meta">BBC World News | 04/21 05:57</p>
+    <p class="summary">Appleは、15年間CEOを務めたティム・クック氏の後継者として、ジョン・ターナス氏を任命した。同社にとって新たな時代の幕開けを象徴する人事である。ターナス氏はこれまでハードウェア部門の責任者としてMacやiPhoneの成功を支えてきた人物であり、そのリーダーシップの下での次なる進化が期待される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/clyx4vlqy4vo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Japan loosens arms export rules in break from post-WW2 pacifism</a></h3>
+    <p class="meta">BBC World News | 04/21 08:05</p>
+    <p class="summary">日本政府は武器輸出ルールを大幅に緩和することを決定した。これは戦後の平和主義政策からの大きな転換を意味する。防衛産業の強化や同盟国との協力深化を目的としており、特定の防衛装備品の輸出がこれまで以上に柔軟に認められる。国内外でその影響や憲法との整合性に関する議論を呼んでいる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260421/k10015082681000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（4月21日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 04/21 05:35</p>
+    <p class="summary">ロシアによるウクライナ軍事侵攻に関する4月21日の戦況。各地での戦闘の継続、被害状況、および国際社会の支援の動きについてNHKが伝えている。停戦交渉の行方や人道支援の現状、近隣諸国の反応など、刻一刻と変化する現地の最新情報が随時更新形式でまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260421/k10015104501000.html" target="_blank" rel="noopener noreferrer">高市首相 メキシコ大統領と電話会談 エネルギー協力で一致</a></h3>
+    <p class="meta">NHK国際放送 | 04/21 05:03</p>
+    <p class="summary">高市首相はメキシコの大統領と電話会談を行い、エネルギー分野での協力を強化することで一致した。クリーンエネルギーの開発や重要鉱物の安定供給に向けた連携について話し合われた。両首脳は、経済関係のさらなる深化を目指し、国際社会の課題解決に向けても緊密に協力していくことを確認した。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

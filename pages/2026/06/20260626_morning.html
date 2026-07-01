@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年06月26日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年06月26日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年06月26日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://scrollprize.org/firstscroll" target="_blank" rel="noopener noreferrer">An entire Herculaneum scroll has been read for the first time</a></h3>
+    <p class="meta">Hacker News | 06/26 00:48</p>
+    <p class="summary">ヴェスヴィオ山の噴火で埋没したヘルクラネウムの巻物が、AIとCTスキャン技術を駆使した「ヴェスヴィオ・チャレンジ」により、史上初めて展開せずに解読された。数千の単語を含むテキストが読み取られ、古代ギリシャの哲学的な内容であることが判明。この成果は歴史研究における大きな進展であり、未解読の多くの巻物を解読する道を開いた。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://explorer.oxide.computer/" target="_blank" rel="noopener noreferrer">Oxide computer 3D rack guided tour</a></h3>
+    <p class="meta">Hacker News | 06/23 00:21</p>
+    <p class="summary">Oxide Computer社が提供する、同社のサーバーラック製品の3Dインタラクティブツアー。ブラウザ上でラックの外観から内部コンポーネント、配線構造までを詳細な3Dモデルで確認できる。クラウドの利便性とオンプレミスの制御性を両立させる独自の設計思想が可視化されており、ハードウェアの構成と機能性を深く理解できる内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://newsroom.ibm.com/2026-06-25-ibm-debuts-worlds-first-sub-1-nanometer-chip-technology" target="_blank" rel="noopener noreferrer">IBM debuts sub-1 nanometer chip technology</a></h3>
+    <p class="meta">Hacker News | 06/26 00:33</p>
+    <p class="summary">IBMは世界で初めて1ナノメートル未満のプロセスルールを採用したチップ技術を発表した。この技術革新により、電力効率の大幅な向上と、既存プロセッサを凌駕する性能向上が期待されている。従来の水平型から垂直型トランジスタ（VTFET）への構造転換をさらに進化させたもので、ムーアの法則を維持し、次世代のAIやスーパーコンピューティングの発展に寄与する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/inkeep/open-knowledge" target="_blank" rel="noopener noreferrer">Show HN: OpenKnowledge – open source AI-first alternative to Obsidian/Notion</a></h3>
+    <p class="meta">Hacker News | 06/26 01:04</p>
+    <p class="summary">「OpenKnowledge」は、ObsidianやNotionの代替を目指すオープンソースのAIファーストな知識管理ツールである。Markdownベースのドキュメント管理に加え、AIによる自動要約、質問回答、インテリジェントな検索機能を備えている。ユーザーデータをローカルで管理しながら、AIを活用して効率的な情報整理と知識抽出を可能にする次世代ツールとして注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://siliconopera.com/the-customer-who-almost-killed-slack-stripe-and-airbnb/" target="_blank" rel="noopener noreferrer">The Customer Who Almost Killed Slack, Stripe, and Airbnb</a></h3>
+    <p class="meta">Hacker News | 06/26 05:30</p>
+    <p class="summary">Slack、Stripe、Airbnbといった著名企業が創業初期に直面した危機についての分析。特定の要求が厳しすぎる顧客や、スケールしない過度なカスタマイズ要求に応じようとすることで、サービスの本質や成長が損なわれそうになった事例を紹介している。スタートアップがいかにして「死の顧客」を見極め、プロダクトの核を守るべきかという教訓を提示している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/layerx/articles/6f510abfc3fa72" target="_blank" rel="noopener noreferrer">AI 時代だからこそコードを読もう</a></h3>
+    <p class="meta">Zenn トレンド | 06/25 02:05</p>
+    <p class="summary">AIによるコード生成が普及した現代において、あえてコードを深く読むことの重要性を説いている。AIが生成したコードの正当性を判断し、デバッグや保守を行うためには、人間側の高い読解力が不可欠である。コードを読むことで設計思想や文脈を理解し、単なる実装以上の価値を生み出す力が、エンジニアとしての差別化につながると主張している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/dinii/articles/e12fbacc8e761c" target="_blank" rel="noopener noreferrer">Chromium(V8)のArray.prototype.flatをバルクコピーでさらに約5倍高速化した</a></h3>
+    <p class="meta">Zenn トレンド | 06/25 00:00</p>
+    <p class="summary">V8エンジンにおける`Array.prototype.flat`メソッドの性能を、バルクコピーの活用により約5倍高速化した手法の解説。従来の要素ごとの処理から、メモリアクセスを効率化した一括処理へと改善を図った。JavaScript標準機能のパフォーマンス向上が、ウェブブラウザ全体の高速化にどのように寄与するか、内部実装の詳細とともに詳述されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/25/patronus-ai-lands-50m-to-build-digital-worlds-that-stress-test-ai-agents/" target="_blank" rel="noopener noreferrer">Patronus AI lands $50M to build ‘digital worlds’ that stress-test AI agents</a></h3>
+    <p class="meta">TechCrunch | 06/25 20:19</p>
+    <p class="summary">AIエージェントの安全性をテストする「デジタルワールド」を構築するPatronus AIが、5,000万ドルの資金調達を実施した。同社はハルシネーションや機密漏洩などのリスクを自動検証するプラットフォームを提供している。複雑なシミュレーション環境を通じてAIの堅牢性を高めることで、企業が安心してAIを導入できる環境づくりを目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/25/polymarket-says-hackers-stole-users-funds/" target="_blank" rel="noopener noreferrer">Polymarket says hackers stole users’ funds</a></h3>
+    <p class="meta">TechCrunch | 06/25 19:58</p>
+    <p class="summary">予測市場プラットフォームのPolymarketが、ハッキングによりユーザーの資金が盗まれたことを公表した。攻撃者は特定の脆弱性を突き、複数のウォレットから資産を不正に送金した。同社は被害を受けたユーザーへの補償を検討するとともに、セキュリティ体制の強化を急いでいる。暗号資産市場におけるプラットフォームの信頼性に関わる重大な事案となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/06/25/xbox-follows-apple-with-price-increases/" target="_blank" rel="noopener noreferrer">Xbox follows Apple with price increases</a></h3>
+    <p class="meta">TechCrunch | 06/25 19:39</p>
+    <p class="summary">Appleの価格改定に続く形で、MicrosoftのXboxも一部ハードウェアやサブスクリプションサービスの価格引き上げを発表した。インフレや為替変動、開発コストの上昇を理由に挙げている。今回の改定は定額制サービス「Game Pass」を含む主要市場を対象としており、ゲーム業界全体でのコスト転嫁の流れを象徴する動きとなっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/qblox-finalizes-crucial-u-s-national-laboratory-licensing-agreement-and-expands-enterprise-high-performance-computing-footprint/" target="_blank" rel="noopener noreferrer">Qblox Finalizes Crucial U.S. National Laboratory Licensing Agreement and Expands Enterprise High-Performance Computing Footprint</a></h3>
+    <p class="meta">Quantum Computing Report | 06/25 18:19</p>
+    <p class="summary">量子制御スタックを開発するQblox社が、米国国立研究所とのライセンス契約を締結し、ハイパフォーマンスコンピューティング（HPC）分野での活動を拡大した。この合意により、同社の精密な量子制御技術が最先端の科学研究に活用されることが確実となった。量子コンピュータの実用化に向けたインフラ構築における同社の地位を強化する重要な一歩となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/wisekey-and-sealsq-establish-quantisimo-corp-and-execute-nasdaq-spac-listing-intent-with-gigcapital8/" target="_blank" rel="noopener noreferrer">WISeKey and SEALSQ Establish Quantisimo Corp. and Execute Nasdaq SPAC Listing Intent with GigCapital8</a></h3>
+    <p class="meta">Quantum Computing Report | 06/25 13:22</p>
+    <p class="summary">WISeKeyとSEALSQは、新たにQuantisimo Corp.を設立し、SPAC上場を目指すと発表した。新会社は量子耐性暗号やサイバーセキュリティ、半導体技術に注力する。この戦略的な動きにより、量子コンピューティング時代の到来に備えたセキュリティインフラの強化と、市場での迅速な資本調達を加速させることが狙いである。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/aqsolotl-and-quantrolox-partner-to-integrate-chronos-q-hardware-with-quantum-edge-software-layers/" target="_blank" rel="noopener noreferrer">AQSolotl and QuantrolOx Partner to Integrate Chronos-Q Hardware with Quantum EDGE Software Layers</a></h3>
+    <p class="meta">Quantum Computing Report | 06/25 13:08</p>
+    <p class="summary">量子ハードウェアメーカーのAQSolotlとソフトウェア開発のQuantrolOxが提携し、AQSolotlの「Chronos-Q」ハードウェアにQuantrolOxの「Quantum EDGE」自動制御ソフトを統合する。この連携により、量子プロセッサのキャリブレーション時間を大幅に短縮し、計算のスケーラビリティを向上させる。安定した量子環境の実現を目指す取り組みである。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c3vynpw7rk4o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Earthquake is devastating blow to Venezuela at time of uncertainty</a></h3>
+    <p class="meta">BBC World News | 06/25 13:09</p>
+    <p class="summary">ベネズエラを襲った地震は、政治的・経済的な不確実性が高まる同国にとって甚大な打撃となった。深刻な経済危機や電力不足に直面する中で発生したこの災害は、救助活動やインフラ復旧を極めて困難にしている。国民生活が極限状態にある中、今回の地震は人道危機をさらに深刻化させ、現政権にとってさらなる課題を突きつける形となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/videos/c78y1e3606vo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">People flee as building collapses on Caracas outskirts</a></h3>
+    <p class="meta">BBC World News | 06/25 12:08</p>
+    <p class="summary">ベネズエラの首都カラカス近郊で建物が崩壊し、住民が避難を余儀なくされている様子を伝えるニュース。老朽化や地震の影響、メンテナンス不足が原因とみられ、救助隊による捜索活動が続けられている。避難した人々は住居を失い、政府への支援を訴えている。混乱が続く現地での切迫した状況と、市民の不安が浮き彫りになっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cwy0pdq89zno?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">France warns even young people&#39;s health at risk as Europe&#39;s heatwave shifts east</a></h3>
+    <p class="meta">BBC World News | 06/25 18:12</p>
+    <p class="summary">ヨーロッパを襲う熱波が東へ移動する中、フランス当局は若年層であっても健康へのリスクがあるとして警告を発した。これまでは高齢者が主な注意対象だったが、記録的な気温上昇により熱中症のリスクが全世代に広がっている。冷却スポットの設置や屋外活動の自粛を呼びかけるなど、気候変動による極端な気象への対応が急務となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260626/k10015160631000.html" target="_blank" rel="noopener noreferrer">ホルムズ海峡めぐり「通航料など拒否」 米と湾岸諸国が声明</a></h3>
+    <p class="meta">NHK国際放送 | 06/25 20:39</p>
+    <p class="summary">アメリカと湾岸諸国は共同声明を出し、ホルムズ海峡を航行する船舶に対して、特定の勢力が不当な通航料の支払いや国際法に反する制限を求める動きを拒否する姿勢を鮮明にした。声明では、エネルギー輸送の要衝である同海峡の自由な航行を確保する重要性を強調し、緊張を煽るいかなる行為に対しても結束して対応することを求めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260626/k10015160451000.html" target="_blank" rel="noopener noreferrer">天皇皇后両陛下 オランダとベルギー公式訪問終え帰国の途に</a></h3>
+    <p class="meta">NHK国際放送 | 06/25 20:14</p>
+    <p class="summary">オランダとベルギーを公式訪問されていた天皇皇后両陛下は、すべての行事を終えて帰国の途につかれた。滞在中、各国の王室との親善を深められたほか、文化施設への訪問や現地日本人との懇談を通じて国際親善に尽力された。両陛下の訪問は温かく迎えられ、日本と両国との友好関係をさらに強固にする機会となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260626/k10015160551000.html" target="_blank" rel="noopener noreferrer">NYダウ 一時800ドル超上昇 取引時間中の最高値更新 AI期待で</a></h3>
+    <p class="meta">NHK国際放送 | 06/25 16:35</p>
+    <p class="summary">ニューヨーク株式市場でダウ平均株価が一時800ドル超上昇し、取引時間中の最高値を更新した。背景にはAI関連技術の成長に対する強い期待があり、IT関連株を中心に買いが集まった。アメリカ経済の底堅さへの信頼感も相まって投資家心理が強気になったことが要因とみられ、ハイテク銘柄主導の市場の熱狂が続いている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

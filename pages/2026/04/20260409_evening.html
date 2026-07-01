@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月09日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月09日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月09日 18:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://obdev.at/products/littlesnitch-linux/index.html" target="_blank" rel="noopener noreferrer">LittleSnitch for Linux</a></h3>
+    <p class="meta">Hacker News | 04/09 09:26</p>
+    <p class="summary">macOSで人気のファイアウォール「Little Snitch」がLinux向けに登場。アプリケーションごとのネットワーク通信を可視化し、接続の許可・拒否を制御できる。グラフィカルなUIで通信状況をリアルタイムに把握でき、プライバシー保護やセキュリティ強化に役立つ。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://astral.sh/blog/open-source-security-at-astral" target="_blank" rel="noopener noreferrer">Open Source Security at Astral</a></h3>
+    <p class="meta">Hacker News | 04/09 13:11</p>
+    <p class="summary">Pythonの高速化ツール「uv」や「Ruff」を開発するAstral社が、オープンソースプロジェクトにおけるセキュリティへの取り組みを公開。サプライチェーン攻撃への対策、自動テスト、脆弱性報告プロセス、外部監査など、開発ライフサイクル全体を通じた安全性確保の方針を詳述している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://ravensblight.com/papertoys.html" target="_blank" rel="noopener noreferrer">Haunted Paper Toys</a></h3>
+    <p class="meta">Hacker News | 04/06 19:09</p>
+    <p class="summary">レイ・オバノン氏による不気味でゴシックなペーパークラフトのコレクションサイト。棺桶、幽霊屋敷、怪物などの型紙を無料でダウンロードできる。ホラー愛好家向けに、ユニークで細部までこだわったデザインが多数提供されており、自宅で印刷して組み立てて楽しむことができる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://theamericanscholar.org/the-importance-of-being-idle/" target="_blank" rel="noopener noreferrer">The Importance of Being Idle</a></h3>
+    <p class="meta">Hacker News | 04/07 05:33</p>
+    <p class="summary">常に生産的であることを求められる現代において、何もしない時間（アイドリング）の重要性を説くエッセイ。歴史的背景や心理的メリットを交え、余暇が単なる休息ではなく、創造性や精神的な豊かさを育むために不可欠であることを論じている。効率至上主義に対する警鐘を鳴らす内容。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/babarot/articles/github-as-code-with-gh-infra" target="_blank" rel="noopener noreferrer">Terraformを使わずにGitHubをコードで管理する</a></h3>
+    <p class="meta">Zenn トレンド | 04/08 11:51</p>
+    <p class="summary">GitHubの設定をコードで管理する際、Terraformを使用せずに実現する方法を紹介。独自ツール「gh-infra」を用いることで、Terraformの冗長さを排除し、開発者のエクスペリエンスを向上させる。シンプルな構成でリポジトリやチーム管理を行う手法を解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/nix/articles/74ccf846643edb" target="_blank" rel="noopener noreferrer">Amazon S3 Files vs Amazon FSx for Lustre：性能比較をしてみた</a></h3>
+    <p class="meta">Zenn トレンド | 04/08 09:48</p>
+    <p class="summary">機械学習などの高負荷環境において、Amazon S3（Mountpoint for S3を使用）とAmazon FSx for Lustreの性能を比較検証。スループットやレイテンシの観点から、コスト効率とパフォーマンスのトレードオフを明らかにし、用途に応じた最適なストレージ選択の基準を提示する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/dely_jp/articles/ef573ae39b9162" target="_blank" rel="noopener noreferrer">仕様書は&#34;使い捨て&#34;にした方がうまくいった——仕様駆動開発3ヶ月の転換</a></h3>
+    <p class="meta">Zenn トレンド | 04/08 08:38</p>
+    <p class="summary">仕様駆動開発の導入から3ヶ月を経て、仕様書をメンテナンスし続けるのではなく「実装後に使い捨てる」方針へ転換した体験談。常に最新状態を保つコストを削減し、開発スピードを向上させた経緯を詳述。ドキュメントの役割を再定義し、実用性を重視したプロセスを提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/wata-sho/items/e38b3523685367108b68?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【35歳未経験でも理解できた】SPAへの進化</a></h3>
+    <p class="meta">Qiita トレンド | 04/09 01:24</p>
+    <p class="summary">従来の複数ページ構成（MPA）からシングルページアプリケーション（SPA）へと進化してきた背景を、初心者向けに解説。JavaScriptの役割や、なぜSPAがユーザー体験を向上させるのかを分かりやすく説明。非エンジニアでも理解できるよう、技術的な概念を噛み砕いて記述している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/08/wireguard-vpn-developer-cant-ship-software-updates-after-microsoft-locks-account/" target="_blank" rel="noopener noreferrer">WireGuard VPN developer can’t ship software updates after Microsoft locks account</a></h3>
+    <p class="meta">TechCrunch | 04/08 21:50</p>
+    <p class="summary">WireGuard VPNの開発者ジェイソン・ドネンフェルド氏のMicrosoftアカウントがロックされ、Windows向けドライバーの署名ができなくなる事態が発生。これによりセキュリティアップデートの配布が滞っており、開発者はOSのセキュリティモデルにおける中央集権的な制御の問題を指摘している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/08/avride-self-driving-car-austin-kills-duck-mueller/" target="_blank" rel="noopener noreferrer">A self-driving car in Texas hit and killed a mother duck, sparking neighborhood outrage</a></h3>
+    <p class="meta">TechCrunch | 04/08 21:19</p>
+    <p class="summary">テキサス州オースティンでAvride社の自動運転車が親アヒルを轢いて死なせる事故が発生し、近隣住民の怒りを買っている。住宅街での自動運転車の安全性や障害物検知能力、事故後の対応に疑問が投げかけられており、地域社会での技術の受け入れに影響を与えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/08/poke-makes-ai-agents-as-easy-as-sending-a-text/" target="_blank" rel="noopener noreferrer">Poke makes using AI agents as easy as sending a text</a></h3>
+    <p class="meta">TechCrunch | 04/08 21:05</p>
+    <p class="summary">「Poke」は、テキストメッセージを送る感覚でAIエージェントを操作できる新しいプラットフォーム。複雑な設定なしに日常的なタスクの自動化や情報検索を行える。技術知識がなくてもAIの恩恵を享受できることを目指しており、直感的なインターフェースを通じて生産性を高めるツールとなっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c05d8j9r5ejo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump criticises Nato as alliance chief describes meeting as &#39;very frank&#39;</a></h3>
+    <p class="meta">BBC World News | 04/09 01:59</p>
+    <p class="summary">トランプ次期大統領がNATOのルッテ事務総長と会談し、加盟国の防衛費負担について改めて批判を展開した。ルッテ氏は会談を「非常に率直なものだった」と評し、ウクライナ支援や同盟の将来について議論したことを公表。トランプ氏の姿勢がNATOの結束に与える影響が注視されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260409/k10015095751000.html" target="_blank" rel="noopener noreferrer">ホルムズ海峡 停戦合意後に通過の船舶３隻のみ 位置情報の分析</a></h3>
+    <p class="meta">NHK国際放送 | 04/09 08:29</p>
+    <p class="summary">イスラエルとレバノンの停戦合意後、ホルムズ海峡を通過した船舶がわずか3隻にとどまっていることが船舶位置情報の分析で判明。合意後も地域の緊張が完全には緩和されておらず、海運会社が依然として慎重な姿勢を崩していない状況が浮き彫りになり、物流正常化には時間がかかる見通し。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260409/k10015095711000.html" target="_blank" rel="noopener noreferrer">パレスチナ ヨルダン川西岸 “ミサイル破片落下”で被害相次ぐ</a></h3>
+    <p class="meta">NHK国際放送 | 04/09 08:05</p>
+    <p class="summary">パレスチナのヨルダン川西岸地区で、ミサイルの破片が落下し、住宅や車両に被害が相次いでいる。周辺地域での戦闘に伴う迎撃ミサイルや攻撃の残骸とみられ、住民の安全への懸念が高まっている。戦闘の激化により、直接の標的ではない地域でも市民生活に甚大なリスクが及んでいる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260409/k10015095271000.html" target="_blank" rel="noopener noreferrer">レバノンで大規模攻撃 停戦の合意内容めぐり認識の相違</a></h3>
+    <p class="meta">NHK国際放送 | 04/09 05:28</p>
+    <p class="summary">レバノン各地で大規模な攻撃が発生し、死傷者が増加。イスラエルとヒズボラの間で停戦合意の内容、特に「自衛権の行使」や「監視体制」をめぐる認識の相違が激化の背景にある。合意の解釈の違いが軍事行動の正当化に使われており、停戦の実現そのものが危ぶまれている状況。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

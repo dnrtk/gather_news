@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年04月13日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年04月13日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年04月13日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://bcantrill.dtrace.org/2026/04/12/the-peril-of-laziness-lost/" target="_blank" rel="noopener noreferrer">The peril of laziness lost</a></h3>
+    <p class="meta">Hacker News | 04/13 04:44</p>
+    <p class="summary">現代のソフトウェア開発において、「怠惰（laziness）」が持つ本来の価値が失われつつあることへの警鐘。効率化や最適化を追い求めるあまり、人間が本来持つ創意工夫の余地や、問題解決における思索のプロセスが損なわれていると指摘し、知的な怠惰の重要性を再考する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://essays.johnloeber.com/p/4-bring-back-idiomatic-design" target="_blank" rel="noopener noreferrer">Bring Back Idiomatic Design</a></h3>
+    <p class="meta">Hacker News | 04/12 21:21</p>
+    <p class="summary">ソフトウェア設計における「慣用的な設計（Idiomatic Design）」の重要性を説く論考。技術の過度な抽象化や複雑化が進む中で、そのプラットフォームや言語に最適化された直感的で馴染みのある設計を取り戻すことが、保守性やユーザー体験の向上につながると主張している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.lesswrong.com/posts/jTGbKKGqs5EdyYoRc/most-people-can-t-juggle-one-ball" target="_blank" rel="noopener noreferrer">Most people can&#39;t juggle one ball</a></h3>
+    <p class="meta">Hacker News | 04/09 21:35</p>
+    <p class="summary">一つの物事に集中することが、いかに困難であるかを論じた記事。多くの人がマルチタスクをこなせると勘違いしているが、実際には単純な一つ一つの作業すら集中してこなすことは難しい。深い思考と生産性向上のためには、焦点を絞る訓練が不可欠であると説く。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/halfwhey/claudraband" target="_blank" rel="noopener noreferrer">Show HN: Claudraband – Claude Code for the Power User</a></h3>
+    <p class="meta">Hacker News | 04/13 01:55</p>
+    <p class="summary">パワーユーザー向けに設計されたClaude Codeの拡張ツール「Claudraband」の紹介。開発者がClaudeとより効率的に対話し、コード生成やリファクタリングを加速させるための便利な機能や操作性について解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blinry.org/diy-soft-drinks/" target="_blank" rel="noopener noreferrer">DIY Soft Drinks</a></h3>
+    <p class="meta">Hacker News | 04/13 01:38</p>
+    <p class="summary">身近な材料を使って独自のソフトドリンクを手作りする方法について解説。市販の飲料の成分を見直し、自分好みのフレーバーや甘さを調整する楽しさと、具体的なレシピや実験的なアプローチを通じた飲み物作りの魅力を紹介している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/kurenaif/articles/d316c2ffa784f8" target="_blank" rel="noopener noreferrer">【CTF】cryptoの始め方（入門）</a></h3>
+    <p class="meta">Zenn トレンド | 04/11 11:43</p>
+    <p class="summary">CTF（Capture The Flag）における暗号分野（Crypto）の初心者向け入門ガイド。基本的な暗号技術の仕組みから、CTFで頻出する手法、学習に役立つリソースまでを網羅し、初心者がどのようにして暗号問題にアプローチし、解いていくべきかを解説する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/12/apple-reportedly-testing-four-designs-for-upcoming-smart-glasses/" target="_blank" rel="noopener noreferrer">Apple reportedly testing four designs for upcoming smart glasses</a></h3>
+    <p class="meta">TechCrunch | 04/12 19:58</p>
+    <p class="summary">Appleがスマートグラス市場への参入に向け、4種類の異なるデザインを検証中であるという報道。同社はウェアラブルデバイスのさらなる展開を目指しており、技術的な実現可能性とユーザーの快適性のバランスを見極めようとしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/12/x-says-its-reducing-payments-to-clickbait-accounts/" target="_blank" rel="noopener noreferrer">X says it’s reducing payments to clickbait accounts</a></h3>
+    <p class="meta">TechCrunch | 04/12 17:02</p>
+    <p class="summary">SNSプラットフォーム「X」が、広告収益の分配においてクリックベイト（閲覧誘発型）アカウントへの支払いを削減する方針を発表。質の高いコンテンツを優先し、ユーザー体験を損なう扇情的な投稿やスパム的なリンク誘導を抑制する狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/04/12/techcrunch-mobility-who-is-poaching-all-the-self-driving-vehicle-talent/" target="_blank" rel="noopener noreferrer">TechCrunch Mobility: Who is poaching all the self-driving vehicle talent?</a></h3>
+    <p class="meta">TechCrunch | 04/12 16:06</p>
+    <p class="summary">自動運転技術業界における深刻な人材獲得競争の現状を分析。大手企業やスタートアップが限られた専門スキルを持つエンジニアを確保するために奔走しており、この人材流出が業界全体の技術開発の進展や市場環境にどのような影響を与えているかを考察する。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/c8dl5mly2rzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump&#39;s blockade threat raises risks and leaves predicaments unchanged</a></h3>
+    <p class="meta">BBC World News | 04/12 18:48</p>
+    <p class="summary">トランプ氏が提唱する封鎖措置が招く国際的なリスクと不確実性についての解説。強硬姿勢は特定の交渉において威力を発揮する可能性がある一方、地政学的な緊張を高めるだけで抜本的な問題解決には至らない可能性が高いと分析されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cgk021z3ejpo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Civilians feared killed after reports of air strike on Nigerian market</a></h3>
+    <p class="meta">BBC World News | 04/12 18:11</p>
+    <p class="summary">ナイジェリアの市場に対して空爆が行われたとの報告があり、多数の民間人が死亡したと見られている。現場の状況は混乱しており、人道的な影響と攻撃の背景に関する調査が急がれている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260412/k10015097851000.html" target="_blank" rel="noopener noreferrer">トランプ大統領「ホルムズ海峡で封鎖措置」 イラン側はけん制</a></h3>
+    <p class="meta">NHK国際放送 | 04/12 21:00</p>
+    <p class="summary">トランプ氏がホルムズ海峡の封鎖措置に言及し、波紋を広げている。これに対しイラン側は即座に強くけん制しており、中東地域の緊張感が高まっている。石油供給の要衝における緊張は、世界経済への影響も懸念される事態となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260413/k10015097811000.html" target="_blank" rel="noopener noreferrer">ウクライナ キリスト教復活祭で一時停戦期間も 双方が攻撃主張</a></h3>
+    <p class="meta">NHK国際放送 | 04/12 20:58</p>
+    <p class="summary">ウクライナでキリスト教の復活祭を控え、一時的な停戦期間が設定されたものの、依然として双方による攻撃の主張が続いている。祝祭の期間中であっても軍事的な対立は沈静化しておらず、情勢の収束には程遠い状況にある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260412/k10015097651000.html" target="_blank" rel="noopener noreferrer">“食料品の消費税をゼロする減税”で価格はどうなる？</a></h3>
+    <p class="meta">NHK国際放送 | 04/12 12:51</p>
+    <p class="summary">食料品の消費税をゼロにする減税措置が実施された場合、消費者の購入価格や家計にどのような影響があるかを検証。単なる価格低下だけでなく、流通コストや事業者の価格転嫁の動きなど、複雑な経済メカニズムによって最終的な価格が決まる仕組みを解説する。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>

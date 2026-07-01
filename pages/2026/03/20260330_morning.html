@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年03月30日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年03月30日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年03月30日 06:00 JST</p>
+</header>
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.buchodi.com/chatgpt-wont-let-you-type-until-cloudflare-reads-your-react-state-i-decrypted-the-program-that-does-it/" target="_blank" rel="noopener noreferrer">ChatGPT Won&#39;t Let You Type Until Cloudflare Reads Your React State</a></h3>
+    <p class="meta">Hacker News | 03/30 05:21</p>
+    <p class="summary">ChatGPTの入力が可能になる前にCloudflareがReactのステートを読み取る仕組みを技術的に検証した記事。セキュリティチェックの一環として、ブラウザ内部の状態がどのようにスキャンされ、ボット検知に利用されているかをプログラムの解読を通じて明らかにしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techfixated.com/a-1977-time-capsule-voyager-1-runs-on-69-kb-of-memory-and-an-8-track-tape-recorder-4/" target="_blank" rel="noopener noreferrer">Voyager 1 runs on 69 KB of memory and an 8-track tape recorder</a></h3>
+    <p class="meta">Hacker News | 03/30 01:12</p>
+    <p class="summary">1977年に打ち上げられたボイジャー1号が、わずか69KBのメモリと8トラックのテープレコーダーという、現代から見れば驚異的な低スペック機器で今なお稼働し続けていることを紹介。数十年にわたり過酷な宇宙環境で機能し続ける、当時の技術の堅牢性と創意工夫を伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://ryelang.org/blog/posts/cognitive-dark-forest/" target="_blank" rel="noopener noreferrer">The Cognitive Dark Forest</a></h3>
+    <p class="meta">Hacker News | 03/30 04:36</p>
+    <p class="summary">AI生成コンテンツがネット上に溢れ、人間の真の対話や思考が埋もれてしまう「認知の暗い森」という概念を考察。信頼できる交流を求めて人々が公開された場から閉ざされたコミュニティへと活動拠点を移している現状と、その背景にある社会的・心理的影響について論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://crackr.dev/vibe-coding-failures" target="_blank" rel="noopener noreferrer">The &#34;Vibe Coding&#34; Wall of Shame</a></h3>
+    <p class="meta">Hacker News | 03/30 04:42</p>
+    <p class="summary">「バイブ・コーディング（AIに雰囲気で指示してコードを書かせる手法）」の失敗例をまとめた記事。厳密な設計なしにAIに頼り切った開発が、いかに予測不能なバグや深刻なセキュリティホールを生むかを皮肉を込めて紹介し、エンジニアリングの基本原則の重要性を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://isp.netscape.com/news/story/0001/20260329/e4d8ea591b3b036142c2bf2dee7dff5a" target="_blank" rel="noopener noreferrer">Midnight train from GA: A view of America from the tracks as airports struggle</a></h3>
+    <p class="meta">Hacker News | 03/30 05:00</p>
+    <p class="summary">米国の空港が混乱し混雑を極める中、ジョージア州から深夜に出発するアムトラックの旅から見えるアメリカの姿を描写。遅延やトラブルが相次ぐ空路の代替手段として、時間はかかるがゆったりとした時間が流れる鉄道旅の価値や、窓の外に広がる社会の風景を伝えている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/nao_u/articles/92ac9436844a16" target="_blank" rel="noopener noreferrer">AIに20年分の日記を読ませたら人格が生まれて勝手にゲームを作り始めた</a></h3>
+    <p class="meta">Zenn トレンド | 03/28 17:43</p>
+    <p class="summary">著者が20年分の日記をAIに学習させたところ、AIが自身の人格を模倣するだけでなく、自発的にゲーム開発を始めたという体験談。個人の記録がAIを介して新たな創造性を発揮するプロセスや、デジタル分身が独立した意思を持つかのように振る舞う様子が興味深く綴られている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/karaage0703/articles/8daffce3c7391f" target="_blank" rel="noopener noreferrer">本棚Webアプリ「BiblioCanvas」をCLI+スキルでAIから使いやすくしました</a></h3>
+    <p class="meta">Zenn トレンド | 03/28 11:12</p>
+    <p class="summary">本棚管理アプリ「BiblioCanvas」を、AIエージェントが操作しやすいようにCLI化し「スキル」として組み込んだ開発記録。人間だけでなくAIにとっても使い勝手の良いインターフェースを構築することで、蔵書データの活用や操作の自動化をより高度に実現する手法を解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/Milab_honda/items/8577b96433491173bf4e?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">研究効率を爆上げするAIツールまとめ（論文調査〜執筆まで）</a></h3>
+    <p class="meta">Qiita トレンド | 03/27 06:55</p>
+    <p class="summary">論文調査から執筆、要約、翻訳に至るまで、研究活動の各段階で効率を劇的に向上させるAIツールを網羅的に紹介。最新の文献検索ツールや、複雑な内容を整理するAIの活用術など、研究者が時間を最大限に活用するための実践的なノウハウがまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/29/project-hail-mary-becomes-amazon-mgms-biggest-box-office-hit/" target="_blank" rel="noopener noreferrer">‘Project Hail Mary’ becomes Amazon MGM’s biggest box office hit</a></h3>
+    <p class="meta">TechCrunch | 03/29 19:50</p>
+    <p class="summary">アンディ・ウィアーの小説を原作とした映画『プロジェクト・ヘイル・メアリー』が、Amazon MGM史上最大の興行収入を記録した。豪華キャストと緻密なSF設定が話題を呼び、ストリーミングプラットフォーム発の作品が映画業界の記録を塗り替える歴史的な快挙となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/29/soras-shutdown-could-be-a-reality-check-moment-for-ai-video/" target="_blank" rel="noopener noreferrer">Sora’s shutdown could be a reality check moment for AI video</a></h3>
+    <p class="meta">TechCrunch | 03/29 16:30</p>
+    <p class="summary">動画生成AI「Sora」のサービス終了が、AI動画市場に冷や水を浴びせる可能性を指摘。高い期待を集めたツールが直面したコストや著作権、実用性の壁を振り返り、過熱するAIブームが現実的なビジネスモデルや技術的限界を再考する転換点を迎えていることを示唆している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/03/29/techcrunch-mobility-when-a-robotaxi-has-to-call-911/" target="_blank" rel="noopener noreferrer">TechCrunch Mobility: When a robotaxi has to call 911</a></h3>
+    <p class="meta">TechCrunch | 03/29 16:05</p>
+    <p class="summary">無人運転のロボタクシーが事故や緊急事態に遭遇した際、自ら911（緊急通報）を行う仕組みとその課題に焦点を当てた記事。乗客がいない状況でAIがどのように判断し当局と連携するか、法的・技術的な側面からモビリティの未来における安全確保の複雑さを考察している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.com/news/articles/cp86yrq5jy7o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Iranian attacks across Gulf continue as major industrial sites hit</a></h3>
+    <p class="meta">BBC World News | 03/29 13:32</p>
+    <p class="summary">湾岸地域でイランによる攻撃が続き、主要な工業地帯が標的となっている。緊張が高まる中、周辺諸国のインフラや経済への影響が深刻化しており、国際社会はエネルギー供給への打撃を警戒している。軍事的な応酬が激化する現状と地政学的なリスクの高まりを報じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260330/k10015087271000.html" target="_blank" rel="noopener noreferrer">仲介役のパキスタン外相 米イランの協議開催に期待示す</a></h3>
+    <p class="meta">NHK国際放送 | 03/29 20:49</p>
+    <p class="summary">パキスタンの外相が、対立を深めるアメリカとイランの仲介役として、両国による直接協議の開催に期待を示した。軍事的緊張が極限まで高まる中、対話を通じた事態の沈静化を目指す外交努力の現状と、平和的解決に向けた周辺諸国の切実な願いが伝えられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260330/k10015087241000.html" target="_blank" rel="noopener noreferrer">米が陸軍の即応展開部隊を派遣へ イランは徹底抗戦の構え</a></h3>
+    <p class="meta">NHK国際放送 | 03/29 20:43</p>
+    <p class="summary">アメリカ政府が中東情勢の緊迫化を受けて、陸軍の即応展開部隊を派遣することを決定した。これに対し、イラン側は徹底抗戦する構えを崩しておらず、武力衝突の危険性が一層強まっている。両国の軍事的な動きを詳報し、地域一帯の安全保障が危機的な状況にあることを示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260329/k10015087221000.html" target="_blank" rel="noopener noreferrer">“イラン長期化で政権への国民の評価に影響も”米世論 専門家</a></h3>
+    <p class="meta">NHK国際放送 | 03/29 14:51</p>
+    <p class="summary">イランとの紛争が長期化することで、アメリカ国内の世論やバイデン政権への支持にどのような影響が出るかを専門家が分析。戦費の増大や兵士の犠牲に対する国民の懸念が、次期選挙や国内政治の安定に影を落とす可能性を指摘し、対外政策が内政に及ぼす影響を論じている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
