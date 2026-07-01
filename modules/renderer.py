@@ -25,11 +25,15 @@ def render_digest(
     for a in articles:
         tier_groups.setdefault(a.tier, []).append(a)
 
+    audio_path = output_path.with_suffix(".mp3")
+    audio_filename = audio_path.name if audio_path.exists() else None
+
     html = tmpl.render(
         title=f"{now.strftime('%Y年%m月%d日')} {slot_label} ニュースダイジェスト",
         generated_at=now.strftime("%Y年%m月%d日 %H:%M JST"),
         slot_label=slot_label,
         tier_groups=tier_groups,
+        audio_filename=audio_filename,
         nav_root="../../../",
     )
     output_path.write_text(html, encoding="utf-8")

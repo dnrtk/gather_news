@@ -8,6 +8,7 @@ modules/
 ├── collector.py          # RSS/HN API からの記事収集
 ├── summarizer.py         # Gemini API による要約・翻訳
 ├── store.py              # seen_urls.json / digest JSON の読み書き
+├── podcast.py            # 台本生成 → Gemini TTS 合成 → mp3変換 → 古い音声削除
 ├── renderer.py           # Jinja2 による HTML 生成
 ├── index_builder.py      # index.html の再構築
 └── publisher.py          # git commit & push
@@ -62,10 +63,14 @@ def main() -> None
     """引数を解析し run_daily / run_weekly へ分岐する。"""
 
 def run_daily(slot: str, config: dict) -> None
-    """morning / evening の通常フローを実行する。"""
+    """morning / evening の通常フローを実行する。
+    要約後・HTML生成前に、podcast.enabled なら generate_podcast を呼び出す。"""
 
 def run_weekly(config: dict) -> None
     """weekly 総集編の生成フローを実行する。"""
+
+def run_podcast(slot: str, config: dict) -> None
+    """podcast サブコマンド用。既存の日別JSONから音声のみを単独再生成する。"""
 ```
 
 ### modules/collector.py
@@ -126,12 +131,54 @@ def _parse_summaries(response: str, articles: list) -> list
     パース失敗時は元の articles をそのまま返す（フォールバック済みとして扱う）。"""
 ```
 
+### modules/podcast.py
+
+```python
+def generate_podcast(
+    articles: list[Article],
+    slot: str,
+    now: datetime,
+    pages_dir: Path,
+    api_key: str,
+    podcast_cfg: dict,
+    model_cfg: dict,
+) -> Path | None
+    """要約済み記事から2話者のポッドキャスト音声(mp3)を生成し、そのパスを返す。
+    台本生成・TTS・mp3変換のいずれかで失敗した場合は警告ログを出して None を返す
+    （呼び出し側の daily フローは継続する）。生成後に古い音声を cleanup する。"""
+
+def _build_script(
+    articles: list[Article], speakers: list[dict], api_key: str, primary: str, fallback: str
+) -> list[dict] | None
+    """要約から2話者の対話台本 [{"speaker": str, "text": str}, ...] を生成して返す。
+    LLM 呼び出しは summarizer と同じ fallback 方式。パース失敗時は None。"""
+
+def _synthesize(
+    script: list[dict], speakers: list[dict], api_key: str, tts_model: str
+) -> bytes | None
+    """台本を Gemini TTS のマルチスピーカーで合成し、PCM(24kHz/16bit/mono)バイト列を返す。
+    speakers の name→voice をマルチスピーカー設定にマッピングする。失敗時は None。"""
+
+def _pcm_to_mp3(pcm: bytes, out_path: Path) -> None
+    """PCM バイト列を wave で WAV ファイルに書き出し、subprocess で ffmpeg を呼び出して
+    mp3 に変換する。変換後、中間生成物の WAV ファイルは削除する。"""
+
+def _save_script(script: list[dict], slot: str, now: datetime, pages_dir: Path) -> Path
+    """対話台本を pages/YYYY/MM/YYYYMMDD_{slot}_script.json に保存する。"""
+
+def cleanup_old_audio(pages_dir: Path, retention_days: int, now: datetime) -> int
+    """retention_days を超えた *.mp3 / *_script.json を削除し、削除件数を返す。
+    ファイル名の日付(YYYYMMDD)を基準に判定する。"""
+```
+
 ### modules/renderer.py
 
 ```python
 def render_digest(articles: list[Article], slot: str, now: datetime, pages_dir: Path) -> Path
     """digest.html.j2 を使って日別ダイジェスト HTML を生成し、そのパスを返す。
-    出力先: pages/YYYY/MM/YYYYMMDD_{slot}.html（ディレクトリは自動作成）。"""
+    出力先: pages/YYYY/MM/YYYYMMDD_{slot}.html（ディレクトリは自動作成）。
+    同名の YYYYMMDD_{slot}.mp3 が存在する場合、テンプレートに音声ファイル名を渡し
+    <audio controls> プレイヤーを冒頭に埋め込む（存在しなければ非表示）。"""
 
 def render_weekly(articles: list[WeeklyArticle], week_dates: list[date], now: datetime, pages_dir: Path) -> Path
     """weekly.html.j2 を使って週次総集編 HTML を生成し、そのパスを返す。
@@ -186,11 +233,18 @@ main()
        ├─ summarize(articles, ...)          ← 0件なら skip
        │    → list[Article]  ★ summary 埋まり
        │
-       ├─ render_digest(articles, slot, now, pages_dir)
-       │    → pages/YYYY/MM/YYYYMMDD_{slot}.html
-       │
        ├─ save_digest_json(articles, slot, now, pages_dir)
        │    → pages/YYYY/MM/YYYYMMDD_{slot}.json
+       │
+       ├─ generate_podcast(articles, ...)   ← podcast.enabled のみ / 失敗しても継続
+       │    ├─ _build_script()   → 対話台本 [{"speaker","text"}]
+       │    ├─ _save_script()    → pages/YYYY/MM/YYYYMMDD_{slot}_script.json
+       │    ├─ _synthesize()     → PCM(24kHz/16bit/mono)
+       │    ├─ _pcm_to_mp3()     → pages/YYYY/MM/YYYYMMDD_{slot}.mp3
+       │    └─ cleanup_old_audio() → 保持期間切れの mp3 / script を削除
+       │
+       ├─ render_digest(articles, slot, now, pages_dir)   ← mp3 があれば <audio> 埋め込み
+       │    → pages/YYYY/MM/YYYYMMDD_{slot}.html
        │
        ├─ update_index(pages_dir, index_path)
        │    → index.html 上書き
@@ -298,6 +352,115 @@ def _parse_summaries(response: str, articles: list[Article]) -> list[Article]:
     return articles
 ```
 
+### 5.5 ポッドキャスト台本の TTS 入力構築
+
+台本JSON（話者ラベル付き発話リスト）を、Gemini TTS が話者を識別できる
+`"{speaker}: {text}"` 形式のプレーンテキストに連結する。
+
+```python
+def _script_to_prompt(script: list[dict]) -> str:
+    lines = [f'{turn["speaker"]}: {turn["text"]}' for turn in script]
+    return "TTS the following podcast conversation:\n" + "\n".join(lines)
+```
+
+### 5.6 Gemini TTS マルチスピーカー呼び出し
+
+`speakers`（config）の `name` を台本の話者ラベルに、`voice` を声プリセットに割り当てる。
+2話者分を1リクエストで合成し、レスポンスの PCM バイト列を取り出す。
+
+```python
+from google import genai
+from google.genai import types
+
+def _synthesize(script, speakers, api_key, tts_model):
+    client = genai.Client(api_key=api_key)
+    prompt = _script_to_prompt(script)
+    speaker_cfgs = [
+        types.SpeakerVoiceConfig(
+            speaker=s["name"],
+            voice_config=types.VoiceConfig(
+                prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name=s["voice"])
+            ),
+        )
+        for s in speakers[:2]
+    ]
+    response = client.models.generate_content(
+        model=tts_model,
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            response_modalities=["AUDIO"],
+            speech_config=types.SpeechConfig(
+                multi_speaker_voice_config=types.MultiSpeakerVoiceConfig(
+                    speaker_voice_configs=speaker_cfgs
+                )
+            ),
+        ),
+    )
+    return response.candidates[0].content.parts[0].inline_data.data  # PCM bytes
+```
+
+> 新しい Interactions API（`client.interactions.create`）でも合成可能だが、既存 summarizer が
+> `client.models.generate_content` を使っているため、統一のため後者を採用する。
+> 上記の型・パラメータ名は google-genai のバージョンで差異があり得るため、実装時に SDK で最終確認する。
+
+### 5.7 PCM → mp3 変換
+
+Gemini TTS の生 PCM（24kHz・16bit・mono）を `wave` で WAV ファイルに書き出し、
+`subprocess` で `ffmpeg` を直接呼び出して mp3 に変換する。変換後、中間生成物の
+WAV ファイルは削除する。
+
+> 当初は `pydub` の利用を想定していたが、`pydub` が依存する `audioop` モジュールが
+> Python 3.13 以降で標準ライブラリから削除されており（`pydub` 自体も事実上メンテナンス
+> 終了状態）、この環境（Python 3.14）では動作しないことが実装時に判明した。追加ライブラリ
+> なしで `ffmpeg` を直接呼べるため、依存を1つ減らせる利点もあり不採用とした。
+
+```python
+import subprocess, wave
+from pathlib import Path
+
+def _pcm_to_mp3(pcm: bytes, out_path: Path) -> None:
+    wav_path = out_path.with_suffix(".wav")
+    with wave.open(str(wav_path), "wb") as wf:
+        wf.setnchannels(1)
+        wf.setsampwidth(2)      # 16bit
+        wf.setframerate(24000)  # 24kHz
+        wf.writeframes(pcm)
+    try:
+        subprocess.run(
+            ["ffmpeg", "-y", "-i", str(wav_path), "-b:a", "96k", str(out_path)],
+            check=True,
+            capture_output=True,
+        )
+    finally:
+        wav_path.unlink(missing_ok=True)
+```
+
+### 5.8 古い音声ファイルの削除
+
+`pages/` 配下の `*.mp3` / `*_script.json` を走査し、ファイル名先頭の `YYYYMMDD` を
+基準に `retention_days` 超過分を削除する。削除は `git add pages/` でステージされ、次の commit に含まれる。
+
+```python
+import re
+from datetime import timedelta
+
+_DATE_RE = re.compile(r"(\d{8})_")
+
+def cleanup_old_audio(pages_dir: Path, retention_days: int, now: datetime) -> int:
+    cutoff = (now - timedelta(days=retention_days)).date()
+    removed = 0
+    for pattern in ("*.mp3", "*_script.json"):
+        for f in pages_dir.rglob(pattern):
+            m = _DATE_RE.search(f.name)
+            if not m:
+                continue
+            file_date = datetime.strptime(m.group(1), "%Y%m%d").date()
+            if file_date < cutoff:
+                f.unlink()
+                removed += 1
+    return removed
+```
+
 ---
 
 ## 6. JST 定数の共有
@@ -331,6 +494,9 @@ def main():
 | API レスポンスの JSON パース失敗 | articles をそのまま使用（summary 空のまま） | 継続 |
 | weekly JSON ファイル不存在 | その日・スロットをスキップ | 継続 |
 | 記事が 0 件（daily） | HTML 生成・git push をスキップして正常終了 | 終了 |
+| ポッドキャスト台本生成失敗（API・パース） | 警告ログ、音声生成を中止し daily 継続（音声なしで公開） | 継続 |
+| Gemini TTS 合成失敗 | 警告ログ、mp3 を生成せず daily 継続 | 継続 |
+| mp3 変換失敗（ffmpeg 不在等） | 警告ログ、mp3 を残さず daily 継続 | 継続 |
 | git push 失敗 | エラーログ出力して異常終了（HTML はローカル保存済み） | 終了 |
 
 ---

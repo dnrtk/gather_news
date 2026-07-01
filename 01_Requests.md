@@ -115,6 +115,19 @@ Windowsタスクスケジューラ（6:00 / 18:00）
 - 日別ダイジェストの要約データを再利用し、APIコールを最小化
 - 出力ファイル: `pages/YYYYMMDD_weekly.html`（土曜日の日付）
 
+### ポッドキャスト音声生成（NotebookLM風）
+- 日別ダイジェストの内容を、2人のポッドキャスターが掛け合いで楽しく解説する音声を自動生成
+- 台本生成: 日別要約JSONを基に、Gemini（既存の要約用モデルを流用）で2人の対話スクリプトを生成
+  - 相槌・軽い驚き・話題の受け渡し・専門用語のかみ砕きを含め、NotebookLM のような「楽しさ」を演出
+- 音声合成: `gemini-3.1-flash-tts-preview` のマルチスピーカー機能で、2話者分を1回のAPI呼び出しで合成
+  - Gemini TTS の出力は PCM/WAV（24kHz・16bit・mono）
+- 出力形式: mp3 に変換（`ffmpeg` で変換、Windows/Ubuntu 両対応）
+- 話者2人の名前・声（voice プリセット）は config.yaml で指定
+- 生成タイミング: `morning` / `evening` 実行の要約後、`podcast.enabled: true` の場合のみ自動生成
+- 日別ダイジェストHTMLの冒頭に `<audio controls>` で音声プレイヤーを埋め込み
+- 古い音声ファイルは保持期間（既定30日）を過ぎたら自動削除し、リポジトリの肥大化を防ぐ
+- 出力ファイル: `pages/YYYY/MM/YYYYMMDD_{slot}.mp3`
+
 ---
 
 ## 非機能要件
@@ -153,6 +166,7 @@ news-digest/
 - エディタ: VS Code + Claude Code拡張
 - Python: 3.11以上
 - 主要ライブラリ: `feedparser`, `google-genai`, `pyyaml`, `jinja2`（HTML生成用）
+- 外部依存: `ffmpeg`（`subprocess` から直接呼び出してmp3変換。Windows/Ubuntu 両環境にインストール）
 
 ---
 

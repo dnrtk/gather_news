@@ -27,6 +27,8 @@ news-digest/
 │           ├── 20260314_morning.json   # 記事データ（weekly生成用）
 │           ├── 20260314_evening.html
 │           ├── 20260314_evening.json   # 記事データ（weekly生成用）
+│           ├── 20260314_morning.mp3    # ポッドキャスト音声（保持期間経過で自動削除）
+│           ├── 20260314_morning_script.json # 生成した対話台本（デバッグ・再合成用）
 │           ├── 20260315_weekly.html    # 土曜日の週次総集編
 │           └── ...
 └── README.md
@@ -124,7 +126,21 @@ sources:
 
 seen_urls:
   retention_days: 7                     # キャッシュ保持期間（日）
+
+podcast:
+  enabled: true                         # false で音声生成をスキップ
+  tts_model: "gemini-3.1-flash-tts-preview"  # マルチスピーカーTTSモデル
+  retention_days: 30                    # 音声ファイル(mp3)の保持期間（日）
+  speakers:                             # 話者は2名まで（Gemini TTS のマルチスピーカー上限）
+    - name: "あかり"                     # 台本・TTSで使う話者名
+      voice: "Kore"                     # Gemini TTS の voice プリセット（ホスト役）
+    - name: "たくみ"
+      voice: "Puck"                     # 相方役
 ```
+
+> `podcast.enabled: false` の場合、`morning` / `evening` 実行では音声生成を丸ごとスキップする。
+> `speakers` は必ず2名分を指定する（Gemini TTS のマルチスピーカーは最大2話者）。
+> 台本生成には `model.primary` / `model.fallback`（要約と同じモデル）を流用し、追加のモデル設定は不要。
 
 ---
 
@@ -137,7 +153,11 @@ seen_urls:
 uv run python generate.py morning   # 朝実行
 uv run python generate.py evening   # 夕実行
 uv run python generate.py weekly    # 週次総集編（土曜朝のみ）
+uv run python generate.py podcast morning  # 当日 morning の音声のみ再生成（任意・手動）
 ```
+
+> `podcast` サブコマンドは対象スロット（`morning` / `evening`）を第2引数で受け、既存の日別JSONから
+> 音声のみを単独生成する。通常運用では daily 実行に統合された自動生成で足りるため、手動再生成用の補助コマンド。
 
 **処理フロー（morning / evening）:**
 1. コマンドライン引数 (`morning` / `evening`) を受け取る
@@ -145,11 +165,16 @@ uv run python generate.py weekly    # 週次総集編（土曜朝のみ）
 3. RSS収集モジュールを呼び出し記事リストを取得
 4. `seen_urls.json` と照合し、未取得記事のみ残す
 5. Gemini API で一括要約・翻訳
-6. HTML生成モジュールで出力ファイルを生成（`YYYYMMDD_morning/evening.html`）
-7. 記事データをJSONで保存（`YYYYMMDD_morning/evening.json`）
-8. `index.html` を更新
-9. `seen_urls.json` を更新
-10. git commit & push
+6. 記事データをJSONで保存（`YYYYMMDD_morning/evening.json`）
+7. `podcast.enabled: true` の場合、ポッドキャスト音声を生成（`YYYYMMDD_{slot}.mp3`）し、保持期間切れの古い音声を削除
+8. HTML生成モジュールで出力ファイルを生成（`YYYYMMDD_morning/evening.html`、音声があれば `<audio>` を埋め込み）
+9. `index.html` を更新
+10. `seen_urls.json` を更新
+11. git commit & push
+
+> 音声生成（手順7）は失敗しても致命的とせず、警告ログを出して後続処理を継続する
+> （音声なしでもダイジェスト本体は公開する）。HTML生成（手順8）は音声生成の後に行い、
+> 生成された mp3 の有無に応じてプレイヤー埋め込みを切り替える。
 
 **処理フロー（weekly）:**
 1. `pages/` から当週月曜〜金曜の `.json` ファイルを収集
@@ -358,6 +383,60 @@ git push origin main
 
 ---
 
+### 4.10 ポッドキャスト音声生成モジュール
+
+日別ダイジェストの内容を、2人のポッドキャスターが掛け合いで解説する音声（mp3）に変換する。
+NotebookLM 風の対話を **台本生成（LLM）→ 音声合成（TTS）→ mp3変換** の3段で実現する。
+
+**入力:** 要約済みの記事リスト（`Article` のリスト）。daily フローから直接受け取るか、`podcast` サブコマンド時は日別JSONから復元する。
+
+**処理の流れ:**
+
+1. **台本生成（LLM）**
+   - `model.primary` / `model.fallback`（要約と同じモデル）で、要約テキストから2人の対話台本を生成
+   - 出力は話者ラベル付きの発話リスト（JSON配列）: `[{"speaker": "あかり", "text": "..."}, ...]`
+   - 台本は `pages/YYYY/MM/YYYYMMDD_{slot}_script.json` に保存（デバッグ・再合成用）
+   - プロンプトで相槌・軽い驚き・話題の受け渡し・専門用語のかみ砕きを指示し、楽しい雰囲気を演出
+2. **音声合成（Gemini TTS）**
+   - `podcast.tts_model`（`gemini-3.1-flash-tts-preview`）のマルチスピーカーで、台本全体を1回のAPI呼び出しで合成
+   - `speakers` の `name` を話者ラベル、`voice` を各話者の声プリセットに割り当てる
+   - 出力は PCM/WAV（24kHz・16bit・mono）
+3. **mp3変換**
+   - PCM を `wave` で WAV ファイルに書き出し、`subprocess` で `ffmpeg` を直接呼び出して mp3 に変換
+   - 変換後、中間生成物の WAV ファイルは削除する
+   - 出力先: `pages/YYYY/MM/YYYYMMDD_{slot}.mp3`
+4. **古い音声の自動削除**
+   - `pages/` 配下を走査し、`podcast.retention_days` を超えた `*.mp3` および `*_script.json` を削除
+   - HTML・記事JSONは削除対象外（音声関連ファイルのみ）
+
+**プロンプト仕様（台本生成）:**
+```
+以下のニュース要約を、2人のポッドキャスター（{speaker_a} と {speaker_b}）が
+リスナーに楽しく解説するラジオ番組の台本にしてください。
+
+ルール:
+- 冒頭に軽い挨拶、最後に締めの一言を入れる
+- 相槌・言い換え・軽い驚き・質問と回答のやり取りを自然に含める
+- 専門用語はかみ砕いて説明する
+- 全体で3〜5分程度の長さ（合計 6000 字以内）に収める
+- 出力はJSON配列のみ: [{"speaker": "{speaker_a}", "text": "..."}, ...]
+- speaker には {speaker_a} または {speaker_b} のみを使う
+
+ニュース要約:
+[各記事のタイトルと要約をリスト形式で渡す]
+```
+
+**TTS入力の組み立て:**
+- 台本JSONを `"{speaker}: {text}"` の行に連結したテキストを TTS のプロンプトとして渡す
+- 入力上限は 32k トークン。台本は 6000 字以内に収めるため通常は問題ないが、超過時は記事数を削って再構成
+
+**エラー処理:**
+- 台本生成失敗（API・パース）: 音声生成を中止し警告ログ、daily フローは継続（音声なしで公開）
+- TTS 失敗: 同上（mp3 を生成せず継続）
+- `ffmpeg` 不在で mp3 変換失敗: WAV を残さず警告ログ、継続
+
+---
+
 ## 5. タイムゾーン・日時取得ルール
 
 ### 基本方針
@@ -428,6 +507,10 @@ dependencies = [
     "backports.zoneinfo; python_version < '3.9'",  # 通常不要だが念のため
 ]
 ```
+
+> mp3変換は追加ライブラリを使わず、`subprocess` で `ffmpeg` を直接呼び出す（`pydub` は
+> Python 3.13+ で `audioop` モジュール依存が壊れているため不採用）。Windows/Ubuntu の
+> 両環境に `ffmpeg` をインストールし、PATH を通しておくこと（`podcast.enabled: false` の場合は不要）。
 
 ---
 

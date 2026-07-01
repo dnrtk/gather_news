@@ -64,6 +64,27 @@ def save_digest_json(
     return file_path
 
 
+def load_digest_articles(pages_dir: Path, slot: str, now: datetime) -> list[Article]:
+    dir_path = pages_dir / now.strftime("%Y") / now.strftime("%m")
+    json_path = dir_path / f"{now.strftime('%Y%m%d')}_{slot}.json"
+    if not json_path.exists():
+        logger.warning(f"store: {json_path} が存在しません")
+        return []
+
+    data = json.loads(json_path.read_text(encoding="utf-8"))
+    return [
+        Article(
+            title=item["title"],
+            url=item["url"],
+            source_name=item["source_name"],
+            tier=item["tier"],
+            published=datetime.fromisoformat(item["published"]).astimezone(JST),
+            summary=item["summary"],
+        )
+        for item in data.get("articles", [])
+    ]
+
+
 def load_weekly_articles(pages_dir: Path, target_dates: list[date]) -> list[WeeklyArticle]:
     articles = []
     for d in target_dates:
