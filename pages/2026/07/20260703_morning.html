@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月03日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月03日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月03日 06:00 JST</p>
+</header>
+
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.zachtronics.com/exapunks/" target="_blank" rel="noopener noreferrer">Exapunks (2018)</a></h3>
+    <p class="meta">Hacker News | 07/03 03:41</p>
+    <p class="summary">1997年の架空の過去を舞台にしたZachtronicsによるプログラミングパズルゲーム。プレイヤーは「EXA」と呼ばれるプログラム可能なエージェントを操り、銀行のネットワークや薬品会社などのシステムに侵入してデータを操作する。命令セットを駆使してコードの最適化を図る、高度なパズル要素が特徴となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://mathstodon.xyz/@iblech/116769502749142438" target="_blank" rel="noopener noreferrer">Since Linux 6.9, LUKS suspend stopped wiping disk-encryption keys from memory</a></h3>
+    <p class="meta">Hacker News | 07/03 00:25</p>
+    <p class="summary">Linuxカーネル6.9以降、LUKS（ディスク暗号化）のサスペンド時にメモリから暗号化キーを消去する機能が停止していることが報告された。これにより、サスペンド中のデバイスを物理的に入手した攻撃者が、メモリからキーを抽出できるセキュリティリスクが生じている。ユーザーは設定の確認や修正対応の検討が推奨される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www.lmdb.tech/doc/" target="_blank" rel="noopener noreferrer">Lightning Memory-Mapped Database Manager (LMDB) 1.0</a></h3>
+    <p class="meta">Hacker News | 07/03 05:01</p>
+    <p class="summary">超高速で軽量なメモリマップ型キー・バリューストア（KVDB）であるLMDBのドキュメント。B+ツリー構造を採用し、読み取り性能の最大化と低オーバーヘッドを実現している。ACID特性を備え、メモリ効率が非常に高いため、データベースエンジンや組み込みシステム、大規模なデータ処理基盤などで広く利用されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://cdn.arstechnica.net/wp-content/uploads/2026/07/EFF-letter-to-FTC-on-X-consent-order-7-2-26.pdf" target="_blank" rel="noopener noreferrer">EFF letter to FTC on X consent order (2 July 2026) [pdf]</a></h3>
+    <p class="meta">Hacker News | 07/03 04:27</p>
+    <p class="summary">電子フロンティア財団（EFF）が連邦取引委員会（FTC）に対し、X（旧Twitter）のプライバシー保護に関する合意命令の遵守状況を調査するよう求める書簡を送付した。ユーザーデータの不適切な取り扱いやセキュリティ対策の不備が懸念されており、消費者の権利を守るための厳格な監視と法執行を促す内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.podman.io/2026/07/introducing-podman-v6-0-0/" target="_blank" rel="noopener noreferrer">Podman v6.0.0</a></h3>
+    <p class="meta">Hacker News | 07/02 23:23</p>
+    <p class="summary">コンテナ管理ツールPodmanのメジャーバージョンv6.0.0がリリースされた。Quadletの機能強化、MacおよびWindows版のパフォーマンス向上、ネットワーク設定の改善などが盛り込まれている。Docker互換を維持しつつ、デーモンレスで安全なコンテナ環境を構築するための機能がさらに充実した。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/minorun365/items/7d06434cf830df9c54ff?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【ハンズオン】AgentCore最新機能でRAG &amp; AIエージェント構築に入門！</a></h3>
+    <p class="meta">Qiita トレンド | 07/01 16:32</p>
+    <p class="summary">AgentCoreの最新機能を利用して、RAG（検索拡張生成）やAIエージェントを構築する手法を解説したハンズオン記事。専門的な知識がなくても、視覚的な操作やシンプルなコードで高度なAIアプリケーションを開発できる手順を紹介しており、初心者から実務者までを対象とした導入ガイドとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/akachiryo/items/5299101bce85b5970776?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">RailsとDBインデックス 〜なぜ index があると速いのか〜</a></h3>
+    <p class="meta">Qiita トレンド | 07/02 03:22</p>
+    <p class="summary">Ruby on Railsにおけるデータベースインデックスの仕組みと重要性を解説した記事。B-treeなどのデータ構造を用いることで、全件探索を避けて効率的にデータを特定できる理由を詳述している。適切なインデックス設計がクエリの高速化にどう寄与するか、実例を交えてエンジニア向けに説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/02/iqm-europes-first-public-quantum-company-admits-the-future-of-the-tech-is-uncertain/" target="_blank" rel="noopener noreferrer">IQM, Europe’s first public quantum company, admits the future of the tech is uncertain</a></h3>
+    <p class="meta">TechCrunch | 07/02 20:42</p>
+    <p class="summary">欧州初の公開量子コンピュータ企業であるIQM社が、量子技術の実用化時期について不確実性が残ることを認めた。巨額の投資が集まる一方で、ハードウェアのスケーラビリティやエラー訂正など克服すべき技術的課題が多く、ビジネスとして真の量子優位性を達成するにはまだ時間がかかるとの慎重な見方を示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/02/jersey-mikes-ipo-illustrates-how-bad-the-ai-hype-has-become/" target="_blank" rel="noopener noreferrer">Jersey Mike’s IPO illustrates how bad the AI hype has become</a></h3>
+    <p class="meta">TechCrunch | 07/02 20:11</p>
+    <p class="summary">サンドイッチチェーン「ジャージー・マイクス」のIPOが、現在のAIブームの過熱ぶりを象徴している。本来の業務とは関連が薄い分野でも「AI活用」を強調する傾向があり、投資家の関心を引くためにAIがバズワードとして乱用されている現状に対し、技術の過大評価や実態の乖離を懸念する声が上がっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/02/a-warning-sign-about-ais-real-cost-courtesy-of-google-and-amazon/" target="_blank" rel="noopener noreferrer">A warning sign about AI’s real cost, courtesy of Google and Amazon</a></h3>
+    <p class="meta">TechCrunch | 07/02 19:14</p>
+    <p class="summary">GoogleやAmazonの報告を通じ、AI開発に伴う多大なエネルギー消費と環境負荷が警告されている。データセンターの電力需要が急増したことで、各社が掲げる温室効果ガス排出量実質ゼロ目標の達成が困難になっており、AI技術がもたらす便益の裏にある「環境的な隠れたコスト」が浮き彫りになっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/ce375v12z0qo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Venezuela quake survivor pulled out alive after eight days</a></h3>
+    <p class="meta">BBC World News | 07/02 16:11</p>
+    <p class="summary">ベネズエラで発生した地震から8日後、倒壊した建物の中から男性が救出された。長期間の閉じ込めにもかかわらず生存していたことは奇跡的とされ、救助隊による懸命な捜索活動が実を結んだ。救出された男性は直ちに病院へ運ばれ、現在、集中治療を受けている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cn0vwxyz40zo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Bomb blast at Damascus cafe kills six, Syrian state media say</a></h3>
+    <p class="meta">BBC World News | 07/02 17:56</p>
+    <p class="summary">シリアの首都ダマスカスのカフェで爆弾テロが発生し、少なくとも6人が死亡、多数が負傷した。国営メディアによると、犯行の背景や動機については現在調査中だが、治安情勢が不安定な地域での惨劇に市民の間に大きな衝撃が広がっている。当局は周辺の警戒を強めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260703/k10015167611000.html" target="_blank" rel="noopener noreferrer">日印首脳会談で2兆円規模の投資発表 国内経済活性化の狙い</a></h3>
+    <p class="meta">NHK国際放送 | 07/02 20:50</p>
+    <p class="summary">日印首脳会談において、日本からインドへ2兆円規模の投資を行うことが発表された。インフラ整備やクリーンエネルギー分野での協力を通じ、両国の経済関係を強化するのが狙い。成長著しいインドの市場を取り込むことで、日本国内の経済活性化や産業の競争力向上も期待されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260703/k10015167671000.html" target="_blank" rel="noopener noreferrer">ウクライナ政府 ロシア軍の攻撃 被害の深刻さを各国大使に訴え</a></h3>
+    <p class="meta">NHK国際放送 | 07/02 20:11</p>
+    <p class="summary">ウクライナ政府は各国の大使を招き、ロシア軍によるインフラ攻撃や民間施設への被害がいかに深刻であるかを訴えた。エネルギー網の損壊による国民生活への甚大な影響を詳述し、国際社会に対して防空システムの供与や人道支援の継続、さらなる軍事支援を強く要請した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260703/k10015167711000.html" target="_blank" rel="noopener noreferrer">WHO クルーズ船でのハンタウイルス集団感染の収束を宣言</a></h3>
+    <p class="meta">NHK国際放送 | 07/02 20:08</p>
+    <p class="summary">世界保健機関（WHO）は、クルーズ船内で発生していたハンタウイルスの集団感染が収束したと宣言した。徹底した消毒作業と隔離措置により、新たな感染者の発生が一定期間確認されなくなったため。今後は船舶内の衛生基準の見直しや、将来の感染症再発防止策の徹底が議論される見通し。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
