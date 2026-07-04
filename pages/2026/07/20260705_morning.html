@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月05日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月05日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月05日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260705_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/ammaarreshi/Generals-Mac-iOS-iPad/tree/main" target="_blank" rel="noopener noreferrer">Command and Conquer Generals natively ported to macOS, iPhone, iPad using Fable</a></h3>
+    <p class="meta">Hacker News | 07/05 04:41</p>
+    <p class="summary">人気RTSゲーム『Command &amp; Conquer: Generals』を、Fableエンジンを使用してmacOS、iPhone、iPadへネイティブ移植するプロジェクトがGitHubで公開された。Intel Mac時代の名作をAppleシリコン搭載の最新デバイスでも動作可能にすることを目指しており、モバイル端末でのプレイも視野に入れた野心的な試みとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://javoriuski.com/post/youtube" target="_blank" rel="noopener noreferrer">Leaking YouTube creators&#39; private videos</a></h3>
+    <p class="meta">Hacker News | 07/05 01:45</p>
+    <p class="summary">YouTubeのクリエイターが非公開設定にしている動画が漏洩する可能性についての報告。特定のAPIやURLの不備を通じて、本来閲覧できないはずのプライベートなコンテンツにアクセスできてしまう脆弱性について、その技術的な背景とセキュリティ上のリスクを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://software.annas-archive.gl/AnnaArchivist/annas-archive/-/work_items/234" target="_blank" rel="noopener noreferrer">Google Books (or similar) all book scans – $200k bounty (2025)</a></h3>
+    <p class="meta">Hacker News | 07/05 01:51</p>
+    <p class="summary">「Anna’s Archive」が、Google Booksなどの全ての書籍スキャンデータを収集・提供できる人物に対し、20万ドルの賞金を出すと発表した。2025年を期限とし、膨大な書籍データをパブリックドメインのように誰もがアクセス可能な状態にすることを目指す大規模なプロジェクトの一環である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.jefftk.com/p/verizon-is-about-to-break-our-watches" target="_blank" rel="noopener noreferrer">Verizon is About to Break our Watches</a></h3>
+    <p class="meta">Hacker News | 07/05 02:52</p>
+    <p class="summary">米通信大手ベライゾンが、特定のスマートウォッチの接続サポートを終了しようとしている問題についての指摘。この変更により、多くのユーザーのウォッチが通信機能を失い、実質的に「壊れた」状態になることが懸念されている。旧技術の廃止に伴うユーザーへの影響と企業の責任を論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/anthropics/claude-code/issues/74066" target="_blank" rel="noopener noreferrer">Potential session/cache leakage between workspace instances or consumer accounts</a></h3>
+    <p class="meta">Hacker News | 07/04 23:03</p>
+    <p class="summary">Anthropic社の「Claude Code」において、異なるワークスペースやユーザーアカウント間でセッションやキャッシュが漏洩する可能性がある問題が報告された。機密情報の混同を防ぐためのセキュリティ上の課題として、GitHubのIssueで開発者による議論と対策が進められている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/hidechannu/articles/20260703-japanese-filename-bytestring" target="_blank" rel="noopener noreferrer">Next.jsのpreloadが生成するHTTPヘッダーに日本語ファイル名が紛れて本番だけエラーが出た話</a></h3>
+    <p class="meta">Zenn トレンド | 07/03 13:13</p>
+    <p class="summary">Next.jsのpreload機能が生成するHTTPヘッダーに日本語のファイル名が含まれてしまい、本番環境のみでエラーが発生した事例の紹介。HTTPヘッダーにマルチバイト文字が含まれることでバイト文字列の扱いに不整合が生じたことが原因であり、ファイル名に日本語を使用する際のリスクと対処法を解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/maaaashi/items/6eefccb7361f64607865?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">新しいHTTPメソッド「QUERY」をHono + Bunで実装してみる</a></h3>
+    <p class="meta">Qiita トレンド | 07/03 11:58</p>
+    <p class="summary">新しいHTTPメソッド案である「QUERY」を、WebフレームワークHonoとJavaScriptランタイムBunを用いて実装する試みの解説。GETの制限（URL長の限界）とPOSTの性質（副作用の可能性）の間を埋めるQUERYメソッドの仕様と、実用化に向けた具体的なコード例を紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/yutaka_kozuka/items/cc3be5930b972130885d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">バイブコーディングで本当にアプリはリリースできるのか？エンジニアが実際にアプリをリリースして感じたこと</a></h3>
+    <p class="meta">Qiita トレンド | 07/03 03:06</p>
+    <p class="summary">直感やAIの提案に身を任せる「バイブコーディング」という手法で、実際にアプリをリリースまで導いたエンジニアの体験談。細かな仕様を詰めずに対話型AIを駆使して進める開発のスピード感や、一方で発生する技術的な課題、そして最終的に形にするための要諦について語っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/04/new-google-commercial-imagines-a-declaration-of-independence-written-with-help-from-ai/" target="_blank" rel="noopener noreferrer">New Google commercial imagines a Declaration of Independence written with help from AI</a></h3>
+    <p class="meta">TechCrunch | 07/04 20:55</p>
+    <p class="summary">Googleの新しいCMが、アメリカ独立宣言がAIの助けを借りて書かれたとしたらどうなるかを描き、話題を呼んでいる。AIが歴史的な文書作成を支援する様子を空想的に表現した内容だが、創造性や歴史の重みに対するAIの介在の是非について、SNSなどで議論を巻き起こしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/04/midjourney-wants-hollywood-studios-to-reveal-the-details-of-their-ai-usage/" target="_blank" rel="noopener noreferrer">Midjourney wants Hollywood studios to reveal the details of their AI usage</a></h3>
+    <p class="meta">TechCrunch | 07/04 18:00</p>
+    <p class="summary">画像生成AIのMidjourneyが、ハリウッドの映画製作会社に対し、AIをどのように使用しているかの詳細を開示するよう求めている。これは著作権侵害の訴訟が相次ぐ中、業界全体でのAI利用の透明性を高め、公平な競争環境や法的枠組みを構築しようとする動きの一環と見られる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/04/alibaba-reportedly-bans-employees-from-using-claude-code/" target="_blank" rel="noopener noreferrer">Alibaba reportedly bans employees from using Claude Code</a></h3>
+    <p class="meta">TechCrunch | 07/04 16:32</p>
+    <p class="summary">中国のIT大手アリババが、従業員に対してAnthropic社のAI開発ツール「Claude Code」の使用を禁止したと報じられた。セキュリティ上の懸念や企業秘密の漏洩防止を目的とした措置と見られ、グローバルなAIツールの利用制限が企業レベルで広がっている現状を示している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c8j2vmzxezro?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Ukraine hits major oil terminal in Russia&#39;s St Petersburg</a></h3>
+    <p class="meta">BBC World News | 07/04 18:41</p>
+    <p class="summary">ウクライナ軍が、ロシア第2の都市サンクトペテルブルクにある主要な石油ターミナルをドローンで攻撃した。ロシアの経済と軍事物流に打撃を与える狙いがあると見られ、戦線から離れたロシア北西部の重要施設が標的となったことで、攻撃の範囲が拡大していることが示唆された。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c0ky2zen1kgo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Large crowds gather in Tehran on first day of Ayatollah Khamenei&#39;s funeral</a></h3>
+    <p class="meta">BBC World News | 07/04 09:45</p>
+    <p class="summary">イランの最高指導者ハメネイ師の葬儀の初日、首都テヘランには膨大な数の群衆が集まった。国全体が喪に服す中、後継者問題や今後の政情不安への懸念も広まっており、国内外の注目が集まっている。街には指導者を悼む声が響き、厳戒態勢の中で儀式が執り行われた。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260705/k10015140541000.html" target="_blank" rel="noopener noreferrer">【詳細】ロシア ウクライナに軍事侵攻（7月4日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 07/04 20:55</p>
+    <p class="summary">ロシアによるウクライナ軍事侵攻の7月4日の動きをまとめた報告。東部や南部での激しい戦闘の継続に加え、民間施設への被害や双方のドローン攻撃の応酬について詳報している。国際社会の支援状況や停戦への模索についても触れ、緊迫した情勢が続いていることを伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260705/k10015168911000.html" target="_blank" rel="noopener noreferrer">中国 台湾東海域パトロール「常態的に実施」台湾当局は非難</a></h3>
+    <p class="meta">NHK国際放送 | 07/04 20:12</p>
+    <p class="summary">中国海警局が台湾東方の海域でパトロールを「常態的に実施する」と発表したことに対し、台湾当局が強く非難している。台湾周辺での軍事的・法執行的な圧力を強める中国側の姿勢が鮮明となっており、地域の緊張がさらに高まることが懸念されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260704/k10015169011000.html" target="_blank" rel="noopener noreferrer">カボベルデ どんな国？W杯で大躍進 日本と意外なつながりも</a></h3>
+    <p class="meta">NHK国際放送 | 07/04 15:20</p>
+    <p class="summary">バスケットボールのワールドカップなどで躍進を見せた西アフリカの島国、カボベルデ共和国を紹介。人口約60万人という小国ながらスポーツでの強さが注目されている。また、歴史的な交流や共通点など、日本との意外なつながりについても掘り下げている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
