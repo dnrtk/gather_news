@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月04日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月04日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月04日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260704_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.mikebowler.ca/2026/07/03/co2-and-decision-making/" target="_blank" rel="noopener noreferrer">The bottleneck might be the air in the room</a></h3>
+    <p class="meta">Hacker News | 07/04 15:32</p>
+    <p class="summary">室内空気中の二酸化炭素（CO2）濃度が意思決定や認知機能に及ぼす影響について論じている。従来の常識を覆し、比較的低レベルのCO2でも意思決定の質が著しく低下することが研究で示唆されている。会議室やオフィスの換気が不十分だと、知的な生産性がボトルネックになる可能性を指摘し、センサーによるモニタリングや適切な換気の重要性を強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://danluu.com/ai-coding/#appendix-agentic-loops-and-writing-this-post" target="_blank" rel="noopener noreferrer">Agentic coding notes from Galapagos Island</a></h3>
+    <p class="meta">Hacker News | 07/04 13:37</p>
+    <p class="summary">AIコーディングの現状と限界について、ガラパゴス諸島からの開発日誌として考察している。AIによる自動ループやコード生成の効率を評価しつつ、複雑なタスクにおける精度や信頼性の課題を指摘。また、AIに依存しすぎることの危うさや、人間による監視と設計の重要性について、自身のブログ執筆や開発体験を通じて深く掘り下げている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://mistral.ai/news/leanstral-1-5/" target="_blank" rel="noopener noreferrer">Leanstral 1.5: Proof abundance for all</a></h3>
+    <p class="meta">Hacker News | 07/04 07:33</p>
+    <p class="summary">Mistral AIは、数学的証明言語「Lean 4」に特化したモデル「Leanstral 1.5」をリリースした。このモデルは、高度な数学的推論と証明の自動生成を支援することを目的としており、オープンな形式で提供される。研究者やエンジニアが複雑な数学的課題に対してAIの力を借りて効率的に証明を構築できる環境を整え、定理証明の民主化を加速させる狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.wafer.ai/blog/glm52-amd" target="_blank" rel="noopener noreferrer">Performance per dollar is getting faster and cheaper</a></h3>
+    <p class="meta">Hacker News | 07/04 06:49</p>
+    <p class="summary">AMD製GPUを用いた大規模言語モデル（GLM-52等）の実行効率とコストパフォーマンスの向上について解説している。ハードウェアの進化とソフトウェアの最適化により、1ドルあたりの処理能力が急速に向上しており、AI開発の参入障壁が下がっている。特にエッジコンピューティングや独自インフラを構築する企業にとって、AMDという選択肢が強力な武器になりつつある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://news.exeter.ac.uk/faculty-of-environment-science-and-economy/giant-trees-have-no-trouble-pumping-water-to-top-branches/" target="_blank" rel="noopener noreferrer">Giant trees have no trouble pumping water to top branches: new research</a></h3>
+    <p class="meta">Hacker News | 07/04 07:40</p>
+    <p class="summary">エクセター大学の新研究により、巨大な木々がどのようにして最上部の枝まで水を汲み上げているのかという謎が解明されつつある。従来の物理的限界を超えた高さまで水を運ぶメカニズムを調査した結果、樹木が予想以上に効率的かつ安定した内部圧力を維持していることが判明。この発見は植物の生存戦略の理解を深めるだけでなく、工学的な水分輸送技術への応用も期待されている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/sirasagi62/articles/59db634940ba80" target="_blank" rel="noopener noreferrer">C++の謎めいたHello WorldをPythonで再実装して理解を深めよう</a></h3>
+    <p class="meta">Zenn トレンド | 07/03 12:26</p>
+    <p class="summary">難解なC++のコードで記述された「Hello World」の動作原理を、Pythonでの再実装を通じて紐解く解説記事。テンプレートメタプログラミングやC++特有のテクニックを平易なPythonコードに置き換えることで、そのロジックを直感的に理解することを目指している。一見不可能な挙動に見えるトリッキーなコードの裏側を学ぶ、プログラミング教育的な試み。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/peishim/articles/37ff4d894f8fbc" target="_blank" rel="noopener noreferrer">Generative UIとそれを実現するOpenUIのイメージを掴む！</a></h3>
+    <p class="meta">Zenn トレンド | 07/03 11:30</p>
+    <p class="summary">AIが動的にユーザーインターフェースを生成する「Generative UI」の概念と、それを実現するためのツール「OpenUI」について紹介している。従来の静的なUI設計から、ユーザーの意図や文脈に応じて瞬時に画面構成を最適化する次世代の体験への移行を解説。OpenUIがどのようにUIコンポーネントを組み立て、フロントエンド開発を刷新する可能性があるかを提示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/trknhr/articles/42c20e11812217" target="_blank" rel="noopener noreferrer">.env に API キーを書きたくないので 軽いCLI を作った</a></h3>
+    <p class="meta">Zenn トレンド | 07/03 08:25</p>
+    <p class="summary">APIキーを.envファイルに平文で保存することのリスクを避けるため、セキュアに管理・利用できる軽量なCLIツールを自作した記録。環境変数への依存を減らし、必要な時だけ安全にキーを注入する仕組みや、開発体験を損なわない設計思想を解説。セキュリティ意識の高い開発者に向けた、シンプルながら実用的な解決策を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/ochtum/items/d442ed23d24245b789a0?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">トークンをケチるな、設計しろ：GitHub Copilotを賢く使うコンテキスト戦略</a></h3>
+    <p class="meta">Qiita トレンド | 07/01 16:59</p>
+    <p class="summary">GitHub Copilotから最適な回答を引き出すための「コンテキスト戦略」について解説している。トークン消費を抑えることよりも、AIに必要な文脈（プロジェクトの全体像や関連ファイル）をいかに適切に与えるかという設計の重要性を強調。プロンプトエンジニアリングの基本から、開発効率を最大化するための実戦的なヒントをまとめている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/03/artificial-intelligence-definition-glossary-hallucinations-guide-to-common-ai-terms/" target="_blank" rel="noopener noreferrer">The only AI glossary you’ll need this year</a></h3>
+    <p class="meta">TechCrunch | 07/03 21:20</p>
+    <p class="summary">2026年における最新のAI用語集。ハルシネーション（幻覚）から最新の生成AI関連技術まで、一般ユーザーやビジネスマンが押さえておくべき重要語彙を網羅している。急速に変化するAI業界で、曖昧になりがちな用語の定義を明確化し、AIとの共生時代において正確な対話を行うためのガイドラインを提供している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/whos-news-strategic-appointments-at-silicon-quantum-computing-pasqal-jij-iqm-quantum-computers-ibm-and-postscriptum/" target="_blank" rel="noopener noreferrer">Who’s News: Strategic Appointments at Silicon Quantum Computing, Pasqal, JIJ, IQM Quantum Computers, IBM, and PostScriptum</a></h3>
+    <p class="meta">Quantum Computing Report | 07/04 03:15</p>
+    <p class="summary">量子コンピュータ業界の主要企業（Silicon Quantum Computing、Pasqal、JIJ、IQM、IBM、PostScriptum）における最新の人事異動を報じている。各社が戦略的なリーダーシップを強化し、技術開発と事業拡大を加速させるための布陣を整えている。業界内での人材流動の活発化は、量子技術の商用化に向けた競争が激化していることを示唆している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/ibm-quantum-credits-program-drives-advanced-algorithmic-breakthroughs-beyond-classical-limits/" target="_blank" rel="noopener noreferrer">IBM Quantum Credits Program Drives Advanced Algorithmic Breakthroughs Beyond Classical Limits</a></h3>
+    <p class="meta">Quantum Computing Report | 07/04 02:33</p>
+    <p class="summary">IBM Quantumクレジット・プログラムが、古典コンピュータの限界を超える先進的なアルゴリズムの画期的な進展を後押ししている。研究者がIBMのクラウド経由で高性能な量子プロセッサにアクセスできる体制を整えたことで、材料科学や最適化問題など多岐にわたる分野で、実用的な量子優位性の実証に向けた取り組みが加速していることを紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/ibm-to-commission-one-of-indias-first-physical-quantum-computers-in-amaravati-by-september-2026/" target="_blank" rel="noopener noreferrer">IBM to Commission One of India’s First Physical Quantum Computers in Amaravati by September 2026</a></h3>
+    <p class="meta">Quantum Computing Report | 07/04 02:18</p>
+    <p class="summary">IBMは2026年9月までに、インドのアマラヴァティに同国初となる物理的な量子コンピュータを稼働させる計画を明らかにした。この施設は、インド国内の量子研究や教育、産業応用の中心拠点となることが期待されている。IBMの技術をインドの急速に成長するテックエコシステムに導入することで、現地の量子技術開発を大幅に支援する狙いがある。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c982ry2pen3o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Taylor Swift marries Travis Kelce in NYC ceremony officiated by Adam Sandler</a></h3>
+    <p class="meta">BBC World News | 07/04 02:26</p>
+    <p class="summary">歌手のテイラー・スウィフトが、NFL選手のトラビス・ケルシーとニューヨークで結婚式を挙げた。式は俳優のアダム・サンドラーが司宰を務め、親しい知人らが見守る中で執り行われた。世界的スーパースターと人気スポーツ選手の結婚は大きな話題となり、ニューヨークの会場周辺には多くのファンが詰めかけ祝福ムードに包まれた。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cevlkzer7vdo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Brutal heat cancels Fourth of July events, from DC to Philadelphia</a></h3>
+    <p class="meta">BBC World News | 07/04 02:57</p>
+    <p class="summary">記録的な猛暑の影響により、ワシントンD.C.からフィラデルフィアにかけての全米各地で独立記念日のイベントが中止や規模縮小を余儀なくされた。命に関わる危険な暑さから市民を守るための判断であり、多くの自治体が冷房施設の開放や注意喚起を行っている。気候変動による極端な気象現象が、伝統的な祝日の行事にまで影を落としている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cr5jpvv06e1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Keiko Fujimori declared winner of Peru&#39;s presidential election weeks after vote</a></h3>
+    <p class="meta">BBC World News | 07/04 07:52</p>
+    <p class="summary">ペルー大統領選挙の投開票から数週間を経て、ケイコ・フジモリ氏の当選が公式に宣言された。僅差の接戦が続いていたが、当局による精査の結果、フジモリ氏の勝利が確定。長年の政治的対立が続く同国において、新政権がどのように国民の分断を解消し、経済再建などの課題に取り組んでいくかに国内外の注目が集まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260704/k10015168811000.html" target="_blank" rel="noopener noreferrer">チベット人が国連本部前で焼身自殺 中国の民族政策への抗議か</a></h3>
+    <p class="meta">NHK国際放送 | 07/04 07:15</p>
+    <p class="summary">アメリカ・ニューヨークの国連本部前で、チベット人とみられる人物が自身の体に火をつけて死亡した。中国政府によるチベットでの強硬な民族政策に対する抗議活動の一環とみられている。国連総会などの重要な会議が開催される中で起きたこの痛ましい事件は、国際社会に対してチベットの窮状を改めて訴えかける形となり、波紋が広がっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260704/k10015168781000.html" target="_blank" rel="noopener noreferrer">「新婚です」テイラー・スウィフトさん NFL選手と結婚を発表</a></h3>
+    <p class="meta">NHK国際放送 | 07/04 06:14</p>
+    <p class="summary">人気歌手のテイラー・スウィフトさんが、NFLのスター選手であるトラビス・ケルシーさんと結婚したことを発表した。自身のSNSなどを通じて「新婚である」ことを報告し、多くのファンから祝福の声が寄せられている。二人の交際は以前から注目を集めており、エンタメ界とスポーツ界を代表するビッグカップルの誕生にメディアも沸き立っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260704/k10015168671000.html" target="_blank" rel="noopener noreferrer">建国250年 トランプ大統領 独立記念日前に演説 党派色強い内容</a></h3>
+    <p class="meta">NHK国際放送 | 07/04 06:09</p>
+    <p class="summary">アメリカ建国250周年の節目となる独立記念日を前に、トランプ大統領が演説を行った。演説では「アメリカ第一主義」を強調しつつ、自身の政策の正当性を訴えるなど党派色の強い内容が目立った。祝賀ムードの中でも国内の政治的な分断が色濃く反映された形となり、次期選挙を見据えた支持層へのアピールを鮮明にした。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
