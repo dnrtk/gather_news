@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月05日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月05日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月05日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260705_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://ui.shadcn.com/docs/changelog" target="_blank" rel="noopener noreferrer">Shadcn/UI now defaults to Base UI instead of Radix</a></h3>
+    <p class="meta">Hacker News | 07/05 13:46</p>
+    <p class="summary">shadcn/uiの最新の変更点として、コンポーネントの基盤となるプリミティブライブラリがRadix UIからBase UIにデフォルトで変更された。この移行により、スタイリングの柔軟性が向上し、より高度なカスタマイズが可能になることが期待されている。開発者は既存のプロジェクトへの影響を確認し、必要に応じて新しいベースライブラリへの適応が求められる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://simonwillison.net/2026/Jul/5/sqlite-utils-fable/" target="_blank" rel="noopener noreferrer">sqlite-utils 4.0rc2, mostly written by Claude Fable (for about $149.25)</a></h3>
+    <p class="meta">Hacker News | 07/05 15:19</p>
+    <p class="summary">sqlite-utils 4.0rc2のリリースが発表された。特筆すべきは、開発の大部分をAIモデル「Claude Fable」が担当した点だ。作者のSimon Willison氏によると、約149.25ドルのコストで大部分のコードが生成されたという。大規模言語モデルを実用的なライブラリ開発のメインツールとして活用した事例であり、AIによる開発効率化の可能性を示す興味深い試みとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://unsung.aresluna.org/if-youre-a-button-you-have-one-job/" target="_blank" rel="noopener noreferrer">If you&#39;re a button, you have one job</a></h3>
+    <p class="meta">Hacker News | 07/05 11:01</p>
+    <p class="summary">UIデザインにおけるボタンの役割を再考する記事。ボタンの唯一の仕事は「クリック可能であることを示し、アクションを実行すること」だが、現代のデザインではリンクとボタンの区別が曖昧になっていると指摘している。ユーザーを混乱させないためには、見た目と機能が一致する一貫したインターフェースが不可欠であり、基本的なUI原則に立ち返ることの重要性を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://pandoc.org/lua-filters.html" target="_blank" rel="noopener noreferrer">Pandoc Lua Filters</a></h3>
+    <p class="meta">Hacker News | 07/03 18:52</p>
+    <p class="summary">ドキュメント変換ツール「Pandoc」のLuaフィルター機能に関する解説。Luaスクリプトを使用することで、ドキュメントの変換過程で抽象構文木（AST）を操作し、標準機能では難しい高度なカスタマイズが可能になる。外部依存なしで実行でき、パフォーマンスも高い。技術ドキュメントの自動化や独自のフォーマット変換を必要とする開発者にとって、非常に強力な拡張手段となっている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/yuki_fujisawa/articles/a155d388e61acc" target="_blank" rel="noopener noreferrer">Claude Code (Opus 4.8) が数分固まる問題、188セッション実測したら原因はAPIでもネットワークでもなかった</a></h3>
+    <p class="meta">Zenn トレンド | 07/04 10:26</p>
+    <p class="summary">Claude Code（Opus 4.8）を使用中に数分間フリーズする問題について、188セッションの実測データを元に原因を調査した記事。分析の結果、遅延の正体はAPIやネットワークといった外部要因ではなく、ローカル環境における特定の処理やファイル監視、あるいは内部の計算負荷に関連している可能性が浮上した。開発体験を損なうボトルネックの特定に向けた詳細な検証が行われている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/kenimo49/articles/code-review-300-comments-2-effective-categories" target="_blank" rel="noopener noreferrer">コードレビュー指摘300件を3ヶ月分類したら効いていたのは2種類だけだった</a></h3>
+    <p class="meta">Zenn トレンド | 07/04 09:57</p>
+    <p class="summary">3ヶ月間にわたる300件のコードレビュー指摘を分類・分析した結果、実際に効果的だったのは「設計・拡張性に関する指摘」と「バグ・仕様漏れの指摘」の2種類のみだったという考察。細かなコーディング規約や好みの問題は自動化（Linter等）に任せるべきであり、人間は本質的な品質向上に注力すべきだという、効率的なレビュー体制の構築に向けた実践的な知見を共有している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/dip_techblog/articles/526cc6e6e5d5a5" target="_blank" rel="noopener noreferrer">仕事の「モチベーション」とは何か。</a></h3>
+    <p class="meta">Zenn トレンド | 07/04 08:19</p>
+    <p class="summary">仕事における「モチベーション」の本質を深掘りする記事。外的な報酬（給与や評価）による動機付けと、内的な欲求（好奇心や自己成長）による動機付けの違いを解説している。単なる一時的なやる気に頼るのではなく、個人の価値観と仕事の意義をいかに繋ぎ合わせるかが、長期的なパフォーマンス維持と幸福感のために重要であることを説いている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cp9lppvkmz5o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">US marks 250th birthday with fireworks, flyovers and extreme weather</a></h3>
+    <p class="meta">BBC World News | 07/05 08:24</p>
+    <p class="summary">アメリカ合衆国が建国250周年を迎え、各地で花火や軍用機による祝賀飛行が行われた。一方で、歴史的な節目は極端な気象条件にも見舞われ、記録的な猛暑や激しい嵐が一部の祝典に影響を与えた。独立記念日を祝う国民の熱気と、直面する気候変動の厳しさが共存する形となり、各地の当局は安全確保に追われる記念日となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c4gy51ky75vo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Chinese underground church figure Jin Mingri freed from prison</a></h3>
+    <p class="meta">BBC World News | 07/05 05:58</p>
+    <p class="summary">中国の著名な地下教会「北京錫安（シオン）教会」の牧師、金明日（ジン・ミンリ）氏が刑務所から出所した。金氏は未登録の教会を運営したとして数年にわたり拘束されていたが、刑期を終えて自由の身となった。中国当局による宗教活動への締め付けが強まる中、彼の釈放は国内外の信仰の自由を求める関係者から注目を集めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260705/k10015169311000.html" target="_blank" rel="noopener noreferrer">フランス40度超 過酷な屋根裏部屋暮らし 歴史的屋根も暑さ増幅</a></h3>
+    <p class="meta">NHK国際放送 | 07/05 08:33</p>
+    <p class="summary">フランスで気温が40度を超える猛暑が続き、屋根裏部屋での暮らしが過酷さを増している。パリなどの歴史的な街並みを象徴する亜鉛吹きの屋根が太陽光を吸収して熱を蓄えるため、室温が外気温を大幅に上回る事態となっている。冷房設備の設置が制限される歴史的建造物も多く、住民の健康被害への懸念が高まっており、都市温暖化対策が急務となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260705/k10015169121000.html" target="_blank" rel="noopener noreferrer">トランプ大統領演説 アメリカ建国250年を誇る 対立勢力批判も</a></h3>
+    <p class="meta">NHK国際放送 | 07/05 08:25</p>
+    <p class="summary">アメリカ建国250周年に合わせ、トランプ大統領が演説を行った。アメリカの歴史と誇りを強調し、偉大な国家の再建を訴える一方で、民主党などの対立勢力を厳しく批判した。選挙を見据えた政治的な色合いが濃い内容となり、建国記念日という国民的な祝祭の場においても、国内の深刻な政治的分断が浮き彫りになる形となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260705/k10015169331000.html" target="_blank" rel="noopener noreferrer">中国とロシアの海軍が合同演習実施へ 中国国防省</a></h3>
+    <p class="meta">NHK国際放送 | 07/05 07:20</p>
+    <p class="summary">中国国防省は、中国とロシアの海軍が合同軍事演習を実施すると発表した。両国の軍事協力を深め、海上での安全保障上の脅威に対処する能力を高めることが目的とされている。アメリカを中心とする西側諸国との対立が深まる中、中露が連携を強化して存在感を示す狙いがあるとみられ、アジア太平洋地域や周辺海域の緊張状態への影響が注目される。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
