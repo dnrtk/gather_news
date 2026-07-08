@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月08日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月08日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月08日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260708_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos/" target="_blank" rel="noopener noreferrer">GitLost: We Tricked GitHub&#39;s AI Agent into Leaking Private Repos</a></h3>
+    <p class="meta">Hacker News | 07/08 14:25</p>
+    <p class="summary">GitHubのAIエージェント「Copilot Workspace」を騙し、プライベートリポジトリの情報を漏洩させる手法「GitLost」が発表された。プロンプトインジェクション等を用いることで、本来アクセスできないファイルの内容を読み取らせたり、情報を外部へ送信させたりすることが可能だという。AIエージェントの権限管理とセキュリティ設計の重要性を浮き彫りにしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://neil.computer/notes/how-to-setup-minimal-zfs-nas-without-truenas/" target="_blank" rel="noopener noreferrer">How to Build a Minimal ZFS NAS Without Synology, QNAP, TrueNAS (2024)</a></h3>
+    <p class="meta">Hacker News | 07/08 12:59</p>
+    <p class="summary">SynologyやTrueNASといった既存のNAS用OSを使用せず、Ubuntu Server上で最小限のZFS環境を構築する方法を解説したガイド。複雑なWeb UIや余計な機能を排除し、コマンドラインベースで管理することで、システムの透明性とリソース効率を高めることができる。データ整合性を重視するZFSの利点を活かしつつ、シンプルで堅牢な自作NASを求めるユーザー向けの構成案となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://kb.cert.org/vuls/id/213560" target="_blank" rel="noopener noreferrer">Tenda firmware (multiple versions) contains hidden authentication backdoor</a></h3>
+    <p class="meta">Hacker News | 07/08 09:08</p>
+    <p class="summary">Tenda製の複数のルーター用ファームウェアに、認証を回避できる隠しバックドアが存在することが判明した。特定のUDPパケットを送信することで、認証なしで管理者権限の取得や任意コマンドの実行が可能になる。CERT/CCはこの脆弱性（VU#213560）を公開し、影響を受けるデバイスの使用停止や代替品の検討を推奨している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.digipres.org/the-floppy-guide/" target="_blank" rel="noopener noreferrer">Copy That Floppy – Cambridge guide for preserving data from fragile floppy disks</a></h3>
+    <p class="meta">Hacker News | 07/08 12:22</p>
+    <p class="summary">ケンブリッジ大学による、劣化しやすく壊れやすいフロッピーディスクからデータを保存・復元するためのガイド。適切なハードウェアの選定、書き込み防止措置、ディスクイメージの作成方法、長期保存のためのファイル形式の変換など、デジタルアーカイブのベストプラクティスを網羅している。貴重なレガシーデータを失わないための実践的な手順書となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://ocw.mit.edu/courses/6-001-structure-and-interpretation-of-computer-programs-spring-2005/video_galleries/video-lectures/" target="_blank" rel="noopener noreferrer">Structure and Interpretation of Computer Programs Video Lectures (1986)</a></h3>
+    <p class="meta">Hacker News | 07/08 08:57</p>
+    <p class="summary">1986年にMITで行われた、コンピュータ科学の名著『計算機プログラムの構造と解釈 (SICP)』の著者らによる伝説的なビデオ講義。Schemeを用いて、抽象化、再帰、インタープリタの構築など、プログラミングの本質的な概念を体系的に解説している。時代を超えて通用する思考法を学べる教材として、現在もMIT OpenCourseWareで無料公開されている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/kenfdev/articles/1febc0052b0d71" target="_blank" rel="noopener noreferrer">VS Code DevContainer を使わなくなった私の、LLM エージェント向け開発環境</a></h3>
+    <p class="meta">Zenn トレンド | 07/07 08:00</p>
+    <p class="summary">VS CodeのDevContainerから、LLMエージェント（Roo CodeやCline等）の活用に最適化した開発環境へ移行した経緯と構成を紹介。DevContainerの重量感やエージェントとの相性を考慮し、Dockerベースの軽量で隔離された環境とdotfilesによる管理を組み合わせる手法を解説。AI時代における「エージェントが自律的に動きやすい環境」の作り方を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/avaintelligence/articles/b7d4743a448485" target="_blank" rel="noopener noreferrer">APIもDBも東京なのに、全クエリが太平洋横断していた話</a></h3>
+    <p class="meta">Zenn トレンド | 07/07 06:06</p>
+    <p class="summary">APIとデータベースを東京リージョンに配置しているにもかかわらず、全クエリが太平洋を横断して米国を経由していたトラブルの事例紹介。Prismaやサーバーレス環境の設定ミスにより、トラフィックが意図せず米国のプロキシを経由していたことが原因で、高いレイテンシが発生していた。地理的近接性とネットワーク経路は必ずしも一致しないことを示唆している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/masa20057/items/daef8174d2f43485371f?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">未経験からエンジニアを目指す方へ。「早く独立したい」と焦っていた頃の話</a></h3>
+    <p class="meta">Qiita トレンド | 07/08 01:26</p>
+    <p class="summary">未経験からエンジニアになり「早く独立したい」と焦っていた過去を振り返り、学習者へのアドバイスを綴った記事。独立を急ぐあまり基礎をおろそかにせず、まずは現場での実務経験を積み、スキルの土台を固めることの重要性を強調。焦りが招くリスクや、長期的なキャリア形成において何が本当に価値を持つのかを、自身の経験に基づき語っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/08/hot-french-startup-zml-releases-free-product-to-speed-inference-across-lots-of-ai-chips/" target="_blank" rel="noopener noreferrer">Hot French startup ZML releases free product to speed inference across lots of AI chips</a></h3>
+    <p class="meta">TechCrunch | 07/08 08:00</p>
+    <p class="summary">フランスのスタートアップZMLが、多様なAIチップ（GPUやTPU等）で推論を高速化する無料ツールをリリースした。Zig言語ベースのこの製品は、特定のハードウェアに依存せず、CUDAの代替となる選択肢を提供することを目指している。開発者は異なる種類のチップを組み合わせて効率的にモデルを動かせるようになり、AIインフラのコスト削減が期待される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/08/sambanova-draws-1b-at-11b-valuation-in-series-f-first-close/" target="_blank" rel="noopener noreferrer">AI chip maker SambaNova raises $1B at $11B valuation, 5 months after last mega round</a></h3>
+    <p class="meta">TechCrunch | 07/08 07:16</p>
+    <p class="summary">AIチップメーカーのSambaNova Systemsが、シリーズFで10億ドルの資金調達を実施し、評価額が110億ドルに達した。前回の巨額調達からわずか5ヶ月での増資となる。同社のデータスケール・アーキテクチャは、大規模言語モデル（LLM）の実行において高い効率性を誇り、NVIDIAの有力な競合として市場の期待を集めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/07/final-extension-startup-battlefield-australia-applications-now-close-july-20/" target="_blank" rel="noopener noreferrer">Final extension: Startup Battlefield Australia applications now close July 20</a></h3>
+    <p class="meta">TechCrunch | 07/07 22:30</p>
+    <p class="summary">TechCrunchが主催するスタートアップコンペティション「Startup Battlefield Australia」の応募締め切りが、7月20日まで最終延長された。オーストラリアとニュージーランドの有望なスタートアップを対象としており、選出された企業は賞金や投資家へのピッチ機会、メディア露出を得ることができる。地域のエコシステムを活性化させるための重要なイベントだ。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/university-of-pretoria-establishes-upqust-research-node-under-sa-quti-framework/" target="_blank" rel="noopener noreferrer">University of Pretoria Establishes UPQuST Research Node under SA QuTI Framework</a></h3>
+    <p class="meta">Quantum Computing Report | 07/08 03:00</p>
+    <p class="summary">プレトリア大学が、南アフリカ量子技術イニシアチブ（SA QuTI）の枠組みのもと、新たな量子研究拠点「UPQuST」を設立した。この拠点は量子物理学の研究と教育の推進を目的としており、同国における量子コンピューティングや量子通信の分野でのプレゼンス向上を目指す。若手研究者の育成や国際的な共同研究の促進が期待されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/quantum-x-labs-demonstrates-fractional-frequency-stability-in-ramsey-cpt-atomic-clock-platform/" target="_blank" rel="noopener noreferrer">Quantum X Labs Demonstrates Fractional Frequency Stability in Ramsey-CPT Atomic Clock Platform</a></h3>
+    <p class="meta">Quantum Computing Report | 07/08 02:44</p>
+    <p class="summary">Quantum X Labsが、Ramsey-CPT方式を用いた原子時計プラットフォームにおいて、極めて高い周波数安定性を実証した。この技術は、高精度なタイミングを必要とする通信やナビゲーションにおいて、デバイスの小型化と高性能化を両立させるもの。ポータブルな環境でも高精度な原子時計が利用可能になることで、防衛や民間インフラの強化に繋がる可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/pasqal-and-megazonecloud-sign-mou-for-neutral-atom-hardware-deployment-in-south-korea/" target="_blank" rel="noopener noreferrer">Pasqal and MegazoneCloud Sign MoU for Neutral-Atom Hardware Deployment in South Korea</a></h3>
+    <p class="meta">Quantum Computing Report | 07/08 02:25</p>
+    <p class="summary">量子コンピューティングのPasqal社とMegazoneCloudが、韓国での中性原子量子ハードウェアの展開に向けた覚書（MoU）を締結した。両社は協力して量子コンピューティングのクラウドサービスを提供し、韓国国内の産業界や研究機関が先端技術を利用できる環境を整備する。アジア市場における量子技術の普及を加速させる戦略的な提携となる。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cvgdlprp1r3o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Will Le Pen rise again? French nationalist leader defiant after court&#39;s ruling</a></h3>
+    <p class="meta">BBC World News | 07/08 03:22</p>
+    <p class="summary">フランスの極右政党リーダー、マリーヌ・ル・ペン氏が、公職追放の可能性を含む裁判の判決を前に強気な姿勢を見せている。資金流用疑惑を巡る裁判だが、彼女はこれを政治的動機による攻撃だと非難。次回の総選挙を見据え、支持層の結集を図っている。判決の結果次第では、フランス政治の構図が大きく変わる可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/ckg4e3lwzqzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Nato allies announce £37bn for new missile project</a></h3>
+    <p class="meta">BBC World News | 07/08 05:57</p>
+    <p class="summary">NATO同盟国は、新たな長距離ミサイル開発プロジェクトに370億ポンドを投じる計画を発表した。ロシアの脅威に対抗するため、欧州独自の防衛能力を強化することが目的。加盟国間での技術協力と生産体制の統合を進め、高精度なミサイルシステムの迅速な配備を目指す。安全保障環境の変化に対応するための大規模な軍事投資となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cr7xk8j0j2do?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Russian fuel shortages bite – but will Putin change tack in Ukraine war?</a></h3>
+    <p class="meta">BBC World News | 07/08 05:05</p>
+    <p class="summary">ロシア国内で燃料不足が深刻化しているが、プーチン大統領がウクライナでの軍事戦略を変更する兆しは見られない。製油所へのドローン攻撃や輸出制限が影響しているものの、政権は軍事支出を最優先している。経済的な圧力が国民生活に影を落としつつある中で、継戦能力を維持するための強硬姿勢を崩していない状況だ。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260708/k10015171371000.html" target="_blank" rel="noopener noreferrer">米軍がイラン攻撃 原油販売など認可取り消しも イランは非難</a></h3>
+    <p class="meta">NHK国際放送 | 07/08 08:18</p>
+    <p class="summary">米軍が中東で親イラン武装勢力の拠点を攻撃した。これに対しイラン側は「主権侵害だ」として強く非難している。米国政府はさらに、イランの原油販売などに関わる認可の取り消しを含む追加制裁を検討しており、経済的な圧力を強める構えだ。地域情勢の緊張が一段と高まっており、武力衝突の拡大が懸念されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260708/k10015171841000.html" target="_blank" rel="noopener noreferrer">台湾 “「第1列島線」中国による現状変更進む 連携し対応を”</a></h3>
+    <p class="meta">NHK国際放送 | 07/08 07:31</p>
+    <p class="summary">台湾当局は、中国が「第1列島線」において現状変更を試みる動きを加速させていると警告した。南シナ海や台湾周辺での軍事活動を強化する中国に対し、周辺諸国や国際社会が連携して対応することの重要性を訴えている。地域の平和と安定を守るため、抑止力の向上と外交的な結束を求めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260708/k10015140771000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（7月8日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 07/08 07:21</p>
+    <p class="summary">ロシアによるウクライナ侵攻の7月8日の動き。各地で激しい戦闘が続く中、被害状況や軍事動向が随時更新されている。ウクライナ軍の抵抗とロシア軍の攻撃が膠着状態にある地域もあり、国際社会による軍事支援の継続が焦点となっている。外交面での進展は依然として見通せず、緊迫した状態が継続している。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
