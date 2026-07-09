@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月09日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月09日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月09日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260709_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://apnews.com/article/john-deere-right-to-repair-agriculture-equipment-cb7514ffedb95c130a976af661f2bc02" target="_blank" rel="noopener noreferrer">John Deere owners will get the right to repair equipment under FTC settlement</a></h3>
+    <p class="meta">Hacker News | 07/09 08:37</p>
+    <p class="summary">ジョン・ディア社は、農家が自身の機器を修理することを認めるという米連邦取引委員会（FTC）との和解に合意しました。これにより、農家はこれまで制限されていた修理用マニュアル、ツール、およびソフトウェアへのアクセスが可能になります。この動きは「修理する権利」運動にとって大きな勝利であり、農業従事者が高額なメーカー修理に頼らず、迅速かつ安価に機器をメンテナンスできるようになることが期待されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://connectsci.au/news/news-parent/9703/Spider-venom-kills-varroa-mites-without-harming" target="_blank" rel="noopener noreferrer">Spider venom kills varroa mites without harming honeybees</a></h3>
+    <p class="meta">Hacker News | 07/09 14:14</p>
+    <p class="summary">科学者たちは、ミツバチには無害で、ミツバチの天敵であるヘミダニ（バロアダニ）だけを殺す特殊なクモの毒素を特定しました。この発見は、ミツバチの個体数減少を防ぐための新たな手段として注目されています。従来の農薬はミツバチ自体にも悪影響を及ぼす可能性がありましたが、この毒素は特定の標的にのみ作用するため、生態系に優しい害虫駆除の実現に期待が寄せられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/malisper/pgrust" target="_blank" rel="noopener noreferrer">Postgres rewritten in Rust, now passing 100% of the Postgres regression tests</a></h3>
+    <p class="meta">Hacker News | 07/09 15:18</p>
+    <p class="summary">PostgreSQLをRust言語で書き直すプロジェクト「pgrust」が、Postgresの全回帰テストに100%合格しました。このプロジェクトの目的は、Rustのメモリ安全性と現代的な機能を活用して、データベースの信頼性と保守性を向上させることです。既存のPostgresとの互換性を維持しつつ、システムプログラミングにおけるRustの利点を実証した画期的な成果となっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.howtogeek.com/why-developers-are-ditching-github-for-codeberg-and-self-hosting-alternatives/" target="_blank" rel="noopener noreferrer">Why developers are ditching GitHub for Codeberg and self-hosting alternatives</a></h3>
+    <p class="meta">Hacker News | 07/09 17:22</p>
+    <p class="summary">開発者がGitHubを離れ、Codebergやセルフホスティングの代替サービスに移行する動きが強まっています。主な理由は、GitHubのソースコードがAI（Copilot）の学習に無断で使用されていることへの懸念、サービスの中央集権化、およびプロプライエタリなソフトウェアへの依存に対する反発です。オープンソースの理念に基づいた、より透明性の高いプラットフォームへの需要が高まっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://nexte.st/" target="_blank" rel="noopener noreferrer">Cargo-nextest: 3x faster than cargo test, per-test isolation, first-class CI</a></h3>
+    <p class="meta">Hacker News | 07/06 13:19</p>
+    <p class="summary">「Cargo-nextest」は、Rust標準のテストランナーよりも最大3倍高速に動作する新しいテスト実行ツールです。各テストを独立したプロセスで実行する分離機能、失敗したテストの再試行、CI環境との高度な統合などを提供します。大規模なプロジェクトにおいてテスト時間を大幅に短縮し、開発効率を向上させることが可能です。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/branbran/articles/2f9538ef0301c7" target="_blank" rel="noopener noreferrer">Next.js 16.3でTurbopackのメモリ使用量を劇的に減らした話</a></h3>
+    <p class="meta">Zenn トレンド | 07/09 00:30</p>
+    <p class="summary">Next.js 16.3において、ビルドエンジンのTurbopackのメモリ使用量を劇的に削減した手法について解説されています。不要なデータのキャッシュ削除やデータ構造の最適化により、大規模なプロジェクトでのメモリ不足問題を解消し、開発サーバーの起動時間やHMR（Hot Module Replacement）の安定性が大幅に向上しました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/yoshit0oo/articles/lambda-microvms-traininglab" target="_blank" rel="noopener noreferrer">Lambda MicroVMsで研修用の隔離ラボを人数分オンデマンドに払い出す</a></h3>
+    <p class="meta">Zenn トレンド | 07/08 12:53</p>
+    <p class="summary">AWS Lambda上でFirecracker MicroVMを活用し、研修用の隔離されたラボ環境を参加者ごとにオンデマンドで自動発行する仕組みについて紹介されています。各ユーザーに独立した実行環境を低コストかつ高速に提供でき、事前の環境構築の手間を省きつつ、リソースの共有による干渉を防ぐことが可能になります。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/shimpei_takeda/articles/b63ecf44777fab" target="_blank" rel="noopener noreferrer">設計判断を属人化させないために、DDDの判断フローをWebアプリにしてみた</a></h3>
+    <p class="meta">Zenn トレンド | 07/08 09:30</p>
+    <p class="summary">ドメイン駆動設計（DDD）における設計判断を属人化させないため、DDDの判断フローを可視化・標準化するWebアプリを開発した事例です。フローチャート形式で設計の意思決定を支援することで、チーム全体での一貫した設計思想の共有と、ジュニアエンジニアの教育、さらには過去の判断プロセスの記録を容易にします。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/nogataka/items/4d2a551f89f6b4f94b01?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Claude Code の無料セキュリティ監査プラグインで脆弱性を自動検出・修正してみる</a></h3>
+    <p class="meta">Qiita トレンド | 07/06 11:00</p>
+    <p class="summary">Claude Codeの無料セキュリティ監査プラグインを使用して、コード内の脆弱性を自動で検出し、修正するプロセスを解説しています。AIを活用することで、従来の静的解析では見逃されがちな論理的な脆弱性の特定が可能になり、開発プロセスの初期段階で迅速にセキュリティを強化できるメリットが強調されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/y_wakai/items/e4ba31be43d518b9fdbc?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AIP合格記：試験対策がてらBedrockを使って弱点特化した問題を作らせる学習システムを自作した</a></h3>
+    <p class="meta">Qiita トレンド | 07/09 01:04</p>
+    <p class="summary">AWS認定AIプラクティショナー（AIP）試験対策として、Amazon Bedrockを利用した自作学習システムの構築記です。自身の苦手分野を分析し、それに特化した模擬問題をAIに生成させることで、効率的に学習を進める手法が紹介されています。AI試験の対策に生成AI自体を活用する、実践的でユニークな取り組みです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/08/truecaller-clashes-with-indias-telecom-regulator-over-anti-spam-rules/" target="_blank" rel="noopener noreferrer">Truecaller clashes with India’s telecom regulator over anti-spam rules</a></h3>
+    <p class="meta">TechCrunch | 07/09 02:30</p>
+    <p class="summary">発信者識別サービスのTruecallerが、インドの通信規制当局（TRAI）による新しいアンチスパム規制を巡って対立しています。新規則では通信事業者がユーザーの契約名を表示することが求められており、これがTruecallerの独自のデータベースビジネスに影響を与える可能性があります。同社はプライバシー保護と利便性のバランスを主張しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/08/despite-misgivings-judge-approves-elon-musks-1-5-million-sec-settlement/" target="_blank" rel="noopener noreferrer">Despite ‘misgivings,’ judge approves Elon Musk’s $1.5M SEC settlement</a></h3>
+    <p class="meta">TechCrunch | 07/08 23:11</p>
+    <p class="summary">米連邦地裁の判決により、イーロン・マスク氏と米証券取引委員会（SEC）との間の150万ドルの和解が承認されました。これは2022年のTwitter（現X）買収に関する調査に関連するものです。判決を下した判事は、手続き上の懸念や「疑念」を抱きつつも、最終的には和解案が妥当であるとして受け入れました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/08/lovable-reportedly-in-talks-to-double-its-valuation-to-13-2b/" target="_blank" rel="noopener noreferrer">Lovable reportedly in talks to double its valuation to $13.2B</a></h3>
+    <p class="meta">TechCrunch | 07/08 22:41</p>
+    <p class="summary">ソフトウェア開発プラットフォームを運営するLovable社が、企業価値を倍増させ、132億ドル（約2兆円）に引き上げるための出資交渉を行っていると報じられました。AIを活用した高度な開発支援機能への期待が投資家の間で高まっており、テック業界における同社の評価が急速に上昇していることを示唆しています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c9v229434p2o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Democrat Graham Platner suspends campaign for key US Senate race after assault allegation</a></h3>
+    <p class="meta">BBC World News | 07/09 02:18</p>
+    <p class="summary">米上院選の有力候補であった民主党のグレアム・プラトナー氏が、自身に対する暴行疑惑を受けて選挙戦から撤退することを発表しました。この疑惑は党内に大きな衝撃を与えており、重要な議席を争う今後の選挙戦の行方に大きな影響を及ぼすと見られています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c20ylnn8wqgo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Platner&#39;s disastrous candidacy exposes rifts that could dampen Democrats&#39; Senate hopes</a></h3>
+    <p class="meta">BBC World News | 07/09 06:28</p>
+    <p class="summary">グレアム・プラトナー氏の不名誉な撤退は、民主党内の深刻な亀裂を浮き彫りにしました。この混乱は上院の過半数維持を目指す民主党の期待に冷や水を浴びせる可能性があり、候補者選定のプロセスや党の結束力、そして今後の選挙戦略の妥当性が厳しく問われる事態となっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260709/k10015172491000.html" target="_blank" rel="noopener noreferrer">ベネズエラ大地震発生2週間 暫定大統領 復興進める姿勢強調</a></h3>
+    <p class="meta">NHK国際放送 | 07/09 08:34</p>
+    <p class="summary">ベネズエラで発生した大規模地震から2週間が経過し、暫定大統領は復興作業を加速させる姿勢を強調しました。被災地のインフラ復旧や住宅支援が急務となる中、国内外からの支援を募りながら、国民の生活再建と国家の安定に向けた強い決意を示しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260709/k10015172831000.html" target="_blank" rel="noopener noreferrer">韓国最高裁 「非常戒厳」拘束妨害でユン前大統領に懲役7年</a></h3>
+    <p class="meta">NHK国際放送 | 07/09 07:49</p>
+    <p class="summary">韓国の最高裁判所は、過去の「非常戒厳」宣告の際、国会議員らの拘束を指示して公務を妨害した罪に問われていたユン前大統領に対し、懲役7年の実刑判決を言い渡しました。この判決により、当時の超法規的な措置による憲法秩序の混乱に対する法的責任が厳しく問われる形となりました。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
