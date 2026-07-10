@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月10日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月10日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月10日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260710_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://nevo-project.epfl.ch/" target="_blank" rel="noopener noreferrer">AI-generated videos to maximally drive a target brain region</a></h3>
+    <p class="meta">Hacker News | 07/10 16:39</p>
+    <p class="summary">EPFLの研究チームは、AIを用いて特定の脳領域の活動を最大限に誘発するビデオを生成するプロジェクト「NEVO」を発表した。この手法はマカク猿の視覚皮質を対象としており、深層ニューラルネットワークと進化的アルゴリズムを組み合わせることで、特定のニューロン群を強く刺激する映像を合成する。これにより、視覚システムがどのように情報を処理し、複雑な動的シーンを認識しているのかを解明する手がかりが得られると期待されている。脳活動とAIモデルの相関を深めることで、神経科学と人工知能の両分野に新たな知見をもたらす研究となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://kotaku.com/a-train-sim-created-by-just-one-person-is-being-called-the-best-ever-made-2000699429" target="_blank" rel="noopener noreferrer">Train sim created by just one person is being called the best ever made</a></h3>
+    <p class="meta">Hacker News | 07/05 17:40</p>
+    <p class="summary">一人の開発者によって制作された鉄道シミュレーションゲームが、これまでに作られた中で最高傑作であると評価されている。この個人開発によるプロジェクトは、大手パブリッシャーが制作するAAAタイトルのクオリティを凌駕するほどのリアリズムと詳細な作り込みを実現しており、鉄道ファンやゲーマーの間で大きな注目を集めている。グラフィックの美しさだけでなく、車両の挙動や操作感、システム面においても妥協のない設計が施されており、小規模な開発体制がもたらす熱意とこだわりが、シミュレーター界における新たな基準を打ち立てたと称賛されている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/m2lab/articles/typescript-version-benchmark" target="_blank" rel="noopener noreferrer">同じ React アプリで TypeScript 5.9 / 6.0 / 7.0 の型チェックを比べた</a></h3>
+    <p class="meta">Zenn トレンド | 07/09 13:49</p>
+    <p class="summary">同じReactアプリケーションを用いて、TypeScriptのバージョン（5.9、6.0、7.0）ごとの型チェック性能を比較した検証記事。記事では、大規模なコードベースにおいて新バージョンがどのようにパフォーマンスや型推論の精度に影響するかをベンチマーク測定している。特に、新しいコンパイラ最適化によるチェック時間の短縮や、複雑な型定義に対するエラー検出能力の向上について詳しく解説。開発者が将来のアップグレードに向けて、どの程度の速度改善や破壊的変更を期待すべきかの指標を提示しており、TypeScriptエコシステムの進化を技術的な視点から考察している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/xtm_blog/articles/9b7fa5f94eae28" target="_blank" rel="noopener noreferrer">ミューテーションテストのススメ</a></h3>
+    <p class="meta">Zenn トレンド | 07/09 12:51</p>
+    <p class="summary">テストコードの有効性を測定するための手法である「ミューテーションテスト」を推奨する技術記事。通常のコードカバレッジ（網羅率）だけではテストの質を担保できないという課題に対し、ソースコードを意図的に変更（ミュータントを作成）し、既存のテストがそれを検知できるかを確認する手法を紹介している。ミュータントが「生き残る」ことはテストの不備を意味し、これを解消することで真に堅牢なテストスイートを構築できると主張。導入のメリットや代表的なツール、実践的なアプローチについて解説し、品質向上のための新たなステップを提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/rehabforjapan/articles/composer-to-cloud-run-jobs" target="_blank" rel="noopener noreferrer">Claude Codeと挑む技術的負債の返済 — 止められない本番データ基盤を、一人で載せ替えた話</a></h3>
+    <p class="meta">Zenn トレンド | 07/09 08:23</p>
+    <p class="summary">開発者が一人で、運用中の本番データ基盤をGoogle Cloud ComposerからCloud Run Jobsへと移行した体験談。この移行プロジェクトでは、AI開発ツール「Claude Code」を駆使して技術的負債の返済と基盤の刷新を同時に進めた。サービスを停止できない制約の中で、AIを活用して複雑なコードの理解やリファクタリングを効率化し、大幅なコスト削減と運用の簡素化を実現した。単なるツール紹介に留まらず、AIと協調しながら大規模なインフラ変更を一人で成し遂げるための実践的な知見や、開発プロセスにおけるAIの有用性が強調されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/Syoitu/items/78d45bee1160d059c972?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">そのスキル、本当に効いてる？ Agent Skills を「評価」する3つのツールを比べてみた</a></h3>
+    <p class="meta">Qiita トレンド | 07/09 07:17</p>
+    <p class="summary">LLM（大規模言語モデル）エージェントの能力である「Agent Skills」を評価するための3つのツールを比較・検証した記事。AIエージェントがタスクを遂行する際の正確性や効率をどのように測定すべきかという課題に対し、各ツールの特徴や得意分野、導入の難易度を整理している。具体的には、エージェントが生成したコードの実行結果や推論プロセスの妥当性を評価する基準に焦点を当て、開発者が自らのプロジェクトに最適な評価手法を選択するための指針を提供。エージェント開発における客観的な評価指標の重要性を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/yamada-iknow/items/5e5ec4d5e96b12fbc75c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">ナレッジ83件を2時間で作った。でも腐るのは、もっと速かった</a></h3>
+    <p class="meta">Qiita トレンド | 07/09 22:00</p>
+    <p class="summary">AIを活用して2時間で83件ものナレッジ記事を量産したものの、情報の陳腐化（腐敗）が予想以上に速かったという失敗談。大量の記事を短時間で作成しても、情報の鮮度や正確性を維持するメンテナンス体制が整っていなければ、すぐに役立たずの「ゴミ」と化してしまう実態を報告している。記事の数だけを追うのではなく、質の担保とライフサイクル管理の重要性を再確認しており、AIによるコンテンツ生成の容易さが招く情報の氾濫と、それを管理する人間の責任について警鐘を鳴らしている。効率性よりも、継続的に価値を提供し続けるための仕組み作りを訴える内容。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/Suemura/items/ce4cb4290e4e711fdc98?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">最近のDynamoDB設計事情：single-table偏重の見直しとGSIマルチ属性キー</a></h3>
+    <p class="meta">Qiita トレンド | 07/10 00:58</p>
+    <p class="summary">Amazon DynamoDBの設計思想における最新の動向を解説した記事。かつて推奨されていた「Single-table design（単一テーブル設計）」への過度な偏重を見直し、柔軟性や拡張性を考慮した設計への回帰を提案している。具体的には、シングルテーブルの複雑さを避けるためのアプローチや、グローバルセカンダリインデックス（GSI）におけるマルチ属性キーの活用方法について詳述。ビジネス要件の変化に対応しやすいデータモデリングの手法を紹介しており、DynamoDBをより効果的かつ持続可能な形で運用するための実践的なテクニックを共有している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/09/after-apple-indias-smartphone-manufacturing-boom-enters-new-phase-with-vivo-jv/" target="_blank" rel="noopener noreferrer">After Apple, India’s smartphone manufacturing boom enters new phase with Vivo JV</a></h3>
+    <p class="meta">TechCrunch | 07/10 04:36</p>
+    <p class="summary">インドのスマートフォン製造ブームが新たな段階に突入した。Appleの成功に続き、中国のVivoがインド企業との合弁事業（JV）を通じて現地生産を拡大する。この動きは、インド政府が掲げる「メイク・イン・インディア」政策の成果であり、製造拠点としてのインドの重要性がさらに高まっていることを示している。Vivoの合弁事業は、地元のサプライチェーンを強化し、雇用を創出すると同時に、中国企業に対するインド当局の規制リスクを軽減する狙いもあると見られる。スマートフォン業界の生産拠点が中国からインドへとシフトする動きが加速している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/09/openai-says-gpt-5-6-is-the-preferred-model-for-microsoft-copilot-amid-breakup-chatter/" target="_blank" rel="noopener noreferrer">OpenAI says GPT 5.6 is the ‘preferred model’ for Microsoft Copilot 365 amid breakup chatter</a></h3>
+    <p class="meta">TechCrunch | 07/10 00:16</p>
+    <p class="summary">OpenAIは、Microsoft Copilot 365の「推奨モデル」としてGPT 5.6を位置づけていると発表した。一部で囁かれている両社の不仲説や提携解消の噂を打ち消す形となった。GPT 5.6は、ビジネス用途に最適化された高い処理能力と推論精度を備えており、Microsoftの生産性ツールとの統合がさらに深まる。OpenAIは、Microsoftとの強力なパートナーシップが継続していることを強調し、今後も共同でAI技術の社会実装を進めていく姿勢を示した。この発表により、エンタープライズ向けAI市場における両社の優位性が改めて確認された。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/09/dont-want-to-invest-in-elon-musk-two-new-etfs-explicitly-exclude-him/" target="_blank" rel="noopener noreferrer">Don’t want to invest in Elon Musk? Two new ETFs explicitly exclude him</a></h3>
+    <p class="meta">TechCrunch | 07/10 00:13</p>
+    <p class="summary">イーロン・マスク氏に関連する企業への投資を避けたい投資家向けに、同氏を明示的に除外する2つの新しいETF（上場投資信託）が登場した。これらのETFは、テスラやSpaceXなど、マスク氏が率いる、あるいは強い影響力を持つ企業の株式をポートフォリオから排除している。マスク氏の予測不能な言動や政治的発言が企業価値に与えるリスクを懸念する層や、同氏の経営スタイルに反対する投資家の需要に応えるものだ。特定の経営者を投資対象から外すというユニークなアプローチは、ESG投資の新たな形態や、投資家の好みの多様化を反映している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/sas-unveils-quantum-lab-on-viya-platform-combining-emulated-workloads-with-a-physics-first-auditing-approach/" target="_blank" rel="noopener noreferrer">SAS Unveils Quantum Lab on Viya Platform, Combining Emulated Workloads with a “Physics-First” Auditing Approach</a></h3>
+    <p class="meta">Quantum Computing Report | 07/10 05:25</p>
+    <p class="summary">SASは、同社のViyaプラットフォーム上に「Quantum Lab」を開設した。このラボは、エミュレートされた量子ワークロードと「フィジックス・ファースト（物理学優先）」の監査アプローチを組み合わせたものである。量子コンピューティングの実用化に向け、企業が量子アルゴリズムをシミュレーションし、その精度や信頼性を検証できる環境を提供する。物理法則に基づいた厳格な監査プロセスを導入することで、量子計算の結果が現実のビジネス課題にどのように適用できるかを明確にし、量子技術の導入に伴うリスクの軽減と最適化を図ることを目的としている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/shanghai-quantum-sensing-intelligence-secures-tens-of-millions-of-yuan-in-angel-round-to-scale-photonic-sensing-infrastructure/" target="_blank" rel="noopener noreferrer">Shanghai Quantum Sensing Intelligence Secures Tens of Millions of Yuan in Angel Round to Scale Photonic Sensing Infrastructure</a></h3>
+    <p class="meta">Quantum Computing Report | 07/10 04:58</p>
+    <p class="summary">上海を拠点とする「Shanghai Quantum Sensing Intelligence」が、エンジェルラウンドで数千万人民元（数億円規模）の資金調達を実施した。この資金は、光子センシング（フォトニック・センシング）インフラの規模拡大に充てられる。同社は量子計測技術を活用し、高精度なセンシングソリューションを産業向けに展開することを目指している。今回の調達成功は、中国における量子技術の社会実装への期待の高さを示しており、インフラ監視や精密測定など、幅広い分野での活用が期待される技術基盤の構築を加速させることになる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/qiz-security-raises-17m-seed-round-to-scale-enterprise-cryptographic-posture-platforms/" target="_blank" rel="noopener noreferrer">QIZ Security Raises $17M Seed Round to Scale Enterprise Cryptographic Posture Platforms</a></h3>
+    <p class="meta">Quantum Computing Report | 07/10 04:33</p>
+    <p class="summary">サイバーセキュリティ企業のQIZ Securityが、シードラウンドで1,700万ドルの資金を調達した。同社は、企業の暗号化状態を管理・最適化する「暗号化ポスチャプラットフォーム」の構築を目指している。量子コンピュータの発展により従来の暗号技術が脅かされる「クアンタム・レディ（量子耐性）」への対応が急務となる中、企業が自社のセキュリティインフラを量子耐性のあるものへと円滑に移行できるよう支援する。今回の資金調達により、製品開発と市場展開を加速させ、次世代の暗号標準に対応したエンタープライズ向けソリューションを強化する。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c5yzm8m4peeo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Huge crowds in Mashhad as Iran&#39;s late supreme leader is buried</a></h3>
+    <p class="meta">BBC World News | 07/09 23:18</p>
+    <p class="summary">イランの聖地マシュハドにて、亡くなった最高指導者の埋葬式が執り行われ、膨大な数の群衆が集まった。国葬の最終段階として行われたこの儀式には、全国から支持者が詰めかけ、街は哀悼の意を表す人々で埋め尽くされた。最高指導者の死はイランの政治体制において極めて重要な出来事であり、後継者問題や今後の国内外の政策への影響が注視されている。厳重な警備の中で行われた葬儀の様子は、国家の団結を象徴する行事として国営メディアで大々的に報じられ、支持者たちの深い悲しみと体制への忠誠心が浮き彫りとなった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cpv3e8y39j7o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Ukrainian agent accused of murdering Monaco bomb suspect changes story</a></h3>
+    <p class="meta">BBC World News | 07/09 20:47</p>
+    <p class="summary">モナコでの爆発事件に関与した疑いで告発されているウクライナ人のエージェントが、証言を一転させた。当初の供述とは異なる内容を語り始めており、事件の背後関係や動機についての捜査は複雑化している。この事件は国際的な注目を集めており、政治的な陰謀や諜報活動が絡んでいる可能性も指摘されている。容疑者の供述の変化により、裁判の行方や他国との外交関係への影響も懸念されており、当局は慎重に裏付け捜査を進めている。事件の真相解明に向けた法的なプロセスが続く中、新たな証拠や関係者の証言が待たれている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cwylznzjk04o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Palestinians mourn Gaza World Cup screenings organiser killed in Israeli strike</a></h3>
+    <p class="meta">BBC World News | 07/09 21:04</p>
+    <p class="summary">ガザ地区でワールドカップのパブリックビューイングを企画・運営していた男性が、イスラエルによる空爆で死亡し、パレスチナの人々がその死を悼んでいる。この男性は、厳しい封鎖と紛争の中に置かれた地域の人々に、サッカーを通じてささやかな喜びと団結の場を提供していた人物として知られていた。彼の死は地元のコミュニティに深い衝撃を与えており、日常の楽しみを奪われた悲しみが広がっている。この事件は、ガザにおける民間人の犠牲と、紛争が人々の文化的な生活や希望に与える甚大な影響を改めて浮き彫りにした。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260710/k10015173791000.html" target="_blank" rel="noopener noreferrer">南シナ海仲裁判断10年 比外相「国際秩序の揺るぎない基盤」</a></h3>
+    <p class="meta">NHK国際放送 | 07/10 08:54</p>
+    <p class="summary">南シナ海における中国の領有権主張を退けた常設仲裁裁判所の判断から10年を迎え、フィリピンの外相は、この判断が「国際秩序の揺るぎない基盤」であるとの声明を発表した。外相は、法の支配に基づく海洋秩序の重要性を強調し、中国に対して仲裁判断を尊重し、国際法を遵守するよう改めて求めた。これに対し、中国側は一貫して判断を認めない姿勢を崩しておらず、周辺海域での活動を継続している。この節目に際し、地域情勢の安定に向けた国際社会の連携と、紛争の平和的解決に向けた取り組みが再び焦点となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260710/k10015140791000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（7月10日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 07/10 07:46</p>
+    <p class="summary">7月10日のロシアによるウクライナ軍事侵攻の動き。ロシア軍はウクライナ東部および南部での攻撃を継続しており、各地で激しい戦闘が報告されている。ウクライナ軍は防衛体制を維持しつつ、一部地域での反撃を試みている。また、ロシアによる都市部へのミサイル攻撃やドローンによるインフラ破壊も続いており、市民生活への甚大な被害が懸念されている。一方で、国際社会からの軍事・人道支援の継続や、停戦に向けた外交的な模索も並行して行われているが、事態の打開には至っていない。戦況は依然として不透明な状況が続いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260710/k10015173691000.html" target="_blank" rel="noopener noreferrer">米オープンAI 新型AI 一般への提供開始 「ミュトス」超えも</a></h3>
+    <p class="meta">NHK国際放送 | 07/10 07:09</p>
+    <p class="summary">米OpenAIは、新型AIモデル「ミュトス（Mythos）」の一般提供を開始した。この新モデルは、従来のモデルを大幅に上回る性能を備えており、高度な推論能力や自然な言語生成において飛躍的な進化を遂げたとされている。特定のベンチマークテストでは、これまで最高峰とされていた既存モデルを凌駕するスコアを記録しており、AIの可能性をさらに広げるものとして期待されている。OpenAIは、この新型AIを通じて、より複雑な問題解決やクリエイティブな活動を支援する意向であり、幅広い業界での活用が見込まれている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
