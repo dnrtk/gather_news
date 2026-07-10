@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月11日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月11日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月11日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260711_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.jeffgeerling.com/blog/2026/quadrf-can-spot-drones-and-see-wifi-through-my-wall/" target="_blank" rel="noopener noreferrer">QuadRF can spot drones and see WiFi through my wall</a></h3>
+    <p class="meta">Hacker News | 07/11 00:59</p>
+    <p class="summary">QuadRFは、電波を利用してドローンを検知したり、壁越しにWiFi信号を可視化したりできる技術です。Jeff Geerling氏のブログでは、ソフトウェア無線（SDR）を活用して周囲の無線環境を詳細に把握する様子が紹介されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.smithsonianmag.com/smart-news/spider-silk-loses-top-spot-natures-strongest-material-snails-teeth-180954346/" target="_blank" rel="noopener noreferrer">Snails&#39; teeth beats spider silk as nature&#39;s strongest material (2015)</a></h3>
+    <p class="meta">Hacker News | 07/11 01:37</p>
+    <p class="summary">2015年の研究で、カサガイ（貝の一種）の歯がクモの糸を抜き、自然界で最強の材料であることが判明しました。この歯は極小の鉱物繊維が密に詰まった構造をしており、F1マシンや航空機の構造に応用できる可能性を秘めています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.nyc.gov/mayors-office/news/2026/07/mayor-mamdani-announces-landmark--click-to-cancel--consumer-prot" target="_blank" rel="noopener noreferrer">Mayor Mamdani Announces Landmark &#34;Click-to-Cancel&#34; Consumer Protection Rules</a></h3>
+    <p class="meta">Hacker News | 07/11 04:30</p>
+    <p class="summary">ニューヨーク市のマムダニ市長は、消費者がサブスクリプションを契約時と同じくらい簡単に解約できるようにする「クリック・トゥ・キャンセル」規則を発表しました。これは、不当な契約維持を防ぐための画期的な消費者保護策です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://vfxblog.com/2017/08/23/the-tech-of-terminator-2-an-oral-history/" target="_blank" rel="noopener noreferrer">The tech of &#39;Terminator 2&#39; – an oral history (2017)</a></h3>
+    <p class="meta">Hacker News | 07/11 01:48</p>
+    <p class="summary">映画『ターミネーター2』における視覚効果（VFX）の進化を振り返るオーラル・ヒストリーです。液体金属のT-1000など、当時の最新技術を駆使した革新的なCG制作の裏側が、関係者の証言とともに詳しく語られています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://cdn.openai.com/pdf/04d1d1e4-bc75-476a-97cf-49055cd98d31/cdc_proof.pdf" target="_blank" rel="noopener noreferrer">GPT-5.6 Sol Ultra produces proof of the Cycle Double Cover Conjecture [pdf]</a></h3>
+    <p class="meta">Hacker News | 07/11 03:29</p>
+    <p class="summary">OpenAIのモデル「GPT-5.6 Sol Ultra」が、グラフ理論における難問「サイクル二重被覆予想（Cycle Double Cover Conjecture）」の証明を作成したという報告書です。AIが高度な数学的推論において人間レベルを超える成果を出したことを示唆しています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/9m/articles/d08dcc093e1bbf" target="_blank" rel="noopener noreferrer">Cloudflareだけで独自ドメインメールをGmailから送受信できるようになってた</a></h3>
+    <p class="meta">Zenn トレンド | 07/10 02:33</p>
+    <p class="summary">Cloudflareの「Email Routing」とGmailの機能を組み合わせることで、追加費用なしで独自ドメインのメールを送受信する方法を紹介しています。従来必要だった外部送信サーバー（SMTP）の設定を簡略化できる点が特徴です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/atrae/articles/08f2b2c3f2217d" target="_blank" rel="noopener noreferrer">AI が自分の結論を正当化してくるので、デバイアスして自律的にFable 5 にセカンドオピニオンを聞くSkill を作った</a></h3>
+    <p class="meta">Zenn トレンド | 07/09 22:15</p>
+    <p class="summary">AIが自身の結論を正当化する傾向（バイアス）を防ぐため、別のAI（Fable 5）に自律的にセカンドオピニオンを求めるスキルを開発した事例です。意思決定の客観性を高めるための工夫と実装方法が解説されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prumnn/items/08eddaf8e9e7cec2f390?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">新人エンジニアが進捗報告のたびに思考停止しちゃう話</a></h3>
+    <p class="meta">Qiita トレンド | 07/09 08:20</p>
+    <p class="summary">新人エンジニアが直面する、進捗報告時の「思考停止」という悩みについての体験談です。報告を単なる作業報告ではなく「相談」と捉え直し、周囲の協力を得るためのマインドセットや具体的な対策が語られています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prum_sumomo/items/299014d7667aa57fb5d4?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">5年後、AIに頼りすぎた自分を後悔する？考えてみた</a></h3>
+    <p class="meta">Qiita トレンド | 07/10 05:30</p>
+    <p class="summary">AIツールの普及に伴い、過度な依存が自身のスキル低下や思考の退化を招くのではないかという懸念を考察した記事です。5年後を見据え、AIを使いこなしつつも自身の「考える力」を維持するためのバランスについて模索しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/10/apple-sues-openai-over-alleged-trade-secret-theft/" target="_blank" rel="noopener noreferrer">Apple sues OpenAI over alleged trade secret theft</a></h3>
+    <p class="meta">TechCrunch | 07/10 20:32</p>
+    <p class="summary">アップルがOpenAIに対し、営業秘密を盗用したとして訴訟を起こしました。AI開発における知的財産や機密情報の取り扱いを巡る、テクノロジー大手企業間の激しい法的対立が浮き彫りになっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/10/filing-college-app-fizz-accuses-vc-of-sharing-confidential-startup-information-with-rival-sidechat/" target="_blank" rel="noopener noreferrer">Filing: College app Fizz accuses VC of sharing confidential startup information with rival Sidechat</a></h3>
+    <p class="meta">TechCrunch | 07/10 17:42</p>
+    <p class="summary">大学生向けアプリ「Fizz」が、投資家（VC）が自社の機密情報を競合の「Sidechat」に共有したとして提訴しました。スタートアップと投資家間の信頼関係や守秘義務、利益相反を巡る重大な訴訟案件となっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/10/sk-hynix-raises-26-5b-in-the-biggest-foreign-ipo-in-us-history-is-urged-to-build-new-us-fabs/" target="_blank" rel="noopener noreferrer">SK Hynix raises $26.5B in the biggest foreign IPO in US history, is urged to build new US fabs</a></h3>
+    <p class="meta">TechCrunch | 07/10 17:17</p>
+    <p class="summary">韓国のSKハイニックスが、米国史上最大の海外企業によるIPOで265億ドルを調達しました。同社は、供給網の安定化を求める米国側から、米国内での新たな半導体工場の建設を強く迫られています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/sealsq-and-quobly-execute-5m-commercial-accord-to-embed-post-quantum-cryptography-in-silicon-quantum-processors/" target="_blank" rel="noopener noreferrer">SEALSQ and Quobly Execute $5M Commercial Accord to Embed Post-Quantum Cryptography in Silicon Quantum Processors</a></h3>
+    <p class="meta">Quantum Computing Report | 07/10 15:18</p>
+    <p class="summary">SEALSQ社とQuobly社は、シリコン量子プロセッサに耐量子計算機暗号（PQC）を組み込むための500万ドルの商業契約を締結しました。量子コンピュータの普及を見据え、将来的な暗号解読リスクに対応するセキュリティ技術の開発を目指します。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/btq-technologies-and-ictk-finalize-architecture-for-next-generation-post-quantum-security-chip/" target="_blank" rel="noopener noreferrer">BTQ Technologies and ICTK Finalize Architecture for Next-Generation Post-Quantum Security Chip</a></h3>
+    <p class="meta">Quantum Computing Report | 07/10 15:01</p>
+    <p class="summary">BTQ TechnologiesとICTKは、次世代の耐量子セキュリティチップのアーキテクチャを完成させました。これにより、量子コンピューティング時代におけるデータ保護を目的とした、物理的複製困難関数（PUF）技術を統合した高度な暗号化ソリューションの実現に近づきました。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c8e2382jk7jo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Wildfire in southern Spain leaves at least 12 dead and 23 missing</a></h3>
+    <p class="meta">BBC World News | 07/10 14:08</p>
+    <p class="summary">スペイン南部で発生した山火事により、少なくとも12人が死亡し、23人が行方不明となっています。猛烈な熱波と強風が消火活動を妨げており、当局は近隣住民の避難を進めるとともに、大規模な捜索救助活動を展開しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c04y6wr03gxo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">East Asia braces for destructive typhoon as landslides kill 15 in Philippines</a></h3>
+    <p class="meta">BBC World News | 07/10 13:53</p>
+    <p class="summary">フィリピンで土砂崩れにより15人が死亡した後、東アジア諸国が破壊的な台風の上陸に備えています。台風の接近に伴い、暴風雨や高潮への警戒が強まっており、広範囲にわたるインフラ被害が懸念されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cy8dl9n1v3vo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Zulu king expresses regret after video captures tirade against his wife</a></h3>
+    <p class="meta">BBC World News | 07/10 16:42</p>
+    <p class="summary">ズールー王が、妻に対して激しい言葉を浴びせる様子を捉えた動画が拡散したことを受け、後悔の念を表明しました。この事件は王室の品位を巡る議論を呼び、国王は自身の行動が不適切であったことを認め、謝罪を行っています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260711/k10015174251000.html" target="_blank" rel="noopener noreferrer">ロシア“緩衝地帯拡大させる” ウクライナの攻撃強化で</a></h3>
+    <p class="meta">NHK国際放送 | 07/10 20:50</p>
+    <p class="summary">ロシアのプーチン大統領は、ウクライナによるロシア本土への攻撃を阻止するため、国境付近の「緩衝地帯」を拡大させる方針を示しました。攻撃が続く限り、戦闘地域をウクライナ側へ押し広げる構えであり、軍事作戦のさらなる激化が予想されます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260711/k10015174191000.html" target="_blank" rel="noopener noreferrer">世界の石油供給量増加も 米イラン応酬で見通し“不透明”IEA</a></h3>
+    <p class="meta">NHK国際放送 | 07/10 20:44</p>
+    <p class="summary">国際エネルギー機関（IEA）は、世界の石油供給量が増加傾向にあるものの、米国とイランの緊張の高まりにより、今後の供給見通しは不透明であるとの見解を示しました。地政学的なリスクがエネルギー市場に与える影響が注視されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260711/k10015174211000.html" target="_blank" rel="noopener noreferrer">NATO会議参加の首脳にトルコが拳銃贈呈 各国が対応に苦慮</a></h3>
+    <p class="meta">NHK国際放送 | 07/10 20:40</p>
+    <p class="summary">NATO首脳会議において、トルコ政府が参加国の首脳に記念品として拳銃を贈呈し、各国がその対応に苦慮しています。外交儀礼上の贈り物としては異例であり、武器の持ち込み制限や政治的メッセージの解釈を巡って混乱が生じています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
