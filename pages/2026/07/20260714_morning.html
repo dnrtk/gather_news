@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月14日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月14日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月14日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260714_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://get-inscribe.com/blog/apple-speech-api-benchmark.html" target="_blank" rel="noopener noreferrer">Apple&#39;s new SpeechAnalyzer API, benchmarked against Whisper and its predecessor</a></h3>
+    <p class="meta">Hacker News | 07/14 01:06</p>
+    <p class="summary">Appleの新しいSpeechAnalyzer APIを、Whisperや旧来のSpeechフレームワークと比較したベンチマーク結果。Appleシリコンに最適化されたオンデバイス処理により、高いプライバシー性能を維持しつつ、従来モデルを凌駕する実行速度と電力効率、そしてWhisperに匹敵する書き起こし精度を実現していることを示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://scottwillsey.com/building-and-shipping-mac-and-ios-apps-without-ever-opening-xcode/" target="_blank" rel="noopener noreferrer">Building and Shipping Mac and iOS Apps Without Ever Opening Xcode</a></h3>
+    <p class="meta">Hacker News | 07/14 03:22</p>
+    <p class="summary">重厚なXcode GUIを一切開かずに、MacやiOSアプリを開発・ビルド・配布する方法を解説。xcodebuildやfastlane、Swift Package Managerなどのコマンドラインツールを組み合わせることで、好みのエディタを使用し、CI/CD環境での自動化を前提とした効率的な開発フローを構築するノウハウを紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://playcode.io/blog/real-price-of-frontier-models" target="_blank" rel="noopener noreferrer">The real prices of frontier models. Tokens * Price, right?</a></h3>
+    <p class="meta">Hacker News | 07/14 03:32</p>
+    <p class="summary">最先端AIモデルの真のコストは、単なるトークン単価の計算では測れない。推論のレイテンシ、プロンプトの調整工数、インフラの冗長化費用、そしてモデルのアップデートに伴う挙動変化の修正コストなど、運用フェーズで発生する「隠れた支出」を総合的に評価することの重要性を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://werd.io/climate-gov-was-destroyed-open-data-saved-it/" target="_blank" rel="noopener noreferrer">Climate.gov was destroyed. Open data saved it</a></h3>
+    <p class="meta">Hacker News | 07/14 04:57</p>
+    <p class="summary">米国の気候変動情報サイト「Climate.gov」が政治的な理由などで閉鎖・削除の危機に直面した際、オープンデータの精神に基づいた有志によるアーカイブ活動が情報を救った事例を紹介。公的データの透明性と、政府の方針転換から科学的知見を保護するための分散型保存の意義を強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://cakehonolulu.github.io/linux-on-32x/" target="_blank" rel="noopener noreferrer">Linux on the Sega 32X. Who needs hardware synchronization primitives anyway?</a></h3>
+    <p class="meta">Hacker News | 07/14 03:18</p>
+    <p class="summary">セガの周辺機器「スーパー32X」上でLinuxを動作させるという技術的な試み。ハードウェアによる同期プリミティブが存在しないなど、極めて制限の多い特異なアーキテクチャ上で、どのようにカーネルを移植し、CPU間の同期問題を解決してOSをブートさせたのかをマニアックな視点で解説している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/minorun365/items/699e89544da8b0de300d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">あなたの技術ブログの「AI臭さ」を抜くスキル公開します</a></h3>
+    <p class="meta">Qiita トレンド | 07/13 00:56</p>
+    <p class="summary">生成AIを使って技術ブログを書く際に、読者に「AIが生成した」と感じさせないための具体的な推敲スキルを公開。自身の独自の体験談や失敗談を挿入する方法、文章の構成を意図的に崩す工夫、自然な語尾の調整など、AIの利便性を活かしつつ書き手の個性を際立たせるテクニックをまとめている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/ZiYuCai1984/items/636c7c15cd666e987a90?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">「15歳とChatGPT」より、4万6812件が退会させられたシステムについて考えたい</a></h3>
+    <p class="meta">Qiita トレンド | 07/12 07:15</p>
+    <p class="summary">「15歳とChatGPT」という話題を端緒に、プラットフォーム側が4万件以上のアカウントを一斉に強制退会させたシステムの是非を考察。AIの不適切な利用を防ぐための自動化されたBANシステムが、個別の事情を考慮せずに行使される際のリスクや、デジタル社会における利用者の権利と倫理について切り込んでいる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/13/satya-nadella-has-issued-a-shocking-warning-to-companies-using-ai/" target="_blank" rel="noopener noreferrer">Satya Nadella has issued a shocking warning to companies using AI</a></h3>
+    <p class="meta">TechCrunch | 07/13 20:59</p>
+    <p class="summary">Microsoftのサティア・ナデラCEOが、AIを導入する企業に対し衝撃的な警告を発した。急速なAI導入によるセキュリティリスクの増大や、AIへの過度な依存がビジネスモデルの脆弱性を生む可能性を指摘。単なる効率化だけでなく、堅牢な倫理的枠組みと人間によるガバナンスが不可欠であることを説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/13/apple-says-former-employee-exploited-rare-bug-to-download-confidential-files-after-leaving-for-openai/" target="_blank" rel="noopener noreferrer">Apple says former employee exploited ‘rare’ bug to download confidential files after leaving for OpenAI</a></h3>
+    <p class="meta">TechCrunch | 07/13 20:00</p>
+    <p class="summary">Appleは、OpenAIへ転職した元従業員が、希少なセキュリティバグを悪用して機密ファイルを不正にダウンロードしたとして提訴した。退職後もシステムにアクセス可能な脆弱性を利用したとされるこの問題は、テック大手間の激しい人材争奪戦と、高度な技術機密を保護することの難しさを改めて浮き彫りにしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/13/the-wildest-allegations-in-apples-trade-secrets-lawsuit-against-openai/" target="_blank" rel="noopener noreferrer">The wildest allegations in Apple’s trade secrets lawsuit against OpenAI</a></h3>
+    <p class="meta">TechCrunch | 07/13 18:22</p>
+    <p class="summary">AppleがOpenAIを相手取って起こした営業秘密侵害訴訟について、その衝撃的な主張内容を詳報。AIモデルの学習データに関する不正取得の疑惑や、重要人物の引き抜き工作に関する過激な内部告発など、AI業界の覇権を争う両社の対立が、法廷闘争という形で激化している背景を解説している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/chips-ju-and-pasqal-launch-e50m-57-2m-usd-q-planet-pilot-line-to-industrialize-neutral-atom-quantum-chips/" target="_blank" rel="noopener noreferrer">Chips JU and Pasqal Launch €50M ($57.2M USD) Q-PLANET Pilot Line to Industrialize Neutral Atom Quantum Chips</a></h3>
+    <p class="meta">Quantum Computing Report | 07/13 08:15</p>
+    <p class="summary">欧州の「Chips JU」と量子計算企業のPasqalが、5000万ユーロを投じて「Q-PLANET」パイロットラインを立ち上げた。中性原子方式の量子チップの工業化を目指すプロジェクトで、欧州における量子コンピューティングの製造基盤を強化し、研究段階から実用的な商用生産へと移行させる大きな一歩となる。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c8d2vn38dy1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump reinstates Iran port blockade and vows 20% charge on cargo passing through Hormuz</a></h3>
+    <p class="meta">BBC World News | 07/13 20:57</p>
+    <p class="summary">トランプ米大統領がイランに対する海上封鎖の再開を宣言し、ホルムズ海峡を通過する貨物に20％の対価を課す方針を表明した。中東の地政学リスクを劇的に高めるこの措置は、国際的なエネルギー供給網や物流コストに甚大な影響を及ぼす可能性があり、周辺諸国や国際社会からの強い反発を招いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cp9ld3p324jo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Briton tells of surviving Spain wildfire in car as wife and friends died trying to run to safety</a></h3>
+    <p class="meta">BBC World News | 07/13 17:31</p>
+    <p class="summary">スペインで発生した大規模な山火事から生還した英国人男性が、悲劇的な体験を語った。迫り来る炎から逃れるため、男性は車内に留まって生き延びたが、車を捨てて逃げようとした妻や友人たちは犠牲となった。猛烈なスピードで延焼する火災の恐怖と、極限状態での生存判断の明暗が浮き彫りになっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cp8r002gdevo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Hungary parliament votes to remove president from office</a></h3>
+    <p class="meta">BBC World News | 07/13 20:39</p>
+    <p class="summary">ハンガリー議会は、大統領を解任する決議を可決した。政治的スキャンダルや憲法解釈を巡る対立が背景にあると見られ、オルバン政権下での政治的緊張が一段と深刻化している。この決定は同国の民主主義の現状を問うものとして、EUとの関係や今後の国内政局に大きな影響を与えることが予想される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260714/k10015176181000.html" target="_blank" rel="noopener noreferrer">ベネズエラ大地震 死者4500人超に 捜索は難航</a></h3>
+    <p class="meta">NHK国際放送 | 07/13 20:44</p>
+    <p class="summary">ベネズエラで発生した大規模な地震により、これまでに4500人以上の死亡が確認される甚大な被害が出ている。倒壊した建物が広範囲に及び、余震の恐れやインフラの寸断によって救助活動は難航を極めている。国際社会に対し、医療支援や救援物資の提供といった緊急の援助が呼びかけられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260714/k10015176161000.html" target="_blank" rel="noopener noreferrer">トランプ大統領「海上封鎖再開 20％対価も」 イラン反発</a></h3>
+    <p class="meta">NHK国際放送 | 07/13 20:34</p>
+    <p class="summary">トランプ米大統領がイランへの海上封鎖再開と、ホルムズ海峡を通過する貨物への20％の対価徴収を表明。これに対し、イラン側は国際法違反として猛烈に反発している。原油輸送の要衝を巡る緊張がかつてないほど高まっており、原油価格の高騰や世界経済への悪影響が懸念される事態となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260713/k10015175941000.html" target="_blank" rel="noopener noreferrer">韓国株価8％超の大幅な下落 売買を一時的に中断する措置も</a></h3>
+    <p class="meta">NHK国際放送 | 07/13 12:58</p>
+    <p class="summary">韓国の株式市場で、総合株価指数が8％を超える記録的な暴落を記録した。市場の混乱を沈静化させるため、取引を一時的に強制中断する「サーキットブレーカー」が発動される異例の事態となった。米中間の地政学的な緊張や世界的な景気後退への懸念が背景にあると見られ、投資家の間で動揺が広がっている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
