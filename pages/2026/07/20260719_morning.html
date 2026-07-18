@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月19日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月19日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月19日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260719_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://old.reddit.com/r/math/comments/1uxj3cy/after_openais_cdc_proof_announcement_gpt56_used_a/" target="_blank" rel="noopener noreferrer">GPT-5.6 used a prompt to close a 30-year gap in convex optimization</a></h3>
+    <p class="meta">Hacker News | 07/18 22:00</p>
+    <p class="summary">OpenAIのGPT-5.6が、特定のプロンプトを用いることで、凸最適化分野における30年来の難問を解決したというニュースが話題になっています。これはOpenAIによる「CDC証明」の発表に続くもので、AIが高度な数学的理論の進展において重要な役割を果たした事例として注目されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://haxxorwpm.0s.is/" target="_blank" rel="noopener noreferrer">Typing Speed Test, but for Developers</a></h3>
+    <p class="meta">Hacker News | 07/19 04:38</p>
+    <p class="summary">開発者向けに特化したタイピング速度測定テスト「HaxxorWPM」の紹介です。一般的な文章ではなく、コードのシンタックスやプログラミング特有の記法を用いることで、実際の開発業務に近い環境でのタイピングスキルを測定できるツールとなっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.benlandautaylor.com/p/if-you-build-it-they-will-come" target="_blank" rel="noopener noreferrer">If You Build It, They Will Come</a></h3>
+    <p class="meta">Hacker News | 07/19 00:37</p>
+    <p class="summary">「作れば、人々はやってくる」という格言をテーマに、インフラや供給の構築がどのように需要を創出するかを考察した記事です。経済的・社会的な発展において、事前の需要予測に頼るだけでなく、先に場を整えることの重要性と、それがもたらす効果について論じています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://tangled.org/gleam.run/gleam" target="_blank" rel="noopener noreferrer">Gleam Is Now on Tangled</a></h3>
+    <p class="meta">Hacker News | 07/19 00:44</p>
+    <p class="summary">型安全な関数型言語であるGleamが、プラットフォーム「Tangled」上で利用可能になりました。これにより、Erlang仮想マシン（BEAM）上で動作するGleamプロジェクトの管理やホスティングの選択肢が広がり、エコシステムのさらなる発展が期待されます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://ykdojo.github.io/claude-controls-mac/" target="_blank" rel="noopener noreferrer">Setting up your spare Mac for Claude Code to control, a step-by-step guide</a></h3>
+    <p class="meta">Hacker News | 07/19 01:12</p>
+    <p class="summary">余っているMacを、AnthropicのAIツール「Claude Code」で操作・制御できるようにするための設定ガイドです。ステップバイステップの形式で、リモート制御に必要な環境構築や権限設定の方法が詳しく解説されています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/luup_developers/articles/server-jang-20260716" target="_blank" rel="noopener noreferrer">Claude Codeと取り組んだ大規模レガシー移行の記録</a></h3>
+    <p class="meta">Zenn トレンド | 07/17 11:43</p>
+    <p class="summary">LUUPの開発チームが、AIツール「Claude Code」を活用して大規模なレガシーシステムの移行に取り組んだ記録です。AIを単なるコード生成に留めず、複雑な既存コードの解析やリファクタリングの支援として実務にどう組み込んだか、その知見が共有されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/yumemi_inc/articles/github-release-not-a-publish-trigger" target="_blank" rel="noopener noreferrer">GitHub Release 作成をパッケージリリースのトリガーにするな！</a></h3>
+    <p class="meta">Zenn トレンド | 07/17 05:22</p>
+    <p class="summary">GitHub Releaseの作成をパッケージ配布（npm等）のトリガーにすることの危険性を指摘する記事です。タグ作成と公開の順序による不整合や、不完全な成果物がリリースされるリスクを解説し、より堅牢なリリースフローの構築方法を提案しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/Koukyosyumei/items/e9ee8e26cfdc40a8c2f9?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">マルチエージェントに関する論文を40本再実装してみて分かったこと</a></h3>
+    <p class="meta">Qiita トレンド | 07/16 22:54</p>
+    <p class="summary">マルチエージェントシステムに関する40本の論文を実際に実装・検証した経験に基づくまとめです。各手法のトレンドや再現性の課題、実用性の高いエージェント設計のポイントなど、膨大な試行錯誤から得られた実践的な知見が紹介されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/T-furukubo/items/3ace375e1b8aafd014a2?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">そのSQL、本当に大丈夫？実務で意識したい5つの基本ルール</a></h3>
+    <p class="meta">Qiita トレンド | 07/17 01:25</p>
+    <p class="summary">実務でSQLを書く際に意識すべき5つの基本ルールについて解説した記事です。パフォーマンス低下の防止、可読性の維持、セキュリティ上の配慮など、エンジニアが現場で直面しがちな問題を防ぐための具体的な指針が示されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/18/waymo-appears-to-pause-san-francisco-service-amidst-power-outage/" target="_blank" rel="noopener noreferrer">Waymo says San Francisco service has resumed after one-hour pause</a></h3>
+    <p class="meta">TechCrunch | 07/18 19:30</p>
+    <p class="summary">自動運転タクシーを展開するWaymoは、停電の影響で約1時間中断していたサンフランシスコでのサービスを再開したと発表しました。一時的なシステム停止はあったものの、迅速な復旧により現在は通常の運行に戻っています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/18/kimi-threat-or-menace/" target="_blank" rel="noopener noreferrer">Kimi: Threat or menace?</a></h3>
+    <p class="meta">TechCrunch | 07/18 18:51</p>
+    <p class="summary">中国発のAIチャットボット「Kimi」について、その性能や市場への影響力を分析した記事です。Kimiが既存のAI大手にとって脅威となるのか、あるいは特定の懸念材料を抱えているのか、技術的・戦略的な観点からその立ち位置を考察しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/18/all-the-evs-that-were-discontinued-or-killed-off-in-the-u-s-this-year/" target="_blank" rel="noopener noreferrer">All the EVs that were discontinued or killed off in the U.S. this year</a></h3>
+    <p class="meta">TechCrunch | 07/18 16:30</p>
+    <p class="summary">今年、米国市場で生産終了や廃止となった電気自動車（EV）をまとめたレポートです。市場需要の変化やメーカーの戦略転換により、どのモデルが姿を消したのか、その背景にあるEV市場の現状と課題を振り返ります。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cn8nynv8ze8o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Two US troops killed and one missing after Iranian attack in Jordan</a></h3>
+    <p class="meta">BBC World News | 07/18 20:33</p>
+    <p class="summary">ヨルダンでイランによる攻撃が発生し、米軍兵士2人が死亡、1人が行方不明となりました。この事態により地域的な緊張が急激に高まっており、米国の出方や中東情勢へのさらなる影響が懸念されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/clyxlm877p2o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Russian online retail warehouses hit by deadly Ukrainian strikes</a></h3>
+    <p class="meta">BBC World News | 07/18 13:06</p>
+    <p class="summary">ウクライナによる攻撃がロシアの主要なオンライン小売業者の倉庫を直撃し、死傷者が発生しました。物流拠点への攻撃により、ロシア国内の商業インフラや物流網に大きな打撃と混乱が生じています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cpd7q7eev7po?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Hungary&#39;s president agrees to stand down after parliament backs removal</a></h3>
+    <p class="meta">BBC World News | 07/18 19:34</p>
+    <p class="summary">ハンガリーの大統領が、議会による解任案の支持を受けて辞任することに同意しました。政権内部の混乱や政治的圧力を背景に、トップの交代が決定的となったことで、今後の国内政治の動向に注目が集まっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260719/k10015180431000.html" target="_blank" rel="noopener noreferrer">モジタバ師「覚書繰り返し違反 米大統領署名が無効の証し」</a></h3>
+    <p class="meta">NHK国際放送 | 07/18 18:01</p>
+    <p class="summary">イランの宗教指導者モジタバ師は、米国が覚書に繰り返し違反していることを挙げ、「米大統領の署名には実質的な効力がないことが証明された」と非難しました。合意が守られない現状への強い不信感を表明しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260718/k10015141091000.html" target="_blank" rel="noopener noreferrer">【詳細】ロシア ウクライナに軍事侵攻（7月18日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 07/18 15:09</p>
+    <p class="summary">7月18日のロシアによるウクライナ軍事侵攻の動向に関する詳細レポートです。前線での戦闘状況やドローンを用いた攻撃の応酬、市民生活への影響など、最新の戦況が包括的にまとめられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260718/k10015179971000.html" target="_blank" rel="noopener noreferrer">アメリカとイラン 覚書署名から1か月 合意形がい化で被害拡大</a></h3>
+    <p class="meta">NHK国際放送 | 07/18 13:36</p>
+    <p class="summary">米国とイランの間で覚書が交わされてから1か月が経過しましたが、合意が形骸化していることで地域的な被害が拡大しています。実効性を伴わない合意の裏で対立が激化し、情勢がより深刻化している実態を伝えています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
