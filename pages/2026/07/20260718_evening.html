@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月18日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月18日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月18日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260718_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://maurycyz.com/projects/bad_jpeg/" target="_blank" rel="noopener noreferrer">Regressive JPEGs</a></h3>
+    <p class="meta">Hacker News | 07/18 12:14</p>
+    <p class="summary">JPEGエンコードにおける「Regressive（逆進的）」な現象についての技術解説。通常、JPEGはデータを効率的に圧縮するが、特定の設定や入力ではファイルサイズが増大したり品質が著しく低下したりするケースがある。著者は画素データの再構成プロセスやハフマン符号化の最適化不足が原因で起こる「悪い」JPEGの例を挙げ、画像圧縮の仕組みにおける意外な落とし穴や、実装による挙動の違いを実験を通じて検証している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://parksb.github.io/en/article/41.html" target="_blank" rel="noopener noreferrer">Reviving a 15-year-old netbook with Arch Linux</a></h3>
+    <p class="meta">Hacker News | 07/14 23:02</p>
+    <p class="summary">15年前のネットブック（Samsung N150 Plus）をArch Linuxで復活させる試みの記録。Intel Atomプロセッサと低容量メモリという極めて限られたリソースで動作させるため、軽量なウィンドウマネージャi3wmの採用やスワップ設定の最適化を行った。最新のWebブラウジングには厳しい面もあるが、ターミナル作業やテキスト編集においては実用的な速度で動作することを確認し、古いハードウェアをLinuxで延命させる手法を紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/tucan9389/nanochat-jax/discussions/1" target="_blank" rel="noopener noreferrer">Porting nanochat to a TPU: what carries over from PyTorch, and what breaks</a></h3>
+    <p class="meta">Hacker News | 07/15 17:18</p>
+    <p class="summary">PyTorchで実装されたnanochatをJAX/Flaxへ移植し、TPUで動作させる過程での技術的知見を共有。JAXの純粋関数型モデルへの適応、静的コンパイル（JIT）とPyTorchの動的グラフの違い、チェックポイントの互換性、TPU固有の並列化手法であるpjitの活用などが議論されている。モデルの重み転送は可能だが、最適化手法やメモリ管理の挙動が異なるため、単純な移植では済まない課題があることを示唆している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/nextbeat/articles/aws-vpc-origin-outage-troubleshooting" target="_blank" rel="noopener noreferrer">CloudFront VPC Origin障害をどう切り分けて復旧したか</a></h3>
+    <p class="meta">Zenn トレンド | 07/17 08:02</p>
+    <p class="summary">AWSの新機能「CloudFront VPC Origin」を使用した環境で発生した通信障害の調査記録。特定の条件下でCloudFrontからVPC内リソースへの接続が失敗する事象に対し、AWSサポートへの問い合わせやメトリクス分析を通じて原因を特定した。最終的には設定の不備や一時的な制限が影響していたことを突き止め、構成修正により復旧。新機能ゆえの情報不足や、VPCエンドポイント特有の挙動を考慮した切り分け手法が解説されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/pksha/articles/python-memory-leak-jemalloc" target="_blank" rel="noopener noreferrer">メモリリークの正体は glibc malloc だった ── Python 以外でも効く LD_PRELOAD 1 行のアロケータ差し替え</a></h3>
+    <p class="meta">Zenn トレンド | 07/17 05:27</p>
+    <p class="summary">Pythonアプリで発生したメモリリークの原因が、標準ライブラリ「glibc」のメモリアロケータ（malloc）のフラグメンテーションにあった事例を紹介。解決策として、効率的なメモリ管理を行う「jemalloc」への差し替えを提案している。LD_PRELOAD環境変数を利用することで、コードを一切変更せずにアロケータを変更でき、劇的なメモリ使用量の削減に成功。コンテナ環境などでメモリ制約が厳しい場合に有効な実践的テクニックを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/17/neil-rimer-thinks-the-ai-money-is-coming-back-out/" target="_blank" rel="noopener noreferrer">Neil Rimer thinks the AI money is coming back out</a></h3>
+    <p class="meta">TechCrunch | 07/18 04:47</p>
+    <p class="summary">Index Venturesの共同創業者ニール・ライマー氏は、AI分野への巨額投資が一段落し、資金が回収フェーズに入る「揺り戻し」が来ると予測している。これまで多くの資金が基盤モデル開発に投じられてきたが、今後はその技術をどう具体的なビジネス価値に変え、収益化できるかが問われる段階に移行するという。同氏は、誇大広告に踊らされる時期は終わり、持続可能なビジネスモデルを持つ企業が選別される健全な市場調整が行われると考えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/17/applications-close-in-48-hours-heres-everything-australian-founders-need-to-know-about-stripe-x-startup-battlefield/" target="_blank" rel="noopener noreferrer">Applications close in 48 hours — here’s everything Australian founders need to know about Stripe x Startup Battlefield</a></h3>
+    <p class="meta">TechCrunch | 07/17 23:08</p>
+    <p class="summary">オーストラリアのスタートアップを対象とした、StripeとTechCrunchの「Startup Battlefield」への応募締め切りが48時間後に迫っている。このコンテストは、選出された起業家が投資家やメディアの前でピッチを行い、賞金や知名度、ネットワーキングの機会を得られる場である。記事では、応募に必要な条件や審査のポイント、Stripeによる支援内容などを説明しており、グローバル市場への進出を目指す豪州の創業者に対し応募を呼びかけている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/17/vertu-wants-executives-to-pay-6880-for-an-ai-agent-heres-how-it-actually-performs/" target="_blank" rel="noopener noreferrer">Vertu wants executives to pay $6,880 for an AI agent — here’s how it actually performs</a></h3>
+    <p class="meta">TechCrunch | 07/17 22:55</p>
+    <p class="summary">高級携帯電話ブランドのVertuが、経営層向けに約6,880ドルの高額なAIエージェントサービスを発表した。このサービスはパーソナライズされたアシスタント機能を提供すると謳っているが、実際のパフォーマンス検証では、既存の安価なAIツールと比較して圧倒的な優位性は見られなかったという。記事では、豪華なハードウェアやブランド力で差別化を図ろうとするVertuの戦略を分析しつつ、実用性の面では価格に見合う価値があるか疑問を呈している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cy748n8zx8ro?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">US strikes hit Iran for seventh consecutive night</a></h3>
+    <p class="meta">BBC World News | 07/18 07:33</p>
+    <p class="summary">米軍は7夜連続でイラン国内の拠点を標的とした空爆を実施した。これは最近発生した米軍への攻撃に対する報復措置であり、ドローン製造施設や武器庫などが対象となっている。バイデン政権は事態のさらなる拡大を避けたい意向を示しつつも、自衛のための攻撃は継続する構え。一方、イラン側はこれを主権侵害として強く非難しており、中東地域における緊張状態は深刻な局面を迎えている。国際社会からは武力衝突の激化を懸念する声が上がっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cwyq93j34lgo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump threatens new Canada tariffs over fires sending &#39;filthy&#39; air into US cities</a></h3>
+    <p class="meta">BBC World News | 07/18 01:29</p>
+    <p class="summary">トランプ前大統領は、カナダの森林火災による煙が米国の都市の空気を汚染しているとして、カナダに対して新たな関税を課すと警告した。同氏はカナダ政府の森林管理が不十分であると主張し、「汚れた空気」の輸出に対する責任を問う構え。この発言は環境問題を関税の理由にする異例のアプローチであり、隣国との貿易関係を揺るがす恐れがある。カナダ側は気候変動の影響を強調しているが、米加間の外交摩擦が激化する懸念が出ている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260718/k10015180171000.html" target="_blank" rel="noopener noreferrer">米アップル 日本でiPhoneの販売価格を約10％値上げ</a></h3>
+    <p class="meta">NHK国際放送 | 07/18 03:40</p>
+    <p class="summary">米アップルが日本国内でのiPhoneの販売価格を約10％引き上げることが判明した。今回の値上げは為替変動や原材料費、物流コストの上昇を受けたものとみられ、最新モデルを含む主要製品が対象となる。日本では円安の影響によりこれまでも断続的な価格改定が行われてきたが、家計への負担増が懸念される。スマートフォン市場でのシェアが高い日本において、この価格改定が他社の戦略や中古端末需要、買い替えサイクルにどのような影響を与えるかが注目される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260718/k10015180131000.html" target="_blank" rel="noopener noreferrer">米が7日連続イラン攻撃 覚書は形がい化 事態悪化懸念</a></h3>
+    <p class="meta">NHK国際放送 | 07/18 02:37</p>
+    <p class="summary">アメリカ軍が7日連続でイランへの攻撃を行った。かつての緊張緩和に向けた合意は事実上形骸化しており、双方が武力による応酬を続ける泥沼化の様相を呈している。アメリカは自国民の保護を大義名分としているが、攻撃の継続は地域の不安定化を加速させ、予期せぬ全面衝突に発展するリスクを孕んでいる。国際社会は即時停戦と対話による解決を求めているが、事態の沈静化の兆しは見えず、中東情勢は過去数年で最も危険な段階に達している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260718/k10015180111000.html" target="_blank" rel="noopener noreferrer">米グリア通商代表 日本など対象の新関税措置“結論に数週間”</a></h3>
+    <p class="meta">NHK国際放送 | 07/18 01:56</p>
+    <p class="summary">アメリカのグリア通商代表は、日本など複数の国を対象とした新たな関税措置の導入について、最終的な結論が出るまでには数週間を要するとの見通しを示した。この措置は通商法に基づき、輸入制限や追加関税の是非を検討しているもので、自動車や半導体などの重要分野が含まれる可能性がある。グリア氏は関係国との協議を継続する意向だが、アメリカ第一主義を掲げる政権の意向を反映し、厳しい姿勢を崩していない。日本政府の対応が問われている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
