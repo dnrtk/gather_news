@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月20日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月20日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月20日 18:00 JST</p>
+</header>
+
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/hgaiser/moonshine" target="_blank" rel="noopener noreferrer">Moonshine: Lets you stream games from your PC to any device running Moonlight</a></h3>
+    <p class="meta">Hacker News | 07/20 09:16</p>
+    <p class="summary">Moonshineは、PCからMoonlightクライアントが動作するあらゆるデバイスへゲームをストリーミングするためのオープンソースプロジェクトです。NVIDIA GameStreamの代替として機能し、低遅延で高品質なリモートプレイ体験を提供することを目指しています。GitHubで公開されており、ユーザーは自身のPCをホストとして設定し、スマートフォンやタブレットなどからゲームにアクセスできます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/Saivineeth147/lora-speedrun" target="_blank" rel="noopener noreferrer">LoRA Speedrun – a public wall-clock leaderboard for fine-tuning techniques</a></h3>
+    <p class="meta">Hacker News | 07/20 13:24</p>
+    <p class="summary">LoRA Speedrunは、大規模言語モデル（LLM）のファインチューニング技術を、実際の経過時間（ウォールクロックタイム）で競うパブリックなリーダーボードです。特定のハードウェア環境において、いかに速く、かつ精度を維持しながら学習を完了させられるかに焦点を当てています。様々な最適化手法やライブラリの効果を公平に比較・評価するためのプラットフォームとして機能します。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://robotics.xiaomi.com/xiaomi-robotics-1.html" target="_blank" rel="noopener noreferrer">Xiaomi-Robotics-1</a></h3>
+    <p class="meta">Hacker News | 07/20 13:45</p>
+    <p class="summary">Xiaomiは、ロボティクス分野の最新プラットフォーム「Xiaomi-Robotics-1」を公開しました。人型ロボットや四足歩行ロボットの開発で培われた高度な制御技術、AI、視覚アルゴリズムを統合しています。将来的な家庭内アシスタントや産業利用を見据え、オープンソースの精神に基づき、ロボティクスエコシステムの発展と技術革新の加速を目指す取り組みです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.labrujulaverde.com/en/2026/07/sealed-tomb-of-a-high-official-or-priest-filled-with-paintings-and-inscriptions-discovered-on-luxors-west-bank/" target="_blank" rel="noopener noreferrer">Sealed tomb filled with paintings and inscriptions discovered in Egypt</a></h3>
+    <p class="meta">Hacker News | 07/15 17:35</p>
+    <p class="summary">エジプトのルクソール西岸で、保存状態の良い古代の密封された墓が発見されました。この墓は高位の役人または司祭のものと見られ、内部は色鮮やかな絵画やヒエログリフの碑文で埋め尽くされています。数千年の時を経て封印が解かれたこの遺跡は、当時の宗教儀式や日常生活、社会構造を解明するための重要な手がかりになると期待されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://spectrum.ieee.org/self-powered-trailers-freight-decarbonization" target="_blank" rel="noopener noreferrer">Self-Powered Trailers Promise Leaner Freight Runs</a></h3>
+    <p class="meta">Hacker News | 07/11 00:44</p>
+    <p class="summary">貨物輸送の脱炭素化に向け、独自の動力源を備えた「自己動力型トレーラー」が注目されています。トレーラー自体にバッテリーとモーターを搭載することで、牽引するトラックの負担を軽減し、燃費向上や航続距離の延長を実現します。既存のディーゼル車や電気トラックの双方で効率化が可能であり、クリーンな物流システムの実現に寄与すると期待されています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/joeee/articles/048addcc0c2ce6" target="_blank" rel="noopener noreferrer">自宅でサーバーを建てたいエンジニアにおすすめの構成</a></h3>
+    <p class="meta">Zenn トレンド | 07/19 11:27</p>
+    <p class="summary">自宅でサーバーを構築したいエンジニア向けに、実用的な構成案を紹介する記事です。ハードウェア選定から仮想化プラットフォーム（Proxmox等）、ネットワーク設定までを網羅しています。省電力性と静音性を考慮したミニPCの活用やバックアップ体制の重要性について詳しく解説しており、技術学習や個人サービスの運用を安全かつ効率的に行うためのガイドとなっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tkou15/articles/bonsai-1bit-llm-guide" target="_blank" rel="noopener noreferrer">1-bit LLM「Bonsai」活用ガイド — 1.15GB で動く 8B モデルをローカルで使い倒す</a></h3>
+    <p class="meta">Zenn トレンド | 07/19 07:35</p>
+    <p class="summary">1ビットLLM「Bonsai」をローカル環境で活用するためのガイドです。80億パラメータを持ちながら1.15GBという極めて小さなサイズで動作するのが特徴です。量子化技術の解説から、具体的なセットアップ方法、メモリ制限のあるPCでの動かし方までを紹介しています。軽量でありながら高いパフォーマンスを発揮する次世代AIモデルを手軽に試せる実用的な内容です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/miruky/items/42b892805eb1d754109c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【徹底解説】文系でもわかる！機械学習に入門しよう</a></h3>
+    <p class="meta">Qiita トレンド | 07/18 08:14</p>
+    <p class="summary">文系の方でも理解できるように機械学習の基本を解説した入門記事です。数式を最小限に抑え、身近な例え話を用いて「機械学習とは何か」やAIとの違いを明快に説明しています。学習の進め方、主要なアルゴリズムの種類、実際の活用事例までカバーしており、専門外の人でもデータサイエンスの世界に最初の一歩を踏み出せるような構成になっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/jqit-yukiono/items/d33908602fd060f5e1d1?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">個人開発でApp Storeリリースフローを学ぶ ― UIKit + FastAPI + K8sで作るMinecraftサーバー監視アプリ「MineWatch」</a></h3>
+    <p class="meta">Qiita トレンド | 07/19 23:56</p>
+    <p class="summary">個人開発を通じたApp Storeへのリリース工程を学ぶ体験記です。Minecraftサーバー監視アプリの開発を題材に、UIKit、FastAPI、Kubernetesを組み合わせたモダンな構成を採用。設計から実装、Appleの審査プロセス、そして実際にリリースするまでの技術的な課題や解決策を詳細に記述しており、アプリ開発の一連の流れを把握するのに最適です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/19/netflix-paid-587m-for-ben-afflecks-ai-filmmaking-startup/" target="_blank" rel="noopener noreferrer">Netflix paid $587M for Ben Affleck’s AI filmmaking startup</a></h3>
+    <p class="meta">TechCrunch | 07/19 21:45</p>
+    <p class="summary">Netflixが、俳優ベン・アフレックらが立ち上げたAI映画制作スタートアップを5億8700万ドルで買収しました。この企業は生成AIを活用して制作ワークフローを効率化し、視覚効果やポストプロダクションのコスト削減を図る技術を開発しています。Netflixはこの買収により、コンテンツ制作の高速化と技術革新を狙っており、業界から高い注目を集めています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/19/what-to-watch-for-after-jensen-huangs-japan-visit/" target="_blank" rel="noopener noreferrer">What to watch for after Jensen Huang’s Japan visit</a></h3>
+    <p class="meta">TechCrunch | 07/19 21:16</p>
+    <p class="summary">NVIDIAのジェンスン・ファンCEO来日後の日本市場の展望についての分析です。ファン氏は日本をAI大国と評価し、政府や国内企業との連携、AIインフラの整備、スタートアップ支援を強調しました。特に日本の製造業やロボティクスへのAI導入、国産LLMの開発支援、データセンター投資の加速などが今後の焦点となり、日米協力によるAIエコシステムの構築が期待されます。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c5ydr3xd0kvo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Food delivery rider wins China&#39;s top literary prize</a></h3>
+    <p class="meta">BBC World News | 07/20 03:53</p>
+    <p class="summary">中国でフードデリバリーの配達員として働く男性が、国内で最も権威のある文学賞の一つを受賞しました。過酷な労働の合間に執筆を続け、自身の生活や社会の底辺で生きる人々の姿をリアルに描写した作品が評価されました。このニュースは階層社会における希望の象徴として感銘を与えており、文学があらゆる人々に開かれていることを再確認させています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c07r9m22gyyo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Norway opens new memorial for victims of 2011 massacre</a></h3>
+    <p class="meta">BBC World News | 07/20 01:11</p>
+    <p class="summary">ノルウェーで、2011年に起きた連続テロ事件の犠牲者を追悼する新しい記念碑が公開されました。77人の犠牲者を悼み、悲劇を忘れないための場所として建設されました。式典では遺族や生存者、政府関係者が出席し、寛容と民主主義を守り続ける決意が語られました。事件から年月が経過する中で、次世代へ教訓を伝え続けるための重要な拠点となります。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260720/k10015181211000.html" target="_blank" rel="noopener noreferrer">台湾南部の海岸 太平洋戦争戦没者の遺骨試掘調査始まる</a></h3>
+    <p class="meta">NHK国際放送 | 07/20 07:15</p>
+    <p class="summary">太平洋戦争末期、連合軍の攻撃を受けた日本の輸送船から海岸に流れ着いたとされる戦没者の遺骨について、台湾南部の屏東県で試掘調査が始まりました。現地の有志や日本の支援団体の協力で行われており、地中に埋もれている可能性がある遺骨の発見を目指しています。長年放置されてきた歴史の解明と、戦没者を遺族のもとへ帰すための重要な一歩として注目されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260720/k10015180931000.html" target="_blank" rel="noopener noreferrer">米“イランに9日連続の攻撃” 中東に戦闘機追加配備と報道も</a></h3>
+    <p class="meta">NHK国際放送 | 07/20 07:11</p>
+    <p class="summary">米軍がイラン関連の拠点に対し9日連続で攻撃を行ったと報じられました。中東情勢の緊張が高まる中、米国は抑止力を強化するため、最新鋭の戦闘機を周辺地域に追加配備する検討も進めています。これらは地域内の米軍関係者や同盟国への脅威に対抗する措置とされていますが、さらなる衝突の拡大を懸念する声も上がっており、事態は予断を許さない状況が続いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260720/k10015181061000.html" target="_blank" rel="noopener noreferrer">プーチン大統領 北朝鮮外相と会談 ウクライナめぐり議論か</a></h3>
+    <p class="meta">NHK国際放送 | 07/19 23:03</p>
+    <p class="summary">ロシアのプーチン大統領は、訪露した北朝鮮のチェ・ソンヒ外相と会談しました。ウクライナ侵攻を継続するロシアへの軍事支援や、両国間の戦略的パートナーシップの深化について協議されたとみられます。北朝鮮による兵士派遣の疑いがある中、頻繁に行われる高官交流は両国の結束強化を示しており、国際的な安全保障体制に大きな影響を与える可能性があります。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
