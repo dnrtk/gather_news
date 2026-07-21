@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月21日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月21日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月21日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260721_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/janestreet/incremental" target="_blank" rel="noopener noreferrer">Incremental – A library for incremental computations</a></h3>
+    <p class="meta">Hacker News | 07/21 12:50</p>
+    <p class="summary">Jane Streetが開発・公開している、増分計算（incremental computations）のためのOCamlライブラリ。入力データの一部が変更された際、依存関係のある箇所だけを効率的に再計算する有向非巡回グラフを構築でき、複雑な計算の高速化に貢献する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://stratechery.com/2026/whos-afraid-of-chinese-models/" target="_blank" rel="noopener noreferrer">Who&#39;s afraid of Chinese models?</a></h3>
+    <p class="meta">Hacker News | 07/20 20:05</p>
+    <p class="summary">中国製AIモデル（DeepSeekやQwen等）の台頭と、それに対する米国の懸念を分析。中国のモデルがオープンソースを通じて世界的な影響力を強めている現状や、米国の規制が技術競争に与える影響、AIの民主化がもたらす地政学的な変化について論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.armaangomes.com/blogs/doom/" target="_blank" rel="noopener noreferrer">Running Doom on Our Custom CPU and Going Viral</a></h3>
+    <p class="meta">Hacker News | 07/21 12:54</p>
+    <p class="summary">自作のカスタムCPU上で名作ゲーム「Doom」を動作させたプロジェクトの記録。CPU設計の技術的な詳細から、OSなしのベアメタル環境での移植作業、そしてその成果がSNSで大きな反響を呼び拡散された経緯までを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qwen.ai/blog?id=qwen-image-3.0" target="_blank" rel="noopener noreferrer">Qwen-Image-3.0: Rich Content, Authentic Details, Deep Knowledge</a></h3>
+    <p class="meta">Hacker News | 07/21 17:44</p>
+    <p class="summary">アリババの最新マルチモーダルモデル「Qwen-Image-3.0」の紹介。高解像度画像の理解、詳細なテキスト認識、豊富な知識に基づいた推論能力が強化され、従来モデルよりも複雑な視覚情報の解析や自然な対話が可能になったとしている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/drbobt1122/articles/blog26072002" target="_blank" rel="noopener noreferrer">ソフトウェア開発のAIエージェントを作る(2)</a></h3>
+    <p class="meta">Zenn トレンド | 07/20 09:06</p>
+    <p class="summary">ソフトウェア開発を自動化するAIエージェント構築の連載第2回。エージェントが既存のコードベースを理解し、具体的なタスクを実行するためのアーキテクチャや各種ツールの統合方法について、実装の詳細を含めて解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/juth/articles/9dc12f2621e2c1" target="_blank" rel="noopener noreferrer">Linuxのディレクトリ配置ルール（FHS）超入門</a></h3>
+    <p class="meta">Zenn トレンド | 07/20 02:18</p>
+    <p class="summary">Linuxにおける標準的なディレクトリ配置ルールであるFHS（Filesystem Hierarchy Standard）の解説記事。/bin、/etc、/usr/localなどの主要なディレクトリがどのような役割を持ち、何を配置すべきかを初心者向けに整理している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/ishi720/items/3e4597bc50695fa9bf79?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">白って1600色あんねん！</a></h3>
+    <p class="meta">Qiita トレンド | 07/19 00:02</p>
+    <p class="summary">デジタル世界における「白」の多様性を技術的な視点で解説。RGB値だけでなく、カラープロファイル、色温度、HDR（高輝度）など、表示環境や規格によって白の表現がいかに多岐にわたるかをエンジニアの視点で綴っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/20/anthropics-landmark-1-5b-copyright-settlement-is-approved/" target="_blank" rel="noopener noreferrer">Anthropic’s landmark $1.5B copyright settlement is approved</a></h3>
+    <p class="meta">TechCrunch | 07/21 00:12</p>
+    <p class="summary">Anthropicによる15億ドルの著作権訴訟和解が承認された。AIモデルの学習データに関する著作権侵害をめぐる歴史的な合意であり、今後のAI業界におけるコンテンツ利用のライセンスモデルに大きな影響を与える可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/20/colossal-biosciences-reportedly-in-talks-to-raise-new-capital-at-20b-30b-valuation/" target="_blank" rel="noopener noreferrer">Colossal Biosciences reportedly in talks to raise new capital at $20B–$30B valuation</a></h3>
+    <p class="meta">TechCrunch | 07/20 23:39</p>
+    <p class="summary">絶滅種の復活を目指すバイオ企業Colossal Biosciencesが、200億ドルから300億ドルの評価額で新たな資金調達の交渉を行っている。マンモスの復活という野心的な目標に対する、市場と投資家の期待の高さを示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/20/trumps-latest-ai-czar-has-already-resigned/" target="_blank" rel="noopener noreferrer">Trump’s latest AI czar has already resigned</a></h3>
+    <p class="meta">TechCrunch | 07/20 22:21</p>
+    <p class="summary">トランプ政権が任命した最新のAI担当責任者（AI czar）が、就任から間もなく辞任した。政策方針の不一致や政権内の不透明さが浮き彫りになっており、米国のAI戦略におけるリーダーシップの不安定さが懸念されている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cg4dzq3x3e1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump slaps 50% tariffs on Canada and Carney vows to &#39;intensify&#39; trade talks</a></h3>
+    <p class="meta">BBC World News | 07/21 07:56</p>
+    <p class="summary">トランプ大統領がカナダに対して50%の関税を課すと表明した。これを受け、カナダ側は経済的影響を抑えるべく通商交渉を強化する意向を示しており、北米内の貿易緊張が急速に高まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cx25wg2x26do?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">US launches fresh strikes on Iran, as Trump warns of retaliation for deaths of soldiers</a></h3>
+    <p class="meta">BBC World News | 07/21 06:16</p>
+    <p class="summary">米軍がイランに対して新たな軍事攻撃を実施した。米兵に死傷者が出たことへの報復としてトランプ大統領が命じたもので、米側はさらなる報復も警告しており、中東情勢は極めて危険な段階に入っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260721/k10015141121000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（7月21日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 07/21 08:25</p>
+    <p class="summary">2026年7月21日におけるロシアのウクライナ侵攻の戦況報告。現地での軍事行動や被害状況に加え、国際社会による支援の動向、外交的な動きなど、日々変化する事態をリアルタイムで更新している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260721/k10015181491000.html" target="_blank" rel="noopener noreferrer">イランへの攻撃「大統領が判断を下すまで続ける」米政府当局者</a></h3>
+    <p class="meta">NHK国際放送 | 07/21 08:16</p>
+    <p class="summary">米政府当局者は、イランへの軍事攻撃について、大統領が最終的な判断を下すまで継続する方針を明らかにした。米兵の犠牲に対する報復の意思を明確にしており、軍事的圧力を強め続ける姿勢を強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260720/k10015181411000.html" target="_blank" rel="noopener noreferrer">中国艦艇が日本のEEZ内で機関銃射撃訓練実施 防衛省が確認</a></h3>
+    <p class="meta">NHK国際放送 | 07/21 05:56</p>
+    <p class="summary">日本の排他的経済水域（EEZ）内において、中国軍の艦艇が機関銃の射撃訓練を行っていたことが防衛省により確認された。日本の安全保障に対する懸念として、政府は警戒監視と情報収集を強めている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
