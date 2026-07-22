@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月22日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月22日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月22日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260722_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://fireworks.ai/blog/kimik3-fable" target="_blank" rel="noopener noreferrer">Kimi K3 Is Competitive with Fable; Kimi K3 and Fable Is SoTA</a></h3>
+    <p class="meta">Hacker News | 07/22 07:35</p>
+    <p class="summary">Fireworks.aiが公開したKimi K3は、Fableに匹敵する性能を持つ最先端（SoTA）モデルです。本記事では、この新しいAIモデルの競争力と技術的な卓越性について解説しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/chrislgarry/Apollo-11" target="_blank" rel="noopener noreferrer">Original Apollo 11 Guidance Computer source code for command and lunar modules</a></h3>
+    <p class="meta">Hacker News | 07/22 14:18</p>
+    <p class="summary">アポロ11号の司令船および月着陸船で使用された誘導コンピュータのソースコード。歴史的価値のある当時のプログラミング手法や計算機システムの全貌を確認できる貴重な資料です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://morethanmoore.substack.com/p/intel-starts-shipping-high-na-euv" target="_blank" rel="noopener noreferrer">Intel Starts Shipping High-NA EUV Silicon</a></h3>
+    <p class="meta">Hacker News | 07/19 04:56</p>
+    <p class="summary">Intelが最新のHigh-NA EUV露光技術を用いたシリコンチップの出荷を開始。次世代半導体製造の幕開けとなるこの技術は、微細化の限界に挑む重要なステップです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.readkinetic.com/app/" target="_blank" rel="noopener noreferrer">Show HN: ReadKinetic – a free, local-first speed reader for your own books</a></h3>
+    <p class="meta">Hacker News | 07/22 14:49</p>
+    <p class="summary">「ReadKinetic」は、自分の書籍データを読み込めるローカル優先型の無料スピードリーダーです。高速読書を支援するツールとして、プライバシーを重視しつつ効率的な学習を可能にします。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mattn/articles/cace8c5a00b9cc" target="_blank" rel="noopener noreferrer">Rust に書き直さなくても C 言語をメモリ安全にできる Fil-C を試した</a></h3>
+    <p class="meta">Zenn トレンド | 07/22 00:54</p>
+    <p class="summary">C言語コードをRustへ書き換えることなくメモリ安全性を向上させる「Fil-C」を試した記事。既存のCプロジェクトに対し、最小限の工数で安全性を取り入れる手法を検証しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/epicai_techblog/articles/1bc0f3769bfddc" target="_blank" rel="noopener noreferrer">Claude Code + Notion でターミナルから一歩も出ずにタスク消化・ドキュメント生成を全自動化する</a></h3>
+    <p class="meta">Zenn トレンド | 07/21 09:00</p>
+    <p class="summary">Claude CodeとNotionを連携し、ターミナル操作のみでタスク管理からドキュメント作成までを全自動化する方法を紹介。開発環境から離れずに業務効率を最大化する実用的な手法です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/awesome_kou/articles/engineer-performance-metrics" target="_blank" rel="noopener noreferrer">エンジニアの成果、結局どう測ればいいのか</a></h3>
+    <p class="meta">Zenn トレンド | 07/21 03:07</p>
+    <p class="summary">エンジニアの成果をどのように測定・評価すべきかという難題について考察。定量的な指標と定性的な貢献のバランスを取りつつ、チームの成長と個人の納得感を生む評価のあり方を議論しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/mame_hiro416/items/dc7a18f58eb5a2c8a6e7?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">SSL/TLS証明書って何？なぜ必要で、誰が発行して誰が使うのかを整理する</a></h3>
+    <p class="meta">Qiita トレンド | 07/20 00:06</p>
+    <p class="summary">SSL/TLS証明書の役割を分かりやすく解説。ウェブサイトの通信を暗号化し、信頼性を証明するために必要な仕組みや、証明書が発行・検証されるプロセスを整理して説明しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/22/synthesias-ai-training-platform-is-moving-beyond-videos-into-live-coaching/" target="_blank" rel="noopener noreferrer">Synthesia’s AI training platform is moving beyond videos into live coaching</a></h3>
+    <p class="meta">TechCrunch | 07/22 08:00</p>
+    <p class="summary">Synthesiaが、AIトレーニングプラットフォームをビデオ生成からライブコーチングへと拡大。AIを活用したリアルタイムの指導により、教育体験をより対話的で柔軟なものへと進化させます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/21/the-anthropic-physical-intelligence-rumor-roiling-ai-twitter/" target="_blank" rel="noopener noreferrer">The Anthropic-Physical Intelligence rumor roiling AI Twitter</a></h3>
+    <p class="meta">TechCrunch | 07/22 03:20</p>
+    <p class="summary">AnthropicがPhysical Intelligenceを買収するのではないかという噂がAI界隈を賑わせています。この統合が実現すれば、AIの大規模言語モデルと物理的なロボティクスの融合が加速する可能性があります。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/21/dimension-capitals-800m-third-fund-shows-the-intersection-of-science-and-compute-is-booming/" target="_blank" rel="noopener noreferrer">Dimension Capital’s $800M third fund shows the intersection of science and compute is booming</a></h3>
+    <p class="meta">TechCrunch | 07/22 01:27</p>
+    <p class="summary">Dimension Capitalが8億ドルの第3号ファンドを設立。科学研究と計算資源の融合領域への投資が急増しており、高度なコンピューティングが科学的発見を牽引する現状が示されています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/quantinuum-and-softbank-publish-framework-linking-quantum-hardware-to-enterprise-use-cases/" target="_blank" rel="noopener noreferrer">Quantinuum and SoftBank Publish Framework Linking Quantum Hardware to Enterprise Use Cases</a></h3>
+    <p class="meta">Quantum Computing Report | 07/22 00:58</p>
+    <p class="summary">Quantinuumとソフトバンクが共同で、量子ハードウェアをビジネス現場へ適用するためのフレームワークを発表。量子技術を実社会の企業課題に結びつけるための重要な指針となります。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/saxon-q-launches-100-qubit-diamond-based-room-temperature-quantum-computers/" target="_blank" rel="noopener noreferrer">SAXON Q Launches 100+ Qubit Diamond-Based Room-Temperature Quantum Computers</a></h3>
+    <p class="meta">Quantum Computing Report | 07/22 00:49</p>
+    <p class="summary">SAXON Qが、100量子ビット以上を備えたダイヤモンドベースの常温量子コンピュータを発表。冷却設備を簡略化できる常温動作の実現により、量子コンピュータの実用化が大きく前進します。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/photon-queue-raises-4m-oversubscribed-seed-round-to-commercialize-room-temperature-quantum-memory/" target="_blank" rel="noopener noreferrer">Photon Queue Raises $4M Oversubscribed Seed Round to Commercialize Room-Temperature Quantum Memory</a></h3>
+    <p class="meta">Quantum Computing Report | 07/22 00:38</p>
+    <p class="summary">Photon Queueがシードラウンドで400万ドルを調達。常温で動作する量子メモリ技術の商業化を目指します。この技術は、量子ネットワーク構築におけるボトルネックの解消に期待されています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c36de9n4pxpo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Ukrainian drones hit more sites of Russian online retailer Wildberries</a></h3>
+    <p class="meta">BBC World News | 07/22 08:37</p>
+    <p class="summary">ウクライナ軍のドローンが、ロシアの大手通販サイトWildberriesの拠点を再び攻撃しました。戦争が経済インフラにも拡大する中、両国の緊張関係がより一層深まっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c70gek2kqyno?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Iran war has cost US $37.5bn so far, Hegseth says, as Pentagon seeks billions more</a></h3>
+    <p class="meta">BBC World News | 07/22 02:15</p>
+    <p class="summary">米国のヘグセス氏は、イランとの紛争に関連する米国の支出がすでに375億ドルに達したと指摘。国防総省がさらなる追加予算を求める中、コスト負担への懸念が浮上しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260722/k10015182791000.html" target="_blank" rel="noopener noreferrer">アフガニスタン東部で洪水 23人死亡 100人以上が行方不明</a></h3>
+    <p class="meta">NHK国際放送 | 07/22 08:39</p>
+    <p class="summary">アフガニスタン東部で激しい洪水が発生し、23人が死亡、100人以上が行方不明となっています。救助活動が続けられていますが、被害の全容把握が難航しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260722/k10015141131000.html" target="_blank" rel="noopener noreferrer">【随時更新】ロシア ウクライナに軍事侵攻（7月22日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 07/22 07:19</p>
+    <p class="summary">ロシアによるウクライナ軍事侵攻の7月22日の状況。最新の戦況や国際情勢の変化を随時更新しており、停戦の兆しが見えない厳しい現地の様子が記録されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260722/k10015182701000.html" target="_blank" rel="noopener noreferrer">日米豪印外相 海洋の平和と安定の重要性強調する成果文書 発表</a></h3>
+    <p class="meta">NHK国際放送 | 07/22 07:05</p>
+    <p class="summary">日米豪印（QUAD）の外相会談が行われ、海洋の平和と安定の重要性を再確認する成果文書を発表。力による現状変更を認めず、自由で開かれたインド太平洋を目指す姿勢を強調しました。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
