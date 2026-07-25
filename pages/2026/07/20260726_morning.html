@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月26日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月26日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月26日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260726_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://anatolyzenkov.com/stolen-buttons" target="_blank" rel="noopener noreferrer">Stolen Buttons</a></h3>
+    <p class="meta">Hacker News | 07/20 18:23</p>
+    <p class="summary">筆者がインターネット上の様々なウェブサイトから収集した「ボタン」のデザインをアーカイブしているプロジェクト。かつてのスキューモーフィズムから現代のフラットデザインまで、UIデザインの変遷をボタンという小さなパーツを通じて保存・鑑賞することを目的としている。デザイン史の資料としての側面も持つユニークなコレクションである。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://ammoniaenergy.org/articles/flexible-renewable-ammonia-demonstrator-now-operational-in-minnesota/" target="_blank" rel="noopener noreferrer">Producing ammonia and fertiliser using wind power in Morris, Minnesota</a></h3>
+    <p class="meta">Hacker News | 07/26 04:30</p>
+    <p class="summary">ミネソタ大学モリス校にて、風力発電を利用した柔軟な再生可能アンモニア製造実証プラントが稼働を開始した。このプロジェクトは、天候によって変動する再生可能エネルギー源に合わせたアンモニア生産の可能性を実証するもので、農業における地産地消型の肥料生産や、将来的なエネルギー貯蔵手段としての活用が期待されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://tobi.knaup.me/2026-07-25-open-weight-ai-is-having-its-kubernetes-moment/" target="_blank" rel="noopener noreferrer">Open-weight AI is having its Kubernetes moment</a></h3>
+    <p class="meta">Hacker News | 07/25 23:49</p>
+    <p class="summary">Llama 3.1などのオープンウェイトAIモデルの台頭を、かつてのKubernetesの普及になぞらえている。特定のクラウドベンダーに依存しない標準化が進むことで、企業はインフラの制御権を取り戻し、プライバシーとコストのバランスを最適化できるようになる。AI開発において、独占的なプラットフォームからオープンなエコシステムへの移行が加速している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://brandonli.net/semisim/animations" target="_blank" rel="noopener noreferrer">Show HN: I made some transistor animations</a></h3>
+    <p class="meta">Hacker News | 07/25 03:37</p>
+    <p class="summary">トランジスタの動作原理を視覚的に理解するためのアニメーション集。半導体内部の電子の動きや、P型・N型半導体の接合部における物理的な変化を分かりやすく表現している。論理ゲートがどのように構成され、0と1の信号を処理しているかを直感的に学ぶことができる教育的なツールとなっている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/gamella/articles/7e1af53f19d94d" target="_blank" rel="noopener noreferrer">クオンツはテクニカル分析を寄与度分解の中で見ている</a></h3>
+    <p class="meta">Zenn トレンド | 07/25 01:46</p>
+    <p class="summary">クオンツ投資におけるテクニカル分析の捉え方を解説した記事。クオンツはテクニカル指標を単なるチャートパターンとしてではなく、リターンの寄与度分解における一つの「ファクター」として扱っている。統計的な有効性を検証し、他のマクロ指標やファンダメンタルズ要因と組み合わせることで、客観的なポートフォリオ構築に役立てている実態を説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/scalar_sol_blog/articles/6fa517a84cb7ff" target="_blank" rel="noopener noreferrer">Terraform / Kubernetes の構築で、初心者がよく指摘されるポイントのまとめ</a></h3>
+    <p class="meta">Zenn トレンド | 07/24 01:05</p>
+    <p class="summary">TerraformやKubernetesの構築において、初心者が陥りやすいミスとその対策をまとめたガイド。コードの再利用性を高めるモジュール化、機密情報の適切な管理、リソースの命名規則、状態管理（State）の注意点などが詳しく解説されている。レビューで指摘されがちなポイントを事前に押さえることで、運用の安定性と保守性を向上させることを目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/jqit-yukiono/items/21c54529410ba960c388?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">JenkinsでGitHub Copilot CLIにPRを自動レビューさせる ― E2BIG・プロンプトインジェクション・トークン地獄との戦い</a></h3>
+    <p class="meta">Qiita トレンド | 07/24 22:20</p>
+    <p class="summary">Jenkins環境でGitHub Copilot CLIを活用し、プルリクエストの自動レビューを実現する試みの記録。大量のコード変更によるエラーや、AI特有のプロンプトインジェクション対策、トークン制限といった技術的課題に直面しながらも、効率的な自動レビュー基盤を構築するまでの苦労と工夫が詳しく紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/WdknWdkn/items/ba228da40b5d2fd1b612?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">ひとことで、言え。～スライドをAIで作り直したらわかりにくくなった話～</a></h3>
+    <p class="meta">Qiita トレンド | 07/25 11:22</p>
+    <p class="summary">AIを使ってプレゼンスライドを作成した際、情報が過多になりかえって分かりにくくなってしまった失敗談。AIは詳細を補完することに長けているが、伝えたい核心を「一言」に凝縮する能力は人間に依存する。読み手に負担をかけないための「情報の引き算」と、論理構成の重要性を再認識させる内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/jqit-yukiono/items/91755838ea8589fde90d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">個人開発でApp Storeリリースフローを学ぶ（続編）― 3回のリジェクトと審査通過までにやったこと</a></h3>
+    <p class="meta">Qiita トレンド | 07/24 23:20</p>
+    <p class="summary">個人開発のiOSアプリがApp Storeの審査で3回リジェクトされ、それを乗り越えてリリースするまでの体験記。メタデータの不備や機能要件の解釈違いなど、具体的なリジェクト理由とそれに対する修正手順がまとめられている。審査ガイドラインへの理解を深め、粘り強く対応することの重要性が説かれている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/25/warner-bros-lawsuit-accuses-amazon-of-illegally-poaching-executives/" target="_blank" rel="noopener noreferrer">Warner Bros. lawsuit accuses Amazon of illegally poaching executives</a></h3>
+    <p class="meta">TechCrunch | 07/25 20:55</p>
+    <p class="summary">ワーナー・ブラザースが、アマゾンを相手取り、幹部社員を不当に引き抜いたとして訴訟を起こした。競合禁止条約を無視した採用活動が行われたと主張している。動画配信サービス市場での競争が激化する中、優秀な人材の確保を巡る両社の対立が法廷闘争に発展した形であり、今後の業界の雇用慣行に影響を与える可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/25/the-hacker-who-humiliated-spyware-makers-and-was-never-caught/" target="_blank" rel="noopener noreferrer">The hacker who humiliated spyware makers and was never caught</a></h3>
+    <p class="meta">TechCrunch | 07/25 20:24</p>
+    <p class="summary">監視用ソフトウェアを製造する企業を標的に、データの流出やシステムの破壊を行った謎のハッカー「Phineas Fisher」に焦点を当てた記事。ハッカーは自身の活動を政治的な抗議と位置づけ、企業の欺瞞を暴くことで業界に衝撃を与えた。高度な匿名化技術を駆使して捜査を逃れ続け、未だに正体が特定されていない稀有な事例である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/25/elon-musks-boring-company-reportedly-raising-funding-at-a-20-billion-valuation/" target="_blank" rel="noopener noreferrer">Elon Musk’s Boring Company reportedly raising funding at a $20 billion valuation</a></h3>
+    <p class="meta">TechCrunch | 07/25 19:23</p>
+    <p class="summary">イーロン・マスク氏が率いるトンネル掘削企業「ボーリング・カンパニー」が、200億ドルの評価額で資金調達を進めていると報じられた。都市部の渋滞解消を目指す地下輸送システムの構築を加速させる狙いがある。最新の評価額は前回から大幅に上昇しており、次世代インフラへの投資家の期待が依然として高いことを示している。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cd7le0d53y2o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">More than 250,000 flee wildfires in France and Spain</a></h3>
+    <p class="meta">BBC World News | 07/25 17:13</p>
+    <p class="summary">フランスとスペインで発生した大規模な森林火災により、25万人以上が避難を余儀なくされた。記録的な熱波と乾燥が火勢を強めており、消防隊による懸命な消火活動が続いている。気候変動の影響による極端な気象現象が、欧州南部を中心に甚大な被害をもたらしている現状を伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cd7le4ylev2o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump takes swipes at press during White House Correspondents&#39; Dinner</a></h3>
+    <p class="meta">BBC World News | 07/25 13:51</p>
+    <p class="summary">トランプ前大統領がホワイトハウス記者会の夕食会に出席し、メディアに対して鋭い批判を繰り広げた。報道機関を「国民の敵」と呼ぶ従来の主張を繰り返しつつ、自身の政策に対する評価の不当さを指摘。政治家とジャーナリストの緊張関係が改めて浮き彫りになる中、支持者に向けて対決姿勢を強調した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cdx828gj5xko?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">India&#39;s &#39;cockroach&#39; protest called off after education minister quits</a></h3>
+    <p class="meta">BBC World News | 07/25 17:44</p>
+    <p class="summary">インドで教育相の辞任を受けて、通称「ゴキブリ抗議デモ」が中止された。この抗議活動は、教育制度の腐敗や試験の不正に反対する学生たちによって行われていたもの。大臣の更迭という形で一定の成果が得られたものの、抗議団体は根本的な制度改革が行われるまで政府の動きを注視し続けるとしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260726/k10015186301000.html" target="_blank" rel="noopener noreferrer">フーシ派“サウジアラムコの石油施設攻撃”影響の懸念広がる</a></h3>
+    <p class="meta">NHK国際放送 | 07/25 20:47</p>
+    <p class="summary">イエメンの反政府勢力フーシ派が、サウジアラビアの国営石油会社サウジアラムコの施設を攻撃したと発表した。エネルギー供給の停滞や原油価格の高騰など、世界経済への影響が懸念されている。サウジアラビア側は防空システムで迎撃したとしているが、中東地域の緊張が再び高まる事態となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260726/k10015186331000.html" target="_blank" rel="noopener noreferrer">ロシア ウクライナ双方の攻撃で犠牲者増加 子どもも死亡</a></h3>
+    <p class="meta">NHK国際放送 | 07/25 20:41</p>
+    <p class="summary">ロシアとウクライナの両軍による攻撃が激化し、民間人の犠牲者が増え続けている。最近の攻撃では子どもを含む市民が死亡し、住宅地やインフラへの被害も拡大。国際社会からは人道危機の深刻化を憂慮する声が上がっているが、停戦の見通しは立たず、住民は極めて危険な状況下での生活を強いられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260726/k10015141161000.html" target="_blank" rel="noopener noreferrer">【詳細】ロシア ウクライナに軍事侵攻（7月25日の動き）</a></h3>
+    <p class="meta">NHK国際放送 | 07/25 17:54</p>
+    <p class="summary">7月25日のロシアによるウクライナ軍事侵攻の動きを詳細に解説。東部および南部での激しい戦闘の継続や、ドローンを用いた後方支援施設への攻撃、外交面での各国の最新の動向などがまとめられている。戦況は依然として膠着状態にあるものの、双方が戦略的拠点の確保に向けた攻勢を強めている状況を伝えている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
