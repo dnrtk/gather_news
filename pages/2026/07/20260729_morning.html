@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月29日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月29日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月29日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260729_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://elizabethtai.com/2026/06/10/substack-writers-you-need-a-website/" target="_blank" rel="noopener noreferrer">Substack writers, you need a website</a></h3>
+    <p class="meta">Hacker News | 07/29 01:58</p>
+    <p class="summary">Substackの執筆者は、プラットフォーム依存のリスクを避けるために独自のウェブサイトを持つべきだと提唱。自身のドメインを所有することで、SEOの強化、コンテンツの管理権の確保、収益源の多様化が可能になる。Substackは一つのツールとして活用しつつ、長期的なブランド構築には独立した拠点が不可欠であると説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://sbcl.org/all-news.html?2.6.7" target="_blank" rel="noopener noreferrer">Steel Bank Common Lisp version 2.6.7</a></h3>
+    <p class="meta">Hacker News | 07/29 02:11</p>
+    <p class="summary">Steel Bank Common Lisp (SBCL) のバージョン 2.6.7 がリリースされた。この最新版には、コンパイラの最適化、バグ修正、および各種プラットフォーム向けのパフォーマンス改善が含まれている。SBCLは高性能なCommon Lisp実装として知られ、継続的なメンテナンスが行われている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://sebastianraschka.com/blog/2026/kimi-k3-architecture-notes.html" target="_blank" rel="noopener noreferrer">Kimi K3 Architecture Overview and Notes</a></h3>
+    <p class="meta">Hacker News | 07/29 00:48</p>
+    <p class="summary">AIモデル「Kimi K3」のアーキテクチャに関する技術的考察。MoE（Mixture-of-Experts）の採用や、推論能力を飛躍的に向上させるための強化学習、スケーリング則に基づいた設計の特徴を解説している。特に、論理的思考能力や複雑な問題解決に特化した最新のAI設計動向が示されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.modelcontextprotocol.io/posts/2026-07-28/" target="_blank" rel="noopener noreferrer">MCP 2026-07-28 Specification: transport going stateless</a></h3>
+    <p class="meta">Hacker News | 07/29 03:35</p>
+    <p class="summary">Model Context Protocol (MCP) の2026年7月28日付仕様アップデートにて、トランスポート層のステートレス化が発表された。これにより、接続管理が簡素化され、スケーラビリティと耐障害性が向上する。AIエージェントと外部ツールの連携をより堅牢かつ効率的にするための重要なステップとなる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.slow-journalism.com/" target="_blank" rel="noopener noreferrer">Delayed Gratification – Proud to Be &#39;Last to Breaking News&#39;</a></h3>
+    <p class="meta">Hacker News | 07/29 00:50</p>
+    <p class="summary">「速報の最後になること」を誇りに掲げる雑誌「Delayed Gratification」を紹介。速報性のみを追求する現代メディアへの対抗軸として、ニュース発生から時間を置き、十分に調査された深い分析とコンテキストを提供する「スロー・ジャーナリズム」の重要性を説いている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/takkuhiro/articles/agentic-rl-trajectory-mechanics" target="_blank" rel="noopener noreferrer">Agentic RLではtool callを含むtrajectoryをどう学習するのか</a></h3>
+    <p class="meta">Zenn トレンド | 07/27 22:00</p>
+    <p class="summary">Agentic RL（エージェント型強化学習）において、ツール呼び出しを含む軌跡（trajectory）をどのように学習させるかを解説。ツールの実行結果を観測として取り込むメカニズムや、オフポリシー学習における課題と解決策など、自律的なエージェント構築に向けた技術的な詳細をまとめている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/fixstars/articles/kame-benchmark" target="_blank" rel="noopener noreferrer">KAMEをオープンモデルで動かしてMT-Benchでベンチマーク評価した</a></h3>
+    <p class="meta">Zenn トレンド | 07/27 09:56</p>
+    <p class="summary">日本語LLMの評価セット「KAME」をオープンモデル上で動かし、MT-Benchを用いてベンチマーク評価を行った記録。モデルごとの日本語対話能力や推論精度の差異を定量的に比較しており、評価手法の妥当性や結果の分析について詳細なレポートが公開されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/sumomoo/items/0d6667bbcf46ad59c320?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">やる気を信じず、学習習慣を仕組み化して固定せよ【三日坊主回避】</a></h3>
+    <p class="meta">Qiita トレンド | 07/28 04:36</p>
+    <p class="summary">三日坊主を防ぐため、不安定な「やる気」に頼らず学習を仕組み化して固定する方法を提案。場所や時間を固定する、行動のハードルを極限まで下げる、if-thenプランニングを導入するなど、根性に頼らず「習慣」として定着させるための具体的な実践テクニックを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/y-okayama-tb/items/0127a7c5203f44507474?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Mac mini（M4 Pro / 48GB）で「完全ローカル」のLLM + RAG環境を構築してみた</a></h3>
+    <p class="meta">Qiita トレンド | 07/27 04:22</p>
+    <p class="summary">M4 Proチップと48GBメモリを搭載した最新のMac miniを使用し、完全にローカルなLLM + RAG（検索拡張生成）環境を構築した事例。Ollama等のツールを組み合わせ、外部APIに依存せずプライバシーを保護しながら、高速かつ快適なAI利用環境を実現する手順と性能を報告している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/prumnn/items/405f4a78ec5f0232b234?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">参考書を読んでも忘れるのは当然。大事なのは&#34;思い出す&#34;回数</a></h3>
+    <p class="meta">Qiita トレンド | 07/28 04:35</p>
+    <p class="summary">学習において、参考書を読むインプットよりも「思い出す」アウトプットの回数が記憶定着に重要であると解説。忘れることを前提に、定期的な想起トレーニングを仕組み化することで、知識を効率的に長期記憶へ定着させるためのマインドセットと具体的な学習手法を紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/28/mcp-startup-runlayer-accuses-rippling-of-stealing-its-product-idea/" target="_blank" rel="noopener noreferrer">MCP startup Runlayer accuses Rippling of stealing its product idea</a></h3>
+    <p class="meta">TechCrunch | 07/28 20:45</p>
+    <p class="summary">MCP関連のスタートアップRunlayerが、大手Ripplingに対し製品アイデアを盗用されたと告発。Runlayer側は、提携交渉の過程で詳細な製品構想を共有したが、その直後にRipplingが酷似した機能を発表したと主張している。テック業界の競争における企業倫理が問われている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/28/sam-altman-is-ready-to-decelerate/" target="_blank" rel="noopener noreferrer">Sam Altman is ready to decelerate</a></h3>
+    <p class="meta">TechCrunch | 07/28 20:17</p>
+    <p class="summary">OpenAIのサム・アルトマン氏が、AI開発の急激な加速から一転し、ペースを緩める可能性を示唆している。急速な進化がもたらす社会的影響や安全性のリスクを考慮し、より慎重なガバナンスと慎重なアプローチが必要であるとの考えを明らかにし、業界のリーダーとしての姿勢の変化が注目される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/28/ozlos-sleepbuds-2-build-on-boses-sleep-earbud-legacy/" target="_blank" rel="noopener noreferrer">Ozlo’s Sleepbuds 2 build on Bose’s sleep earbud legacy</a></h3>
+    <p class="meta">TechCrunch | 07/28 19:09</p>
+    <p class="summary">元Boseのエンジニアらが設立したOzloが、Boseが断念した睡眠用イヤホンの技術を継承した「Sleepbuds 2」を発表。周囲の騒音を遮断し、睡眠を助けるサウンドを再生する機能に特化している。Boseのレガシーを受け継ぎつつ、独自の改良を加えた製品として期待されている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c5yd8gly1ydo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Wildfires in south-west France flare up as region braces for new 40C heatwave</a></h3>
+    <p class="meta">BBC World News | 07/28 16:14</p>
+    <p class="summary">フランス南西部で森林火災が再燃し、気温が40度に達する熱波に警戒が強まっている。極度の乾燥と強風が火勢を強めており、消防当局が消火活動に追われている。気候変動による異常気象が深刻な被害をもたらしており、当局は住民に注意を呼びかけている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/sport/football/articles/c8xng9894z0o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Uefa and PM criticise Infantino World Cup plan</a></h3>
+    <p class="meta">BBC World News | 07/28 15:36</p>
+    <p class="summary">UEFAと英国首相が、FIFAのインファンティーノ会長が提案するワールドカップの隔年開催案を批判した。選手の過密日程や大会の価値低下、既存の国内リーグへの影響を懸念し、伝統的な4年周期を維持すべきだと主張。サッカー界の統括団体間での対立が浮き彫りになっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/crk52jk0131o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Ghana mourns its tallest man - a &#39;generous and popular giant&#39;</a></h3>
+    <p class="meta">BBC World News | 07/28 18:19</p>
+    <p class="summary">ガーナで最も背が高かった男性、スレマナ・アブドゥル・サメド氏が亡くなり、多くの人々が哀悼の意を捧げている。「寛大な巨人」として親しまれた彼は、巨大症による健康上の課題を抱えながらも前向きに活動し、地域社会で愛される存在だった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260729/k10015189261000.html" target="_blank" rel="noopener noreferrer">米ウクライナ首脳会談 迎撃ミサイルのライセンス生産など協議</a></h3>
+    <p class="meta">NHK国際放送 | 07/28 20:03</p>
+    <p class="summary">バイデン大統領とゼレンスキー大統領が会談し、ウクライナ国内での迎撃ミサイルのライセンス生産について協議した。ロシアの攻撃に対する防空体制の強化と、軍事支援の持続可能性を高めることが狙い。ウクライナの防衛産業の自立に向けた新たな協力段階に入った。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260729/k10015189181000.html" target="_blank" rel="noopener noreferrer">サッカー ジダン氏がフランス代表の新監督に就任へ</a></h3>
+    <p class="meta">NHK国際放送 | 07/28 18:33</p>
+    <p class="summary">サッカー界のレジェンド、ジネディーヌ・ジダン氏がフランス代表の新監督に就任することが決定した。レアル・マドリードを率いて欧州王者に導いた実績を持つ同氏の就任により、代表チームの再建と2026年ワールドカップでの王座奪還に向けた期待が高まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260729/k10015189001000.html" target="_blank" rel="noopener noreferrer">イスラエルがガザ地区への国際部隊展開を承認か 現地報道</a></h3>
+    <p class="meta">NHK国際放送 | 07/28 16:38</p>
+    <p class="summary">イスラエル政府が、戦闘が続くガザ地区への国際部隊の展開を承認する方針であると報じられた。治安維持や人道支援の監視を目的とした多国籍軍の導入を検討しており、停戦交渉や将来の統治体制を巡る議論において重要な進展となる可能性がある。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
