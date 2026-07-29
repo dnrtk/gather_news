@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年07月29日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年07月29日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年07月29日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260729_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://tailscale.com/blog/jailbroken-kindle-proxy-tun-modes" target="_blank" rel="noopener noreferrer">More Tailscale tricks for your jailbroken Kindle</a></h3>
+    <p class="meta">Hacker News | 07/29 13:58</p>
+    <p class="summary">ジェイルブレイク（脱獄）したKindleでTailscaleを活用する高度な手法を紹介しています。単なるファイル共有にとどまらず、プロキシモードやTUNモードを利用することで、Kindleをセキュアなネットワークの出口（エグジットノード）として運用したり、プライベートネットワークへ安全にアクセスさせたりする方法を解説しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.datagubbe.se/scenegui/" target="_blank" rel="noopener noreferrer">User Interfaces of the Demo Scene</a></h3>
+    <p class="meta">Hacker News | 07/29 13:30</p>
+    <p class="summary">1980年代から続く「デモシーン」における独特なユーザーインターフェース（GUI）の歴史と美学を分析した記事です。標準的なOSの規約に縛られず、限られたリソースの中で視覚効果や操作性を追求したカスタムツールキットの数々を、技術的・芸術的な視点から振り返っています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/openai/codex-security" target="_blank" rel="noopener noreferrer">Codex Security</a></h3>
+    <p class="meta">Hacker News | 07/29 05:52</p>
+    <p class="summary">OpenAIのコード生成モデル「Codex」におけるセキュリティ上の脆弱性を調査したリポジトリです。AIが生成するコードに意図せず含まれる可能性のある脆弱性の傾向を分析し、開発者がAIを安全に利用し、生成されたコードのリスクを軽減するための知見を提供しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://micrologics.org/blog/sqlite-in-production-optimizing-wal-mode-concurrency-and-vfs-layers-for-low-latency-app-servers" target="_blank" rel="noopener noreferrer">SQLite in Production: Optimizing WAL Mode, Concurrency, and VFS Layers</a></h3>
+    <p class="meta">Hacker News | 07/29 16:18</p>
+    <p class="summary">本番環境の低レイテンシなアプリケーションサーバーにおいて、SQLiteを最適化する手法を解説しています。WAL（書き込み事前ログ）モードの活用、同時実行制御、VFS（仮想ファイルシステム）レイヤーの調整など、データベースのパフォーマンスを最大限に引き出すための実践的な技術が紹介されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/twalichiewicz/HNewhere" target="_blank" rel="noopener noreferrer">Show HN: I was tired of opening 2 tabs for every HN link, so I made a userscript</a></h3>
+    <p class="meta">Hacker News | 07/29 07:09</p>
+    <p class="summary">Hacker Newsの閲覧体験を向上させるユーザースクリプト「HNewhere」の紹介です。記事リンクと議論スレッドの2つのタブを個別に開く手間を省くため、ページ内にリンク先の内容を直接埋め込むことで、効率的にニュースをチェックできるように設計されています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/uniquevision/articles/4359e64b17b028" target="_blank" rel="noopener noreferrer">TypeScript 7 時代の Vue.js ツールチェーン Vize を実プロダクトで検証した</a></h3>
+    <p class="meta">Zenn トレンド | 07/28 10:11</p>
+    <p class="summary">TypeScript 7時代のVue.js向け次世代ツールチェーン「Vize」を、実際のプロダクト開発に導入して検証したレポートです。ビルド速度の向上や型安全性の強化といったメリットに加え、実運用における課題や解決策について詳しく述べられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/rehabforjapan/articles/claude-code-routines-pr-review-202607" target="_blank" rel="noopener noreferrer">Claude Code Routinesにてサブスク内で自動コードレビューする</a></h3>
+    <p class="meta">Zenn トレンド | 07/28 08:42</p>
+    <p class="summary">Claude Code Routinesを活用し、プルリクエストの自動コードレビューをサブスクリプション環境内で実現する方法を解説しています。AIによる継続的なコード品質チェック体制の構築手順や、自動化による開発フローの効率化、レビュー精度の評価などが紹介されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/dely_jp/articles/7a27a44c06b30a" target="_blank" rel="noopener noreferrer">生成AIでPIIを消し去る！SnowflakeのAI_REDACTでフリーテキストを守る挑戦</a></h3>
+    <p class="meta">Zenn トレンド | 07/28 06:18</p>
+    <p class="summary">Snowflakeの新機能「AI_REDACT」を用い、生成AIを活用してフリーテキストデータから個人識別情報（PII）を自動で除去する試みを紹介しています。データセキュリティとプライバシー保護を両立させながら、企業内のデータを安全に利活用するための実装手法を解説しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/28/cyera-agrees-to-acquire-oasis-security-for-1b-to-safeguard-proliferating-ai-agents/" target="_blank" rel="noopener noreferrer">Cyera agrees to acquire Oasis Security for $1B to safeguard proliferating AI agents</a></h3>
+    <p class="meta">TechCrunch | 07/29 00:09</p>
+    <p class="summary">データセキュリティ企業のCyeraが、アイデンティティ管理のOasis Securityを10億ドルで買収することに合意しました。急増するAIエージェントやボットなどの「非人間アイデンティティ」を保護し、AI時代の新たなセキュリティリスクに対処することを目的としています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/07/28/bot-detection-startup-spur-nabs-200m-from-insight/" target="_blank" rel="noopener noreferrer">Bot-detection startup Spur nabs $200M from Insight</a></h3>
+    <p class="meta">TechCrunch | 07/28 21:29</p>
+    <p class="summary">ボット検知およびIPインテリジェンスを手掛けるスタートアップSpurが、Insight Partnersから2億ドルの資金調達を実施しました。巧妙化する自動化された脅威に対抗するため、データ精度の向上と検知技術の強化を図り、デジタル広告やEコマースの安全性を高める狙いです。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/videos/c3r0pg0dgrgo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Japan in a ‘race against time’ to rescue people trapped beneath rubble after quake</a></h3>
+    <p class="meta">BBC World News | 07/29 06:10</p>
+    <p class="summary">日本で発生した地震の救助活動について、がれきの下に取り残された人々を救出するための「時間との戦い」を報じています。生存率が急激に下がるとされる「72時間の壁」が迫る中、捜索救助チームが懸命な活動を続けている緊迫した状況を伝えています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c70g6y24d76o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Saudi Arabia joins US in strikes on Iran-backed militias in Iraq</a></h3>
+    <p class="meta">BBC World News | 07/29 08:43</p>
+    <p class="summary">サウジアラビアが米国と協力し、イラク国内のイラン支援下の民兵組織に対する空爆に参加しました。この共同作戦は地域安全保障における重要な進展であり、イランの影響力拡大を抑制し、中東の安定を図るための多国間での軍事的な連携強化を象徴しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/crmrnxp4nllo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">How Mexican drug cartels have outsourced meth labs to Nigeria</a></h3>
+    <p class="meta">BBC World News | 07/28 23:25</p>
+    <p class="summary">メキシコの麻薬カルテルが、メタンフェタミンの製造拠点をナイジェリアに外部委託している実態を調査した記事です。現地のネットワークを利用してグローバルに麻薬を輸出する新たな手法が浮き彫りになり、犯罪組織の国際化とサプライチェーンの複雑化を警告しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260728/k10015188781000.html" target="_blank" rel="noopener noreferrer">熊本地震 台湾“要請あれば4時間以内に救助隊出発可能”</a></h3>
+    <p class="meta">NHK国際放送 | 07/29 08:41</p>
+    <p class="summary">熊本地震を受け、台湾当局は日本政府からの要請があれば、4時間以内に救助隊を出発させる準備ができていると表明しました。過去の災害時における相互支援の経験を背景に、迅速な人道支援を申し出ることで、日本との強い友好・協力関係を示しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260729/k10015189791000.html" target="_blank" rel="noopener noreferrer">ブルージェイズ岡本和真 24号ホームランもチーム敗れる</a></h3>
+    <p class="meta">NHK国際放送 | 07/29 08:10</p>
+    <p class="summary">大リーグ、ブルージェイズの岡本和真選手が24号ホームランを放ち、好調な打撃を見せました。しかし、チームは接戦の末に敗北し、岡本選手の活躍は勝利には結びつきませんでした。日本人選手のメジャーでの奮闘が注目されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260729/k10015189731000.html" target="_blank" rel="noopener noreferrer">アンソロピックCEOなど米AI企業幹部 AI開発にペース管理必要</a></h3>
+    <p class="meta">NHK国際放送 | 07/29 06:27</p>
+    <p class="summary">アンソロピックのCEOら米国の主要AI企業の幹部が、AI開発において適切なペース管理が必要であるとの認識を示しました。技術革新のスピードだけでなく、安全性や社会的リスクを考慮し、バランスの取れた責任ある開発体制を構築することの重要性を強調しています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
