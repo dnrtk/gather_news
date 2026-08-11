@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年08月11日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年08月11日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年08月11日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260811_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/antirez/h3.c" target="_blank" rel="noopener noreferrer">H3-metal – Native MiniMax-H3 inference for Apple Silicon</a></h3>
+    <p class="meta">Hacker News | 08/11 10:22</p>
+    <p class="summary">Redisの開発者であるantirez氏が公開した、Apple SiliconのGPU（Metal）を利用してMiniMax-H3の推論を行うC言語実装。推論エンジンをネイティブ環境で効率的に動作させることを目的としている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://thewalrus.ca/google-search-is-dying/" target="_blank" rel="noopener noreferrer">As AI eats the web, the internet’s collective memory is disappearing</a></h3>
+    <p class="meta">Hacker News | 08/11 07:36</p>
+    <p class="summary">AI生成コンテンツの増殖とGoogle検索の質の低下により、インターネットの集合的な記憶が失われつつある現状を指摘した記事。人間による多様な表現がAI学習用のデータとして消費され、検索が困難になっている問題を論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/activeing123/mcptoon" target="_blank" rel="noopener noreferrer">Show HN: Mcptoon – Token-efficient MCP CLI client</a></h3>
+    <p class="meta">Hacker News | 08/11 14:26</p>
+    <p class="summary">Model Context Protocol（MCP）に対応した、トークン消費効率を重視するコマンドライン（CLI）クライアント。AIエージェントのコンテキスト管理を最適化し、コストを抑えつつ効率的な対話を実現する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://code.call-cc.org/releases/6.0.0/NEWS" target="_blank" rel="noopener noreferrer">Chicken Scheme 6.0</a></h3>
+    <p class="meta">Hacker News | 08/11 09:24</p>
+    <p class="summary">Scheme言語のコンパイラ「CHICKEN Scheme」のバージョン6.0.0がリリースされた。内部データ表現の変更やUnicodeサポートの改善など、多数の重要な変更やバグ修正が含まれるメジャーアップデートとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://huggingface.co/LiquidAI/LFM2.5-2.6B" target="_blank" rel="noopener noreferrer">LFM2.5 2.6B model competitive with 4x larger models</a></h3>
+    <p class="meta">Hacker News | 08/05 03:47</p>
+    <p class="summary">Liquid AIが発表した「LFM2.5 2.6B」は、26億パラメータながら、その4倍以上のサイズを持つモデルに匹敵する性能を発揮する。リニアアテンションベースのアーキテクチャにより、高い効率性と推論能力を両立している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/yoshipon_tech/articles/a51bbfcc068c1f" target="_blank" rel="noopener noreferrer">曖昧に使っていたAI周りの言葉を理解する</a></h3>
+    <p class="meta">Zenn トレンド | 08/10 15:10</p>
+    <p class="summary">機械学習、ディープラーニング、生成AI、LLMなど、日常的に曖昧に使われがちなAI関連用語の定義と関係性を整理した解説記事。RAGやプロンプトエンジニアリングといった周辺技術についても分かりやすくまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/aws_japan/articles/agent-plugins-1-0-deep-dive" target="_blank" rel="noopener noreferrer">Agent Plugins 1.0.0 は何を標準化し、何を標準化しなかったのか</a></h3>
+    <p class="meta">Zenn トレンド | 08/10 09:06</p>
+    <p class="summary">AWSが公開した「Agent Plugins 1.0.0」の仕様について、標準化された領域とあえて柔軟性を残した領域を詳しく解説。エージェント間連携における認証やデータ構造の標準化の意図と、開発者への影響を分析している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/ciffelia/articles/pve-amd-sec-snp" target="_blank" rel="noopener noreferrer">Proxmox VEでAMD SEV-SNPを試してみる</a></h3>
+    <p class="meta">Zenn トレンド | 08/10 06:44</p>
+    <p class="summary">Proxmox VE環境でAMDの信頼実行環境（TEE）技術である「SEV-SNP」を導入し、動作検証した記録。最新カーネルの適用や設定手順、実際に仮想マシンのメモリ保護を有効化するまでの具体的な工程が紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/kiwi-dev/items/60dca34eccf785744a1d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AWS認定を1年延長できる維持制度の登録、延長方法について</a></h3>
+    <p class="meta">Qiita トレンド | 08/09 01:54</p>
+    <p class="summary">AWS認定資格の有効期限を1年間延長できる「維持制度（CE）」の登録と延長方法を解説した記事。再試験を受けずにトレーニングを通じて資格を維持する手順や、具体的な申請フローについて説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/10/openai-reportedly-completed-a-7-billion-employee-tender-offer/" target="_blank" rel="noopener noreferrer">OpenAI reportedly completed a $7 billion employee tender offer</a></h3>
+    <p class="meta">TechCrunch | 08/11 00:03</p>
+    <p class="summary">OpenAIが、従業員を対象とした約70億ドル規模の株式公開買付け（テンダーオファー）を完了したとの報道。同社の高い企業価値を背景に、従業員が保有する自社株を現金化する機会を提供した形となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/10/as-ai-led-attacks-multiply-openai-launches-a-new-cyber-model/" target="_blank" rel="noopener noreferrer">As AI-led attacks multiply, OpenAI launches a new cyber model</a></h3>
+    <p class="meta">TechCrunch | 08/10 23:56</p>
+    <p class="summary">AIを悪用したサイバー攻撃の増加に対応するため、OpenAIがサイバーセキュリティに特化した新しいAIモデルを発表。防御側のセキュリティ能力を向上させ、高度化する脅威に対抗することを目的としている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/10/jeff-bezos-might-finally-get-his-hands-on-a-sports-team/" target="_blank" rel="noopener noreferrer">Jeff Bezos might finally get his hands on a sports team</a></h3>
+    <p class="meta">TechCrunch | 08/10 23:16</p>
+    <p class="summary">Amazon創業者のジェフ・ベゾス氏が、プロスポーツチームの買収に乗り出す可能性を報じている。以前から噂されていたNFLだけでなく、NBAのボストン・セルティックスなどの買収にも関心を持っているとされる。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/podcast-with-julien-camirand-lemyre-chief-executive-officer-co-founder-at-nord-quantique/" target="_blank" rel="noopener noreferrer">Podcast with Julien Camirand Lemyre, Chief Executive Officer &amp; Co-founder at Nord Quantique</a></h3>
+    <p class="meta">Quantum Computing Report | 08/11 03:08</p>
+    <p class="summary">量子計算企業Nord QuantiqueのCEOへのインタビュー。超伝導量子ビットと「ボソニック・コード」を用いた独自の誤り訂正アプローチについて語り、少ないリソースで高い信頼性を実現する同社の戦略を解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/utah-governor-spencer-cox-signs-executive-order-launching-statewide-quantum-initiative/" target="_blank" rel="noopener noreferrer">Utah Governor Spencer Cox Signs Executive Order Launching Statewide Quantum Initiative</a></h3>
+    <p class="meta">Quantum Computing Report | 08/11 01:57</p>
+    <p class="summary">ユタ州のスペンサー・コックス知事が、州全域で量子技術を推進するイニシアチブを立ち上げる行政命令に署名。研究開発や産業育成を強化し、ユタ州を量子技術の拠点にすることを目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/pasqal-achieves-first-on-chip-neutral-atom-qubit-trapping-via-photonic-integrated-circuits/" target="_blank" rel="noopener noreferrer">Pasqal Achieves First On-Chip Neutral-Atom Qubit Trapping via Photonic Integrated Circuits</a></h3>
+    <p class="meta">Quantum Computing Report | 08/11 01:44</p>
+    <p class="summary">量子コンピュータ企業のPasqalが、光集積回路を用いて中性原子量子ビットをチップ上にトラップすることに初めて成功した。この成果により、装置の小型化とスケーラビリティが大幅に向上し、実用化への前進が期待される。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c20e360lx0vo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">At least 132 killed in Colombia&#39;s largest  earthquake in years</a></h3>
+    <p class="meta">BBC World News | 08/11 04:06</p>
+    <p class="summary">コロンビアで過去数年で最大規模となる地震が発生し、少なくとも132人が死亡した。甚大な被害が出ており、倒壊した建物の下からの救助活動が現在も進められている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cj6307x3wdgo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Canada flight cancelled after child refuses to wear seat belt</a></h3>
+    <p class="meta">BBC World News | 08/10 21:06</p>
+    <p class="summary">カナダの国内線において、子供がシートベルトの着用を拒否したために離陸が中止され、最終的に便全体が欠航となる異例の事態が発生。安全上の規則に基づく判断だが、多くの乗客に影響を及ぼした。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/videos/cjd48zkg5n9o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Watch: What we know about Tupac murder suspect Duane &#39;Keffe D&#39; Davis</a></h3>
+    <p class="meta">BBC World News | 08/10 20:45</p>
+    <p class="summary">1996年のラッパー、2パック殺害事件の容疑者であるデュアン・「ケフェ・D」・デイビスに関する情報をまとめた動画ニュース。事件から長期間を経て逮捕された経緯や、現在の裁判の進展について伝えている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
