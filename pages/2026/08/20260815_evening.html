@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年08月15日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年08月15日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年08月15日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260815_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://conic.al/writing/the-other-sean-byrne-doesnt-exist/" target="_blank" rel="noopener noreferrer">The other Sean Byrne doesn&#39;t exist</a></h3>
+    <p class="meta">Hacker News | 08/15 13:18</p>
+    <p class="summary">同名の人物「ショーン・バーン」がオンライン上に存在するかを考察したエッセイ。検索結果に現れる同姓同名の人物たちの痕跡を辿りつつ、自分自身のデジタルアイデンティティと向き合う。最終的に、人々が期待するような「もう一人の完成された自分」は存在せず、ネット上の断片的な情報の集積に過ぎないことを綴っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.cryptographyengineering.com/2026/08/14/everything-is-about-to-go-dark/" target="_blank" rel="noopener noreferrer">Going Dark, and the era of law enforcement hacking</a></h3>
+    <p class="meta">Hacker News | 08/15 05:52</p>
+    <p class="summary">法執行機関による暗号化データへのアクセス困難性（Going Dark）と、それに対抗するハッキング手法の進化を解説。エンドツーエンド暗号化の普及により従来の通信傍受が困難になる中、デバイス自体をハッキングする「政府によるハッキング」が新たな捜査標準となりつつある現状と、それに伴うプライバシー上のリスクを論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.wired.com/story/this-coin-sized-device-can-hack-a-boeing-737/" target="_blank" rel="noopener noreferrer">Coin-sized device can hack a Boeing 737</a></h3>
+    <p class="meta">Hacker News | 08/13 16:57</p>
+    <p class="summary">ボーイング737の通信システムに侵入できるコインサイズのデバイスが開発された。セキュリティ研究者が、航空機の制御システム（ARINC 429）の脆弱性を突き、機内配線にデバイスを接続することで航法データの改ざんなどが可能であることを実証。物理的なアクセスが必要だが、航空業界のサイバーセキュリティ対策の遅れに警鐘を鳴らしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.popularmechanics.com/military/a73358518/nazi-rocket-scientist-disappearance/" target="_blank" rel="noopener noreferrer">In 1962, Egypt&#39;s Missile Program Lost Its Key Scientist Without a Trace</a></h3>
+    <p class="meta">Hacker News | 08/12 21:31</p>
+    <p class="summary">1962年、エジプトのミサイル開発に協力していた元ナチスの科学者ハインツ・クルーグが失踪した事件を振り返る。当時、イスラエルの諜報機関モサドがエジプトの軍備増強を阻止するため、科学者らを標的にした暗殺や脅迫を行っていた。クルーグの失踪は冷戦下の諜報戦における大きな謎の一つとして、今なお語り継がれている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/takeshi_teshima/articles/bae79b2f0f97be" target="_blank" rel="noopener noreferrer">概念設計が、その後のコードの命運を左右する</a></h3>
+    <p class="meta">Zenn トレンド | 08/14 13:00</p>
+    <p class="summary">ソフトウェア開発における「概念設計」の重要性を説く記事。コーディング前に扱うドメインの概念を正しく定義し整合性を保つことが、保守性の高いコードを書くための鍵となる。不適切な概念設計は後に技術的負債となりコードを複雑化させるため、設計段階での深い考察がプロジェクトの成否を分けると主張している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/colum2131/articles/46b5560dce0e3a" target="_blank" rel="noopener noreferrer">Databricks の Declarative Automation Bundles を用いた機械学習データセット作成基盤の構築</a></h3>
+    <p class="meta">Zenn トレンド | 08/14 09:00</p>
+    <p class="summary">Databricks Asset Bundles (DABs) を活用し、宣言的なアプローチで機械学習データセット作成基盤を構築する手法を解説。CI/CDパイプラインとの連携やインフラのコード管理を容易にすることで、再現性の高いデータパイプラインを構築する方法を紹介している。エンジニアリングの効率化と品質向上を目的とした実践的な内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/jksoft/items/65f7824679ddf171a93d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">エラーを 3 秒で AI に丸投げする若手を見て、AI から答えを取り上げることにした</a></h3>
+    <p class="meta">Qiita トレンド | 08/14 00:15</p>
+    <p class="summary">若手エンジニアがエラー解決をAIに丸投げし、思考停止している現状を危惧した筆者の教育的試み。AIに直接答えを聞くことを禁止し、エラーの構造理解や公式ドキュメントの読み方を教えることで、基礎的な問題解決能力を養わせる重要性を説く。生成AI時代におけるスキル習得と、技術者としての「考える力」のバランスを問いかけている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/14/talks-to-sell-paypal-to-stripe-and-advent-are-heating-up/" target="_blank" rel="noopener noreferrer">Talks to sell PayPal to Stripe and Advent are heating up</a></h3>
+    <p class="meta">TechCrunch | 08/14 22:43</p>
+    <p class="summary">PayPalをStripeや投資会社Advent Internationalに売却する交渉が加速している。決済業界の巨頭同士の統合は、デジタル決済市場の勢力図を劇的に塗り替える可能性がある。規制当局の審査が大きな壁になると予想される中、PayPalの再編と今後の成長戦略、金融業界全体への波及効果に注目が集まっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c5y0zz63gero?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Powerful 7.7-magnitude earthquake kills at least 38 in Indonesia</a></h3>
+    <p class="meta">BBC World News | 08/15 08:52</p>
+    <p class="summary">インドネシアでマグニチュード7.7の強力な地震が発生し、少なくとも38人が死亡した。地震により多くの建物が倒壊し、救助活動が難航している。余震の恐れや津波警報の発令により住民は避難を余儀なくされており、政府は非常事態を宣言。被災地への支援を急いでいるが、死傷者数はさらに増える可能性がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c4gkyez7195o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">&#39;I shot Mr Thompson&#39;- What it was like inside court as Mangione pleaded guilty</a></h3>
+    <p class="meta">BBC World News | 08/14 18:54</p>
+    <p class="summary">米大手保険会社CEO射殺事件の被告ルイージ・マンジョーネが、法廷で「トンプソン氏を撃った」と罪を認めた。被告は冷静な口調で犯行を認め、背景には米国の医療保険制度への強い不満があったとされる。裁判は全米の注目を集めており、記事では法廷内の緊迫した空気や遺族の様子、被告の言動について詳報している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cd69ely319eo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">BBC seeks to subpoena Trump&#39;s family members in Panorama lawsuit</a></h3>
+    <p class="meta">BBC World News | 08/15 00:01</p>
+    <p class="summary">BBCがドキュメンタリー番組「パノラマ」を巡る訴訟において、トランプ前大統領の家族への召喚状発行を求めている。トランプ氏側がBBCを名誉毀損で訴えたのに対し、BBCは証拠収集の一環として家族の証言が必要だと主張。トランプ陣営のメディアに対する姿勢と、表現の自由を巡る法的な争いが激化している。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
