@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年08月17日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年08月17日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年08月17日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260817_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://rvembedded.com/blog_post/12/" target="_blank" rel="noopener noreferrer">A 3rd World Embedded Engineer Responds to &#34;RISC-V They Should Have Known Better&#34;</a></h3>
+    <p class="meta">Hacker News | 08/17 02:01</p>
+    <p class="summary">RISC-Vに対する批判的な意見への反論記事。途上国の組み込みエンジニアの視点から、高額なライセンス料を要するARMやx86に対し、RISC-Vのオープンな性質が現地での革新を可能にし、教育や産業の自立を支える重要な役割を果たしていることを強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://platform.claude.com/docs/en/release-notes/system-prompts" target="_blank" rel="noopener noreferrer">Claude: System Prompts</a></h3>
+    <p class="meta">Hacker News | 08/16 21:48</p>
+    <p class="summary">Claudeのシステムプロンプトに関するリリースノート。システムプロンプトがどのようにモデルの挙動を誘導し、特定の文脈や役割、制約を定義するかの仕組みを解説している。効果的な実装例や、ユーザー入力を処理する際のベストプラクティスも提供されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://ivan-gavran.github.io/0-social-processes-paper" target="_blank" rel="noopener noreferrer">The Case Against Formal Verification, 50 Years Later</a></h3>
+    <p class="meta">Hacker News | 08/17 05:38</p>
+    <p class="summary">形式手法（Formal Verification）がなぜプログラミングにおける社会的プロセスを代替できなかったのかを論じた著名な論文の50年後を考察。検証の複雑さと、人間による社会的信頼や査読プロセスが依然としてソフトウェアの信頼性において不可欠であることを述べている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://w4g1.dev/blog/models-are-getting-dumber-on-purpose" target="_blank" rel="noopener noreferrer">Models Are Getting Dumber on Purpose</a></h3>
+    <p class="meta">Hacker News | 08/17 04:04</p>
+    <p class="summary">最新のAIモデルが意図的に「低能化」しているように見える現象についての考察。RLHF（人間からのフィードバックによる強化学習）や過度な安全対策、ハルシネーション抑制の試みが、結果としてモデルの創造性や柔軟な回答能力、有用性を損なっている可能性を指摘している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://buf.build/blog/protobuf-lsp" target="_blank" rel="noopener noreferrer">Protobuf has LSP support. You&#39;re welcome</a></h3>
+    <p class="meta">Hacker News | 08/17 03:48</p>
+    <p class="summary">BufがProtocol Buffers（Protobuf）向けのLSP（Language Server Protocol）サポートを発表。これにより、エディタを問わず定義ジャンプ、自動補完、診断などの高度な開発者体験が提供されるようになり、Protobufを用いた開発効率が大幅に向上する。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/gamella/articles/f5e6bddab37c8d" target="_blank" rel="noopener noreferrer">botterのためのKaggle金融予測コンペの設計史</a></h3>
+    <p class="meta">Zenn トレンド | 08/16 04:43</p>
+    <p class="summary">Kaggleで開催されてきた金融予測コンペの設計の歴史を解説。データリーク対策や評価指標の選定、計算資源の制約など、自動取引bot開発者（botter）にとって実戦に近い環境をいかに構築してきたか、その設計思想の変遷を辿っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/seeiji/articles/d9ab5f08b08005" target="_blank" rel="noopener noreferrer">RaycastのSlack Extensionでチャンネル移動が快適に。</a></h3>
+    <p class="meta">Zenn トレンド | 08/15 13:18</p>
+    <p class="summary">RaycastのSlack拡張機能を利用して、Slackのチャンネル移動を高速化する方法の紹介。キーボード操作のみで膨大なチャンネルから目的の場所を即座に検索・移動できるため、マウス操作の手間を省き、日常的なコミュニケーションの効率を大幅に向上させる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mizugeeks/articles/1019cf2353d343" target="_blank" rel="noopener noreferrer">デスクトップUIフレームワーク15種のメモリ使用量計測</a></h3>
+    <p class="meta">Zenn トレンド | 08/15 03:10</p>
+    <p class="summary">Electron、Tauri、Flutter、Qtなど、主要なデスクトップUIフレームワーク15種類のメモリ使用量を比較計測した記事。Hello Worldレベルのアプリから複雑な構成まで、各フレームワークのランタイム特性や初期フットプリントの違いを数値ベースで明らかにしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/minorun365/items/320b4230c0b0c169ba13?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AIエージェントの作業結果、マークダウンで読むの辛くない？ →「HTML共有くん」を作りました</a></h3>
+    <p class="meta">Qiita トレンド | 08/16 06:57</p>
+    <p class="summary">AIエージェントが出力するMarkdown形式の結果を、見やすいHTMLとしてプレビュー・共有できるツール「HTML共有くん」の開発背景と機能を紹介。テキストベースでは読み取りにくい複雑な構造を視覚的に整えることで、AIとの協業効率を向上させる狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/16/stripe-will-reportedly-acquire-ai-gateway-startup-openrouter-for-7b/" target="_blank" rel="noopener noreferrer">Stripe will reportedly acquire AI gateway startup OpenRouter for $7B+</a></h3>
+    <p class="meta">TechCrunch | 08/16 20:57</p>
+    <p class="summary">決済大手のStripeが、AIゲートウェイを提供するスタートアップ「OpenRouter」を70億ドル以上で買収する見込みとの報道。Stripeはこの買収を通じて自社プラットフォームへのAI統合を加速させ、開発者向けのインフラストラクチャ強化を図ると見られている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/16/why-people-arent-buying-mark-zuckerbergs-ai-future/" target="_blank" rel="noopener noreferrer">Why people aren’t buying Mark Zuckerberg’s AI future</a></h3>
+    <p class="meta">TechCrunch | 08/16 20:32</p>
+    <p class="summary">マーク・ザッカーバーグが描くAIの未来像に対し、世間が懐疑的である理由を分析。メタバースでの苦戦の記憶やプライバシーへの懸念、そしてAIがもたらす具体的なユーザー価値の不透明さが、投資家や一般ユーザーの完全な支持を妨げていると指摘している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/16/anthropic-ceo-says-ai-backlash-is-fundamentally-a-crisis-of-trust/" target="_blank" rel="noopener noreferrer">Anthropic CEO says AI backlash is ‘fundamentally a crisis of trust’</a></h3>
+    <p class="meta">TechCrunch | 08/16 16:53</p>
+    <p class="summary">AnthropicのCEO、ダリオ・アモデイ氏が、AIに対する反発は本質的に「信頼の危機」であると発言。企業が開発プロセスの透明性を確保し、安全性を実証し続けなければ、社会からの不信感は解消されず、AIの真の普及と進歩は難しいとの見解を示した。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/quantinuum-and-quanta-computer-partner-to-industrialize-fault-tolerant-trapped-ion-hardware-manufacturing/" target="_blank" rel="noopener noreferrer">Quantinuum and Quanta Computer Partner to Industrialize Fault-Tolerant Trapped-Ion Hardware Manufacturing</a></h3>
+    <p class="meta">Quantum Computing Report | 08/16 19:28</p>
+    <p class="summary">量子コンピューティング企業のQuantinuumとQuanta Computerが、耐故障性トラップイオン型ハードウェアの量産化に向けて提携。量子コンピュータの産業化を加速させ、研究段階から実用レベルの信頼性を持つハードウェアの安定供給体制の構築を目指す。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c77gg5vn44yo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump envoy Kushner meets Hamas leader to push Gaza peace plan</a></h3>
+    <p class="meta">BBC World News | 08/16 19:58</p>
+    <p class="summary">トランプ前大統領の特使であるジャレッド・クシュナー氏が、ガザ地区の和平案を推進するためハマスの指導者と会談。中東和平の実現に向けた新たな外交的アプローチを模索しており、トランプ次期政権を見据えた動きとして国際的な注目を集めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c87nnwlpe5no?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Two dead and hundreds evacuated after twin fires break out on Greek island</a></h3>
+    <p class="meta">BBC World News | 08/16 19:50</p>
+    <p class="summary">ギリシャの島で2件の火災が同時に発生し、2人が死亡、数百人が避難を余儀なくされた。猛暑と強風が火の回りを早めており、消防当局が懸命の消火活動を続けているが、乾燥した天候によりさらなる被害の拡大が懸念されている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
