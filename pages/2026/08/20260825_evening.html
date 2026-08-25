@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年08月25日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年08月25日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年08月25日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260825_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://developer.apple.com/news/?id=1ptvdtcm" target="_blank" rel="noopener noreferrer">iCloud+ Hide My Email addresses will remain on icloud.com</a></h3>
+    <p class="meta">Hacker News | 08/25 07:13</p>
+    <p class="summary">Appleは、iCloud+の「メールを非公開」機能で生成されるアドレスのドメインについて、引き続きicloud.comドメインを使用することを開発者向けに発表しました。これにより、既存のユーザー体験が維持され、開発者は新しいドメインへの対応を心配することなく、このプライバシー保護機能を自身のアプリやサービスで継続して利用・管理することができます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://paulgraham.com/prepare.html" target="_blank" rel="noopener noreferrer">How Universities Should Prepare Founders</a></h3>
+    <p class="meta">Hacker News | 08/25 10:40</p>
+    <p class="summary">ポール・グレアムによる、大学が起業家をいかに育成すべきかを論じたエッセイ。彼は起業を座学で教えるのではなく、学生に「時間」「場所」「志を同じくする仲間」を提供することが重要だと主張しています。不要な管理を避け、学生が実際に何かを作ることに集中できる環境を整えることが、結果として最も効果的な起業家教育になると述べています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://lectronz.com/u/lectronz/articles/how-europe-is-killing-makers-and-micro-entrepreneurs" target="_blank" rel="noopener noreferrer">How Europe is killing makers and micro-entrepreneurs</a></h3>
+    <p class="meta">Hacker News | 08/24 22:05</p>
+    <p class="summary">欧州のGPSR（一般製品安全規則）などの規制が、個人メーカーや小規模な電子機器開発者の活動を困難にしている現状を指摘した記事。適合宣言や代理人設置といった複雑で高コストな法的要件は、小規模事業者にとって大きな障壁となっており、多くの作り手が欧州市場での販売断念や活動停止に追い込まれ、イノベーションが阻害されていると警告しています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/yosashusaku/articles/enterprise-erp-tanstack-hono-orpc" target="_blank" rel="noopener noreferrer">TanStack Start + Hono + oRPC + Cloudflare Workersで社内ERPを作った設計と学び</a></h3>
+    <p class="meta">Zenn トレンド | 08/25 00:00</p>
+    <p class="summary">TanStack Start、Hono、oRPC、Cloudflare Workersを組み合わせ、型安全性を重視した社内ERPを構築した事例の紹介。oRPCによるクライアント・サーバ間のスキーマ共有や、Cloudflare Workersでのエッジ実行による低コスト・高パフォーマンスな運用の実現について解説されています。複雑な業務システム開発におけるモダンな技術選定の学びが共有されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/kobao/articles/0638f3976c6ef8" target="_blank" rel="noopener noreferrer">Bitgetの異常価格で1800万損したが、fableと共闘して取り戻せた話</a></h3>
+    <p class="meta">Zenn トレンド | 08/24 23:42</p>
+    <p class="summary">仮想通貨取引所Bitgetの価格異常により1800万円の損失を被った著者が、Web3コミュニティ「fable」と協力して補償を取り戻した体験談。個人での交渉が難航する中、SNSでの拡散やコミュニティによる連帯、法的な観点を含めた戦略的なアプローチが、取引所の対応を変える鍵となった経緯が詳述されており、海外取引所利用のリスクと対策を示しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/demia/articles/6c1291f0dae964" target="_blank" rel="noopener noreferrer">エージェントのためのUIコンポーネントライブラリを作った</a></h3>
+    <p class="meta">Zenn トレンド | 08/24 12:44</p>
+    <p class="summary">AIエージェントの思考プロセスや実行状態を可視化・管理するためのUIコンポーネントライブラリを開発した報告。エージェントの行動履歴やAPI呼び出しの結果をユーザーに分かりやすく表示するパーツを提供します。AIとのインタラクションを最適化し、複雑な動作を直感的に把握できるインターフェースを構築することで、AIアプリのUX向上を目指しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/h-nabata/items/b80484406e839ee6507b?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【ローカルLLM】国産LLM「LLM-jp-4-33B」と「Qwen3.8-27B」の推論性能比較（RTX 5070 Ti + RTX 3070 Ti）</a></h3>
+    <p class="meta">Qiita トレンド | 08/23 17:34</p>
+    <p class="summary">国産LLM「LLM-jp-4-33B」と「Qwen」シリーズ等の推論性能を、RTX 5070 Tiなどのローカル環境で比較検証した記事。日本語の読解力や要約力、推論速度を具体的な数値と共に評価しています。ミドルエンドGPUのマルチ構成において、30B前後のパラメータを持つモデルがどの程度実用的に動作するか、その性能と限界を明らかにしています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/24/indias-airbound-bags-37m-to-take-on-trucks-with-rocket-like-drones/" target="_blank" rel="noopener noreferrer">India’s Airbound bags $37M to take on trucks with rocket-like drones</a></h3>
+    <p class="meta">TechCrunch | 08/25 03:30</p>
+    <p class="summary">インドのスタートアップAirboundが、トラック輸送に代わる高速・長距離ドローンの開発に向けて3,700万ドルを調達しました。ロケットのような独自の形状を採用することで飛行効率を大幅に高め、従来のドローンよりも低コストで迅速な物流を実現することを目指しています。ラストワンマイルだけでなく、拠点間輸送の変革を視野に入れたプロジェクトです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/24/situational-awareness-star-ai-hedge-fund-that-nearly-imploded-now-being-probed-by-the-sec/" target="_blank" rel="noopener noreferrer">Situational Awareness, star AI hedge fund that nearly imploded, now being probed by the SEC</a></h3>
+    <p class="meta">TechCrunch | 08/25 00:23</p>
+    <p class="summary">急成長の後に経営危機に陥ったAIヘッジファンド「Situational Awareness」が、米証券取引委員会（SEC）の調査を受けています。AIを活用した独自の投資戦略で注目を集めましたが、運用実態やリスク管理、投資家への説明に不透明な点があった疑いがあります。AIブームの影で急増する新興金融機関に対する規制当局の監視が厳まっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/24/oura-is-reportedly-eyeing-a-september-ipo-that-could-value-it-at-more-than-16b/" target="_blank" rel="noopener noreferrer">Oura is reportedly eyeing a September IPO that could value it at more than $16B</a></h3>
+    <p class="meta">TechCrunch | 08/24 23:05</p>
+    <p class="summary">スマートリング市場を牽引するOuraが、今年9月にも160億ドル以上の評価額で新規株式公開（IPO）を計画していると報じられました。ウェアラブルデバイス市場への期待が高まる中、上場によって調達した資金をもとに、競合他社との差別化を図るための機能拡充や、さらなる市場シェアの拡大を加速させる狙いがあると見られています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cq63rmj1zl1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Lockerbie bombing trial postponed days before it was due to start</a></h3>
+    <p class="meta">BBC World News | 08/25 06:59</p>
+    <p class="summary">1988年のロッカビー事件（パンアメリカン航空爆破事件）の容疑者に対する裁判が、開始直前に延期されました。米国で審理される予定だったリビア人の元情報機関員に関するもので、弁護側の準備や証拠提出に関連する理由により延期が決定しました。30年以上を経て真相解明が期待されている事件なだけに、この延期は遺族らに失望を与えています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cg598m3meeyo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">UK drone factories may face attacks from &#39;unknown sources&#39;, says former Russian minister</a></h3>
+    <p class="meta">BBC World News | 08/25 04:06</p>
+    <p class="summary">ロシアの元閣僚が、英国のドローン製造工場が「正体不明の勢力」から攻撃を受ける可能性があると警告しました。ウクライナへの軍事支援を続ける英国に対し、ロシア側が何らかの妨害工作を示唆したものと見られます。これを受け、英国では軍事関連施設や重要インフラに対する物理的な攻撃やサイバー攻撃への警戒とセキュリティ対策の強化が議論されています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
