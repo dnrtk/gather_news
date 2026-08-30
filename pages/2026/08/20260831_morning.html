@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年08月31日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年08月31日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年08月31日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260831_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://people.kernel.org/monsieuricon/creepy-crawlies" target="_blank" rel="noopener noreferrer">Creepy Crawlies</a></h3>
+    <p class="meta">Hacker News | 08/30 02:49</p>
+    <p class="summary">kernel.orgのインフラがウェブクローラーによる過負荷に直面している現状を報告。一部のボットがrobots.txtを無視して過剰なアクセスを行い、サーバー性能を低下させている。開発者の利便性を保つため、ボット管理の改善が必要だと指摘している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.haiku-os.org/news/2026-08-26_haiku_r1_beta6" target="_blank" rel="noopener noreferrer">Haiku R1/beta6 has been released</a></h3>
+    <p class="meta">Hacker News | 08/31 01:01</p>
+    <p class="summary">Haiku R1/beta6がリリースされた。64ビットARMポートの初期対応やWacomタブレットのサポート、ウェブブラウザの改善、多数のバグ修正が含まれる。パフォーマンス向上と互換性の拡大により、正式リリースに向けた重要な一歩となった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.righto.com/2026/08/spacelab-core-memory.html" target="_blank" rel="noopener noreferrer">Cores in space: The core memory module from a 1980 Spacelab computer</a></h3>
+    <p class="meta">Hacker News | 08/31 05:00</p>
+    <p class="summary">1980年代のSpacelabコンピュータで使用された磁気コアメモリを解説。放射線に強い磁気リングを用いた記憶の仕組みや、当時の複雑なハードウェア構成を紹介している。初期の宇宙開発を支えた、極めて信頼性の高いエンジニアリングの結晶に焦点を当てている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://komoroske.com/slime-mold/" target="_blank" rel="noopener noreferrer">Coordination Headwind: How Organizations Are Like Slime Molds</a></h3>
+    <p class="meta">Hacker News | 08/31 01:03</p>
+    <p class="summary">組織の成長を粘菌の動態に例え、規模拡大に伴う「調整の向かい風」を分析した記事。コミュニケーションコストの増大や個人のインセンティブの不一致が組織を停滞させる。効率を維持するためには、調整コストを削減し、目標を一致させる工夫が必要だと説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/KodeMunkie/sm750hdmifb" target="_blank" rel="noopener noreferrer">Why open source rocks – a new SM750 (Silicon Motion GPU) HDMI Driver</a></h3>
+    <p class="meta">Hacker News | 08/31 03:49</p>
+    <p class="summary">Silicon Motion SM750 GPU向けの新しいHDMIドライバの開発を通じ、オープンソースの利点を強調。プロプライエタリなドライバでは制限されていた高解像度出力などの機能を、コミュニティの力で実現した。組み込みシステム等の古いハードウェアの活用に貢献している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/7nohe/articles/npm-malware-incident-response" target="_blank" rel="noopener noreferrer">自作npmパッケージにマルウェアを公開されたときにやったこと</a></h3>
+    <p class="meta">Zenn トレンド | 08/29 15:49</p>
+    <p class="summary">自作npmパッケージがマルウェアに改ざんされた際のインシデント対応記録。2段階認証の導入、npmへの通報、影響範囲の特定、GitHub Actionsのシークレット情報の見直しなど、具体的な対処手順が詳細にまとめられており、開発者にとって重要な教訓となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/rickysb527/articles/spf-dkim-dmarc-roles" target="_blank" rel="noopener noreferrer">SPFとDKIMとDMARCの役割の違いを整理する</a></h3>
+    <p class="meta">Zenn トレンド | 08/29 14:36</p>
+    <p class="summary">メール認証技術であるSPF、DKIM、DMARCの役割を整理した解説記事。SPFは送信元IP、DKIMは電子署名で認証し、DMARCはそれらの失敗時の処理方針を決定する。なりすましメール対策において、これらを適切に組み合わせて運用する重要性を説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/facraft/articles/aws-org-security-for-enterprise-saas" target="_blank" rel="noopener noreferrer">「スタートアップだから」が通用しない、大手製造業向けSaaSのAWSセキュリティ設計</a></h3>
+    <p class="meta">Zenn トレンド | 08/29 14:29</p>
+    <p class="summary">大手製造業向けSaaSにおける厳格なAWSセキュリティ設計を解説。AWS Organizationsを用いたマルチアカウント管理、ガードレールの設置、データの物理的分離、権限管理など、エンタープライズ品質の信頼性を確保するための具体的な指針が示されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/songchong/items/bed44cf5b639df476952?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【2026年8月調査】API連携でデータを外部に渡して大丈夫なのか調べてみた｜OAuth・APIキー・保管場所・やめ方を業務システム56件で</a></h3>
+    <p class="meta">Qiita トレンド | 08/30 15:40</p>
+    <p class="summary">56件の業務システムを対象に、API連携時のデータ管理実態を調査したレポート。OAuthやAPIキーの管理、データ保管場所、連携停止の手順などを分析。外部ツールとのデータ連携において、ユーザーが確認すべきセキュリティ基準や利用規約のポイントを考察している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/_shin_/items/47bc69006f6467d79e91?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">ESP32 シリーズを使ってイチから電子工作まとめ　 (回路設計/基板設計編)</a></h3>
+    <p class="meta">Qiita トレンド | 08/29 13:22</p>
+    <p class="summary">ESP32シリーズを用いた電子工作のまとめ（回路設計・基板設計編）。開発環境の構築から、回路図の作成、部品選定、基板レイアウト設計のコツまでを網羅。初心者から中級者が、実用的なデバイスを自作するためのノウハウが体系的に整理されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/30/liuxs-big-microcar-bets-on-sustainability-to-take-on-chinese-rivals/" target="_blank" rel="noopener noreferrer">Liux’s Big microcar bets on sustainability to take on Chinese rivals</a></h3>
+    <p class="meta">TechCrunch | 08/30 18:33</p>
+    <p class="summary">スペインのスタートアップLiuxが開発した超小型EV「Big」を紹介。植物由来の複合材料を使用するなど持続可能性に重点を置き、低コストで効率的な生産プロセスを構築。安価な中国製EVに対抗することを目指した、環境に配慮した新しい都市型移動手段を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/30/musks-faster-path-to-more-gas-turbines-comes-with-pollution-problem/" target="_blank" rel="noopener noreferrer">Musk’s faster path to more gas turbines comes with pollution problem</a></h3>
+    <p class="meta">TechCrunch | 08/30 16:54</p>
+    <p class="summary">イーロン・マスク氏のxAIデータセンター建設において、電力確保のために設置されたガスタービンが汚染問題を引き起こしている。迅速な稼働を優先した結果、環境規制や地域の大気汚染への懸念が生じており、最先端技術の開発と環境保護の対立が浮き彫りになっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/08/30/techcrunch-mobility-the-hidden-human-cost-of-robotaxis/" target="_blank" rel="noopener noreferrer">TechCrunch Mobility: The hidden human cost of robotaxis</a></h3>
+    <p class="meta">TechCrunch | 08/30 16:03</p>
+    <p class="summary">ロボタクシー普及の裏にある、隠れた人的コストについての考察。完全自動運転と思われがちだが、実際には遠隔監視員や車両のメンテナンススタッフなど、多くの労働力に支えられている。自動化が進む中での労働者の権利や役割の変化が大きな課題となっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/quantrolox-and-qureca-partner-to-launch-quantum-edge-academy-for-hands-on-hardware-training/" target="_blank" rel="noopener noreferrer">QuantrolOx and QURECA Partner to Launch Quantum EDGE Academy for Hands-On Hardware Training</a></h3>
+    <p class="meta">Quantum Computing Report | 08/30 10:11</p>
+    <p class="summary">QuantrolOxとQURECAが提携し、量子コンピューティングのハードウェア実習を行う「Quantum EDGE Academy」を開設。研究者やエンジニア向けに、量子ドットデバイスの制御やチューニングといった実践的なスキルを提供し、業界の深刻な人材不足の解消を目指す。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/whos-news-strategic-appointments-at-quantum-sky-ionq-pasqal-and-global-quantum-intelligence/" target="_blank" rel="noopener noreferrer">Who’s News: Strategic Appointments at Quantum Sky, IonQ, Pasqal, and Global Quantum Intelligence</a></h3>
+    <p class="meta">Quantum Computing Report | 08/29 15:14</p>
+    <p class="summary">量子コンピューティング業界における主要な人事動向のまとめ。IonQ、Pasqal、Quantum Skyなどの有力企業でCEOや役員クラスの戦略的な任命が行われた。各社は市場の拡大や技術開発の加速に向けて、経験豊富なリーダーシップ体制の強化を急いでいる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/ibm-releases-open-source-qiskit-fermions-0-1-0-to-preserve-system-structure-during-transpilation/" target="_blank" rel="noopener noreferrer">IBM Releases Open-Source Qiskit Fermions 0.1.0 to Preserve System Structure During Transpilation</a></h3>
+    <p class="meta">Quantum Computing Report | 08/29 14:49</p>
+    <p class="summary">IBMがオープンソースの「Qiskit Fermions 0.1.0」をリリース。量子コンピュータでのフェルミ粒子系のシミュレーションを支援するツールで、回路変換時にシステムの物理的構造を維持する機能を備える。化学や材料科学分野の研究効率を大幅に向上させることが期待される。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c770jyd4l7lo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Eight killed and others missing after ferry capsizes off northern Cyprus</a></h3>
+    <p class="meta">BBC World News | 08/30 20:02</p>
+    <p class="summary">北キプロス沖でフェリーが転覆し、少なくとも8人が死亡、複数が依然として行方不明となっている。トルコ沿岸警備隊が救助活動を行っているが、犠牲者の多くは移民とみられ、地中海を渡る危険なルートでの悲劇が繰り返されている現状が報じられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c70le8ed1plo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Iceland votes against restarting EU membership talks</a></h3>
+    <p class="meta">BBC World News | 08/30 16:11</p>
+    <p class="summary">アイスランド議会で、EU加盟交渉の再開に関する提案が否決された。漁業権の保護や国家主権の維持に対する懸念から、依然として加盟への慎重論が根強い。政府はEUとの協力関係は継続しつつも、正式な加盟手続きには進まない方針を改めて明確にした。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260808/k10015200331000.html" target="_blank" rel="noopener noreferrer">イチローさん マリナーズOBのホームラン競争でファンわかせる</a></h3>
+    <p class="meta">NHK国際放送 | 08/08 11:55</p>
+    <p class="summary">マリナーズのOBらによるホームラン競争にイチロー氏が登場。現役時代を彷彿とさせる鋭いスイングでホームランを連発し、球場を埋めたファンを熱狂させた。現在は球団特別補佐を務める氏の、変わらぬ技術とカリスマ性が改めて示されたイベントとなった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260808/k10015199681000.html" target="_blank" rel="noopener noreferrer">【動画】中国 北京で人気のレトロ写真館</a></h3>
+    <p class="meta">NHK国際放送 | 08/08 11:25</p>
+    <p class="summary">北京で1980年代から90年代の雰囲気を再現した「レトロ写真館」が若者に大人気となっている。当時の衣装や小道具を使い、ノスタルジックな世界観で撮影。SNS映えだけでなく、親世代の青春時代を追体験する文化的なトレンドとして注目を集めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260808/k10015200271000.html" target="_blank" rel="noopener noreferrer">「韓国サッカー協会が外国人審判員に性的接待」韓国メディア</a></h3>
+    <p class="meta">NHK国際放送 | 08/08 09:38</p>
+    <p class="summary">韓国サッカー協会の幹部らが、過去に外国人審判員に対して性的接待を行っていた疑惑がメディアで報じられた。協会は事実関係を調査中としているが、組織の不透明な運営や倫理観の欠如が厳しく問われており、国内外で大きな批判を浴びている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
