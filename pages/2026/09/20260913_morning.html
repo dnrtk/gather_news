@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年09月13日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年09月13日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年09月13日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260913_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://high5apps.github.io/josm-plugin-website-wizard/" target="_blank" rel="noopener noreferrer">Make your first edit to OpenStreetMap</a></h3>
+    <p class="meta">Hacker News | 09/13 01:25</p>
+    <p class="summary">OpenStreetMap（OSM）の編集ツールであるJOSMを使用し、初めての編集を行うためのガイドです。ウェブサイトウィザードプラグインを利用して、特定の場所の情報を追加したり更新したりする手順を解説しています。OSMは誰でも自由に参加できる地図作成プロジェクトであり、このツールはその参入障壁を下げることを目的としています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.economist.com/interactive/briefing/2026/09/03/nvidia-is-the-central-bank-of-ai" target="_blank" rel="noopener noreferrer">Nvidia is the central bank of AI</a></h3>
+    <p class="meta">Hacker News | 09/13 00:08</p>
+    <p class="summary">NvidiaがAI業界において「中央銀行」のような役割を果たしている現状を分析しています。同社のGPUはAI開発に不可欠な資産となっており、その供給がAIブームの速度を左右しています。ハードウェアだけでなく、CUDAなどのソフトウェアエコシステムを通じて市場を支配し、投資家や開発者にとって最も影響力のある企業となっている背景を解説しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://lwn.net/SubscriberLink/1091015/d9e48318ed242b41/" target="_blank" rel="noopener noreferrer">Stabilizing Rust&#39;s Never Type</a></h3>
+    <p class="meta">Hacker News | 09/09 20:57</p>
+    <p class="summary">プログラミング言語Rustにおける「Never型（!）」の安定化に関する技術記事です。Never型は関数が値を返さないことを示す型ですが、型システム上の複雑さから長年安定化が難航していました。この記事では、後方互換性を保ちつつどのように導入を進めるか、型推論の挙動やフォールバックルールの変更など、技術的な詳細と進捗について説明しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.tomshardware.com/tech-industry/big-tech/lg-strongly-denies-tv-security-claims-says-tracking-and-snooping-concerns-not-true-online-investigation-claims-216-000-000-spy-tvs-record-audio" target="_blank" rel="noopener noreferrer">LG denies TV spying claims, says tracking and snooping concerns &#39;not true&#39;</a></h3>
+    <p class="meta">Hacker News | 09/11 00:31</p>
+    <p class="summary">LGは、自社のスマートTVがユーザーを監視し音声を記録しているという主張を「事実無根」として強く否定しました。一部の報告が数億台のテレビがスパイ行為を行っていると主張したことに対し、LGはデータの収集はユーザーの同意に基づいており、透明性を確保していると反論。オンライン上の根拠のない批判に対して法的措置を示唆する構えを見せています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://arxiv.org/abs/2609.01877" target="_blank" rel="noopener noreferrer">Will There Be a 7G?</a></h3>
+    <p class="meta">Hacker News | 09/13 02:05</p>
+    <p class="summary">6Gの次世代にあたる「7G」移動通信システムの可能性について論じた学術論文です。通信速度の向上に加え、AIの完全統合、エネルギー効率の極大化、宇宙通信との融合などが焦点となります。2040年頃の実現を見据え、技術的な限界や経済的な実現可能性を考慮しつつ、未来の通信インフラが解決すべき課題と展望を専門的な視点から考察しています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tawatawara/articles/44929d525eb97d" target="_blank" rel="noopener noreferrer">【備忘録】CUDA &amp; NVIDIA Driver インストールチャレンジ 2026</a></h3>
+    <p class="meta">Zenn トレンド | 09/11 09:50</p>
+    <p class="summary">2026年時点でのCUDAおよびNVIDIAドライバのインストール手順をまとめた個人向けの備忘録です。OSの環境構築から、依存関係の解決、インストール中に遭遇したトラブルとその解決策までを詳細に記録しています。最新のハードウェア環境における設定のポイントや、過去バージョンとの違いなど、エンジニアが実際に直面した課題が具体的に共有されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/suneo46/items/522f0bcac1532e23048d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【体験談】1年目、バッチ実装で3ヶ月溶かした話 — 『世界一流エンジニアの思考法』で振り返る</a></h3>
+    <p class="meta">Qiita トレンド | 09/10 04:47</p>
+    <p class="summary">新人エンジニアがバッチ処理の実装に3ヶ月を費やした失敗談を、『世界一流エンジニアの思考法』という書籍の視点で振り返った体験談です。理解不足のまま実装を進める「試行錯誤の罠」や、全体像把握の重要性を指摘しています。自身の苦い経験を分析し、より効率的で本質的なエンジニアリングへと成長するための教訓がまとめられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/12/openais-sam-altman-says-it-would-be-ill-advised-to-go-public-in-2026/" target="_blank" rel="noopener noreferrer">OpenAI’s Sam Altman says it would be ‘ill-advised’ to go public in 2026</a></h3>
+    <p class="meta">TechCrunch | 09/12 20:19</p>
+    <p class="summary">OpenAIのサム・アルトマンCEOは、2026年内の株式公開（IPO）は「賢明ではない」との見解を示しました。急速な成長とAI開発への巨額投資が続く中、公開市場の短期的な圧力よりも非公開での機動的な意思決定を優先する意向です。企業のガバナンス構造の変更も議論されており、利益追求と人類への貢献を両立させるための慎重な姿勢を強調しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/12/anthropic-ceo-outlines-plan-to-pace-the-frontier/" target="_blank" rel="noopener noreferrer">Anthropic CEO outlines plan to slow AI development</a></h3>
+    <p class="meta">TechCrunch | 09/12 19:34</p>
+    <p class="summary">AnthropicのCEOダリオ・アモデイ氏が、AI開発のペースを意図的に抑制する計画を発表しました。技術の進歩に伴う安全リスクを懸念し、競合他社にも慎重なアプローチを呼びかけています。「速度」よりも「責任」を重視し、強力なAIが社会に及ぼす影響を評価するための時間を確保することが、長期的な安全性の確保に不可欠であると説いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/12/tesla-says-it-will-finally-unveil-the-second-generation-roadster-on-october-1/" target="_blank" rel="noopener noreferrer">Tesla says it will finally unveil the second generation Roadster on October 1</a></h3>
+    <p class="meta">TechCrunch | 09/12 19:21</p>
+    <p class="summary">テスラは、長らく延期されていた第2世代「ロードスター」を10月1日についに披露すると発表しました。2017年の発表以来、数年の遅れを経てようやく正式な詳細が公開されます。驚異的な加速性能や航続距離、SpaceXの技術を応用したオプションなど、イーロン・マスク氏が予告してきた革新的な機能がどこまで実現されるか注目が集まっています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c14dpgm0rg4o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Anthropic boss Dario Amodei calls for AI development to slow down</a></h3>
+    <p class="meta">BBC World News | 09/12 17:42</p>
+    <p class="summary">Anthropicのダリオ・アモデイCEOは、AIの安全性を確保するために開発速度を抑えるべきだと提唱しました。AIが人間の能力を超える可能性を前に、国際的な規制枠組みや協力体制の構築が急務であると主張。野放図な開発競争が予測不能なリスクを招くことを警告し、倫理面での対策を徹底するために技術進歩を一時的に停滞させるべきとの姿勢を示しました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cy0zvx15rywo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">A united Ireland would be &#39;fantastic&#39; says Trump during Irish visit</a></h3>
+    <p class="meta">BBC World News | 09/12 13:56</p>
+    <p class="summary">アイルランドを訪問中のドナルド・トランプ氏は、アイルランドの統一は「素晴らしいことだ」と発言しました。北アイルランドとアイルランド共和国の統合という非常にデリケートな政治問題に触れたこの発言は、大きな波紋を呼ぶ可能性があります。トランプ氏は自身のゴルフ場での滞在を含め、地域との絆を強調しつつ、経済的なメリットについて楽観的な見解を述べました。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
