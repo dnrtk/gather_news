@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年09月15日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年09月15日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年09月15日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260915_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://nvartolomei.com/dist-sys-classics/" target="_blank" rel="noopener noreferrer">Distributed Systems Classics (2017)</a></h3>
+    <p class="meta">Hacker News | 09/15 01:02</p>
+    <p class="summary">分散システムにおける古典的な論文や文献のリスト。分散システムの理論や実践における不可欠な知識を習得するための、体系的な学習リソースを提供しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.daniellitt.com/blog/2026/9/13/a-beginning-for-mathematics/" target="_blank" rel="noopener noreferrer">A Beginning for Mathematics</a></h3>
+    <p class="meta">Hacker News | 09/15 00:33</p>
+    <p class="summary">数学という学問の出発点に関する考察。数学的な思考の基礎や、どのように数学を学び始めるべきか、その本質的なアプローチについて語られています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://dial9-rs.github.io/blog/principles-for-fast-tokio-applications/" target="_blank" rel="noopener noreferrer">Principles for Fast Tokio Applications</a></h3>
+    <p class="meta">Hacker News | 09/15 00:27</p>
+    <p class="summary">Rustの非同期ランタイム「Tokio」を使用したアプリケーションのパフォーマンスを向上させるためのガイドライン。効率的な設計原則やベストプラクティスを解説しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://tenderlovemaking.com/2026/09/11/what-a-time-to-be-alive/" target="_blank" rel="noopener noreferrer">OpenAI bots knew about the RubyGems caching vulnerability</a></h3>
+    <p class="meta">Hacker News | 09/14 21:40</p>
+    <p class="summary">OpenAIのボットがRubyGemsのキャッシュ脆弱性を事前に認識していたとする技術的トピック。セキュリティとAIの関わりに関する興味深い事例です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://entelligence.ai/blogs/gpt-5.6-luna-vs-gpt-6-astra-is-a-1.20-model-good-enough-for-code-review" target="_blank" rel="noopener noreferrer">GPT-5.6 Luna vs. GPT-6 Astra: Is a $1.20 Model Good Enough for Code Review?</a></h3>
+    <p class="meta">Hacker News | 09/15 04:56</p>
+    <p class="summary">GPT-5.6 LunaとGPT-6 Astraをコードレビューの観点で比較。1.20ドルのコストで提供されるモデルが、実務上のレビュー要求を満たせるのかを検証しています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/k_motoki/articles/ef60bbbc0ad7ec" target="_blank" rel="noopener noreferrer">ローカルLLMにレビューさせていた話の続報（前回の構成、実は動いていませんでした）</a></h3>
+    <p class="meta">Zenn トレンド | 09/14 05:16</p>
+    <p class="summary">ローカルLLMを用いたコードレビュー環境の構築に関する続報。前回の設定内容に不備があり、実際には意図通りに動作していなかったという顛末と教訓を報告しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/aws_japan/articles/lambda-90-minutes-timeout" target="_blank" rel="noopener noreferrer">AWS Lambda の90分タイムアウト検証</a></h3>
+    <p class="meta">Zenn トレンド | 09/14 04:25</p>
+    <p class="summary">AWS Lambdaのタイムアウト制限が90分に延長されたことに関する検証記事。長時間の処理が必要なタスクにおける挙動や注意点を解説しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/kyamaz/items/7b38e5977dc97747d2d9?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">『Lean で証明できた』は何を保証するのか？  〜 Lean の無矛盾性と信頼の根拠 〜</a></h3>
+    <p class="meta">Qiita トレンド | 09/13 13:27</p>
+    <p class="summary">対話型定理証明器「Lean」で証明が完了することが、数学的に何を意味するのかを解説。Leanの信頼性の根拠や無矛盾性に関する論理的な背景を紐解いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/take-yoda/items/e5d9ce6618523af1ffc5?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">生成AIが書いたドキュメントを読みたくない</a></h3>
+    <p class="meta">Qiita トレンド | 09/14 04:55</p>
+    <p class="summary">生成AIによって作成されたドキュメントに対する批判的考察。AI生成テキストが抱える内容の薄さや違和感について触れ、人間による執筆の重要性を訴えています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/14/openai-buys-smartphone-camera-maker-glass-imaging-for-300-million-report-says/" target="_blank" rel="noopener noreferrer">OpenAI buys smartphone camera maker Glass Imaging for $300 million, report says</a></h3>
+    <p class="meta">TechCrunch | 09/14 20:44</p>
+    <p class="summary">OpenAIがスマートフォン向けカメラ技術メーカー「Glass Imaging」を3億ドルで買収。AIによる画像処理や映像技術の強化を図る狙いがあると報じられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/14/ai-infrastructure-company-cornelis-raises-205m-to-chip-away-at-nvidias-dominance/" target="_blank" rel="noopener noreferrer">AI infrastructure company Cornelis raises $205M to chip away at Nvidia’s dominance</a></h3>
+    <p class="meta">TechCrunch | 09/14 20:07</p>
+    <p class="summary">AIインフラ企業Cornelisが2億500万ドルを調達。NVIDIAの市場支配に対抗する形で、AI向け計算インフラやチップ関連技術の発展を目指します。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/14/amazon-prime-video-takes-on-tiktok-with-short-form-news-clips/" target="_blank" rel="noopener noreferrer">Amazon Prime Video takes on TikTok with short-form news clips</a></h3>
+    <p class="meta">TechCrunch | 09/14 18:14</p>
+    <p class="summary">Amazon Prime VideoがTikTok対抗の短尺ニュースクリップ機能を導入。ストリーミングプラットフォームで短い動画コンテンツを強化し、視聴者の囲い込みを狙います。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cn8me133119o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">China criticises idea it is in &#39;malicious competition&#39; over AI</a></h3>
+    <p class="meta">BBC World News | 09/14 11:31</p>
+    <p class="summary">中国政府が、AI開発における自国の取り組みが「悪意ある競争」であるという批判に反論。AI分野の国際競争に対する中国側の見解が示されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c0qx5d79kdeo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Swedish left-wing bloc narrowly ahead with election too close to call</a></h3>
+    <p class="meta">BBC World News | 09/14 08:36</p>
+    <p class="summary">スウェーデンでの総選挙の状況。左派連合がわずかにリードしているものの、結果が予断を許さない接戦であることが報じられています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
