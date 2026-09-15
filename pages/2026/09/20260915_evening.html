@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年09月15日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年09月15日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年09月15日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260915_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://notnottalmud.substack.com/p/why-i-cant-stop-thinking-about-papua" target="_blank" rel="noopener noreferrer">I can&#39;t stop thinking about Papua New Guinea</a></h3>
+    <p class="meta">Hacker News | 09/15 15:16</p>
+    <p class="summary">パプアニューギニアの驚異的な多様性について考察したエッセイ。世界最多の言語数を誇り、国家としての統合が困難な状況にありながら、独自の進化を遂げている。筆者は、近代化の波が押し寄せる中でも失われない文化的な複雑さや、現地の「ウォントク」と呼ばれる相互扶助システムに着目。西洋的な視点では捉えきれない、パプアニューギニア特有の社会構造と、それが現代社会に投げかける問いについて深く探求している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.apple.com/newsroom/2026/09/major-updates-for-apples-software-platforms-are-now-available/" target="_blank" rel="noopener noreferrer">iOS 27, iPadOS 27, and macOS 27</a></h3>
+    <p class="meta">Hacker News | 09/15 02:50</p>
+    <p class="summary">アップルは、iOS 27、iPadOS 27、macOS 27を含む最新のOSアップデートをリリースした。今回のアップデートでは、より高度なAI連携とユーザー体験のパーソナライズが強化されている。iPhoneやMac間でのシームレスな連携機能がさらに進化し、クリエイティブな作業やプライバシー保護機能も拡充された。また、AR/VR技術の統合も進み、より没入感のあるデジタル体験が可能になっている。次世代のコンピューティング体験を象徴する、野心的なソフトウェアプラットフォームとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/enactic/OpenArm" target="_blank" rel="noopener noreferrer">OpenArm: An open-source 7DOF humanoid arm</a></h3>
+    <p class="meta">Hacker News | 09/13 23:17</p>
+    <p class="summary">OpenArmは、7自由度（7DOF）を持つオープンソースのヒューマノイドロボットアームプロジェクトである。低コストで再現可能であることを目指し、3Dプリンタを利用した部品製造や標準的な電子部品の使用を前提としている。リサーチや教育目的、さらには個人開発者が手軽に高度なロボット制御を学べる環境を提供することを目的としている。GitHub上で設計データや制御ソフトウェアが公開されており、コミュニティによる拡張や改良が期待されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.linuxfromscratch.org/" target="_blank" rel="noopener noreferrer">Linux from Scratch</a></h3>
+    <p class="meta">Hacker News | 09/15 13:15</p>
+    <p class="summary">Linux from Scratch (LFS)は、独自のLinuxシステムをソースコードから完全にビルドする手順を解説するプロジェクトである。既存のディストリビューションを使用せず、カーネルやライブラリ、各種ユーティリティを手動でコンパイル・構成することで、OSの内部構造を深く理解することを目的としている。教育的価値が非常に高く、セキュリティの最適化やシステムの軽量化を目指す開発者にとっても重要なリソースとなっている。最新版のブックは、新しいパッケージやセキュリティ修正に対応している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://arkeonews.net/4400-year-old-tomb-of-an-egyptian-judge-found-at-saqqara-with-colors-still-on-the-walls/" target="_blank" rel="noopener noreferrer">4,400-Year-Old Tomb of Egyptian Judge Found at Saqqara with Colors on Walls</a></h3>
+    <p class="meta">Hacker News | 09/13 03:51</p>
+    <p class="summary">エジプトのサッカラ遺跡で、約4,400年前の「メジェジェト」という名の裁判官の墓が発見された。この墓の最大の特徴は、壁画の色彩が非常に鮮明に残っている点である。第6王朝時代のもので、当時の日常生活や供物の儀式の様子が詳細に描かれている。考古学者たちは、この発見が当時の司法制度や社会階層、芸術技法を解明する上で極めて重要な資料になると期待を寄せている。墓は保存状態が良好で、古代エジプトの栄華を今に伝える貴重な遺構である。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/2_daiki_ando/articles/53c34e071b5d69" target="_blank" rel="noopener noreferrer">仕様と実装を同じ言葉で書く ― 責務を機械的に突合し検証し続けるフロントエンド開発（要件定義〜実装・テスト）</a></h3>
+    <p class="meta">Zenn トレンド | 09/14 15:27</p>
+    <p class="summary">本記事では、要件定義から実装、テストに至るまで、仕様と実装を同じ言葉（ユビキタス言語）で記述するフロントエンド開発手法について解説している。仕様の変更を機械的に検出し、コードとの乖離を防ぐためのアーキテクチャやテスト設計を提言。特に、複雑化するフロントエンドの責務を明確に分離し、開発者間で一貫性を保つための実践的なアプローチを紹介している。開発プロセスの透明性を高め、保守性の高いプロダクトを作るための具体的な知見が共有されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/uhyo/articles/react-fragment-refs-hack" target="_blank" rel="noopener noreferrer">Fragment Refsのずるい使い方</a></h3>
+    <p class="meta">Zenn トレンド | 09/14 14:26</p>
+    <p class="summary">ReactのRelayにおいて、Fragment Refsを本来のデータ取得目的以外で利用するテクニック（いわゆる「ずるい使い方」）について解説している。特定のコンポーネントが求めるデータの依存関係を型安全に保ちつつ、不要な再レンダリングを回避したり、コンポーネントの責務を柔軟に定義したりする手法を紹介。あくまでRelayの仕組みを逆手に取った応用的なアプローチであり、開発効率の向上やパフォーマンス最適化に寄与する可能性がある一方で、プロジェクト内での合意形成の重要性についても触れている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/aucccchi/articles/hoshiimono-bayes-gift-diagnosis" target="_blank" rel="noopener noreferrer">【ベイズ推定】相手のことを答えると「本当に欲しそうなプレゼント」を当てにいく『欲しいもの.com』を作った</a></h3>
+    <p class="meta">Zenn トレンド | 09/14 14:13</p>
+    <p class="summary">ベイズ推定を活用して、相手の性格や好みに基づき最適なプレゼントを提案するサービス『欲しいもの.com』の開発記録。ユーザーが贈る相手に関する質問に答えることで、統計的なアプローチからプレゼントの的中率を高める仕組みを構築している。記事では、ベイズの定理をどのようにシステムに落とし込んだか、実装上の工夫や課題について詳しく解説。単純な選択肢形式の診断ではなく、データに基づいた推論プロセスをプロダクトに組み込む面白さと難しさが語られている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/suwa_nobu/items/08e3bd535dbc79e0c738?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Claude Code のスキルを47本運用して測った、7つのこと</a></h3>
+    <p class="meta">Qiita トレンド | 09/14 00:52</p>
+    <p class="summary">Claude Codeを実務で運用し、47個のスキルを開発・検証した結果から得られた7つの知見を共有している。プロンプトエンジニアリングのコツや、AIエージェントが持つべきコンテキストの範囲、エラー発生時の自己修正能力の限界など、実践的な気づきがまとめられている。AIを単なるチャットツールとしてではなく、開発プロセスに深く組み込まれた「自律的な同僚」として機能させるための具体的な戦略と、現時点での課題が明確に示されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/14/jensen-huang-took-a-call-from-trump-and-showed-off-something-else-too/" target="_blank" rel="noopener noreferrer">Jensen Huang took a call from Trump, and showed off something else, too</a></h3>
+    <p class="meta">TechCrunch | 09/15 01:50</p>
+    <p class="summary">NVIDIAのジェンスン・ファンCEOがトランプ大統領と電話会談を行い、AI技術の最先端動向について意見交換した。この会談の中でファン氏は、開発中の次世代AIチップやデータセンター構想など、同社の最新テクノロジーを披露した。トランプ大統領は米国のAI競争力の維持に関心を示し、ファン氏はそれに応える形でNVIDIAの技術がどのように国家の経済成長や安全保障に貢献できるかを説明した。業界トップと政治リーダーが直接対話したことで、今後のAI政策への影響が注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/14/nvidia-ceo-jensen-huang-tells-trump-were-not-going-to-let-an-ai-slowdown-happen/" target="_blank" rel="noopener noreferrer">Nvidia CEO Jensen Huang tells Trump ‘we’re not going to let [an AI slowdown] happen’</a></h3>
+    <p class="meta">TechCrunch | 09/14 21:51</p>
+    <p class="summary">NVIDIAのジェンスン・ファンCEOはトランプ大統領に対し、AI分野の成長が鈍化することはないと断言した。「AIの減速は許さない」と述べ、同社が強力なリーダーシップを維持し続ける姿勢を強調。米中間のテクノロジー競争が激化する中、米国がAI革命の主導権を握り続けるために必要なインフラ投資やイノベーションの重要性を訴えた。この発言は、NVIDIAの市場支配力への自信を示すとともに、国家戦略としてのAI開発の重要性を改めて浮き彫りにした。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cw980n0nd0qjo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump says AI safety fears a &#39;hoax&#39; as he rejects calls for greater safeguards</a></h3>
+    <p class="meta">BBC World News | 09/15 08:49</p>
+    <p class="summary">トランプ大統領は、AIの安全性に対する懸念を「作り話（hoax）」と一蹴し、より厳格な安全基準の導入を拒否した。規制を強化することは米国の技術革新を阻害し、競合他国に有利な状況を作ると主張。AIが人類にとって存亡の危機をもたらすという一部の専門家の主張に対し、経済的利益と開発スピードを最優先すべきだとの姿勢を鮮明にした。この強硬な立場は、テクノロジー業界や安全性を重視する市民団体から大きな反発を招いており、AIガバナンスを巡る議論が再燃している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/ck20989806e9o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">AI regulation faces political deadlock as calls grow for Congress to act</a></h3>
+    <p class="meta">BBC World News | 09/15 02:50</p>
+    <p class="summary">AI規制を巡る米議会での議論が、政治的な行き詰まりに直面している。急速に進化するAI技術への対応として、包括的な法整備を求める声が強まっているが、イノベーションを保護したい派閥と、プライバシーや安全性を重視する派閥の間で妥協点が見出せていない。超党派での議論は進んでいるものの、具体的な規制内容や管轄機関を巡って利害が対立。この空白期間が続くことで、AI企業による独自の自主規制に依存せざるを得ない状況が続いており、公的な監視体制の構築が急務となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cqlykdx48xrpo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Welsh actor Matthew Rhys makes Emmy Awards history with double win</a></h3>
+    <p class="meta">BBC World News | 09/15 03:50</p>
+    <p class="summary">ウェールズ出身の俳優マシュー・リスが、エミー賞で二冠を達成し、歴史にその名を刻んだ。主演男優賞を含む複数のカテゴリーで受賞を果たし、その卓越した演技力が改めて高く評価された。リスはスピーチで、これまで支えてくれた家族や制作チームへの感謝を述べ、ウェールズ代表としての誇りを強調した。一つの授賞式で主要な賞を同時に獲得するのは稀な快挙であり、彼のキャリアにおける金字塔となった。このニュースは、ウェールズ国内でも大きな喜びとともに報じられている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
