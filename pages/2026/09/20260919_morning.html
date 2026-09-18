@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年09月19日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年09月19日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年09月19日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260919_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.koreajoongangdaily.com/business/korea-raises-data-breach-fines-to-10-of-revenue/12869899" target="_blank" rel="noopener noreferrer">Korea raises data breach fines to 10% of revenue</a></h3>
+    <p class="meta">Hacker News | 09/19 05:02</p>
+    <p class="summary">韓国政府は個人情報保護法を改正し、データ漏洩時の制裁金を最大で売上高の10%に引き上げる方針を固めました。企業に対するセキュリティ対策の厳格化を促す狙いがあり、違反時のペナルティを大幅に強化することで、サイバーセキュリティへの投資を加速させる見込みです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://grapheneos.social/@GrapheneOS/117282080803799576" target="_blank" rel="noopener noreferrer">Android 17 is the first since 3.x to add new APIs without releasing to the AOSP</a></h3>
+    <p class="meta">Hacker News | 09/19 04:03</p>
+    <p class="summary">Android 17は、Android 3.x以来初めて、AOSP（Android Open Source Project）への公開を伴わずに新しいAPIが追加されたバージョンとなりました。オープンソースコミュニティからは、Androidのクローズド化が進んでいるとの指摘が出ています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://try.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare Quick Tunnels</a></h3>
+    <p class="meta">Hacker News | 09/18 23:18</p>
+    <p class="summary">Cloudflareが提供する「Quick Tunnels」の紹介ページ。複雑なネットワーク設定を必要とせず、迅速かつ安全にローカルサーバーやアプリケーションをインターネット経由で公開できるツールであり、開発者が手軽にトンネリングを実現するためのソリューションです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.cloudflare.com/saving-100-tb-of-ram-with-math/" target="_blank" rel="noopener noreferrer">Saving another 100TB of RAM with math (and Rust)</a></h3>
+    <p class="meta">Hacker News | 09/19 03:51</p>
+    <p class="summary">Cloudflareは、数学的アプローチとRust言語を活用することで、サーバーのメモリ使用量を100TB削減した事例を解説しています。データ構造の最適化や効率的なメモリ管理手法により、インフラの大幅なコスト削減とパフォーマンス向上が実現されました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://developer.apple.com/documentation/xcode-release-notes/xcode-27_1-release-notes" target="_blank" rel="noopener noreferrer">Apple releases iPhone Duo simulator and Xcode 27.1 beta</a></h3>
+    <p class="meta">Hacker News | 09/19 03:39</p>
+    <p class="summary">Appleが「iPhone Duo」シミュレーターを含むXcode 27.1ベータ版をリリースしました。新しい開発環境の提供により、次世代のハードウェア機能や画面構成に対応したアプリケーション開発とテストが可能になります。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mizchi/articles/jev-is-gpu-for-llms" target="_blank" rel="noopener noreferrer">既存の LLM が CPU なら、 Jev はその GPU 版みたいなやつ</a></h3>
+    <p class="meta">Zenn トレンド | 09/18 07:27</p>
+    <p class="summary">LLM（大規模言語モデル）の推論を高速化する技術「Jev」についての考察記事。既存のLLMがCPUのような汎用的な存在であるのに対し、Jevは特定の計算処理を最適化・加速させるGPUのような役割を果たすものであり、AIの実行効率を劇的に高める可能性があると論じています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/henteko/articles/1d159d10413312" target="_blank" rel="noopener noreferrer">Cloudflare WorkersでJevを使ったら高速か検証してみた</a></h3>
+    <p class="meta">Zenn トレンド | 09/18 07:23</p>
+    <p class="summary">Cloudflare Workers上で「Jev」を利用した場合の高速化効果を検証した技術レポート。Workersのサーバーレス環境において、Jevによる推論処理の最適化がどれほどパフォーマンスに寄与するかを実際に測定し、その有用性や課題について詳しく解説しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/18/automattic-names-interim-cfo-after-exec-departures/" target="_blank" rel="noopener noreferrer">Automattic names interim CFO after exec departures</a></h3>
+    <p class="meta">TechCrunch | 09/18 20:25</p>
+    <p class="summary">Automattic社は、幹部陣の退任を受け、暫定CFO（最高財務責任者）を指名しました。組織再編の中で財務管理体制を維持しつつ、今後の経営戦略の安定化を図るための人事が実施されました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/18/y-combinator-insurance-tech-alum-angle-health-hits-2-7b-valuation/" target="_blank" rel="noopener noreferrer">Y Combinator insurance tech alum Angle Health hits $2.7B valuation</a></h3>
+    <p class="meta">TechCrunch | 09/18 20:24</p>
+    <p class="summary">Y Combinatorの卒業生であるインシュアテック企業Angle Healthが、評価額27億ドルに到達しました。ヘルスケア保険のDX化と効率的なプラットフォーム提供が評価され、同社はさらなる市場拡大を見込んでいます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/18/world-model-companies-are-keeping-a-lot-of-secrets/" target="_blank" rel="noopener noreferrer">World model companies are keeping a lot of secrets</a></h3>
+    <p class="meta">TechCrunch | 09/18 20:18</p>
+    <p class="summary">世界モデル（World Model）を開発する企業が、技術の詳細やデータセットを秘匿している現状について報じています。競合優位性の確保や安全性の懸念から詳細は公開されていませんが、AIの透明性と倫理をめぐる議論が今後活発化しそうです。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/eigenq-and-silicon-valley-acquisition-corp-secure-45m-committed-convertible-financing-ahead-of-3b-spac-merger/" target="_blank" rel="noopener noreferrer">EigenQ and Silicon Valley Acquisition Corp. Secure $45M Committed Convertible Financing Ahead of $3B SPAC Merger</a></h3>
+    <p class="meta">Quantum Computing Report | 09/18 16:08</p>
+    <p class="summary">EigenQ社とSilicon Valley Acquisition Corp.が、30億ドル規模のSPAC合併を控え、4,500万ドルの転換社債型融資を確保しました。量子コンピューティング分野における同社の技術開発と事業拡大に向けた資金調達が完了しました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/ictk-and-jiran-security-partner-on-q-bridge-to-commercialize-end-to-end-pqc-migration-frameworks/" target="_blank" rel="noopener noreferrer">ICTK and Jiran Security Partner on ‘Q-BRIDGE’ to Commercialize End-to-End PQC Migration Frameworks</a></h3>
+    <p class="meta">Quantum Computing Report | 09/18 15:55</p>
+    <p class="summary">ICTKとJiran Securityが、耐量子計算機暗号（PQC）への移行を支援するフレームワーク「Q-BRIDGE」の商用化で提携しました。企業が将来の量子コンピューティング脅威に対応できるよう、エンドツーエンドの移行ソリューションを提供します。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/q-safe-solutions-unveils-eu-27-carrier-grade-quantum-safe-network-platform/" target="_blank" rel="noopener noreferrer">Q-SAFE Solutions Unveils EU-27 Carrier-Grade Quantum-Safe Network Platform</a></h3>
+    <p class="meta">Quantum Computing Report | 09/18 05:46</p>
+    <p class="summary">Q-SAFE Solutions社が、EU全域を対象としたキャリアグレードの耐量子ネットワークプラットフォームを発表しました。量子技術によるサイバー脅威から通信インフラを保護するため、高度なセキュリティ基準を満たすネットワークソリューションを展開します。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cm2dw1w9d3yjo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Russian hybrid attacks against Europe intensifying, says Macron</a></h3>
+    <p class="meta">BBC World News | 09/18 18:04</p>
+    <p class="summary">フランスのマクロン大統領は、欧州に対するロシアのハイブリッド攻撃が激化していると警告しました。サイバー攻撃や偽情報キャンペーンを含むこれらの妨害工作に対し、欧州諸国が警戒を強め、団結して対抗する必要性を強調しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c6e30580jqjpo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump says he is banning CNN and Politico from White House</a></h3>
+    <p class="meta">BBC World News | 09/18 20:47</p>
+    <p class="summary">トランプ前大統領は、CNNとPoliticoをホワイトハウスの取材から締め出す方針を表明しました。メディアに対する批判的な姿勢を明確にするものであり、報道機関との対立構造がさらに鮮明になっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/videos/cqy4zw4xr717o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Is the Kennedy Center losing &#39;hundreds of millions of dollars&#39;?</a></h3>
+    <p class="meta">BBC World News | 09/18 18:56</p>
+    <p class="summary">ケネディ・センターが多額の財務損失を抱えている可能性が指摘されています。運営上の課題や収支状況について調査が進んでおり、全米の文化的な象徴である同施設の先行きを懸念する声が上がっています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
