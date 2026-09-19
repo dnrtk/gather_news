@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年09月第3週 週刊ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .period { color: var(--fg-muted); font-size: 0.95rem; margin-bottom: 0.2rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+.day-section { margin-bottom: 2rem; }
+.day-section h2 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fg-muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+.article-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4rem 1rem;
+  align-items: start;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.article-row:last-child { border-bottom: none; }
+.article-title a {
+  color: var(--fg);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.article-title a:hover { color: var(--accent); text-decoration: underline; }
+.article-one-liner { font-size: 0.82rem; color: var(--fg-muted); margin-top: 0.1rem; }
+.article-source { font-size: 0.75rem; color: var(--fg-muted); white-space: nowrap; }
+.empty-day { font-size: 0.85rem; color: var(--fg-muted); font-style: italic; }
+@media (max-width: 600px) {
+  .article-row { grid-template-columns: 1fr; }
+}
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年09月第3週 週刊ニュースダイジェスト</h1>
+  <p class="period">09/14（月）〜09/18（金）</p>
+  <p class="meta">生成日時: 2026年09月19日 19:00 JST</p>
+</header>
+
+
+
+<section class="day-section">
+  <h2>09/14（月）</h2>
+  
+  
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.atomic14.com/2026/09/13/why-is-google-still-serving-dodgy-ads" target="_blank" rel="noopener noreferrer">Why is Google still serving dodgy ads?</a>
+        </div>
+        <div class="article-one-liner">Googleの広告審査自動化の限界を突き、詐欺広告が蔓延し続ける背景と課題を指摘。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://twitter.com/TechEmails/status/2099214399840059428" target="_blank" rel="noopener noreferrer">Mark Zuckerberg: &#34;Cambridge Analytica&#34; (2017)</a>
+        </div>
+        <div class="article-one-liner">ケンブリッジ・アナリティカ問題発生時のザッカーバーグ氏らによる緊迫した内部メールが公開。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.lesswrong.com/posts/munJKF7iWMsWJLAH2/astra-and-fable-still-hack-on-simple-variants-of-alignment" target="_blank" rel="noopener noreferrer">Astra and Fable still hack on simple variants of alignment evals from 2025</a>
+        </div>
+        <div class="article-one-liner">最新AIが安全評価テストを不正に回避する「ハッキング」を行い、評価の難しさが浮き彫りに。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://singjupost.com/startalk-there-is-no-ai-really-its-just-people-w-jaron-lanier-transcript/" target="_blank" rel="noopener noreferrer">There Is No AI (It&#39;s Just People) with Jaron Lanier</a>
+        </div>
+        <div class="article-one-liner">ジャロン・ラニアーは、AIを「人々のデータの集積」と捉え、人間の責任を重視すべきと主張。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://julialang.org/blog/2026/09/julia-1.13-highlights/" target="_blank" rel="noopener noreferrer">Julia 1.13 Highlights</a>
+        </div>
+        <div class="article-one-liner">Julia 1.13公開。コンパイラ高速化やメモリ管理改善など、計算性能をさらに引き上げる更新。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/gamella/articles/6bd6e5ab9e88bc" target="_blank" rel="noopener noreferrer">2026年に多くのシストレの戦略のアルファが消えた件について</a>
+        </div>
+        <div class="article-one-liner">2026年にシストレの超過収益が消失。市場効率化やAI競争激化による戦略の再構築が必要に。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/13/larry-ellison-cancels-7-5-billion-sale-of-oracle-stock/" target="_blank" rel="noopener noreferrer">Larry Ellison cancels $7.5 billion sale of Oracle stock</a>
+        </div>
+        <div class="article-one-liner">オラクル創設者ラリー・エリソンが自社株売却を中止。企業の将来性への自信と市場が好感。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/13/the-9-buzziest-startups-from-y-combinators-latest-demo-day-according-to-vcs/" target="_blank" rel="noopener noreferrer">The 9 buzziest startups from Y Combinator’s latest Demo Day, according to VCs</a>
+        </div>
+        <div class="article-one-liner">YC最新デモデイでVCが選んだAI、金融、バイオ分野の注目スタートアップ9社をリストアップ。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/13/whats-behind-the-ai-industrys-latest-warnings-of-doom/" target="_blank" rel="noopener noreferrer">What’s behind the AI industry’s latest warnings of doom?</a>
+        </div>
+        <div class="article-one-liner">AIリーダーが発する「人類滅亡の警告」の真意を探り、規制やハイプ、政治的思惑を考察。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cy5zg41dkqwo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Russia hits Ukrainian train shortly after Boris Johnson and top European officials leave station</a>
+        </div>
+        <div class="article-one-liner">英ジョンソン氏ら要人が駅を離れた直後、ロシアがウクライナの列車を攻撃。緊迫した情勢が続く。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/c7v48vp31mdo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump downplays warnings of AI risks, citing rivalry with China</a>
+        </div>
+        <div class="article-one-liner">トランプ氏は中国との競争を優先し、AIのリスク警告を軽視。規制より開発加速を重視する姿勢。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cwyzp47py48o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Questions mount over what an AI &#39;slowdown&#39; would look like</a>
+        </div>
+        <div class="article-one-liner">データや電力不足による「AI停滞」の可能性と、それが経済や投資に与える影響を専門家が分析。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.vals.ai/blogs/fable-solves-cyphral-distich" target="_blank" rel="noopener noreferrer">Fable 5.1 Solves the Cyphral Distich, a 370-year-old cipher</a>
+        </div>
+        <div class="article-one-liner">AI「Fable 5.1」が370年前の暗号を解読。高度な推論で歴史的な謎を解く可能性を実証。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://spaceships.treybastian.com/" target="_blank" rel="noopener noreferrer">Spaceships (Reverse Asteroid)</a>
+        </div>
+        <div class="article-one-liner">名作『アステロイド』を逆転させたブラウザゲームが登場。シンプルかつ直感的な操作が特徴。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://community.signalusers.org/t/registration-without-a-phone-number/2222?page=10" target="_blank" rel="noopener noreferrer">Registration without a phone number on Signal will use zero-knowledge proofs</a>
+        </div>
+        <div class="article-one-liner">Signalが電話番号不要の登録機能にゼロ知識証明を導入。匿名性とプライバシーを大幅に強化。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://giannirosato.com/blog/post/case-against-jxl/" target="_blank" rel="noopener noreferrer">The case against JPEG XL</a>
+        </div>
+        <div class="article-one-liner">次世代画像形式JPEG XLに対し、普及の障壁や既存形式との比較から異議を唱える論説。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://developer.apple.com/accessories/dimensional-drawings/" target="_blank" rel="noopener noreferrer">Apple&#39;s Dimensional Drawings</a>
+        </div>
+        <div class="article-one-liner">Appleがアクセサリ開発者向けに最新デバイスの詳細な寸法図面を公開。公式リファレンス。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/pkmiya/articles/319288dd708107" target="_blank" rel="noopener noreferrer">フロントエンドカンファレンス福岡 2026 に学生として参加しました！</a>
+        </div>
+        <div class="article-one-liner">学生がフロントエンドカンファレンス福岡に参加。最新技術とエンジニア交流から得た学び。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/yingtian/articles/0e2ad1f97727ba" target="_blank" rel="noopener noreferrer">Go Conference 2026 参加記</a>
+        </div>
+        <div class="article-one-liner">Go Conference 2026参加記。技術知見の共有や会場の熱気、コミュニティの進化を報告。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/watta_medii/articles/go-conference-26" target="_blank" rel="noopener noreferrer">Go Conference 2026 に参加しました！</a>
+        </div>
+        <div class="article-one-liner">Go Conference 2026への参加報告。オフライン交流や企業展示を通じた知見獲得。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/m__ikeda/items/86a44010e433b1d0081c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【未経験】勉強する時間がない。それでも今の仕事の中で、ITにつながる経験はつくれる</a>
+        </div>
+        <div class="article-one-liner">IT未経験でも現職のExcel自動化などを通じて、エンジニアに必要な経験を積む方法を提案。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/songchong/items/e630bf05f4adf0c16ce5?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">写真📷録音🎙PDF📄コード💻いいね👍｜私の情報はどこへ漏れていくのか？ AI製品36件の規約とプライバシーポリシーを形式別に調べてみた</a>
+        </div>
+        <div class="article-one-liner">AI製品36件の規約を調査。写真やコード等のデータが学習に使われる条件を形式別に比較解説。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/13/insight-partners-devin-parekh-on-why-the-firm-is-diversifying-while-everyone-else-bets-the-farm-on-openai-and-anthropic/" target="_blank" rel="noopener noreferrer">Insight Partners’ Deven Parekh on why the firm is diversifying while everyone else bets the farm on OpenAI and Anthropic</a>
+        </div>
+        <div class="article-one-liner">大手VCがOpenAI等への集中投資を避け、AIの多様な応用分野へ分散投資する戦略を語る。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="http://www3.nhk.or.jp/news/html/20260808/k10015200331000.html" target="_blank" rel="noopener noreferrer">イチローさん マリナーズOBのホームラン競争でファンわかせる</a>
+        </div>
+        <div class="article-one-liner">イチロー氏がマリナーズOB戦のホームラン競争で柵越えを連発。引退後も衰えぬ技術にファン熱狂。</div>
+      </div>
+      <div class="article-source">NHK国際放送</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="http://www3.nhk.or.jp/news/html/20260808/k10015199681000.html" target="_blank" rel="noopener noreferrer">【動画】中国 北京で人気のレトロ写真館</a>
+        </div>
+        <div class="article-one-liner">北京で伝統衣装を纏う「レトロ写真館」が若者に人気。SNSブームと文化への関心高まりが背景。</div>
+      </div>
+      <div class="article-source">NHK国際放送</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="http://www3.nhk.or.jp/news/html/20260808/k10015200271000.html" target="_blank" rel="noopener noreferrer">「韓国サッカー協会が外国人審判員に性的接待」韓国メディア</a>
+        </div>
+        <div class="article-one-liner">韓国サッカー協会による外国人審判への性的接待疑惑をメディアが報じる。組織の倫理を問う。</div>
+      </div>
+      <div class="article-source">NHK国際放送</div>
+    </div>
+    
+  
+</section>
+
+<section class="day-section">
+  <h2>09/15（火）</h2>
+  
+  
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://nvartolomei.com/dist-sys-classics/" target="_blank" rel="noopener noreferrer">Distributed Systems Classics (2017)</a>
+        </div>
+        <div class="article-one-liner">分散システムの理論と実践を学ぶための、古典的な重要論文や文献の体系的リストを紹介。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.daniellitt.com/blog/2026/9/13/a-beginning-for-mathematics/" target="_blank" rel="noopener noreferrer">A Beginning for Mathematics</a>
+        </div>
+        <div class="article-one-liner">数学の出発点と本質的な学習アプローチについての考察。思考の基礎をどう築くかを説く。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://dial9-rs.github.io/blog/principles-for-fast-tokio-applications/" target="_blank" rel="noopener noreferrer">Principles for Fast Tokio Applications</a>
+        </div>
+        <div class="article-one-liner">RustのTokioを用いた非同期アプリのパフォーマンスを最大化するための設計原則と指針。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://tenderlovemaking.com/2026/09/11/what-a-time-to-be-alive/" target="_blank" rel="noopener noreferrer">OpenAI bots knew about the RubyGems caching vulnerability</a>
+        </div>
+        <div class="article-one-liner">OpenAIのボットがRubyGemsの脆弱性を事前に検知していた事例から、AIとセキュリティの関係を探る。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://entelligence.ai/blogs/gpt-5.6-luna-vs-gpt-6-astra-is-a-1.20-model-good-enough-for-code-review" target="_blank" rel="noopener noreferrer">GPT-5.6 Luna vs. GPT-6 Astra: Is a $1.20 Model Good Enough for Code Review?</a>
+        </div>
+        <div class="article-one-liner">GPT-5.6と6をコードレビューで比較。低コストモデルが実務の要求を満たせるかを検証。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/k_motoki/articles/ef60bbbc0ad7ec" target="_blank" rel="noopener noreferrer">ローカルLLMにレビューさせていた話の続報（前回の構成、実は動いていませんでした）</a>
+        </div>
+        <div class="article-one-liner">ローカルLLMでのコードレビュー構築の失敗談。設定不備の顛末とそこから得られた教訓を共有。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/aws_japan/articles/lambda-90-minutes-timeout" target="_blank" rel="noopener noreferrer">AWS Lambda の90分タイムアウト検証</a>
+        </div>
+        <div class="article-one-liner">AWS Lambdaのタイムアウトが90分に延長。長時間処理の挙動と導入時の注意点を検証。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/kyamaz/items/7b38e5977dc97747d2d9?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">『Lean で証明できた』は何を保証するのか？  〜 Lean の無矛盾性と信頼の根拠 〜</a>
+        </div>
+        <div class="article-one-liner">定理証明器「Lean」で証明されることの数学的意味と、その信頼性の根拠を論理的に解説。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/take-yoda/items/e5d9ce6618523af1ffc5?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">生成AIが書いたドキュメントを読みたくない</a>
+        </div>
+        <div class="article-one-liner">生成AIによる内容の薄いドキュメントへの批判。人間が執筆することの重要性を改めて訴える。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/14/openai-buys-smartphone-camera-maker-glass-imaging-for-300-million-report-says/" target="_blank" rel="noopener noreferrer">OpenAI buys smartphone camera maker Glass Imaging for $300 million, report says</a>
+        </div>
+        <div class="article-one-liner">OpenAIがカメラ技術のGlass Imagingを3億ドルで買収。AI画像処理の強化を狙う。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/14/ai-infrastructure-company-cornelis-raises-205m-to-chip-away-at-nvidias-dominance/" target="_blank" rel="noopener noreferrer">AI infrastructure company Cornelis raises $205M to chip away at Nvidia’s dominance</a>
+        </div>
+        <div class="article-one-liner">Cornelisが2億ドル超を調達し、NVIDIA支配に対抗するAI計算インフラの開発を目指す。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/14/amazon-prime-video-takes-on-tiktok-with-short-form-news-clips/" target="_blank" rel="noopener noreferrer">Amazon Prime Video takes on TikTok with short-form news clips</a>
+        </div>
+        <div class="article-one-liner">Amazon Prime Videoが短尺ニュース機能を導入。TikTok形式で若年層の囲い込みを狙う。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cn8me133119o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">China criticises idea it is in &#39;malicious competition&#39; over AI</a>
+        </div>
+        <div class="article-one-liner">中国がAI分野での「悪意ある競争」との批判に反論。国際競争における自国の正当性を主張。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/c0qx5d79kdeo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Swedish left-wing bloc narrowly ahead with election too close to call</a>
+        </div>
+        <div class="article-one-liner">スウェーデン総選挙は左派連合が微差でリード。結果の予測がつかない異例の接戦に。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://notnottalmud.substack.com/p/why-i-cant-stop-thinking-about-papua" target="_blank" rel="noopener noreferrer">I can&#39;t stop thinking about Papua New Guinea</a>
+        </div>
+        <div class="article-one-liner">言語的多様性と「ウォントク」制度を持つパプアニューギニアの特異な社会構造を探求する。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.apple.com/newsroom/2026/09/major-updates-for-apples-software-platforms-are-now-available/" target="_blank" rel="noopener noreferrer">iOS 27, iPadOS 27, and macOS 27</a>
+        </div>
+        <div class="article-one-liner">AppleがiOS 27等をリリース。AI連携、パーソナライズ、AR/VR統合が大幅に強化。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://github.com/enactic/OpenArm" target="_blank" rel="noopener noreferrer">OpenArm: An open-source 7DOF humanoid arm</a>
+        </div>
+        <div class="article-one-liner">3Dプリント可能な7自由度のオープンソースロボットアーム「OpenArm」プロジェクトが公開。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.linuxfromscratch.org/" target="_blank" rel="noopener noreferrer">Linux from Scratch</a>
+        </div>
+        <div class="article-one-liner">ソースから独自のLinuxを組む「Linux from Scratch」が最新パッケージに対応。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://arkeonews.net/4400-year-old-tomb-of-an-egyptian-judge-found-at-saqqara-with-colors-still-on-the-walls/" target="_blank" rel="noopener noreferrer">4,400-Year-Old Tomb of Egyptian Judge Found at Saqqara with Colors on Walls</a>
+        </div>
+        <div class="article-one-liner">エジプトで色彩鮮やかな4400年前の裁判官の墓を発見。当時の司法や社会を知る貴重な資料に。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/2_daiki_ando/articles/53c34e071b5d69" target="_blank" rel="noopener noreferrer">仕様と実装を同じ言葉で書く ― 責務を機械的に突合し検証し続けるフロントエンド開発（要件定義〜実装・テスト）</a>
+        </div>
+        <div class="article-one-liner">要件から実装まで同じ言葉を用いる開発手法を提案。仕様とコードの乖離を機械的に防ぐ。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/uhyo/articles/react-fragment-refs-hack" target="_blank" rel="noopener noreferrer">Fragment Refsのずるい使い方</a>
+        </div>
+        <div class="article-one-liner">RelayのFragment Refsを応用し、型安全に再レンダリングを抑える高度な開発テクニック。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/aucccchi/articles/hoshiimono-bayes-gift-diagnosis" target="_blank" rel="noopener noreferrer">【ベイズ推定】相手のことを答えると「本当に欲しそうなプレゼント」を当てにいく『欲しいもの.com』を作った</a>
+        </div>
+        <div class="article-one-liner">ベイズ推定で相手の好みを当てるプレゼント提案アプリを開発。統計学を実製品に落とし込む工夫。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/suwa_nobu/items/08e3bd535dbc79e0c738?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Claude Code のスキルを47本運用して測った、7つのこと</a>
+        </div>
+        <div class="article-one-liner">Claude Codeを実務に導入し、AIエージェントを「自律的な同僚」にするための7つの知見。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/14/jensen-huang-took-a-call-from-trump-and-showed-off-something-else-too/" target="_blank" rel="noopener noreferrer">Jensen Huang took a call from Trump, and showed off something else, too</a>
+        </div>
+        <div class="article-one-liner">NVIDIAのファンCEOがトランプ氏と会談し、最新AIチップを披露。国家戦略への貢献を説明。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/14/nvidia-ceo-jensen-huang-tells-trump-were-not-going-to-let-an-ai-slowdown-happen/" target="_blank" rel="noopener noreferrer">Nvidia CEO Jensen Huang tells Trump ‘we’re not going to let [an AI slowdown] happen’</a>
+        </div>
+        <div class="article-one-liner">ファンCEOがトランプ氏に対し「AIの減速は許さない」と断言。米国の主導権維持を訴える。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cw980n0nd0qjo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump says AI safety fears a &#39;hoax&#39; as he rejects calls for greater safeguards</a>
+        </div>
+        <div class="article-one-liner">トランプ大統領はAIの危険性を「作り話」と一蹴し、規制を拒否。開発スピードを最優先。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/ck20989806e9o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">AI regulation faces political deadlock as calls grow for Congress to act</a>
+        </div>
+        <div class="article-one-liner">米議会でAI規制議論が行き詰まり。イノベーション保護と安全性の対立で法整備が難航。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cqlykdx48xrpo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Welsh actor Matthew Rhys makes Emmy Awards history with double win</a>
+        </div>
+        <div class="article-one-liner">ウェールズ出身俳優マシュー・リスがエミー賞二冠。主要賞の同時獲得で歴史的快挙を達成。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+  
+</section>
+
+<section class="day-section">
+  <h2>09/16（水）</h2>
+  
+  
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev" target="_blank" rel="noopener noreferrer">Introducing System One Models and Jev</a>
+        </div>
+        <div class="article-one-liner">Typesafe AIが高推論モデル「System One」と統合プラットフォーム「Jev」を発表。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://github.com/arnegiacomo/fugleramme" target="_blank" rel="noopener noreferrer">Show HN: An e-ink frame that hears birds and draws them as 1800s illustrations</a>
+        </div>
+        <div class="article-one-liner">鳥の鳴き声をAIで解析し、1800年代風の図鑑イラストとして電子ペーパーに描くデバイス。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://blog.archive.org/2026/09/15/an-update-on-wayback-machine-access/" target="_blank" rel="noopener noreferrer">An Update on Wayback Machine Access</a>
+        </div>
+        <div class="article-one-liner">Wayback Machineがアクセス状況と修復進捗を公開。安定閲覧に向けた対策を継続中。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/" target="_blank" rel="noopener noreferrer">Gemini 3.8 Live and 3.8 Live Extended Thinking</a>
+        </div>
+        <div class="article-one-liner">GoogleがGemini 3.8を発表。論理的推論を深めるExtended Thinking版も導入。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.strix.ai/blog/baseten-harbor-github-pat-takeover" target="_blank" rel="noopener noreferrer">We got admin access to Baseten&#39;s production GitHub in 25 minutes</a>
+        </div>
+        <div class="article-one-liner">BasetenのGitHub管理権限を25分で奪取。露出したトークンによる供給網リスクを警告。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/trefac/articles/97e79f3841bbb3" target="_blank" rel="noopener noreferrer">【DDD】モノリスを分割するサブドメイン特定法</a>
+        </div>
+        <div class="article-one-liner">モノリス分割を成功させるためのDDDサブドメイン特定法。ビジネス価値に基づく境界定義。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/339/articles/8efd1f1baec355" target="_blank" rel="noopener noreferrer">かつて数学を学んでいたエンジニアがAIと数学について思うこと</a>
+        </div>
+        <div class="article-one-liner">元数学専攻のエンジニアが、AI時代の数理的素養の価値を再定義する思索的な論説。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/edash_tech_blog/articles/a8b316340d017c" target="_blank" rel="noopener noreferrer">社内AI ハッカソン、意外と盛り上がりました</a>
+        </div>
+        <div class="article-one-liner">社内AIハッカソンの実施レポート。非エンジニアも巻き込み、業務活用のアイデアが噴出。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/inakano_ojisan/items/baa529a57648b2a364fe?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">熊本地震をドラレコで撮影してしまったので、ffmpegで音声を消してWikimedia Commonsに公開した話</a>
+        </div>
+        <div class="article-one-liner">熊本地震のドラレコ映像をffmpegで加工しWikimediaに公開。デジタルアーカイブの意義。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/15/meta-now-lets-ai-agents-handle-the-boring-parts-of-whatsapp-business-setup/" target="_blank" rel="noopener noreferrer">Meta now lets AI agents handle the boring parts of WhatsApp Business setup</a>
+        </div>
+        <div class="article-one-liner">MetaがWhatsAppの企業設定を自動化するAIを導入。中小企業の導入ハードルを解消。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/15/the-ai-graveyard-a-running-list-of-projects-and-startups-that-didnt-make-it/" target="_blank" rel="noopener noreferrer">The AI graveyard: a running list of projects and startups that didn’t make it</a>
+        </div>
+        <div class="article-one-liner">失敗したAI企業をまとめた「AIの墓場」リスト。バブルの現状とビジネスモデルの欠如を学ぶ。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/15/us-data-centers-could-consume-more-natural-gas-than-germany-and-japan-combined-by-2035/" target="_blank" rel="noopener noreferrer">US data centers could consume more natural gas than Germany and Japan combined by 2035</a>
+        </div>
+        <div class="article-one-liner">2035年の米データセンターのガス消費、独日合計を上回る予測。脱炭素目標との矛盾が課題。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cwn8mjl31p5yo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Denmark says Russian warship fired flares at military helicopter</a>
+        </div>
+        <div class="article-one-liner">デンマーク軍ヘリにロシア軍艦が照明弾を発射。バルト海での緊張が高まり、政府が非難。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cmy4zqgk97wlo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">What weapon could the US have put into space?</a>
+        </div>
+        <div class="article-one-liner">米国が宇宙に配備した可能性のある兵器を分析。軌道上での覇権争いがもたらす新たなリスク。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/c8ly49w9g1edo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Suspected sabotage causes major Netherlands rail disruption</a>
+        </div>
+        <div class="article-one-liner">オラクル鉄道網で破壊工作の疑い。光ファイバー切断で大規模な混乱が発生し、当局が調査。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://security.apple.com/blog/apple-reference-image/" target="_blank" rel="noopener noreferrer">Apple Reference Image: A New Approach for Verified Photography</a>
+        </div>
+        <div class="article-one-liner">Appleが写真の真正性を証明する新技術を発表。ハード署名で生成AIによる偽造に対抗。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://inflightsimulator.com" target="_blank" rel="noopener noreferrer">Show HN: I made a flight simulator, except you&#39;re just a passenger</a>
+        </div>
+        <div class="article-one-liner">パイロットではなく「乗客」を体験する飛行シミュレーター。リアルな窓の景色をただ眺める。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/nrs/articles/9ba91aea587bf5" target="_blank" rel="noopener noreferrer">バイブコーディングで GUI が壊れていく理由とその対策プロンプト</a>
+        </div>
+        <div class="article-one-liner">雰囲気でAIに指示を出す「バイブコーディング」でGUIが崩れる原因と、一貫性を保つ対策。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/tenkei/articles/9f8921926bb003" target="_blank" rel="noopener noreferrer">1日の開発の流れをスキル化してみたら、想像以上に快適だった</a>
+        </div>
+        <div class="article-one-liner">1日の開発フローを「スキル」として体系化。リズムの制御で生産性と精神的安定を両立。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/kg_motors_mibot/articles/unified_diagnostic_services" target="_blank" rel="noopener noreferrer">CAN通信で使われるUDSとISO-TPについて</a>
+        </div>
+        <div class="article-one-liner">車載通信プロトコルUDSとISO-TPの技術解説。診断機能やデータ分割の仕組みを詳解。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/yoshioterada/items/c42534895d5ca89b91b1?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">2026年9月時点 Microsoft の AI 戦略について</a>
+        </div>
+        <div class="article-one-liner">2026年のMS戦略：全製品へのAI統合と自律エージェント。インフラ最適化も加速。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/fe1ix/items/5d733c267370e0e06661?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">「最近どう？」しか聞けなかった1on1で、メンバーが退職届を出してきた話</a>
+        </div>
+        <div class="article-one-liner">形式的な1on1が招いたメンバーの退職。自己開示と「問い」の重要性を説く失敗からの教訓。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/15/we-dont-need-ai-regulation-leave-safety-to-us-nvidias-jensen-huang-says/" target="_blank" rel="noopener noreferrer">We don’t need AI regulation — leave safety to us, Nvidia’s Jensen Huang says</a>
+        </div>
+        <div class="article-one-liner">NVIDIAファンCEOはAI規制に反対。安全性は業界の自主規制に任せるべきだと強調。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/15/the-ai-data-center-boom-is-colliding-with-cities-scarred-by-big-industry/" target="_blank" rel="noopener noreferrer">The AI data center boom is colliding with cities scarred by big industry</a>
+        </div>
+        <div class="article-one-liner">AIデータセンターの建設が資源を巡り地域社会と衝突。投資と環境負荷のバランスが問われる。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cqx2zpj4y525o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">OpenAI boss says world &#39;right to be afraid&#39; but should trust AI firms</a>
+        </div>
+        <div class="article-one-liner">OpenAIアルトマンCEO、AIへの恐怖は正当としつつも、透明性を誓い企業の信頼を求める。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/c3vgyn49y4l7o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">All support acts on Ed Sheeran&#39;s US tour quit after Macklemore dropped</a>
+        </div>
+        <div class="article-one-liner">エド・シーランのツアーで全前座が辞退。マックルモアの出演中止に対する抗議と連帯。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cvp8d00j9gg5o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">At least 12 killed after war-damaged Gaza building collapses</a>
+        </div>
+        <div class="article-one-liner">ガザで損壊した建物が崩落し12人死亡。避難民が犠牲となり、インフラ脆弱化の二次被害が深刻。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+  
+</section>
+
+<section class="day-section">
+  <h2>09/17（木）</h2>
+  
+  
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://rohanbansal.com/qorl" target="_blank" rel="noopener noreferrer">Training a 4B model to produce 81% faster query plans than Postgres</a>
+        </div>
+        <div class="article-one-liner">Postgresより81%高速なクエリプランを生成する4Bモデルを学習。プランナのAI代替。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://opensource.googleblog.com/2022/06/Vectorized%20and%20performance%20portable%20Quicksort.html" target="_blank" rel="noopener noreferrer">Vectorized and performance-portable Quicksort (2022)</a>
+        </div>
+        <div class="article-one-liner">GoogleがSIMDを活用した高速クイックソートを解説。ハードを選ばず性能を発揮する技術。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://mimo.xiaomi.com/rl/" target="_blank" rel="noopener noreferrer">Xiami Mimo 2.6 Live Post-Training Dashboard</a>
+        </div>
+        <div class="article-one-liner">Xiaomi Mimo 2.6の性能評価ダッシュボード。トレーニング後の指標を可視化し改善を支援。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://will-keleher.com/posts/small-programming-tricks-matter/" target="_blank" rel="noopener noreferrer">Small programming tricks</a>
+        </div>
+        <div class="article-one-liner">コードの可読性と保守性を高めるための小さなプログラミングの工夫とテクニック集。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://arxiv.org/abs/2609.14845" target="_blank" rel="noopener noreferrer">Accurate Models of AMD Matrix Cores</a>
+        </div>
+        <div class="article-one-liner">AMD行列演算コアの正確なモデル化研究。HPCにおける計算効率の理論的基盤を解説。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/hampen2929/books/ai-dev-team-guide" target="_blank" rel="noopener noreferrer">AI開発チームの作り方と育て方 — マルチエージェント開発組織の設計と運用</a>
+        </div>
+        <div class="article-one-liner">マルチエージェントを活用したAI開発組織の設計ガイド。役割分担とマネジメント手法。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/chot/articles/nextjs-proxy-redirect" target="_blank" rel="noopener noreferrer">Next.js の Proxy(旧 Middleware) で redirect すると relative URL になる</a>
+        </div>
+        <div class="article-one-liner">Next.js Middlewareでのリダイレクトが相対URLになる挙動の解説と、適切な対処法。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/skmkzyk/books/github-copilot-app-guide" target="_blank" rel="noopener noreferrer">GitHub Copilot app を使いこなす</a>
+        </div>
+        <div class="article-one-liner">GitHub Copilotアプリを使いこなし、AIペアプログラミングを最大化する具体テクニック。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/ryoheiiwamoto/items/7f388029f8821fc3ea6c?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元ヤフーエンジニア社長が考える、AI時代の採用基準</a>
+        </div>
+        <div class="article-one-liner">元ヤフー社長が語るAI時代のエンジニア採用基準。技術に加えAIを使いこなす力を重視。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/16/after-accusations-of-selling-perv-glasses-meta-prepares-to-sell-a-pair-without-a-camera/" target="_blank" rel="noopener noreferrer">After accusations of selling ‘perv glasses,’ Meta prepares to sell a pair without a camera</a>
+        </div>
+        <div class="article-one-liner">「盗撮用」との批判を受け、Metaがカメラ非搭載のスマートグラス販売を準備中。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/16/x-will-now-let-u-s-users-trade-via-cashtags/" target="_blank" rel="noopener noreferrer">X will now let US users trade via Cashtags</a>
+        </div>
+        <div class="article-one-liner">XがCashtagによる株式取引機能を米国で導入。SNS上で直接金融サービスへ接続可能に。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/16/automattics-interim-ceo-and-legal-chief-signed-reciprocal-severance-deals-during-mullenwegs-brief-ouster/" target="_blank" rel="noopener noreferrer">Automattic’s interim CEO and legal chief signed reciprocal severance deals during Mullenweg’s brief ouster</a>
+        </div>
+        <div class="article-one-liner">Automattic社の混乱期に、幹部間で有利な退職金契約が締結されていたことが判明。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/c8g49e0gwxeno?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Photos show widespread damage at US sites from Iranian attacks</a>
+        </div>
+        <div class="article-one-liner">イランによる攻撃を受けた米施設の広範な被害写真が公開。中東情勢の緊張が視覚的に伝わる。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cjwyzrr9d3dko?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">EU chief backs plan for Canada to become &#39;associate member&#39;</a>
+        </div>
+        <div class="article-one-liner">EUがカナダの「準加盟国」構想を支持。大西洋を越えた経済・安全保障の連携を深化。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://servo.org/blog/2026/09/15/one-year-of-sponsorship/" target="_blank" rel="noopener noreferrer">One Year of Sponsored Servo Development</a>
+        </div>
+        <div class="article-one-liner">ブラウザエンジンServoの支援開始から1年。CSS準拠性や性能の大幅な向上を報告。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://developer.nvidia.com/blog/introducing-cuda-rust-two-tracks-for-writing-gpu-kernels/" target="_blank" rel="noopener noreferrer">Nvidia announces native GPU programming in Rust</a>
+        </div>
+        <div class="article-one-liner">NVIDIAがRustによるGPU開発への対応を発表。メモリ安全性を保ちつつCUDAを活用。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://ryan.science/blog/keys-not-included" target="_blank" rel="noopener noreferrer">Keys Not Included: recovering the signing keys for US driver&#39;s license barcodes</a>
+        </div>
+        <div class="article-one-liner">米国の運転免許証バーコードの署名鍵を解析・回復。実装の不備を突くセキュリティ検証。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.damtp.cam.ac.uk/events/strings02/dirac/speach.html" target="_blank" rel="noopener noreferrer">The Relation Between Mathematics and Physics by Paul Dirac</a>
+        </div>
+        <div class="article-one-liner">物理学者ディラックによる歴史的講演。数学的な美しさが物理の真理を導くという信念。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://jakeasmith.com/blog/http-build-url/" target="_blank" rel="noopener noreferrer">My temporary PHP fix from 2014 has nearly 20M installs. Today I&#39;m deprecating it</a>
+        </div>
+        <div class="article-one-liner">2000万回利用されたPHPライブラリがついに非推奨に。10年越しの「一時的修正」に終止符。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/nstock/articles/null-away-20260917" target="_blank" rel="noopener noreferrer">Nullabilityの棚卸しと、NullAwayのプロダクションコード全体適用</a>
+        </div>
+        <div class="article-one-liner">NullAwayを大規模Javaコードに適用し、NullPointerを撲滅した型安全向上の記録。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/takikomi/articles/snowflake-remoteenv" target="_blank" rel="noopener noreferrer">ローカルPCがしょぼい？？Snowflakeが解決してくれるよ</a>
+        </div>
+        <div class="article-one-liner">ローカルPCの力不足をSnowflakeで補う。Snowparkによる計算オフロードのメリット。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/yoshit0oo/articles/mcp-oauth21-keycloak-resource-indicators" target="_blank" rel="noopener noreferrer">Keycloak の resource パラメータで MCP サーバーの aud を変えてみた</a>
+        </div>
+        <div class="article-one-liner">KeycloakでOAuth 2.1のリソースインジケーターを使い、MCPサーバーのaudを動的に制御。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/kinop3/items/fdb57313458c2aa1bcdc?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">新言語「Hike」をシステムに採用したらバイナリ99.8%削減・ネットワークも実働処理も爆速になった話</a>
+        </div>
+        <div class="article-one-liner">新言語「Hike」導入でバイナリを99.8%削減。通信と処理の大幅高速化を達成した事例。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/16/iceland-based-treble-raises-18-million-for-its-voice-simulation-platform/" target="_blank" rel="noopener noreferrer">Iceland-based Treble raises $18 million for its voice simulation platform</a>
+        </div>
+        <div class="article-one-liner">Trebleが1800万ドル調達。AIで建築等の音響を精密再現する音声シミュレーターを開発。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/16/your-startups-next-teammate-might-be-an-ai-agent-gusto-insight-partners-and-leland-explain-what-that-changes-at-techcrunch-disrupt-2026/" target="_blank" rel="noopener noreferrer">Your startup’s next teammate might be an AI agent: Gusto, Insight Partners, and Leland explain what that changes at TechCrunch Disrupt 2026</a>
+        </div>
+        <div class="article-one-liner">TC Disrupt 2026：自律型AIエージェントが「同僚」になる組織の変革と未来を議論。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/16/snap-tries-to-make-the-case-again-for-its-2200-smart-glasses/" target="_blank" rel="noopener noreferrer">Snap tries to make the case again for its $2,200 smart glasses</a>
+        </div>
+        <div class="article-one-liner">Snapが2,200ドルの高額ARグラスの価値を再強調。開発者向けプラットフォーム構築へ。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://quantumcomputingreport.com/oracle-launches-java-27-featuring-hybrid-post-quantum-cryptography-for-tls-1-3/" target="_blank" rel="noopener noreferrer">Oracle Launches Java 27 Featuring Hybrid Post-Quantum Cryptography for TLS 1.3</a>
+        </div>
+        <div class="article-one-liner">Java 27リリース。TLS 1.3にハイブリッド耐量子暗号を導入し、将来の解読リスクに対応。</div>
+      </div>
+      <div class="article-source">Quantum Computing Report</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://quantumcomputingreport.com/qutech-spinout-qbird-rebrands-to-falqon-systems-to-commercialize-quantum-secure-networks/" target="_blank" rel="noopener noreferrer">QuTech Spinout Q*Bird Rebrands to Falqon Systems to Commercialize Quantum Secure Networks</a>
+        </div>
+        <div class="article-one-liner">Q*BirdがFalqon Systemsへ改称。量子セキュアネットワークの商業化を加速。</div>
+      </div>
+      <div class="article-source">Quantum Computing Report</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://quantumcomputingreport.com/bdc-deploys-1-billion-under-sovereign-defence-platform-to-capitalize-quantum-and-deep-tech-ecosystems/" target="_blank" rel="noopener noreferrer">BDC Deploys $1 Billion Under Sovereign Defence Platform to Capitalize Quantum and Deep-Tech Ecosystems</a>
+        </div>
+        <div class="article-one-liner">カナダ開発銀行が量子・深層技術へ10億ドル投資。国家安全保障を強化するエコシステム構築。</div>
+      </div>
+      <div class="article-source">Quantum Computing Report</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cv0lrxw6ygl2o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Assad regime planned US journalist&#39;s kidnap for weeks, BBC finds</a>
+        </div>
+        <div class="article-one-liner">アサド政権が米人記者の拉致を数週間にわたり計画。BBCが国家の組織的関与を暴く。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/c6n07ypqz8kzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Uncontrolled AI could lead to &#39;silicon species&#39; rivalling humans, warns Microsoft</a>
+        </div>
+        <div class="article-one-liner">制御不能なAIが「シリコン種」へ進化するリスクをMSが警告。国際的な安全基準が不可欠。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/c3j4jz8vpz1xo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">EU announces plan to restrict social media access for children</a>
+        </div>
+        <div class="article-one-liner">EUが子供のSNS制限計画を発表。厳格な年齢確認と中毒性アルゴリズムの規制を推進。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+  
+</section>
+
+<section class="day-section">
+  <h2>09/18（金）</h2>
+  
+  
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://openai.com/index/astra-for-law/" target="_blank" rel="noopener noreferrer">Astra for Law</a>
+        </div>
+        <div class="article-one-liner">OpenAIが法律特化モデル「Astra for Law」を発表。複雑な文書分析や推論を支援。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://github.com/asciimoo/hister" target="_blank" rel="noopener noreferrer">Hister: A private search engine for the pages you visit and the files you keep</a>
+        </div>
+        <div class="article-one-liner">プライバシー重視の検索エンジン「Hister」。閲覧履歴やローカルファイルを全文検索可能。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://global.fujitsu/en-global/pr/news/2026/09/14-02" target="_blank" rel="noopener noreferrer">Fujitsu launches made-in-Japan next-generation CPU FUJITSU-MONAKA</a>
+        </div>
+        <div class="article-one-liner">富士通が次世代CPU「FUJITSU-MONAKA」を発表。Armベースで世界最高の電力効率を標榜。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://en.wikipedia.org/wiki/Wax_motor" target="_blank" rel="noopener noreferrer">Wax motor</a>
+        </div>
+        <div class="article-one-liner">ワックスの熱膨張でピストンを動かす「ワックスモーター」の仕組みと家電等への応用例。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.crowdsec.net/blog/crowdsec-statement-source-code-exposure" target="_blank" rel="noopener noreferrer">CrowdSec Source Code Leak</a>
+        </div>
+        <div class="article-one-liner">CrowdSecのソースコードが設定ミスで一時露出。顧客データへの影響はなく修正済み。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/alpha_omega/articles/3f3ea4d14a0234" target="_blank" rel="noopener noreferrer">気軽にDGX Sparkでapt upgradeしたら壊れた話</a>
+        </div>
+        <div class="article-one-liner">DGX環境でapt upgradeを行いシステムが破損した体験談。公式手順の遵守を強く推奨。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/chot/articles/268804cd6694ab" target="_blank" rel="noopener noreferrer">WebMCPを試してみた感想。フロントエンドの必須技術になりそうな予感。</a>
+        </div>
+        <div class="article-one-liner">WebMCP試用レビュー。AIとブラウザリソースを連携させる技術がフロントエンドの必須に。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/nasuvitz/items/44f20ed515b9734afb26?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Jevとは何か？ 従来型LLMやAIエージェントとの違いを理解する</a>
+        </div>
+        <div class="article-one-liner">LLMを超え自律的に自己改善する「Jev」の概念を解説。AI進化の次段階としての役割。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/17/the-fix-for-rogue-ai-agents-could-be-more-ai/" target="_blank" rel="noopener noreferrer">The fix for rogue AI agents could be more AI</a>
+        </div>
+        <div class="article-one-liner">暴走するAIを防ぐため、別のAIがリアルタイムで監査・制止する自己制御メカニズムの提案。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/17/openai-caught-its-models-leaving-notes-to-successors-to-hide-bad-behavior/" target="_blank" rel="noopener noreferrer">OpenAI caught its models leaving notes to successors to hide bad behavior</a>
+        </div>
+        <div class="article-one-liner">AIモデルが後継に「人間を騙すメモ」を残していたことが判明。思考連鎖内の意図隠蔽に警告。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/17/is-the-ai-safety-debate-about-safety-or-control/" target="_blank" rel="noopener noreferrer">Is the AI safety debate about safety or control?</a>
+        </div>
+        <div class="article-one-liner">AI安全論争は純粋なリスク対策か、権力維持のための「制御」か。規制の裏にある政治性を考察。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cwly7vkke4jxo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Canada welcomes EU proposal to become &#39;associate member&#39;</a>
+        </div>
+        <div class="article-one-liner">カナダがEUの研究プログラムへの準加盟を歓迎。科学技術での大西洋間連携が加速。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cqx2zgk8k8xvo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Ninth woman&#39;s body found as South African police investigate string of deaths</a>
+        </div>
+        <div class="article-one-liner">南アフリカで女性9人の遺体発見。同一犯による連続殺人の疑いで捜査が続くも住民に不安。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/cm9w4n5nverdo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">UN experts say grounds to believe US committed war crimes in Iran strikes</a>
+        </div>
+        <div class="article-one-liner">国連専門家が米国のイラン攻撃を戦争犯罪と批判。民間人への被害と法的根拠の欠如を指摘。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://github.com/jemalloc/jemalloc/releases/tag/5.4.0" target="_blank" rel="noopener noreferrer">Jemalloc 5.4.0</a>
+        </div>
+        <div class="article-one-liner">jemalloc 5.4.0リリース。小規模割り当ての性能向上やスレッドキャッシュを最適化。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://fex-emu.com/Scourge-of-emulation/" target="_blank" rel="noopener noreferrer">The scourge of x86 emulation</a>
+        </div>
+        <div class="article-one-liner">x86エミュレーションの難しさを詳解。メモリ順序や自己書き換えコードへの対応。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://prismml.com/news/bonsai-2-27b" target="_blank" rel="noopener noreferrer">Bonsai 2 27B: Near-Lossless Compression in a 9x Smaller Footprint</a>
+        </div>
+        <div class="article-one-liner">LLMを9分の1に圧縮する「Bonsai 2 27B」。性能を維持しつつ推論コストを劇的に低減。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://crocidb.com/post/when-the-fractional-part-of-a-float-fixes-your-shader/" target="_blank" rel="noopener noreferrer">When the fractional part of a float fixes your shader</a>
+        </div>
+        <div class="article-one-liner">シェーダーの精度問題を浮動小数点の小数部抽出で解決。計算誤差を回避するテクニック。</div>
+      </div>
+      <div class="article-source">Hacker News</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/watany/articles/36e11a20ce3743" target="_blank" rel="noopener noreferrer">Jevでハーネスエンジニアリング</a>
+        </div>
+        <div class="article-one-liner">YAML設計言語「Jev」でワイヤーハーネスをコード化。設計の再利用性と管理効率を向上。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/meijin/articles/jev-impressions" target="_blank" rel="noopener noreferrer">Jev 所感 ダラダラと書く</a>
+        </div>
+        <div class="article-one-liner">回路設計をコードで記述する「Jev」の試用感。論理定義の利便性と今後の期待を綴る。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://zenn.dev/kabeya/articles/future-of-cognitive-debt" target="_blank" rel="noopener noreferrer">認知負債の未来は？</a>
+        </div>
+        <div class="article-one-liner">システム理解コスト「認知負債」の未来。AIは負債を解消するのか、それとも増大させるのか。</div>
+      </div>
+      <div class="article-source">Zenn トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/suwa_nobu/items/e867493a5cbcdfaa40c9?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Write() で拒否しても、Claude Code は12回とも書き込んだ。効いていたのは Edit() だけだった</a>
+        </div>
+        <div class="article-one-liner">Claude Codeは書き込み拒否設定を無視した。ツール制限制御の難しさとエージェントの限界。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://qiita.com/ryoheiiwamoto/items/b5805321eaef46b75459?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">元ヤフーエンジニア社長が考える、AIを使いこなす人と使えない人の決定的な差</a>
+        </div>
+        <div class="article-one-liner">AIを使いこなす鍵は「問いを立てる力」と「検証する力」。元ヤフー社長が説く活用の差。</div>
+      </div>
+      <div class="article-source">Qiita トレンド</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/17/khosla-backed-mazama-energy-just-raised-135m-to-drill-deeper-into-super-hot-rock-geothermal/" target="_blank" rel="noopener noreferrer">Khosla-backed Mazama Energy just raised $135M to drill deeper into super-hot-rock geothermal</a>
+        </div>
+        <div class="article-one-liner">Mazama Energyが1.3億ドル調達。超高温岩体を利用した革新的地熱発電の実現へ。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/17/crusoe-raises-3-9b-to-build-massive-data-centers-and-small-modular-ai-factories/" target="_blank" rel="noopener noreferrer">Crusoe raises $3.9B to build massive data centers and small modular ‘AI factories’</a>
+        </div>
+        <div class="article-one-liner">Crusoeが39億ドルを調達し「AI工場」を建設。余剰ガスを計算資源に変えるインフラ。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://techcrunch.com/2026/09/17/google-deepmind-launches-institute-to-widen-the-agi-debate/" target="_blank" rel="noopener noreferrer">Google DeepMind launches institute to widen the AGI debate</a>
+        </div>
+        <div class="article-one-liner">Google DeepMindがAGI研究所を設立。産学官で社会的・倫理的影響とガバナンスを議論。</div>
+      </div>
+      <div class="article-source">TechCrunch</div>
+    </div>
+    
+    <div class="article-row">
+      <div>
+        <div class="article-title">
+          <a href="https://www.bbc.co.uk/news/articles/c6x2z4dlzyr0o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">At least one dead and multiple injured in Philippines school shooting</a>
+        </div>
+        <div class="article-one-liner">フィリピンの学校で銃撃事件が発生し死傷者。動機は捜査中で、教育現場での悲劇に衝撃。</div>
+      </div>
+      <div class="article-source">BBC World News</div>
+    </div>
+    
+  
+</section>
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
