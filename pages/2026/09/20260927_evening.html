@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年09月27日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年09月27日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年09月27日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260927_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://authorsguild.org/news/ag-v-openai-top-execs-knew-mass-book-piracy-was-illegal/" target="_blank" rel="noopener noreferrer">OpenAI Feared &#34;Optics&#34; of what might appear on Hacker News</a></h3>
+    <p class="meta">Hacker News | 09/27 15:19</p>
+    <p class="summary">作家協会がOpenAIを提訴。公開された内部文書によると、OpenAIの幹部は同社のAIモデルが大量の著作権侵害を行っていることを認識しており、特にHacker Newsなどの技術系コミュニティでの評判（見栄え）を懸念していたことが明らかになりました。同社は法的なリスクよりも公的な批判を恐れていたと指摘されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.astralcodexten.com/p/does-georgism-work-five-years-later" target="_blank" rel="noopener noreferrer">Does Georgism work? Five years later</a></h3>
+    <p class="meta">Hacker News | 09/25 22:48</p>
+    <p class="summary">土地の価値に対する課税（地価税）を主軸とする「ジョージズム」について、提唱から5年後の現状を検証。税制としての理論的な優位性が語られる一方で、政治的な実現可能性や実装上の課題が根深く残っています。経済的な効率性と社会的な公平性をどう両立させるか、現実の政策適用を通じた議論が整理されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://mitxela.com/projects/flipflip" target="_blank" rel="noopener noreferrer">Flip Fluid on Flip Dots</a></h3>
+    <p class="meta">Hacker News | 09/26 16:50</p>
+    <p class="summary">「フリップドット（パタパタ表示器）」を用いたユニークな流体シミュレーションプロジェクトの紹介。物理的なドットの反転音と視覚的な変化を組み合わせ、デジタルな流体演算をアナログデバイス上で表現する試みです。ハードウェア制御と映像出力の同期手法や、その制作過程における技術的工夫が詳細に解説されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://antonz.org/go-concurrency-distilled/" target="_blank" rel="noopener noreferrer">Go Concurrency Distilled</a></h3>
+    <p class="meta">Hacker News | 09/26 23:34</p>
+    <p class="summary">Go言語の並行処理に関する技術解説。goroutineやchannelといったGo特有の機能を、どのように効率的かつ安全に活用するかを詳説しています。並行処理で陥りやすいバグや、パフォーマンスを最大化するためのベストプラクティスを、簡潔なコード例と共にまとめた実用的なガイドです。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mazrean/articles/bd9b563ace18db" target="_blank" rel="noopener noreferrer">Cloudflare 上で Jev で作るほぼ0円運用可能な高品質なページ内検索</a></h3>
+    <p class="meta">Zenn トレンド | 09/26 11:26</p>
+    <p class="summary">Cloudflare PagesとJev（検索エンジン構築ツール）を組み合わせ、ほぼゼロコストで運用可能な高品質なページ内検索機能を実装する方法を紹介。静的サイトに動的な検索性を付与する際の手順や、コストを最小化するための構成パターンを解説しており、個人のブログや小規模サイト開発者にとって有益な知見です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/enjoetoh/articles/ai-as-literary-judge" target="_blank" rel="noopener noreferrer">人工知能と小説新人賞審査</a></h3>
+    <p class="meta">Zenn トレンド | 09/26 06:53</p>
+    <p class="summary">AIの進化が小説の新人賞審査に与える影響について考察。AIが大量の作品を論理的に評価できる可能性と、人間が持つ「文学的価値」を判断する際の感性との対比が議論されています。AIを活用した効率化には期待が寄せられる一方、創造性の評価における人間独自の役割について警鐘を鳴らしています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/26/pnoes-new-face-mask-wants-to-make-lab-grade-breath-testing-a-self-serve-affair/" target="_blank" rel="noopener noreferrer">PNOE’s new face mask wants to make lab-grade breath testing a self-serve affair</a></h3>
+    <p class="meta">TechCrunch | 09/27 01:40</p>
+    <p class="summary">PNOE社が発表した新しいフェイスマスクは、ラボと同等の精度で呼気分析を行えるデバイスです。従来は医療施設でしか行えなかった代謝測定や呼吸分析を、家庭やジムで手軽に行えるように設計されています。個人の健康状態をリアルタイムで詳細に可視化することで、パーソナルヘルスケアの新たな選択肢を目指します。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/26/google-tests-buying-from-walmart-owned-flipkart-through-gemini-and-ai-mode-in-india/" target="_blank" rel="noopener noreferrer">Google tests buying from Walmart-owned Flipkart through Gemini and AI Mode in India</a></h3>
+    <p class="meta">TechCrunch | 09/27 01:30</p>
+    <p class="summary">Googleはインド市場において、Geminiと「AIモード」を通じたFlipkartでの商品購入テストを開始しました。AIがユーザーの代わりに商品を探し、比較・購入をサポートすることで、Eコマースの体験をより直感的かつパーソナライズされたものに変えようとしています。インドでの成功は、他地域への展開の足がかりとなる可能性があります。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/26/insurers-claim-ai-is-already-increasing-healthcare-costs/" target="_blank" rel="noopener noreferrer">Insurers claim AI is already increasing healthcare costs</a></h3>
+    <p class="meta">TechCrunch | 09/26 21:02</p>
+    <p class="summary">保険会社各社は、医療現場でのAI導入が逆にコストを押し上げていると主張しています。AI診断や管理の効率化が期待されている一方で、導入コストの増大やシステム運用費、誤診を避けるための過剰診療などが要因とされています。AI活用が医療経済にもたらす影響については、依然として賛否が分かれています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cmvgyyw2jeego?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Iranian minister says only negotiation can end conflict after Trump rejects Hormuz deal</a></h3>
+    <p class="meta">BBC World News | 09/27 07:44</p>
+    <p class="summary">イランの閣僚は、トランプ氏がホルムズ海峡に関する合意を拒否したことに対し、紛争を終結させる唯一の手段は交渉であると強調しました。緊張状態が続く中、対話を通じた解決の重要性を訴えていますが、両国の溝は深く、今後の国際社会の調整が注目されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c6pwl9g9ne1lo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Christa Pike to be first woman executed in Tennessee in 200 years - but her defence say she&#39;s a victim too</a></h3>
+    <p class="meta">BBC World News | 09/26 23:04</p>
+    <p class="summary">テネシー州で200年ぶりとなる女性死刑囚の執行が予定されているクリスタ・パイク氏について、弁護団は彼女もまた過去の虐待などの被害者であると主張しています。死刑執行の是非を巡り、犯した罪の重大さと個人の背景にある環境要因の間で、司法のあり方に大きな議論が巻き起こっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c3grvv7p81lqo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Four killed in helicopter crash near Montreal</a></h3>
+    <p class="meta">BBC World News | 09/27 02:43</p>
+    <p class="summary">モントリオール近郊でヘリコプターが墜落し、4名が死亡しました。事故原因については現在調査中ですが、現場付近は天候や視界状況が悪かった可能性が指摘されています。当局は飛行ルートや機体の整備記録を含め、詳しい事故の経緯を解明するための捜査を進めています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
