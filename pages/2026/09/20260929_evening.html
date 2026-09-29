@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年09月29日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年09月29日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年09月29日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260929_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.conan.io/cpp/conan/gamedev/godot/cmake/2026/09/29/Using-Any-Cpp-Library-In-Godot.html" target="_blank" rel="noopener noreferrer">Using any C++ library in Godot</a></h3>
+    <p class="meta">Hacker News | 09/29 17:40</p>
+    <p class="summary">Godotエンジンで任意のC++ライブラリを使用する方法を解説。パッケージマネージャーのConanとCMakeを組み合わせ、GDExtensionを利用してライブラリを統合する手法を紹介している。C++の強力なエコシステムをゲーム開発に活用するための、モダンで効率的なワークフローを提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://jagi.studio/posts/phyllotaxis/" target="_blank" rel="noopener noreferrer">Phyllotaxis: An audio-reactive LED display</a></h3>
+    <p class="meta">Hacker News | 09/29 01:18</p>
+    <p class="summary">葉序（フィロタキシス）のパターンに基づいた、音声反応型LEDディスプレイの制作記録。植物の成長パターンを数学的に模倣した配置のLEDが、音楽に合わせてダイナミックに光り輝く様子を描写している。ハードウェア構成やアニメーションのアルゴリズムについても触れられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.christianperone.com/2026/09/the-systems-that-no-one-will-test/" target="_blank" rel="noopener noreferrer">The systems that no one will test</a></h3>
+    <p class="meta">Hacker News | 09/28 19:51</p>
+    <p class="summary">誰もテストしたがらない、あるいはテストが極めて困難な複雑なシステムについての考察。カーネル、ドライバ、暗号化サブシステムなど、重要性は高いがバグの再現や環境構築が難しい領域の課題を指摘している。静的解析や形式手法の必要性、そして人間による深い洞察の重要性を強調している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.computerworld.com/article/1673071/booted-up-in-1993-this-server-still-runs-but-not-for-much-longer-2.html" target="_blank" rel="noopener noreferrer">Booted up in 1993, this server still runs – but not for much longer (2017)</a></h3>
+    <p class="meta">Hacker News | 09/28 05:13</p>
+    <p class="summary">1993年から一度も再起動されずに稼働し続けてきた、あるネットウェアサーバーの物語。24年以上も現役で動作し続けた驚異的な耐久性と、ハードウェアの老朽化による引退の時が近づいている現状を伝えている。長期間の連続稼働を支えた保守の工夫や、歴史的な背景に焦点を当てている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/ababup1192/articles/77b844dcfc1529" target="_blank" rel="noopener noreferrer">AI開発時代だからこそ、テストの役割を見つめ直す</a></h3>
+    <p class="meta">Zenn トレンド | 09/29 01:00</p>
+    <p class="summary">AIによるコード生成が普及する時代において、ソフトウェアテストが果たす役割の変遷を考察した記事。AIが書いたコードの品質を担保するための手段としてテストの重要性が増していることや、テスト駆動開発（TDD）がAIとの協業においていかに有効であるかを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/339/articles/56ef43afde8bd2" target="_blank" rel="noopener noreferrer">大きなボトルネックをごろごろ見つける方法 - 優秀なエンジニアになる</a></h3>
+    <p class="meta">Zenn トレンド | 09/28 23:46</p>
+    <p class="summary">パフォーマンスの大きなボトルネックを効率的に発見し、優秀なエンジニアへと成長するための手法を紹介。推測ではなく計測に基づく分析の重要性や、システムの全体像を把握するためのプロファイリングツールの活用法、そして解決すべき問題の優先順位付けについて詳しく解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/oukayuka/articles/15years-git-then-jujutsu" target="_blank" rel="noopener noreferrer">Jujutsu と出会い、15 年使った Git にもう戻れなくなった理由</a></h3>
+    <p class="meta">Zenn トレンド | 09/28 23:30</p>
+    <p class="summary">15年間愛用したGitから、次世代のバージョン管理ツール「Jujutsu」へと乗り換えた理由を綴った記事。コミット操作の簡略化や、作業状態を意識させない設計など、Jujutsu特有の快適なワークフローを紹介。Gitの難解さを解消し、開発効率を劇的に向上させる可能性について語っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/jqit-yukiono/items/0a68cd4ab997e8c8213b?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">同一人物がApple/Googleどちらでログインしても同じアカウントにする ― Firebase純正のlink(with:)を使わなかった理由</a></h3>
+    <p class="meta">Qiita トレンド | 09/28 11:26</p>
+    <p class="summary">Firebaseの標準機能を使わず、AppleとGoogleのログインで同一ユーザーを紐付ける独自の実装方法を解説。標準機能の制限や、複雑なログイン要件をクリアするための設計思想、具体的にメールアドレスの一致を確認してアカウントを統合するロジックの工夫などが紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/jqit-yukiono/items/0f7d52531f4370484101?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Web/admin/iOSにE2Eテストを整備した話 ― 認証を迂回したら、次はテストコード自身の罠が待っていた</a></h3>
+    <p class="meta">Qiita トレンド | 09/28 11:26</p>
+    <p class="summary">Web、管理画面、iOSアプリの各プラットフォームにE2Eテストを導入した経験談。認証処理をバイパスする仕組みの構築や、テストコード特有の不安定さ（フレイキーなテスト）への対策など、実務で直面した課題と解決策を具体的に示している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/28/anthropics-prospectus-details-losses-growth-and-yes-a-warning-that-its-ai-could-end-humanity/" target="_blank" rel="noopener noreferrer">Anthropic’s prospectus details losses, growth, and, yes, a warning that its AI could end humanity</a></h3>
+    <p class="meta">TechCrunch | 09/29 05:13</p>
+    <p class="summary">AI開発企業Anthropicの目論見書から、急激な収益成長の裏にある巨額の損失と、同社が懸念する「AIが人類を滅ぼす可能性」についての警告が明らかになった。投資家に対し、AIの安全性を最優先事項としつつも、強力なモデル開発に伴う存亡リスクについて極めて率直なリスク開示を行っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/28/peak-xv-goes-bigger-at-seed-with-new-surge-cohort-as-series-a-bar-rises/" target="_blank" rel="noopener noreferrer">Peak XV ups Surge seed investment ceiling to $5M, unveils 18-startup cohort</a></h3>
+    <p class="meta">TechCrunch | 09/29 00:30</p>
+    <p class="summary">ベンチャーキャピタルPeak XVが、シード投資プログラム「Surge」の投資上限を500万ドルに引き上げ、新たに18社のスタートアップを選出した。シリーズAの資金調達基準が厳格化する中、初期段階の企業に対してより多額の資金を提供し、成長を強力に支援する戦略を打ち出している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/28/openai-reportedly-ditches-model-over-safety-concerns/" target="_blank" rel="noopener noreferrer">OpenAI reportedly ditches model over safety concerns</a></h3>
+    <p class="meta">TechCrunch | 09/28 23:39</p>
+    <p class="summary">OpenAIが安全性への懸念から、新型AIモデルのリリースを断念したとの報道。開発過程で判明した潜在的なリスクが同社の安全基準をクリアできなかったことが理由とされており、スピードよりも安全性を優先する姿勢が注目されている。内部チームからのフィードバックが決定打となったとされる。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cm5y5nynl75ko?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">OpenAI scraps rollout of new model over safety concerns</a></h3>
+    <p class="meta">BBC World News | 09/29 08:41</p>
+    <p class="summary">OpenAIが安全性を理由に新しいAIモデルの公開を中止した。これは同社の安全性評価プロセスにおける重要な判断であり、高性能なモデルがもたらす社会的なリスクを重く見た結果とされる。AIの急速な進歩に伴う倫理的、安全的な議論が、実際の開発現場で具体的なブレーキとして機能した形だ。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cmkg8qgy9d9lo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Evicted Spanish pensioner can move back home, lawyer says</a></h3>
+    <p class="meta">BBC World News | 09/29 08:53</p>
+    <p class="summary">不当な立ち退きを命じられていたスペインの年金受給者の男性が、法的な勝訴により自宅へ戻れることになった。当初、投資グループによる買収で住まいを追われていたが、弁護士の粘り強い活動と市民の支持が実を結び、高齢者の居住権を守る重要な判決が下されたというニュース。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cq5yj1835y1wo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Argentina threatens legal action against UK over Falkland Islands oil exploration</a></h3>
+    <p class="meta">BBC World News | 09/29 03:50</p>
+    <p class="summary">アルゼンチン政府が、フォークランド諸島周辺での石油掘削活動を巡り、イギリスに対し法的措置を辞さない構えを見せている。自国の領有権を主張するアルゼンチンは、イギリス系企業による探査を違法と見なしており、長年にわたる領土問題が資源開発を契機に再び激化している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260808/k10015200331000.html" target="_blank" rel="noopener noreferrer">イチローさん マリナーズOBのホームラン競争でファンわかせる</a></h3>
+    <p class="meta">NHK国際放送 | 08/08 11:55</p>
+    <p class="summary">シアトル・マリナーズの殿堂入りを果たしているイチローさんが、球団OBによるホームラン競争に出場。現役時代を彷彿とさせる鋭いスイングを披露し、スタンドのファンを大いに沸かせた。数本の柵越えを放ち、衰えぬ技術とカリスマ性を改めて見せつけるイベントとなった。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260808/k10015199681000.html" target="_blank" rel="noopener noreferrer">【動画】中国 北京で人気のレトロ写真館</a></h3>
+    <p class="meta">NHK国際放送 | 08/08 11:25</p>
+    <p class="summary">中国の北京で、1980年代から90年代の雰囲気を再現したレトロな写真館が若者の間で人気を集めている。当時の衣装や家具、照明を忠実に再現し、懐かしさを感じさせる質感の写真を撮影できるのが魅力。デジタル時代だからこそ、アナログな温かみや独特の演出を求める需要が高まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="http://www3.nhk.or.jp/news/html/20260808/k10015200271000.html" target="_blank" rel="noopener noreferrer">「韓国サッカー協会が外国人審判員に性的接待」韓国メディア</a></h3>
+    <p class="meta">NHK国際放送 | 08/08 09:38</p>
+    <p class="summary">韓国サッカー協会が、過去に外国人審判員に対して不適切な接待、特に性的接待を行っていた疑いがあると韓国メディアが報じた。協会の不透明な運営実態や倫理観の欠如が批判の大賞となっており、詳細な事実確認と責任の所在を追及する声が強まっている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
