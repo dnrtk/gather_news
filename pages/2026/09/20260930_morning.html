@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年09月30日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年09月30日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年09月30日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20260930_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://postalemployeenetwork.com/news/2026/09/26/u-s-postal-inspectors-shut-down-website-selling-millions-of-counterfeit-postage-labels/" target="_blank" rel="noopener noreferrer">U.S. postal inspectors shut down website selling counterfeit postage labels</a></h3>
+    <p class="meta">Hacker News | 09/30 04:30</p>
+    <p class="summary">米国郵便検査局は、数百万枚の偽造切手ラベルを販売していたウェブサイトを閉鎖した。このサイトは格安で切手を提供していたが、すべて偽物であり、郵便サービスに多大な損害を与えていた。当局は、消費者に対し、正規のルート以外で極端に安い切手を購入しないよう警告している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.tcl-lang.org/software/tcltk/9.1.html" target="_blank" rel="noopener noreferrer">Tcl/Tk 9.1 Released</a></h3>
+    <p class="meta">Hacker News | 09/30 02:13</p>
+    <p class="summary">プログラミング言語TclとそのGUIツールキットTkの最新バージョン9.1がリリースされた。本バージョンでは、Unicode 16.0のサポート強化や、プラットフォーム固有の不具合修正、パフォーマンスの向上が図られている。長年愛用されているツールの安定性と機能性がさらに向上した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://openai.com/index/introducing-gpt-6-1-sol/" target="_blank" rel="noopener noreferrer">GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price</a></h3>
+    <p class="meta">Hacker News | 09/30 02:06</p>
+    <p class="summary">OpenAIは、最新モデル「GPT-6.1 Sol」を発表した。このモデルは、高度な推論能力を持つ「Astra」に近いインテリジェンスを維持しながら、コストを従来の5分の1に抑えることに成功している。開発者はより安価に高性能なAIを利用できるようになり、AIの普及が加速することが期待される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://spectrum.ieee.org/delhi-electricity-loss" target="_blank" rel="noopener noreferrer">How Delhi cut electricity loss from 50 to 5 percent</a></h3>
+    <p class="meta">Hacker News | 09/29 21:43</p>
+    <p class="summary">インドのデリーにおいて、電力損失率を50%から5%にまで劇的に削減した事例が紹介されている。この改善は、デジタルメーターの導入、送電網の近代化、そして盗電防止のための厳格な監視体制の構築によって実現された。インフラ改善による都市運営の効率化を示す好例である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://statmodeling.stat.columbia.edu/2026/08/27/258/" target="_blank" rel="noopener noreferrer">Nicholas Polson has authored 258 academic papers in 2026 (so far)</a></h3>
+    <p class="meta">Hacker News | 09/30 04:15</p>
+    <p class="summary">統計学者のニコラス・ポルソン氏が、2026年の現時点で既に258本もの学術論文を執筆したことが話題となっている。この驚異的なペースは、AIツールの活用や共同研究のあり方に一石を投じており、学術界における研究の「質」と「量」に関する議論を呼んでいる。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tokium_dev/articles/ai-agent-usage-limit-long-sessions" target="_blank" rel="noopener noreferrer">Claude Code / Codexで「私のlimit、減りすぎ…？」と思ったときに見る記事</a></h3>
+    <p class="meta">Zenn トレンド | 09/29 03:00</p>
+    <p class="summary">AIエージェントツール「Claude Code」や「Codex」を使用中に、利用制限（リミット）が急激に減る原因を解説した記事。長時間セッションや大規模なコンテキストの受け渡しが主な原因であり、トークン消費を抑えるための具体的な対策や運用のコツが紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mconfjp/articles/transaction-action-order" target="_blank" rel="noopener noreferrer">３分で読めるトランザクション設計のコツ</a></h3>
+    <p class="meta">Zenn トレンド | 09/29 02:45</p>
+    <p class="summary">データベースのトランザクション設計において、一貫性を保つためのコツを短時間で学べる記事。処理の順序（アクションオーダー）の重要性や、デッドロックを避けるための基本原則、エラーハンドリングのベストプラクティスが、開発者向けに簡潔にまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/remotive/articles/cloudflare-birthday-week-2026-day1" target="_blank" rel="noopener noreferrer">Cloudflare Birthday Week 2026 Day1</a></h3>
+    <p class="meta">Zenn トレンド | 09/29 01:15</p>
+    <p class="summary">Cloudflareの創立記念イベント「Birthday Week 2026」の初日の発表内容をまとめた記事。AI推論の高速化やネットワークセキュリティの新機能など、最新のインフラ技術に関するアップデートが公開された。今後のインターネット基盤を支える技術動向が示されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/hamham999/items/ebee7540a82db6933854?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">荒れたテストケースをコード管理で立て直してみた</a></h3>
+    <p class="meta">Qiita トレンド | 09/28 23:10</p>
+    <p class="summary">肥大化し管理が困難になったテストケースを、コードベースの管理手法によって改善した事例の紹介。テストのモジュール化や重複の排除、CI/CDへの統合を通じて、メンテナンスコストを削減し、テストの信頼性を向上させるための具体的なプロセスが解説されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/minorun365/items/f1f6a45fa9aff8d624af?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Twitter（現X）に貼ったURLのサムネイル画像、キャッシュクリアできるの知ってた？</a></h3>
+    <p class="meta">Qiita トレンド | 09/29 07:16</p>
+    <p class="summary">X（旧Twitter）にURLを投稿した際に表示されるサムネイル画像が更新されない問題を、手動でキャッシュクリアして解決する方法を解説。公式ツールの代用方法や、URLにパラメータを付与することで最新の情報を再取得させるテクニックなどが紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/rana_kualu/items/4bf77973ab94453a2699?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【JavaScript】Promise.resolveはPromiseでないオブジェクトもresolveするしそのせいで脆弱性がたくさんある</a></h3>
+    <p class="meta">Qiita トレンド | 09/28 10:59</p>
+    <p class="summary">JavaScriptの Promise.resolve が、Promiseではないオブジェクト（Thenable）も解決してしまう挙動に起因するセキュリティ脆弱性について解説。意図しないコード実行やプロトタイプ汚染など、開発者が注意すべき実装上の落とし穴と、安全なコードの書き方が示されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/29/openais-latest-features-take-direct-aim-at-the-app-store-model/" target="_blank" rel="noopener noreferrer">OpenAI’s latest features take direct aim at the app store model</a></h3>
+    <p class="meta">TechCrunch | 09/29 20:15</p>
+    <p class="summary">OpenAIが発表した最新機能が、AppleやGoogleの「App Store」モデルに直接対抗するものとして注目されている。AIエージェントがアプリを介さず直接タスクを実行できるようになることで、既存のモバイルプラットフォームのエコシステムが根本から変わる可能性を指摘している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/29/openai-repotedly-in-talks-to-raise-30b-round-at-1-4t-valuation/" target="_blank" rel="noopener noreferrer">OpenAI repotedly in talks to raise $30B round at $1.4T valuation</a></h3>
+    <p class="meta">TechCrunch | 09/29 19:52</p>
+    <p class="summary">OpenAIが、1兆4000億ドルという驚異的な評価額で、300億ドルの資金調達に向けた交渉を行っている。この巨額の資金は、次世代AIモデルの開発や膨大なコンピューティングリソースの確保に充てられる見通しであり、市場における独走態勢をさらに強める狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/29/more-ways-to-disrupt-new-2026-side-events-from-kotra-wayfounder-enterprise-ireland-safetywing-descope/" target="_blank" rel="noopener noreferrer">More Ways to Disrupt: New 2026 Side Events from KOTRA, WayFounder, Enterprise Ireland, SafetyWing + Descope</a></h3>
+    <p class="meta">TechCrunch | 09/29 18:48</p>
+    <p class="summary">2026年の「TechCrunch Disrupt」において、KOTRAやEnterprise Irelandなど、各国の政府機関や団体が主催する新しいサイドイベントの情報が公開された。ネットワーキングやピッチの機会が多数用意されており、スタートアップの国際的な拡大を支援する内容となっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cwm2qmjgy93do?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Spain announces ban on evictions after protests over 87-year-old woman&#39;s removal from flat</a></h3>
+    <p class="meta">BBC World News | 09/29 16:23</p>
+    <p class="summary">スペイン政府は、87歳の女性がアパートから強制退去させられたことに対する大規模な抗議を受け、強制退去の禁止措置を発表した。住宅価格の高騰と生活困窮が深刻な社会問題となる中、弱者を保護するための政策転換が行われた形だ。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/ck9qr8jy8ynyo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">&#39;I was lured into a trap&#39;: Evan Gershkovich on moment that led to 16 months in Russian jail</a></h3>
+    <p class="meta">BBC World News | 09/29 12:43</p>
+    <p class="summary">ロシアで16ヶ月間拘束されていたジャーナリストのエバン・ゲルシュコビッチ氏が、逮捕時の状況を回想した。彼は「罠に誘い込まれた」と述べ、拘束中の過酷な体験や、外交交渉の末に釈放された経緯を詳述。報道の自由が直面する危機を改めて訴えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cvlylj41egxgo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Israeli settlers attack West Bank village and block Palestinian family&#39;s return home</a></h3>
+    <p class="meta">BBC World News | 09/29 12:39</p>
+    <p class="summary">ヨルダン川西岸の村で、イスラエル人入植者がパレスチナ人の家族を攻撃し、帰宅を妨害する事件が発生した。この地域では入植者による暴力が激化しており、国際社会から強い懸念と批判が寄せられている。現地の緊張状態は依然として解消されていない。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
