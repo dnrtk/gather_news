@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月01日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月01日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月01日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261001_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/maanHimself/OpenDLSS-NR" target="_blank" rel="noopener noreferrer">OpenDLSS: A Vulkan Reimplementation of Nvidia&#39;s DLSS 5 Neural Rendering Network</a></h3>
+    <p class="meta">Hacker News | 09/30 17:43</p>
+    <p class="summary">NVIDIAのDLSS 5をVulkanで再実装したオープンソースプロジェクト「OpenDLSS」の紹介。独自のシェーダーやネットワーク構造を再現し、ハードウェアの制限を超えたアップスケーリング技術の探求を目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.thespacereview.com/article/4951/1" target="_blank" rel="noopener noreferrer">The top secret URSALA, RAQUEL, and FARRAH satellites (2025)</a></h3>
+    <p class="meta">Hacker News | 10/01 07:03</p>
+    <p class="summary">かつて極秘とされていた米国衛星URSALA、RAQUEL、FARRAHに関する2025年のレポート。冷戦時代から続く宇宙監視や信号情報収集任務の詳細、当時の技術的進歩、そしてそれらが安全保障に果たした役割を紐解いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.worksinprogress.news/p/why-really-caused-the-bronze-age" target="_blank" rel="noopener noreferrer">Why the Bronze Age Collapsed</a></h3>
+    <p class="meta">Hacker News | 09/29 19:10</p>
+    <p class="summary">青銅器時代の文明崩壊の原因を考察する記事。従来説の「海の民」の襲撃だけでなく、気候変動、地震、貿易網の断絶、内部崩壊といった複数の要因が重なり合った「システム崩壊」の視点から、高度に接続された当時の社会の脆弱性を分析している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/gonta_ganbareyo/articles/6256bf2008b2ef" target="_blank" rel="noopener noreferrer">terraform applyしたら、1ヶ月半前のコードが本番に出ていた</a></h3>
+    <p class="meta">Zenn トレンド | 09/30 23:45</p>
+    <p class="summary">Terraformの実行により、意図せず1ヶ月半前の古いコードが本番環境に反映されたトラブルの記録。GitHub Actionsの設定ミスや手動操作の不備が原因であり、事象の解明から再発防止策まで、開発プロセスにおけるステート管理の重要性を解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/algoartis/articles/0b1c731881b25c" target="_blank" rel="noopener noreferrer">AI-Slopな日本語を構造レベルで読みやすくするSkill『yomiyasu（よみやす）』を作りました</a></h3>
+    <p class="meta">Zenn トレンド | 09/30 18:28</p>
+    <p class="summary">AIが生成した冗長で不自然な日本語（AI-Slop）を、構造レベルで整理して読みやすくするツール「yomiyasu」の紹介。構文解析を通じて文脈を維持しつつ文章をスッキリさせる仕組みや、Dify等のツールでの活用方法を解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/kmizu/articles/2026-09-parser-book" target="_blank" rel="noopener noreferrer">『構文解析のしくみ』が出版されました（出版にあたって宣伝と裏話）</a></h3>
+    <p class="meta">Zenn トレンド | 09/30 12:12</p>
+    <p class="summary">新刊『構文解析のしくみ』の著者による紹介記事。プログラミング言語のコンパイラ等に欠かせない構文解析技術について、理論から実装までを解説。執筆の動機や出版の裏話、対象読者へのメッセージ、書籍の構成などが語られている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/miruky/items/6577a57b9b62c8f97e11?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【被害者は語る】タイムズカー660万件情報漏えいはなぜ起きたのかの矮小な考察</a></h3>
+    <p class="meta">Qiita トレンド | 09/29 16:00</p>
+    <p class="summary">タイムズカーで発生した約660万件の個人情報漏えい事件について、利用者の視点から考察した記事。公式発表を基に攻撃手法やセキュリティの脆弱性を推測し、漏えいした情報の種類や運営側の対応、ユーザーが取るべき防衛策について見解を述べている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/30/google-releases-gemini-4-argon-called-its-most-powerful-model-yet/" target="_blank" rel="noopener noreferrer">Google releases Gemini 4 Argon, called its most powerful model yet</a></h3>
+    <p class="meta">TechCrunch | 09/30 23:43</p>
+    <p class="summary">Googleが史上最強のAIモデルとされる「Gemini 4 Argon」をリリース。推論能力の向上と処理速度の改善により、より複雑なタスクへの対応が可能となった。AI競争におけるGoogleの優位性を強調する発表であり、テック業界に大きな衝撃を与えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/30/the-pentagon-taps-elon-musk-and-palmer-luckey-to-help-decide-what-the-military-should-do-next/" target="_blank" rel="noopener noreferrer">The Pentagon taps Elon Musk and Palmer Luckey to help decide what the military should do next</a></h3>
+    <p class="meta">TechCrunch | 09/30 23:08</p>
+    <p class="summary">米国防総省が軍の次世代戦略策定のため、イーロン・マスク氏とパルマー・ラッキー氏に協力を要請。民間企業の技術革新を軍事力強化に活かす狙いがあり、ドローン、AI、宇宙技術などの先端分野での活用が期待される新たな協力体制が注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/09/30/valor-atreides-and-sequoia-back-ai-startup-flow-engineering-at-750m-valuation/" target="_blank" rel="noopener noreferrer">Valor, Atreides, and Sequoia back AI startup Flow Engineering at $750M valuation</a></h3>
+    <p class="meta">TechCrunch | 09/30 21:07</p>
+    <p class="summary">AIスタートアップのFlow Engineeringが、Sequoiaなどから資金を調達し、評価額が7億5000万ドルに達した。同社は開発ワークフローの効率化に特化したAIソリューションを提供しており、今回の調達で製品開発と市場拡大を加速させる見込み。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/alice-bob-and-ens-lyon-demonstrate-dc-biased-squid-architecture-for-multi-photon-cat-qubit-dissipation/" target="_blank" rel="noopener noreferrer">Alice &amp; Bob and ENS Lyon Demonstrate DC-Biased SQUID Architecture for Multi-Photon Cat Qubit Dissipation</a></h3>
+    <p class="meta">Quantum Computing Report | 10/01 07:23</p>
+    <p class="summary">Alice &amp; BobとENS Lyonの研究チームが、DCバイアスSQUIDを用いた量子ビットの散逸制御の実証に成功。量子エラー訂正を効率化する画期的な手法であり、スケーラブルで誤り耐性のある量子コンピュータの実現に向けた大きな一歩となる成果。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/governor-newsom-signs-fusion-legislation-and-allocates-state-capital-to-advance-california-quantum-infrastructure/" target="_blank" rel="noopener noreferrer">Governor Newsom Signs Fusion Legislation and Allocates State Capital to Advance California Quantum Infrastructure</a></h3>
+    <p class="meta">Quantum Computing Report | 10/01 07:07</p>
+    <p class="summary">カリフォルニア州のニューサム知事が、核融合発電と量子インフラ推進の法案に署名。州予算を割り当て、クリーンエネルギー確保と最先端技術のハブ化を目指す。量子技術の社会実装や研究開発を加速させるための基盤整備に重点が置かれている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cq8r6rjdvlx6o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">US death row inmate survives execution attempt after two lethal injections</a></h3>
+    <p class="meta">BBC World News | 10/01 07:01</p>
+    <p class="summary">米国で2度の薬物注射による死刑執行を生き延びた死刑囚の事例。執行中のトラブルにより中止されたが、この事態は死刑制度の倫理性や法的妥当性について全米で議論を呼んでおり、再執行の是非や執行方法の残酷さを巡る司法判断が注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cqgmrm7xd8wyo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Too early to say if Iran involved in Dubai-Tel Aviv flight attack, Israeli PM says</a></h3>
+    <p class="meta">BBC World News | 10/01 08:25</p>
+    <p class="summary">ドバイ発テルアビブ行きの航空機への攻撃について、イスラエル首相は「イランの関与を断定するのは時期尚早」と述べた。中東の緊張が高まる中、当局は攻撃の詳細や背後関係の調査を進めており、国際社会もその動向を注視している。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
