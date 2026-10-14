@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月15日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月15日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月15日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261015_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://jjmaxwell4.com/writing/things-to-know-when-you-get-cancer/" target="_blank" rel="noopener noreferrer">Things to know if you get cancer in 2026</a></h3>
+    <p class="meta">Hacker News | 10/15 04:26</p>
+    <p class="summary">2026年現在のがん診断を受けた際に知っておくべき事項をまとめた記事。がんとの向き合い方や最新の治療環境、患者が取るべき行動やリソースの活用法について、実用的なアドバイスを提供しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.cloudflare.com/yandex-outage/" target="_blank" rel="noopener noreferrer">Yandex outage: data shows that instead of going dark, malicious bots moved</a></h3>
+    <p class="meta">Hacker News | 10/15 05:29</p>
+    <p class="summary">Yandexの障害発生時、サービスが完全に停止するのではなく、悪意のあるボットトラフィックが他の経路へと移動していたことをCloudflareのデータが示しています。サイバー攻撃の動的な挙動を分析した報告です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://go.dev/blog/http-connection-reuse" target="_blank" rel="noopener noreferrer">Better HTTP/1 connection reuse in Go 1.27</a></h3>
+    <p class="meta">Hacker News | 10/15 01:29</p>
+    <p class="summary">Go 1.27で導入されたHTTP/1接続再利用の改善について解説。効率的なコネクション管理によりパフォーマンスが向上する仕組みと、ネットワーク通信を最適化するための実装上の変更点を詳細に説明しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://sunshowers.io/posts/anthropic-mononoke/" target="_blank" rel="noopener noreferrer">Anthropic&#39;s Scion is heavily inspired by Mononoke</a></h3>
+    <p class="meta">Hacker News | 10/15 05:30</p>
+    <p class="summary">Anthropicが発表したモデル「Scion」が、映画『もののけ姫』から強いインスピレーションを受けて設計されていることを紹介。開発の背景やデザイン哲学にどのようにアニメの世界観が反映されているかを考察しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://dpa-international.com/politics/urn:newsml:dpa.com:20090101:261014-930-839530/" target="_blank" rel="noopener noreferrer">Fire at Starlink site in Bulgaria after suspected sabotage in Poland</a></h3>
+    <p class="meta">Hacker News | 10/15 03:37</p>
+    <p class="summary">ブルガリアのStarlink拠点での火災に関するニュース。ポーランドでの工作活動の疑いがある中、関連性が調査されています。通信インフラを標的とした物理的攻撃への懸念が高まっています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/finatext/articles/swtt2026-snow-waf-datamanagement" target="_blank" rel="noopener noreferrer">【SWTT 2026】Snowflake Well-Architected Frameworkで実現する実践的なデータマネジメント</a></h3>
+    <p class="meta">Zenn トレンド | 10/14 08:51</p>
+    <p class="summary">Snowflake Well-Architected Frameworkを活用したデータマネジメントの実践論。データ基盤の構築において、信頼性やセキュリティ、コスト効率を最適化するためのフレームワークの適用方法を解説しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/onthebakery/articles/5a27024f61405f" target="_blank" rel="noopener noreferrer">Next.jsの公開ページで、1回遊ぶ間に読むchunkを48本から16本にした</a></h3>
+    <p class="meta">Zenn トレンド | 10/14 08:48</p>
+    <p class="summary">Next.jsアプリケーションの最適化に関する記事。ページの読み込み速度を向上させるため、初回プレイ時にダウンロードされるチャンク数を48本から16本へと大幅に削減した改善プロセスと手法を紹介しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/seisei89628/articles/cd976e4c7d78c7" target="_blank" rel="noopener noreferrer">就活用DirectX12アクションゲーム作成 第三十三回</a></h3>
+    <p class="meta">Zenn トレンド | 10/14 06:06</p>
+    <p class="summary">就職活動向けにDirectX12を用いたアクションゲームを開発する連載の第33回。実装の進捗状況や、グラフィックスAPIの習得を通じた技術的な課題解決プロセス、開発中のゲームの機能紹介を行っています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/14/colossal-biosciences-announces-new-ai-platform-to-help-accelerate-de-extinction-efforts/" target="_blank" rel="noopener noreferrer">Colossal Biosciences announces new AI platform to help accelerate de-extinction efforts</a></h3>
+    <p class="meta">TechCrunch | 10/14 21:00</p>
+    <p class="summary">Colossal Biosciencesが絶滅動物の復活研究を加速させるための新しいAIプラットフォームを発表。遺伝子解析やバイオテクノロジーの進展にAIを統合し、種の復元に向けたプロセスを大幅に効率化することを目指します。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/14/flock-ceo-we-havent-fired-any-police-departments-as-customers/" target="_blank" rel="noopener noreferrer">Flock CEO: We haven’t ‘fired’ any police departments as customers</a></h3>
+    <p class="meta">TechCrunch | 10/14 20:26</p>
+    <p class="summary">FlockのCEOが、警察機関との取引関係についてコメント。一部で報じられていた「警察署との契約解除（解雇）」の事実を否定し、法執行機関とのパートナーシップは継続中であると強調しました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/14/electric-vehicle-sales-in-the-u-s-are-showing-signs-of-life/" target="_blank" rel="noopener noreferrer">Electric vehicle sales in the US are showing signs of life</a></h3>
+    <p class="meta">TechCrunch | 10/14 20:12</p>
+    <p class="summary">米国における電気自動車（EV）販売状況が回復の兆しを見せているという分析。市場の需要が再び高まっており、これまでの停滞期を脱しつつある業界のトレンドや要因について詳述しています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c8wy9veedgygo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Musk says any limits on Ukraine&#39;s Starlink access down to US, not his firm</a></h3>
+    <p class="meta">BBC World News | 10/14 20:55</p>
+    <p class="summary">イーロン・マスク氏は、ウクライナにおけるStarlinkのアクセス制限は自社による判断ではなく、米国政府の規制に従ったものであると主張。通信サービスの提供を巡る地政学的な調整の難しさが浮き彫りとなりました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cq80zk5k2ep4o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Student protesters attack government buildings in Tirana</a></h3>
+    <p class="meta">BBC World News | 10/14 20:29</p>
+    <p class="summary">ティラナにおいて、学生による政府施設への抗議活動が暴動へと発展したニュース。政治的背景を巡り、当局との衝突が発生しており、現地の治安情勢が緊迫している様子を伝えています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cwx28r0zvm6lo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Pope walking and recovering &#39;as expected&#39; after surgery, doctors say</a></h3>
+    <p class="meta">BBC World News | 10/14 15:12</p>
+    <p class="summary">手術を受けた教皇の術後の容体が良好であることが報告されました。医師団によると、歩行訓練を開始するなど順調に回復しており、経過は想定通りであると伝えられています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
