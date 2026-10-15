@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月15日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月15日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月15日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261015_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.dfb.sh/blog/eap770-root-for-two-zeros/" target="_blank" rel="noopener noreferrer">Wanted to download an ISO, ended up writing a kernel exploit</a></h3>
+    <p class="meta">Hacker News | 10/13 21:30</p>
+    <p class="summary">TP-LinkのアクセスポイントEAP770のISOファイルをダウンロードしようとした著者が、最終的にカーネルエクスプロイトを開発してルート権限を取得するまでの過程を解説した記事。脆弱性の調査からバグの発見、そしてデバイスを完全に制御するまでの技術的な詳細が記述されている。当初の目的を超えて、深く低レイヤーのセキュリティ解析に踏み込んだ成果がまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://anoma.ly/notes/opencode-2-0/" target="_blank" rel="noopener noreferrer">OpenCode 2.0</a></h3>
+    <p class="meta">Hacker News | 10/15 05:48</p>
+    <p class="summary">Anomaが発表した「OpenCode 2.0」に関する記事。OpenCodeは透過的で検証可能なコード開発を目指すプロジェクトであり、2.0では共同開発のインフラやガバナンスモデルがさらに強化されている。ソフトウェア開発における信頼性と透明性を高めるための新しいアプローチが提案されており、分散型エコシステムにおけるコードの役割と進化の方向性が示されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://jackantico.io/garmin-mcp" target="_blank" rel="noopener noreferrer">Creating a Garmin &#34;MCP&#34;</a></h3>
+    <p class="meta">Hacker News | 10/14 09:52</p>
+    <p class="summary">Garminのスマートウォッチからデータを取得・活用するための「MCP（マスター・コントロール・プログラム）」を自作した記録。Garmin Connect API等を利用して、個人の活動データや健康指標を独自のインターフェースで管理・表示する仕組みを構築している。デバイスの制限を乗り越えて自分好みのダッシュボードを作るための、具体的な実装方法や課題について解説されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://tinylittleoffice.com/" target="_blank" rel="noopener noreferrer">Tiny Little Office</a></h3>
+    <p class="meta">Hacker News | 10/15 07:10</p>
+    <p class="summary">ミニマルで機能的な「Tiny Little Office（小さなオフィス）」というコンセプトを紹介する記事。限られたスペースを最大限に活用し、集中力と生産性を高めるためのワークスペース設計について述べられている。物理的な環境が仕事の質に与える影響を考慮し、シンプルかつ効率的なデスクセットアップやツールの選び方に焦点を当てた、リモートワーカー向けの提案となっている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mkj/articles/8e1da67da67f98" target="_blank" rel="noopener noreferrer">Akinatorで始めるAgentic RL ー タスク設計と初期検証  ー</a></h3>
+    <p class="meta">Zenn トレンド | 10/15 02:50</p>
+    <p class="summary">「Akinator」を題材に、エージェント型強化学習（Agentic RL）のタスク設計と初期検証を行った記録。Akinatorというゲームを通じて、エージェントがどのように質問を選択し対象を特定するかを強化学習の枠組みで捉え直している。実験の設定、報酬設計、初期段階の検証結果について技術的に解説しており、複雑な意思決定を伴うエージェント開発の可能性を探っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/riochin/articles/mixi2-intern-2026" target="_blank" rel="noopener noreferrer">レポ：mixi2のインターンに参加しました！</a></h3>
+    <p class="meta">Zenn トレンド | 10/15 02:09</p>
+    <p class="summary">mixiの新プロジェクト「mixi2」のインターンに参加した体験レポート。開発現場の雰囲気や、実際に取り組んだ技術的な課題、チームでのコミュニケーションについて詳細に綴られている。最新の技術スタックを用いた開発プロセスや、メンターからのフィードバックを通じて得られた学び、そしてプロジェクトが目指すビジョンについて、学生の視点から記述されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/r_kaga/articles/2fd185c50cea7c" target="_blank" rel="noopener noreferrer">改めて考える、AIエンジニアリングの今</a></h3>
+    <p class="meta">Zenn トレンド | 10/14 23:08</p>
+    <p class="summary">急速に進化するAIエンジニアリングの現状を改めて整理・考察した記事。LLMの台頭による開発手法の変化や、プロンプトエンジニアリングからRAG、さらにはエージェントへと移り変わる技術トレンドについて解説している。単なる実装スキルの枠を超え、ビジネス価値の創出やシステムとしての信頼性をどう確保すべきかという、現代のAIエンジニアが直面する課題を論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/figueiredoluiz/items/6337f9c909fe0f60e7c2?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">重複率0%でも安心できない？Cucumberのステップ定義に潜む重複を見つける</a></h3>
+    <p class="meta">Qiita トレンド | 10/14 23:08</p>
+    <p class="summary">Cucumberを用いたテスト開発において、一見すると重複がないように見えても潜んでいる「ステップ定義の重複」を見つける方法についての解説。従来のコード重複チェックツールでは検知できない、論理的・意味的な重複がメンテナンス性を低下させる問題を指摘している。正規表現の活用や設計の工夫によって、どのようにクリーンで再利用性の高いステップ定義を維持するための解決策を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/14/figma-announces-new-features-to-define-how-agents-work-on-its-platform/" target="_blank" rel="noopener noreferrer">Figma announces new features to define how agents work on its platform</a></h3>
+    <p class="meta">TechCrunch | 10/15 04:30</p>
+    <p class="summary">Figmaは、AIエージェントがプラットフォーム上でどのように動作するかを定義するための新機能を発表した。これにより、デザイナーだけでなくAIも設計プロセスに深く関与できるようになり、単純作業の自動化や意思決定の支援が可能になる。エージェントがデザインファイルを理解し適切に操作するためのフレームワーク提供により、デザインワークフローの変革が期待される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/14/ricursive-intelligence-is-betting-on-ai-designed-chips-to-help-solve-the-compute-crisis/" target="_blank" rel="noopener noreferrer">Ricursive Intelligence is betting on AI-designed chips to help solve the compute crisis</a></h3>
+    <p class="meta">TechCrunch | 10/15 01:01</p>
+    <p class="summary">Ricursive Intelligenceは、計算資源の不足（コンピュート・クライシス）を解決するため、AIによって設計されたカスタムチップの開発に注力している。従来の手作業による設計では限界がある半導体開発を、AIの力で高速化・最適化することを目指している。エネルギー効率が高くAI処理に特化した次世代ハードウェアを提供することで、増大するAI計算需要に応える戦略だ。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/14/flock-ceo-defends-surveillance-technology-amid-national-backlash-we-shouldnt-pause-progress/" target="_blank" rel="noopener noreferrer">Flock CEO defends surveillance technology amid national backlash: ‘We shouldn’t pause progress’</a></h3>
+    <p class="meta">TechCrunch | 10/15 00:49</p>
+    <p class="summary">監視カメラ技術を提供するFlockのCEOは、プライバシー侵害への批判が高まる中、自社の技術を擁護した。ナンバープレート認識などの監視技術が犯罪抑止に不可欠であることを強調し、「進歩を止めるべきではない」と主張している。全米で監視社会への懸念が強まる中、安全確保とプライバシー保護のバランスを巡る議論が、CEOの強気な姿勢とともに報じられている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cmp3gnngv3e9o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Retired US generals call on Pentagon to cancel &#39;barbaric&#39; execution livestream</a></h3>
+    <p class="meta">BBC World News | 10/15 02:26</p>
+    <p class="summary">米軍の退役将軍たちが、死刑執行のライブストリーミング計画を「野蛮である」として、国防総省に中止を求めている。この計画は軍事的正義の透明性を確保する名目で検討されているが、退役軍人らは軍の品位を損ない倫理に反すると強く反発。現代社会において処刑を公開することの道徳的是非と、軍内部での規律や名誉に対する影響について激しい議論が巻き起こっている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
