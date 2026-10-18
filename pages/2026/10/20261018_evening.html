@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月18日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月18日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月18日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261018_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://api-docs.deepseek.com/guides/search/" target="_blank" rel="noopener noreferrer">DeepSeek search and fetch – $0.75 per 1000 successful requests</a></h3>
+    <p class="meta">Hacker News | 10/18 15:50</p>
+    <p class="summary">DeepSeekが提供する検索・取得APIのガイド。モデルがウェブ上の最新情報にアクセスすることを可能にし、料金は成功したリクエスト1,000件あたり0.75ドル。開発者はこのAPIを利用して、学習データに含まれない動的な情報や特定のウェブコンテンツをAIに読み込ませることができる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://sphinx-six-theta.vercel.app/" target="_blank" rel="noopener noreferrer">Show HN: Sphinx – A hook that quizzes you on your AI&#39;s code before shipping</a></h3>
+    <p class="meta">Hacker News | 10/18 13:33</p>
+    <p class="summary">AIが生成したコードの内容を開発者が真に理解しているかを確認するためのツール「Sphinx」が登場。Gitのフックとして動作し、コードをデプロイする前にその内容に関するクイズを出題する。これにより、AI任せのブラックボックスなコードが本番環境へ導入されるのを防ぎ、品質と保守性の向上を支援する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.readtheprofile.com/p/elizabeth-holmes-documentary-you-can-see-everything" target="_blank" rel="noopener noreferrer">How the Elizabeth Holmes documentary “You Can See Everything” is deceiving</a></h3>
+    <p class="meta">Hacker News | 10/18 12:19</p>
+    <p class="summary">エリザベス・ホームズとセラノス社を題材にしたドキュメンタリー「You Can See Everything」の欺瞞性を指摘する論評。この記事は、映像がどのように視聴者の感情を操作し、事実を歪めて伝えているかを分析。詐欺師の人間性を過度に美化または単純化するメディアの姿勢に対し、批判的な視点を提供している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://leodemoura.github.io/blog/2026-10-15-lean-now-ships-with-verified-kernels/" target="_blank" rel="noopener noreferrer">Lean now ships with verified kernels</a></h3>
+    <p class="meta">Hacker News | 10/16 15:16</p>
+    <p class="summary">定理証明支援系「Lean」が、検証済みカーネル（Verified Kernels）を搭載して出荷されるようになった。これにより、証明の妥当性を検証する基盤部分の信頼性がさらに高まり、フォーマルメソッド（形式手法）を用いたソフトウェア開発や数学的証明において、より強固な安全性が保証されることになる。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/eai/articles/dont-let-agents-see-the-ios-sim-screen" target="_blank" rel="noopener noreferrer">ClaudeにiOSシミュレーターのスクリーンショットを読ませるのをやめて、操作で増えるコンテキストを43%削減した</a></h3>
+    <p class="meta">Zenn トレンド | 10/18 02:56</p>
+    <p class="summary">ClaudeなどのAIエージェントにiOSシミュレーターのスクリーンショットを直接読み込ませるのをやめ、代替手法を導入した事例の紹介。画像情報の送信を抑えることで、操作に伴い蓄積されるトークン消費量を43%削減することに成功。コンテキストウィンドウの節約と、動作の高速化・効率化を両立させている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/gritchbreed/articles/ced633f449178f" target="_blank" rel="noopener noreferrer">AFM（Apple Foundation Models）を活用したテキストアドベンチャーゲームの開発【第2回】自由入力を台本の選択肢につなぐ</a></h3>
+    <p class="meta">Zenn トレンド | 10/18 02:35</p>
+    <p class="summary">Apple Foundation Models（AFM）を活用したテキストアドベンチャーゲーム開発の連載第2回。ユーザーが自由に入力したテキストを、ゲーム内のシナリオ分岐や選択肢へと適切に紐付ける技術的な手法を解説。オンデバイスAIを活用しながら、自然なユーザー体験とストーリーの整合性を維持する工夫が述べられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/takuya_fukatsu/articles/d66e570b929d19" target="_blank" rel="noopener noreferrer">MPC（モデル予測制御）専用ソルバーの歴史 ― プラントの分単位からマイクロ秒の組込み制御まで</a></h3>
+    <p class="meta">Zenn トレンド | 10/18 01:54</p>
+    <p class="summary">モデル予測制御（MPC）に使用される専用ソルバーの進化の歴史を辿る記事。かつては化学プラントなどの分単位の制御に限られていたMPCが、アルゴリズムの改良と計算機の高速化により、現在ではマイクロ秒単位の精度が求められる組込みシステムやロボティクスの分野で広く活用されるに至った背景を解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/Un_titled/items/a8620f54cf953ad67365?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">GitHubに競プロライブラリを保管したい！を叶える備忘録</a></h3>
+    <p class="meta">Qiita トレンド | 10/17 14:43</p>
+    <p class="summary">競技プログラミングで使用する自作ライブラリをGitHubで管理・活用するための手法をまとめた備忘録。ディレクトリ構造の設計から、スニペットとしての利用方法、テストの自動化など、開発効率を高めるための実践的なテクニックを紹介している。競プロ初心者が自身の資産を整理・蓄積する際のガイドとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/17/meta-removes-language-that-raised-scraping-and-ai-training-concerns/" target="_blank" rel="noopener noreferrer">Meta removes language that raised scraping and AI training concerns</a></h3>
+    <p class="meta">TechCrunch | 10/17 21:31</p>
+    <p class="summary">Meta社は、ユーザーデータのスクレイピングやAI学習への利用に関する懸念を招いていた利用規約の表現を削除・修正した。この変更は、プライバシー保護を求めるユーザーや規制当局からの圧力に応じたもので、データの取り扱いに関する透明性を高め、不当なAIトレーニングへの流用を防ぐ姿勢を明確にすることが狙い。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/podcast-with-johannes-pollanen/" target="_blank" rel="noopener noreferrer">Podcast with Johannes Pollanen, Co-founder of EeroQ and a Professor of Physics at Michigan State University</a></h3>
+    <p class="meta">Quantum Computing Report | 10/17 19:39</p>
+    <p class="summary">EeroQの共同創設者でありミシガン州立大学教授のヨハネス・ポラネン氏が出演したポッドキャスト。液体ヘリウム上の電子を用いた独自の量子計算アプローチについて解説し、量子コンピュータの実用化に向けた課題や今後の展望を議論している。物理学の視点から次世代コンピューティングの可能性を探る内容。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/review-evaluates-ai-and-quantum-computing-paradigms-for-adaptive-combinatorial-optimization/" target="_blank" rel="noopener noreferrer">Review Evaluates AI and Quantum Computing Paradigms for Adaptive Combinatorial Optimization</a></h3>
+    <p class="meta">Quantum Computing Report | 10/17 17:32</p>
+    <p class="summary">適応型組合せ最適化問題に対するAIと量子コンピューティングの各パラダイムを評価したレビュー記事。従来の手法と、量子アニーリングや変分アルゴリズム、さらにはAIとのハイブリッド手法の優劣を比較分析。複雑な物流やスケジューリング問題に対し、どの技術が最も効率的で将来性があるかを論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/riken-demonstrates-high-fidelity-simultaneous-control-of-silicon-spin-qubits-above-99-9-threshold/" target="_blank" rel="noopener noreferrer">RIKEN Demonstrates High-Fidelity Simultaneous Control of Silicon Spin Qubits Above 99.9% Threshold</a></h3>
+    <p class="meta">Quantum Computing Report | 10/17 16:27</p>
+    <p class="summary">理化学研究所が、シリコンスピン量子ビットの同時制御において、エラー訂正に必要とされる99.9%の閾値を超える高忠実度を達成。シリコンベースの量子コンピュータの拡張性を実証する重要な成果であり、既存の半導体製造技術との親和性を活かした、大規模な量子計算機実現への大きな一歩となる。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c6d937wedj7jo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Violent clashes, looting and buildings ablaze in France as more than 1,200 arrested after protests</a></h3>
+    <p class="meta">BBC World News | 10/18 05:56</p>
+    <p class="summary">フランス各地で激しい抗議デモが発生し、1,200人以上が逮捕された。デモ隊と警察の衝突により建物が炎上し、略奪行為も発生するなど混乱が広がっている。社会不安が高まる中、政府は秩序回復を急いでいるが、国民の怒りと抗議活動の激化は収まる気配を見せず、深刻な事態が続いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cmy4xnyyg1lyo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Photos show luxury boat with 50m pool and water slides near Kim Jong Un&#39;s summer retreat</a></h3>
+    <p class="meta">BBC World News | 10/17 22:09</p>
+    <p class="summary">金正恩氏の夏季静養地の近くで、50メートルのプールやウォータースライダーを備えた豪華な遊覧船の存在が衛星写真により確認された。国内で食料不足や経済難が続く一方で、指導部が贅沢なレジャー施設を維持・利用している実態を浮き彫りにしており、北朝鮮内の深刻な格差が改めて注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cmx2wvyv5j17o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">A wave of homemade, synthetic drugs sweeps US and deepens crisis</a></h3>
+    <p class="meta">BBC World News | 10/18 05:04</p>
+    <p class="summary">米国で手製の合成薬物が急速に普及し、薬物依存の危機が深刻化している。従来の違法薬物に代わり、安価で強力な化学物質が家庭や小規模な拠点で製造され、若年層を中心に被害が拡大。司法当局や保健当局は対策を強化しているが、複雑化する密造ルートと新種の登場により、解決が困難な状況にある。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
