@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月19日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月19日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月19日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261019_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://karrisaarinen.com/posts/someone-behind-the-software/" target="_blank" rel="noopener noreferrer">Someone behind the software</a></h3>
+    <p class="meta">Hacker News | 10/19 01:32</p>
+    <p class="summary">ソフトウェアの背後にある「作り手の存在」の重要性を説く記事。現代のAIや量産型アプリが溢れる中、細部へのこだわりや工芸的な美しさを持つ製品は稀少。優れたソフトウェアには、単なる機能以上の作り手の情熱や意図が感じられるべきだと主張。AI生成コンテンツが増える未来において、人間らしい感性と責任感が宿る「魂のあるソフトウェア」こそが、ユーザーとの深いつながりを生む鍵となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.getlazarus.org/dynamic/" target="_blank" rel="noopener noreferrer">Free Pascal compiler now supports dynamic packages</a></h3>
+    <p class="meta">Hacker News | 10/19 03:48</p>
+    <p class="summary">Free Pascalコンパイラ（FPC）が動的パッケージのサポートを開始した。DelphiのBPLに相当する機能で、大規模なアプリケーションをより小さな共有ライブラリに分割できる。これにより、コンパイル時間の短縮、配布サイズの削減、プラグインアーキテクチャの構築が容易になる。開発者は、メインの実行ファイルとは別に必要な機能のみを動的にロード・アンロードすることが可能になり、モジュール性の高い開発が実現する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/VikOlliver/RepRapMicron/wiki" target="_blank" rel="noopener noreferrer">RepRapMicron</a></h3>
+    <p class="meta">Hacker News | 10/18 22:48</p>
+    <p class="summary">極小サイズの3Dプリンターを開発するプロジェクト「RepRapMicron」のWiki。オープンソースの自己複製型3Dプリンター「RepRap」の系譜を継ぎつつ、小型化を徹底的に追求している。省スペースかつ低コストでの造形を目指し、主要パーツの設計図や構築ガイド、必要な電子部品の構成などが公開されている。個人のデスクトップ環境でも運用可能なマイクロスケールの製造デバイスの実現に向けた試み。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/ardiri/palmos-lemmings" target="_blank" rel="noopener noreferrer">PalmOS Lemmings</a></h3>
+    <p class="meta">Hacker News | 10/19 02:56</p>
+    <p class="summary">古典的パズルゲーム『レミングス』をPalmOSへと移植したプロジェクトのGitHubリポジトリ。開発者のAaron Ardiri氏によるソースコードが公開されており、リソースの制限が厳しいPDAプラットフォームで、いかにグラフィックスやロジックを最適化し、当時の操作感を実現したかが示されている。レトロゲームの移植技術やPalmOSアプリ開発の歴史を知る上でも貴重な資料となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://arxiv.org/abs/2610.18861" target="_blank" rel="noopener noreferrer">Hybrid Reasoning Agents: 35–55% fewer tokens and up to 2.6× faster inference</a></h3>
+    <p class="meta">Hacker News | 10/19 05:48</p>
+    <p class="summary">推論能力を維持しつつ、トークン使用量を35〜55%削減し、推論速度を最大2.6倍まで向上させる「ハイブリッド推論エージェント」に関する研究論文。複雑な思考を要する場面と、高速な応答が求められる場面で異なる推論モデルを動的に切り替える手法を提案。これにより、LLMの運用コストを大幅に抑えつつ、効率的な自律エージェントの構築が可能になる。2026年時点の最新のAI最適化技術に焦点を当てている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/drbobt1122/articles/blog26101701" target="_blank" rel="noopener noreferrer">PyODで時系列データの異常検知を試す</a></h3>
+    <p class="meta">Zenn トレンド | 10/18 01:36</p>
+    <p class="summary">Pythonの異常検知ライブラリ「PyOD」を用いて、時系列データの外れ値を検出する手法を解説した記事。PyODが提供する多様なアルゴリズムの中から、特に時系列データに適した手法の選び方や実装手順を具体的に紹介している。データの前処理からモデルの学習、評価方法までを網羅しており、実務で異常検知を導入したい開発者向けの実践的なガイドとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/songchong/items/351a939e2e1b673c2929?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【2026年版】今日から使える AI との会話術 — Claude・Gemini・Codex に指示を守らせる 6 つの原則</a></h3>
+    <p class="meta">Qiita トレンド | 10/18 15:40</p>
+    <p class="summary">Claude、Gemini、Codexなどの最新AIに対し、意図した通りに指示を守らせるためのプロンプトエンジニアリング術を解説。役割の明確化、制約事項の具体化、思考プロセスの指定など、実効性の高い6つの原則を紹介している。2026年時点のLLMの特性を踏まえ、より複雑なタスクを精度高く遂行させるための具体的な指示の出し方を学べる内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/songchong/items/542892c6d4c569c9c15f?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">重要な指示は最初か最後か？ AI 大手 3 社の助言が異なるので、資料→命令→指示の並び方を 8 通り試してみた</a></h3>
+    <p class="meta">Qiita トレンド | 10/18 18:30</p>
+    <p class="summary">プロンプト内で重要な指示を「最初」と「最後」のどちらに配置すべきか、AI各社の推奨が異なる点に着目した検証記事。資料、命令、詳細指示の並び順を8パターン作成し、主要なLLMでの回答精度を比較。特定のモデルでは後半の指示を重視する傾向や、文脈理解の癖を分析し、最も安定した結果が得られる構成パターンを考察している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/18/anthropic-says-its-committing-5-of-its-shares-to-a-public-benefit-fund/" target="_blank" rel="noopener noreferrer">Anthropic says it’s committing 5% of its shares to a ‘public benefit fund’</a></h3>
+    <p class="meta">TechCrunch | 10/18 20:37</p>
+    <p class="summary">AI開発企業のAnthropicが、自社株の5%を「公共利益基金」に充当すると発表。この基金は、AIの長期的な安全性研究や、技術の恩恵を社会全体に還元するプロジェクトの支援を目的に設立された。利益追求だけでなく、AIが人類に及ぼす影響に対する倫理的責任を果たす姿勢を強調しており、企業ガバナンスと社会貢献を両立させる新たなモデルとして注目を集めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/18/everyones-watching-the-elizabeth-holmes-documentary-you-can-see-everything/" target="_blank" rel="noopener noreferrer">Everyone’s watching the Elizabeth Holmes documentary ‘You Can See Everything’</a></h3>
+    <p class="meta">TechCrunch | 10/18 19:03</p>
+    <p class="summary">Theranosの創業者エリザベス・ホームズを描いた最新ドキュメンタリー『You Can See Everything』が大きな話題を呼んでいる。巨額詐欺事件の真相だけでなく、服役中の彼女の近況や、かつてのシリコンバレーの熱狂と闇を多角的に描いた内容。多くの視聴者がこのスキャンダルの新たな側に注目しており、SNS上でもテック業界の教訓として活発な議論が交わされている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/18/disney-agrees-to-hire-the-majority-of-character-ais-workforce/" target="_blank" rel="noopener noreferrer">Disney agrees to hire the majority of Character.AI’s workforce</a></h3>
+    <p class="meta">TechCrunch | 10/18 16:30</p>
+    <p class="summary">ディズニーが、対話型AIスタートアップ「Character.AI」の従業員の大部分を雇用することに合意した。事実上の人材買収と見られ、ディズニーは自社IPを活用した、より没入感のあるAIキャラクター体験の開発を強化する狙い。Character.AIの高度な自然言語処理技術とノウハウを取り込むことで、パークやデジタル配信におけるファンとの交流に新たな次元をもたらすと期待されている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c574pdzl0k4no?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Burnt out cars and shattered glass on Paris streets after protests turn to riots and looting</a></h3>
+    <p class="meta">BBC World News | 10/18 12:07</p>
+    <p class="summary">パリで発生した抗議デモが暴徒化し、車両の放火や店舗の略奪が相次いだ。路上には焼けた車や割れたガラスが散乱し、市街地は大きな混乱に包まれている。警察は治安維持のために出動したが、事態は激化。デモの背景には社会的不満や政策への反発があるとされ、暴動へと発展したことで一般市民の生活にも深刻な影響が出ている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cw240zl08dm5o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Macron calls for &#39;calm and order&#39; after riots across France</a></h3>
+    <p class="meta">BBC World News | 10/18 20:33</p>
+    <p class="summary">フランス全土で続く暴動を受け、マクロン大統領は国民に対し「冷静さと秩序」を求める声明を発表した。暴力行為を強く非難し、治安回復のためにあらゆる手段を講じる構えを見せている。政府は事態を収拾するための対話の場を模索しているが、依然として混乱は続いており、大統領のリーダーシップと対応策が厳しく問われている状況。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cmgelrq8x92do?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">What we know so far about deadly fire at Canadian military base</a></h3>
+    <p class="meta">BBC World News | 10/18 19:42</p>
+    <p class="summary">カナダの軍基地で発生した死者を伴う火災に関する現状報告。火災の発生原因は依然として調査中だが、複数の犠牲者が出ていることが確認されている。基地内の施設が深刻な被害を受け、軍当局と消防が連携して消火と救助活動にあたった。今後の詳細な調査により、当時の状況や安全管理に問題がなかったかが解明される見通し。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
