@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月22日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月22日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月22日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261022_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://docs.mistral.ai/models/mistral-large-4-0" target="_blank" rel="noopener noreferrer">Mistral Large 4</a></h3>
+    <p class="meta">Hacker News | 10/22 04:20</p>
+    <p class="summary">Mistral AIの最新フラッグシップモデル「Mistral Large 4」が登場しました。128kトークンのコンテキストウィンドウを備え、推論、コーディング、多言語タスクにおいて最高水準の性能を誇ります。特に複雑な多言語タスクや高度な数学的推論において優れた結果を示しており、APIや主要なクラウドプラットフォーム経由で利用可能です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://thephp.foundation/blog/2026/10/21/todays-php-security-release-and-how-were-strengthening-php-security/" target="_blank" rel="noopener noreferrer">Today&#39;s PHP security release, and how we&#39;re strengthening security</a></h3>
+    <p class="meta">Hacker News | 10/22 00:48</p>
+    <p class="summary">PHP Foundationは、最新の脆弱性に対応するセキュリティアップデートをリリースしました。あわせて、PHPコアのセキュリティを長期的に強化するための取り組みについても説明しています。これには、外部監査の増加、CI/CDパイプラインの改善、および開発プロセス全体でのセキュリティ意識の向上が含まれており、利用者に迅速な更新を推奨しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://nmdoj.gov/press-release/the-new-mexico-department-of-justice-secures-another-landmark-victory-against-big-tech-with-historic-25-billion-penalty-against-facebook/" target="_blank" rel="noopener noreferrer">Meta hit with $25B penalty for deceiving users about privacy on Facebook</a></h3>
+    <p class="meta">Hacker News | 10/22 04:26</p>
+    <p class="summary">ニューメキシコ州司法省は、Facebookユーザーのプライバシーに関する欺瞞的な行為に対し、Meta社に250億ドル（約3.7兆円）の制裁金を科すと発表しました。これはビッグテック企業に対する歴史的な勝利とされ、ユーザーデータの不正利用や誤解を招く設定の是正を目的としています。州当局は、巨大IT企業の責任を追及する姿勢を鮮明にしました。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://docs.gitlab.com/releases/patches/patch-release-gitlab-19-5-1-released/" target="_blank" rel="noopener noreferrer">GitLab CVSS 10.0 Integer Overflow issue</a></h3>
+    <p class="meta">Hacker News | 10/22 04:01</p>
+    <p class="summary">GitLabは、深刻度が最高値のCVSS 10.0とされる整数オーバーフローの脆弱性に対処するため、セキュリティパッチ19.5.1を緊急リリースしました。この脆弱性は、悪用されると任意のコード実行を許す恐れがあります。GitLab Community EditionおよびEnterprise Editionの全ユーザーに対し、直ちにアップデートを適用するよう強く求めています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.windowslatest.com/2026/10/19/why-windows-11-still-ships-with-windows-95s-memory-manager-hidden-inside-it/" target="_blank" rel="noopener noreferrer">Why Windows 11 still ships with Windows 95&#39;s memory manager hidden inside it</a></h3>
+    <p class="meta">Hacker News | 10/20 09:14</p>
+    <p class="summary">最新のWindows 11には、いまだにWindows 95時代のメモリマネージャのコードが隠されています。これは古いアプリケーションとの互換性を維持するために不可欠な措置であり、数十年にわたるソフトウェアの歴史を支え続けるマイクロソフトの設計思想を物語っています。レガシーコードの維持は、現代のOSにおいても安定性と互換性を両立させるための重要な要素となっています。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/yosiki/articles/claude-p-cron-token-diet" target="_blank" rel="noopener noreferrer">cronのclaude -pが&#34;ok&#34;だけで4万トークン——--safe-modeと--tools &#34;&#34;で98%削減</a></h3>
+    <p class="meta">Zenn トレンド | 10/21 09:22</p>
+    <p class="summary">cronジョブでClaudeのCLI（claude -p）を利用した際、短い「ok」という応答を得るだけで4万トークン以上が消費される問題を報告しています。調査の結果、不要なシステムプロンプトやツール定義が原因であることを突き止め、オプションで「--safe-mode」と「--tools &#34;&#34;」を指定することでトークン消費量を98%削減することに成功した体験談です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/hk_work/articles/sole-proprietor-app-store-paid-apps-agreement" target="_blank" rel="noopener noreferrer">個人事業主が App Store の有料アプリ契約を有効にするまで。Apple は組織を選べず、私は納税フォームを2つ出した</a></h3>
+    <p class="meta">Zenn トレンド | 10/21 07:43</p>
+    <p class="summary">個人事業主がApp Storeで有料アプリ販売契約を有効化するまでの苦労をまとめた記事です。Appleのシステム上で「組織」として登録できない問題や、納税フォームを2回提出しなければならなかった経緯など、特有の手続き上の落とし穴が詳しく解説されています。同様の状況にある開発者にとって、具体的な解決ステップを示す有益なガイドとなっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/aws_japan/articles/bedrock-guardrails-japanese-tier" target="_blank" rel="noopener noreferrer">Amazon Bedrock Guardrails を AnswerCarefully で試してみた</a></h3>
+    <p class="meta">Zenn トレンド | 10/21 05:08</p>
+    <p class="summary">Amazon Bedrockのガードレール機能が日本語を含む多言語に対応したことを受け、実際の挙動を検証した記事です。特定の有害な回答を拒否する設定や、企業ポリシーに基づいた応答制御がどのように機能するかをテストしています。不適切なコンテンツのフィルタリング精度を確認し、日本語環境におけるLLMの安全性確保に向けた具体的な活用方法を紹介しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/kikuziro/items/b6a0743b070d7320c36d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">「ドパ資料」の作り方</a></h3>
+    <p class="meta">Qiita トレンド | 10/21 09:04</p>
+    <p class="summary">読み手の脳内でドーパミンが出るような、快感を与える資料「ドパ資料」の作り方を解説しています。ストレスなく理解させるための構成術、視覚的な図解の工夫、心理学に基づいた言葉選びなど、読了後の満足度を高める具体的なテクニックを提案しています。相手の感情を動かし、行動を促すための「おもてなし」としての資料作成の重要性を説いています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/21/year-old-ai-lab-flapping-airplanes-raises-1b-at-a-6b-valuation/" target="_blank" rel="noopener noreferrer">Year-old AI lab Flapping Airplanes raises $1B at a $6B valuation</a></h3>
+    <p class="meta">TechCrunch | 10/21 20:57</p>
+    <p class="summary">設立わずか1年のAIスタートアップ「Flapping Airplanes」が、10億ドル（約1500億円）の資金調達を実施し、評価額が60億ドルに達しました。同社は次世代の基盤モデル開発に注力しており、今回の巨額融資はAI分野への投資意欲が依然として極めて高いことを示しています。急速な成長を遂げる同社の今後の動向が注目されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/21/tesla-stars-optimus-robot-production-in-california-as-profit-falls-43/" target="_blank" rel="noopener noreferrer">Tesla stars Optimus robot production in California as profit falls 43%</a></h3>
+    <p class="meta">TechCrunch | 10/21 20:33</p>
+    <p class="summary">テスラ社はカリフォルニア州の工場で、人型ロボット「Optimus」の本格的な生産を開始しました。同社の四半期利益が前年比43%減と大幅に落ち込む厳しい財務状況にありますが、イーロン・マスクCEOはロボット事業を将来の主要な収益源と位置づけ、製造の自動化と事業の多角化によって状況の打開を図っています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/21/recursive-launches-flint-a-laptop-coding-model-it-says-was-largely-built-by-ai/" target="_blank" rel="noopener noreferrer">Recursive launches Flint, a laptop coding model it says was largely built by AI</a></h3>
+    <p class="meta">TechCrunch | 10/21 20:27</p>
+    <p class="summary">Recursive社は、ノートPCなどのローカル環境で動作するコーディング支援AIモデル「Flint」をリリースしました。特筆すべきは、このモデル開発の大部分がAI自身によって行われたという点です。プライバシーを重視する開発者向けに設計されており、軽量ながら高い精度を実現。AIがAIを作る時代の到来を象徴する製品となっています。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/plurilock-files-information-circular-and-schedules-shareholder-vote-for-c33-8m-24m-usd-acquisition-by-quantum-emotion/" target="_blank" rel="noopener noreferrer">Plurilock Files Information Circular and Schedules Shareholder Vote for C$33.8M ($24M USD) Acquisition by Quantum eMotion</a></h3>
+    <p class="meta">Quantum Computing Report | 10/21 13:13</p>
+    <p class="summary">サイバーセキュリティ企業のPlurilock社は、Quantum eMotion社による約2,400万米ドルでの買収に向け、株主投票をスケジュールしました。この買収により、量子安全暗号と生体認証技術の統合が進む見込みです。量子コンピュータ時代の脅威に備えた次世代のセキュリティソリューション提供を加速させることが狙いです。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/coherence-quantum-launches-with-e2-78-million-3-1-million-usd-seed-round-to-scale-cryogenic-quantum-control/" target="_blank" rel="noopener noreferrer">Coherence Quantum Launches with €2.78 Million ($3.1 Million USD) Seed Round to Scale Cryogenic Quantum Control</a></h3>
+    <p class="meta">Quantum Computing Report | 10/21 12:58</p>
+    <p class="summary">Coherence Quantum社は、シードラウンドで278万ユーロ（約310万米ドル）の資金調達を実施し、極低温量子制御技術のスケールアップを開始しました。量子コンピュータの冷却環境下での制御精度を向上させる同社の技術は、計算の安定性とシステムの拡張性を高めるための重要な鍵として、量子計算の実用化に向けた期待を集めています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/black-kite-introduces-quantum-readiness-controls-to-assess-third-party-cryptographic-risk/" target="_blank" rel="noopener noreferrer">Black Kite Introduces Quantum Readiness Controls to Assess Third-Party Cryptographic Risk</a></h3>
+    <p class="meta">Quantum Computing Report | 10/21 12:49</p>
+    <p class="summary">サイバーリスク評価のBlack Kite社は、サードパーティ企業の量子コンピュータ耐性を評価する「量子レディネス・コントロール」機能を導入しました。将来的な量子コンピュータによる暗号解読リスクに対し、サプライチェーン全体の脆弱性を可視化し、リスク管理を強化するのが狙いです。企業のデータ保護体制を新たな次元で評価可能にします。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cq3djn5nxx12o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Russia says it is ready to resume talks with Ukraine and US to end war</a></h3>
+    <p class="meta">BBC World News | 10/21 17:42</p>
+    <p class="summary">ロシア政府は、ウクライナ侵攻を終結させるため、ウクライナおよび米国との交渉を再開する準備があるとの意向を示しました。しかし、具体的な合意条件や停戦の見通しについては依然として不明確です。西側諸国やウクライナ側は、ロシア側の真意や交渉の条件を慎重に見極める姿勢をとっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cm98zn5j89kdo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Rosenberg: US diplomatic push offers little hope for imminent Ukraine peace</a></h3>
+    <p class="meta">BBC World News | 10/21 19:58</p>
+    <p class="summary">BBCのスティーブ・ローゼンバーグ記者は、米国の外交的働きかけがウクライナ和平の即時実現につながる見込みは乏しいと分析しています。ロシアとウクライナ双方の立場に依然として大きな隔たりがあることや、戦況の複雑さが交渉を困難にしている現状を指摘。外交努力がすぐさま事態の打開に結びつくことへの期待を戒めています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/ckjrw044ggxgo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Macron accuses foreign leaders of exploiting French riots</a></h3>
+    <p class="meta">BBC World News | 10/21 14:04</p>
+    <p class="summary">フランスのマクロン大統領は、自国内で発生した暴動について、他国の指導者らがこれを政治的に利用し、状況を悪化させていると批判しました。具体的な国名は挙げなかったものの、SNSを通じた外部からの干渉が混乱を助長し、フランスの国内情勢を不安定化させようとしていると警鐘を鳴らし、国民に冷静な対応を呼びかけました。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
