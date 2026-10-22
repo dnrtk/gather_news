@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月23日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月23日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月23日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261023_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quad9.net/news/blog/au-revoir-france/" target="_blank" rel="noopener noreferrer">Quad9 (DNS Resolver) to Exit France</a></h3>
+    <p class="meta">Hacker News | 10/22 23:32</p>
+    <p class="summary">Quad9（DNSプロバイダー）は、ソニー・ミュージックらとの著作権侵害サイトのブロックを巡る法廷闘争を受け、フランスからの撤退を表明した。フランスの裁判所がISP以外のDNSプロバイダーに対してもサイトブロックを命じる判決を下したことを、インターネットの自由と中立性への脅威と見なしている。同社は法的に有利なスイスなどの拠点へ活動を移すが、フランス国内のユーザーへのサービス自体は継続される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/NVIDIA/OpenShell" target="_blank" rel="noopener noreferrer">OpenShell – A safe, private runtime for fleets of autonomous AI agents</a></h3>
+    <p class="meta">Hacker News | 10/23 02:44</p>
+    <p class="summary">NVIDIAが公開した「OpenShell」は、自律型AIエージェントの群れ（フリート）を安全かつプライベートに実行するためのランタイム環境である。AIが生成・実行するコードをホストOSから隔離されたセキュアなサンドボックス内で動かすことで、セキュリティリスクを最小限に抑える。企業などが機密性の高いタスクをAIに任せる際の信頼性を確保することを目的としている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.taler.net/en/news/2026-13.html" target="_blank" rel="noopener noreferrer">Getting ready to operate GNU Taler in Germany</a></h3>
+    <p class="meta">Hacker News | 10/23 01:14</p>
+    <p class="summary">プライバシーを重視した電子決済システム「GNU Taler」が、ドイツでの本格運用に向けて準備を進めている。Taler Systems SAは、ユーロをデジタル通貨として扱うための規制対応や技術整備を行っており、銀行との提携を通じて、ユーザーの匿名性を保護しつつ法的要件を満たす決済手段の提供を目指している。監視されない自由な経済活動の実現に向けた大きな一歩となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/oosexgang/hackios-xnu-kernel" target="_blank" rel="noopener noreferrer">Show HN: Run full iOS 16.5 firmware on Android Devices</a></h3>
+    <p class="meta">Hacker News | 10/23 00:26</p>
+    <p class="summary">Androidデバイス上でiOS 16.5のファームウェアを動作させる試み「hackios-xnu-kernel」がGitHubで公開された。これはiOSの基盤であるXNUカーネルをAndroid端末に移植する実験的なプロジェクトである。完全な動作には至っていないものの、モバイルOSの互換性やセキュリティ研究、仮想化技術の観点から開発者コミュニティの間で注目を集めている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.typeui.sh/micro-interactions" target="_blank" rel="noopener noreferrer">Show HN: UI micro interactions prompts for AI</a></h3>
+    <p class="meta">Hacker News | 10/23 03:32</p>
+    <p class="summary">「TypeUI」は、AIを用いて洗練されたUIマイクロインタラクションを生成するためのプロンプト集を提供している。ボタンのアニメーションやローディング表示など、ユーザー体験を向上させる細かなUI動作を、AIを使って効率的に作成するための具体的な指示文がまとめられている。開発者がAIを活用して、高品質なフロントエンド実装を加速させることを支援するツールである。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/fumika_676/articles/20220236284e11" target="_blank" rel="noopener noreferrer">Hugo のビルドを just にまとめて、生成物の置き場で事故りました</a></h3>
+    <p class="meta">Zenn トレンド | 10/22 07:58</p>
+    <p class="summary">静的サイトジェネレーター「Hugo」のビルド手順をタスクランナー「just」で自動化した際の失敗談。生成物の出力先設定を誤った状態でビルドを実行したことにより、意図しないディレクトリのファイルが削除されるなどの事故が発生した。自動化ツールを導入する際のパス指定の注意点や、`just`を用いた効率的なワークフロー構築における教訓が共有されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/nauh_blog/articles/7f19a2f193d15d" target="_blank" rel="noopener noreferrer">テニス解析をピックルボールに使ってみた：四隅の指定でコートの俯瞰表示を補う①</a></h3>
+    <p class="meta">Zenn トレンド | 10/22 06:31</p>
+    <p class="summary">テニスの動画解析技術をピックルボールに応用する試みの記録。コートの四隅を指定することで、カメラ映像からコートを俯瞰（トップダウン）表示に変換し、プレイヤーの動きを可視化する手法について解説している。スポーツアナリティクスの視点から、既存の解析アルゴリズムを異なる競技に適応させるための具体的な工夫と実装プロセスが紹介されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/shogo/articles/f847c35ea8dccb" target="_blank" rel="noopener noreferrer">KMPデスクトップはAIエージェントに速いのか？検証してみる</a></h3>
+    <p class="meta">Zenn トレンド | 10/22 05:46</p>
+    <p class="summary">Kotlin Multiplatform (KMP) DesktopがAIエージェントの開発においてどれほど有用かを検証した記事。デスクトップアプリの起動速度やUIのレスポンス、AIとの連携のしやすさを評価している。クロスプラットフォーム開発の利点を活かしつつ、AIエージェントのような複雑なロジックを持つアプリケーションにおいて、KMPが迅速な開発を可能にする有力な選択肢であることを示唆している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/kenimo49/items/30f290bf0f4fff021fb3?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">PHP脆弱性php2shell対応、7.4本番を止めずに守った夜と実際の攻撃</a></h3>
+    <p class="meta">Qiita トレンド | 10/21 17:15</p>
+    <p class="summary">PHP 7.4というサポート終了済みの古い環境において、サーバー乗っ取りの危険がある「php2shell」攻撃への対応記録。本番環境を停止させずに脆弱性を修正し、実際に試行された攻撃を防いだ緊迫した経緯が綴られている。レガシーシステムを運用し続ける際のリスク管理と、迅速なインシデント対応、そしてWAFやパッチによる多層防御の重要性が説かれている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/22/arc-browser-sunsets-december-22-as-the-browser-company-doubles-down-on-dia/" target="_blank" rel="noopener noreferrer">Arc browser sunsets December 22 as The Browser Company doubles down on Dia</a></h3>
+    <p class="meta">TechCrunch | 10/22 20:01</p>
+    <p class="summary">The Browser Companyは、現行の「Arc」ブラウザの提供を12月22日に終了し、次世代のAIブラウザ「Dia」に注力することを発表した。Arcで培った独自のUIコンセプトを継承しつつ、AIをブラウザの中核に据えてネット閲覧のあり方を再構築することを目指す。既存ユーザーにとっては大きな転換点となるが、同社はAIによる効率化という新たなビジョンへ舵を切る。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/22/the-secret-to-fast-startup-growth-isnt-early-sales-top-names-in-tech-say/" target="_blank" rel="noopener noreferrer">The secret to fast startup growth isn’t early sales, top names in tech say</a></h3>
+    <p class="meta">TechCrunch | 10/22 20:00</p>
+    <p class="summary">テック界の著名なリーダーらによれば、スタートアップが急速に成長するための秘訣は、初期段階での売上追求ではないという。真に重要なのは、顧客が熱狂するようなプロダクト・マーケット・フィット（PMF）の達成である。目先の収益よりも、製品の質とユーザー体験、そしてスケーラビリティの確保に重点を置くことが、最終的な爆発的成長に繋がると説いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/22/1password-launches-a-way-for-ai-agents-to-log-in-on-your-behalf-without-seeing-your-password/" target="_blank" rel="noopener noreferrer">1Password launches a way for AI agents to log in on your behalf without seeing your password</a></h3>
+    <p class="meta">TechCrunch | 10/22 19:07</p>
+    <p class="summary">1Passwordは、AIエージェントがユーザーに代わってサービスにログインできる新機能を発表した。この機能の最大の特徴は、AIに実際のパスワードを教えることなく認証を完了できる点にある。AIの自律的な活動を支援しつつ、認証情報の漏洩リスクを最小限に抑える仕組みを構築しており、AI時代のセキュリティと利便性の両立を図っている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/ibm-and-rutgers-control-quantum-chaos-across-100-qubits-on-heron-processor/" target="_blank" rel="noopener noreferrer">IBM and Rutgers Control Quantum Chaos Across 100 Qubits on Heron Processor</a></h3>
+    <p class="meta">Quantum Computing Report | 10/22 12:19</p>
+    <p class="summary">IBMとラトガーズ大学の研究チームは、新型のHeronプロセッサを用い、100量子ビット規模で量子カオスを制御することに成功した。量子コンピュータ特有のノイズやエラーの原因となるカオス現象を制御・活用することで、計算の精度と安定性を大幅に高めることができる。これは実用的な量子コンピュータの実現に向けた、ハードウェア制御における重要な進展である。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/qbraid-unveils-qbraid-os-and-launches-hosted-gh200-gpu-simulators-at-nvidia-gtc-berlin/" target="_blank" rel="noopener noreferrer">qBraid Unveils qBraid OS and Launches Hosted GH200 GPU Simulators at NVIDIA GTC Berlin</a></h3>
+    <p class="meta">Quantum Computing Report | 10/22 12:06</p>
+    <p class="summary">qBraidは、量子開発環境「qBraid OS」を発表し、NVIDIAのGH200 GPUを用いたホスト型シミュレータの提供を開始した。これにより、開発者は複雑な量子回路のシミュレーションを高速かつクラウド上で手軽に行えるようになる。量子コンピューティングのソフトウェア開発を効率化し、研究者がハードウェアの制約を超えてアルゴリズムを構築できる環境を整えた。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/uk-national-physical-laboratory-secures-230000-307-5k-usd-gott-grant-to-scale-quantum-ion-trap-manufacturing/" target="_blank" rel="noopener noreferrer">UK National Physical Laboratory Secures £230,000 ($307.5K USD) GOTT Grant to Scale Quantum Ion-Trap Manufacturing</a></h3>
+    <p class="meta">Quantum Computing Report | 10/22 11:49</p>
+    <p class="summary">英国国立物理学研究所（NPL）は、量子コンピュータの基幹技術であるイオン・トラップの製造をスケールアップするため、23万ポンドの助成金を獲得した。この資金は製造プロセスの自動化と精度向上に充てられ、英国内での量子ハードウェアのサプライチェーン強化を目指す。イオン・トラップ方式の量子計算の実用化を加速させるための重要な投資となる。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cr5ynl63v0pyo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Newborn twins fight for survival as conflict fuels Yemen&#39;s hunger crisis</a></h3>
+    <p class="meta">BBC World News | 10/22 15:56</p>
+    <p class="summary">イエメンでの紛争激化により飢餓危機が深刻化しており、生まれたばかりの双子が生死の境を彷徨っている。長引く戦闘と経済崩壊により食料供給が断たれ、多くの乳幼児が深刻な栄養失調に苦しんでいる。人道支援が届きにくい状況下で、罪のない子供たちが紛争の犠牲になっている悲惨な実態をBBCが報じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c9j34zgmkxx1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Race to update services&#39; computer systems after cyber-security flaw found</a></h3>
+    <p class="meta">BBC World News | 10/22 17:12</p>
+    <p class="summary">重大なサイバーセキュリティの脆弱性が発見され、公的サービスや企業のシステムを保護するためのアップデート作業が急ピッチで進められている。この欠陥が悪用されると、機密情報の漏洩や大規模なシステムダウンを招く恐れがある。攻撃者が脆弱性を突く前に対応を完了させるため、IT部門による時間との戦いが続いている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cmy0ryjx7741o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump ordered to answer questions under oath in BBC lawsuit</a></h3>
+    <p class="meta">BBC World News | 10/22 17:14</p>
+    <p class="summary">ドナルド・トランプ氏に対し、BBCとの訴訟に関連して宣誓証言を行うよう裁判所が命じた。この訴訟は以前のインタビューや報道を巡るものであり、元大統領は自身の発言について直接回答する法的義務を負うことになった。裁判の進展に伴い、メディアに対するトランプ氏の姿勢や、過去の発言に対する法的責任が改めて問われることになる。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
