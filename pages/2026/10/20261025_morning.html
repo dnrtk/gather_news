@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月25日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月25日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月25日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261025_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.apollo.com/wealth/insights-news/insights/daily-spark/no-signs-of-ai-payoff-outside-the-tech-sector" target="_blank" rel="noopener noreferrer">No Signs of AI Payoff Outside the Tech Sector</a></h3>
+    <p class="meta">Hacker News | 10/25 04:47</p>
+    <p class="summary">AI投資は急増しているが、その利益は依然としてテック企業や半導体メーカーに集中している。製造業や小売業など非テック分野では、AIによる生産性の向上や収益化の兆候がまだ見られない。マクロ経済全体への波及には時間がかかると予測されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://aardappel.github.io/goose/" target="_blank" rel="noopener noreferrer">The Goose Programming Language</a></h3>
+    <p class="meta">Hacker News | 10/25 04:27</p>
+    <p class="summary">Gooseは、ForthやSmalltalk、Lispに触発された実験的なプログラミング言語である。データスタックとミニマリズムを重視し、複数のスタック操作や相対参照などの独自機能を備える。開発効率と簡潔さを追求しており、特にデータ構造の扱いに革新的なアプローチを試みている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://missileer.watch" target="_blank" rel="noopener noreferrer">Listen and read USA nuclear forces Emergency Action Messages, heard on 11175 kHz</a></h3>
+    <p class="meta">Hacker News | 10/25 04:43</p>
+    <p class="summary">米軍の戦略部隊が使用する緊急行動メッセージ（EAM）を11175 kHzなどの短波帯で監視・記録するサイト。冷戦時代からの高周波無線ネットワークを介した通信をリアルタイムで聴取・解読でき、国家安全保障に関連する軍事的な指示の動向を確認することができる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.roku.com/developer/gitlab-move" target="_blank" rel="noopener noreferrer">Roku developer repositories moved from GitHub to GitLab</a></h3>
+    <p class="meta">Hacker News | 10/25 01:06</p>
+    <p class="summary">Rokuは、開発者向けのリポジトリをGitHubからGitLabへ移行した。これによりBrightScriptなどの開発ツールやサンプルコードの管理場所が変更された。開発者は今後の更新や新機能の利用、イシューの報告をGitLab上で行う必要がある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://twitter.com/ID_AA_Carmack/status/2113704269274636568" target="_blank" rel="noopener noreferrer">John Carmack on the Goose Language: multiple data stacks and relative references</a></h3>
+    <p class="meta">Hacker News | 10/25 04:06</p>
+    <p class="summary">著名なエンジニア、ジョン・カーマック氏がプログラミング言語「Goose」について言及。複数のデータスタックを用いたメモリアロケーションの回避や、相対参照によるデータ構造の移動の容易さを高く評価している。効率的な計算処理を実現するGooseの革新的な設計に注目が集まっている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/genelab_999/articles/387bf151caf716" target="_blank" rel="noopener noreferrer">MultiheadAttentionの高速経路がVRAMを18GB食っていた話</a></h3>
+    <p class="meta">Zenn トレンド | 10/24 09:00</p>
+    <p class="summary">PyTorchのMultiheadAttentionにおいて、特定の条件下で高速な処理経路（FlashAttentionなど）が選択された際、予想に反してVRAMを18GBも消費した事例の報告。メモリ管理の挙動や、特定の設定がメモリ消費に与える影響を分析し、予期せぬリソース不足を避けるための注意喚起を行っている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/sk8jp/articles/260e3c0fa07ed9" target="_blank" rel="noopener noreferrer">リンクで確認した SNS のメール購読に、作り直さずに「解除の保護」を付ける</a></h3>
+    <p class="meta">Zenn トレンド | 10/24 08:24</p>
+    <p class="summary">メール内の「購読解除」リンクを、セキュリティ対策ソフトのURL検査等による自動アクセスから守る仕組みの実装解説。ワンクリックで解除されないよう、中間ページを挟むことで「意図しない解除」を防ぐ。既存システムを大幅に作り直さず、安全な解除導線を構築する方法を提案している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/sprix_it/articles/464d97d1ebdbfd" target="_blank" rel="noopener noreferrer">Laravel を IdP にして Ory Hydra で SSO を組み、PHP 5.6 のレガシーアプリも認証ブローカーで乗せる</a></h3>
+    <p class="meta">Zenn トレンド | 10/24 08:22</p>
+    <p class="summary">LaravelをIDプロバイダーとして構築し、Ory Hydraを用いてSSOを実現する手法の紹介。PHP 5.6などの古いレガシーアプリに対しても、認証ブローカーを介することで、モダンな認証基盤への相乗りを可能にする。新旧システムが混在する環境でのID統合の技術的な要点について詳述している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/kitao/items/7fac93e8a7ad6015b0b0?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">3KBしか使えない！奇妙で素敵なゲームエンジン「Playload」のご紹介</a></h3>
+    <p class="meta">Qiita トレンド | 10/23 09:11</p>
+    <p class="summary">Playdate向けに開発された、わずか3KBの制約下で作動する極小ゲームエンジン「Playload」の紹介。Luaで記述でき、極限まで制限された環境でいかに創造的なゲームを作成できるかを追求している。そのユニークな設計思想と、限定的なリソースでの開発の楽しみを伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/Takashi_Masumori/items/c559b0291db39b2169c1?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Copilot の Agent Builder が凄く進化した。何ができるようになったか、Copilot Studio（GitHub Copilot ハーネス）との違いも整理してみる</a></h3>
+    <p class="meta">Qiita トレンド | 10/23 00:11</p>
+    <p class="summary">Microsoft 365 CopilotのAgent Builderの進化点を解説。誰でも簡単にエージェントを作成できるようになった一方で、より高度なカスタマイズが可能なCopilot Studioとの役割分担や機能の違いを整理している。業務特化型AIをノーコードで構築する利便性と今後の可能性を考察している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/shahin0809/items/81e6a6737b2254bdc6ed?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【速報】VS Code 1.142 に Canvas が来た！チャットの横でエージェントと同じ画面を触れる「Interactive Canvases」を整理してみた</a></h3>
+    <p class="meta">Qiita トレンド | 10/23 06:50</p>
+    <p class="summary">VS Codeの最新アップデートで追加された「Interactive Canvases」機能の紹介。AIエージェントがチャット画面の横で直接キャンバスを操作し、コードの可視化やプレビューをユーザーと共同で行えるようになる。開発体験をより直感的かつ双方向にする強力なツールとしての特徴をまとめている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/24/starlink-seems-to-be-working-normally-again-in-ukraine/" target="_blank" rel="noopener noreferrer">Starlink seems to be working normally again in Ukraine</a></h3>
+    <p class="meta">TechCrunch | 10/24 20:46</p>
+    <p class="summary">ウクライナで発生していたStarlinkの通信障害や制限が解消され、再び正常に稼働していると報告された。軍事作戦に不可欠な通信インフラであるStarlinkの安定性は戦況に影響を与える。当局は接続が安定したことを確認し、ネットワーク状況を継続的に監視している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/24/will-ai-expose-the-rickety-infrastructure-of-the-internet/" target="_blank" rel="noopener noreferrer">Will AI expose the rickety infrastructure of the internet?</a></h3>
+    <p class="meta">TechCrunch | 10/24 20:15</p>
+    <p class="summary">急増するAIの電力消費とデータトラフィックが、インターネットの既存インフラの脆さを露呈させる可能性を指摘。データセンターの拡大や送電網への負荷増大に対し、物理的なインフラ整備が追いつかないリスクがある。AIの発展を支えるための持続可能な基盤構築が急務となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/24/the-ai-graveyard-a-running-list-of-projects-and-startups-that-didnt-make-it/" target="_blank" rel="noopener noreferrer">The AI graveyard: a running list of projects and startups that didn’t make it</a></h3>
+    <p class="meta">TechCrunch | 10/24 19:00</p>
+    <p class="summary">激しい競争の中で淘汰されたAIプロジェクトやスタートアップをまとめた「AIの墓場」リスト。巨額の資金調達を受けながらも、収益化の失敗や技術的な壁、大手との競合に敗れて終了した事例を記録している。AIブームの影にある現実的な市場の厳しさを浮き彫りにしている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/whos-news-strategic-appointments-at-ey-zapata-quantum-iqm-sparrow-quantum-and-symmatrics/" target="_blank" rel="noopener noreferrer">Who’s News: Strategic Appointments at EY, Zapata Quantum, IQM, Sparrow Quantum, and Symmatrics</a></h3>
+    <p class="meta">Quantum Computing Report | 10/24 18:52</p>
+    <p class="summary">量子コンピューティング業界における最新の人事動向を報告。EY、Zapata Quantum、IQMなどの主要企業で戦略的な幹部登用が行われた。業界の商業化が進む中で、経験豊富な経営陣の配置により組織体制の強化と事業拡大を狙う各社の戦略が反映されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/bird-foundation-backs-qarakal-quantum-and-quantum-elements-for-quantum-accelerated-catalysis-modeling/" target="_blank" rel="noopener noreferrer">BIRD Foundation Backs Qarakal Quantum and Quantum Elements for Quantum-Accelerated Catalysis Modeling</a></h3>
+    <p class="meta">Quantum Computing Report | 10/24 18:24</p>
+    <p class="summary">米国・イスラエル二国間産業研究開発（BIRD）財団が、Qarakal QuantumとQuantum Elementsによる量子加速触媒モデリングプロジェクトへの資金提供を決定。量子技術を活用して化学反応を効率化する触媒設計の高度化を目指しており、産業分野への量子応用の加速が期待される。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/nowsecure-benchmark-finds-97-of-mobile-applications-lack-post-quantum-cryptography-ahead-of-mandated-timelines/" target="_blank" rel="noopener noreferrer">NowSecure Benchmark Finds 97% of Mobile Applications Lack Post-Quantum Cryptography Ahead of Mandated Timelines</a></h3>
+    <p class="meta">Quantum Computing Report | 10/24 18:02</p>
+    <p class="summary">最新の調査により、モバイルアプリの97%が耐量子計算機暗号（PQC）を未導入であることが判明。将来的な量子コンピュータによる暗号解読のリスクに対し、多くのアプリが脆弱な状態にある。義務化されるタイムラインを前に、迅速なセキュリティ更新の必要性が警告されている。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cwkg5md14j8go?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Ukraine says Starlink connection &#39;now stable&#39; after network limits</a></h3>
+    <p class="meta">BBC World News | 10/24 12:12</p>
+    <p class="summary">ウクライナ政府は、一時的なネットワーク制限を経てStarlinkの接続が「現在は安定している」と発表した。前線での通信手段として依存度が高い同サービスの中断は懸念を呼んでいたが、現時点では正常化している。ウクライナのデジタル変革省が公式に状況の改善を認めた。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cqd09k1k7532o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Palestinian families displaced as Israeli forces demolish Hebron homes</a></h3>
+    <p class="meta">BBC World News | 10/24 17:21</p>
+    <p class="summary">イスラエル軍がヨルダン川西岸地区のヘブロンでパレスチナ人の住宅を破壊し、複数の家族が住む場所を失った。イスラエル側は無許可建築を理由としているが、パレスチナ側は不当な占領拡大と批判している。地域での緊張が高まる中、人道状況の悪化が懸念されている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
