@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月26日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月26日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月26日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261026_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://titleart.dvy.io/" target="_blank" rel="noopener noreferrer">Show HN: TitleArt – Make text like it&#39;s 1997</a></h3>
+    <p class="meta">Hacker News | 10/26 12:23</p>
+    <p class="summary">1990年代のスタイル（WordArtのようなデザイン）でテキストロゴを作成できるウェブツール「TitleArt」の紹介。ブラウザ上で簡単に懐かしい雰囲気のテキストアートを生成し、カスタマイズすることが可能。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/KrushnaVardhanReddy/PaperPilot" target="_blank" rel="noopener noreferrer">PaperPilot – Zero-Cloud, Pure-Rust PDF Engine with WASM and MCP</a></h3>
+    <p class="meta">Hacker News | 10/26 12:29</p>
+    <p class="summary">クラウドを使用せずローカルで動作する、純Rust製のPDFエンジン「PaperPilot」についての記事。WASMに対応し、Model Context Protocol (MCP) を通じてAIツールとの連携も可能で、プライバシーを重視した設計が特徴。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://train-it.eu/blog/cpp26-contracts-the-ballot-result/" target="_blank" rel="noopener noreferrer">The result of the C++26 DIS ballot</a></h3>
+    <p class="meta">Hacker News | 10/26 15:11</p>
+    <p class="summary">次期C++標準規格であるC++26のドラフト国際規格（DIS）投票の結果に関する記事。主要な新機能である「契約（Contracts）」の導入が確定し、標準化プロセスが大きな一歩を踏み出したことを報告している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://exhibits.stanford.edu/menuez/browse/next-computer-inc?per_page=96&amp;sort=pub_year_isi+asc%2C+title_sort+asc&amp;view=masonry" target="_blank" rel="noopener noreferrer">Behind the scenes at the NeXT Computer office</a></h3>
+    <p class="meta">Hacker News | 10/26 12:31</p>
+    <p class="summary">スティーブ・ジョブズが設立したNeXT Computer社のオフィス内部を捉えた貴重な写真アーカイブ。1980年代から90年代にかけての同社の日常や文化、革新的な製品開発の舞台裏を視覚的に伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://brashandplucky.com/2026/10/15/growing-trees.html" target="_blank" rel="noopener noreferrer">Growing Trees</a></h3>
+    <p class="meta">Hacker News | 10/23 23:07</p>
+    <p class="summary">プロシージャルな手法を用いて樹木の成長をシミュレーション・描画する技術に関するブログ記事。アルゴリズムを用いた自然な形状の生成プロセスや、デジタル空間における植物の表現手法について探求している。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/chot/articles/79e6c94e27782d" target="_blank" rel="noopener noreferrer">Node.js の Brotli 脆弱性 CVE-2026-111497 を読む</a></h3>
+    <p class="meta">Zenn トレンド | 10/26 02:29</p>
+    <p class="summary">Node.jsにおけるBrotli圧縮ライブラリに関連する脆弱性「CVE-2026-111497」の詳細を解説した記事。脆弱性の発生原因や影響範囲、そして開発者が取るべき具体的な対策について技術的な観点から分析している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tokium_dev/articles/internship-mentoring-2026" target="_blank" rel="noopener noreferrer">AIネイティブなインターン生を受け入れて考えた、これからの開発エンジニア</a></h3>
+    <p class="meta">Zenn トレンド | 10/26 01:00</p>
+    <p class="summary">AIを当たり前に使いこなす「AIネイティブ」なインターン生を受け入れたエンジニアの体験談。AIの普及により、今後の開発者に求められるスキルが単なるコーディング能力から、課題解決力やAIとの協働能力へシフトしていく現状を考察している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/rimon/articles/45c1fd2f015af8" target="_blank" rel="noopener noreferrer">私が5種類のコーディングエージェントを使い分ける理由</a></h3>
+    <p class="meta">Zenn トレンド | 10/25 22:44</p>
+    <p class="summary">CursorやGitHub Copilotなど、5種類のコーディングAIエージェントを用途に応じて使い分けている開発者の記録。各ツールの強みと弱みを分析し、タスクの難易度や性質に合わせて最適なツールを選択することで、開発効率を最大化する手法を紹介。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/songchong/items/235bed0f8c72f268477e?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AI に資料を毎回貼るな！ファイル・SKILL・AGENTS.md 活用でトークン課金最大 6 割減？ 6 つの方法を試してみた</a></h3>
+    <p class="meta">Qiita トレンド | 10/25 19:00</p>
+    <p class="summary">AIへの入力を効率化しトークン消費を抑える6つの手法を紹介。SKILLファイルやAGENTS.mdを活用し、情報の重複を避けながら精度を維持することで、API利用料を最大6割削減する具体的なテクニックを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/25/5-best-apps-track-reading-discover-new-books/" target="_blank" rel="noopener noreferrer">The best apps for tracking your reading and discovering new books</a></h3>
+    <p class="meta">TechCrunch | 10/26 01:10</p>
+    <p class="summary">読書の記録や新しい本の発見に役立つ最適なアプリを5つ紹介するTechCrunchの記事。Goodreadsの代替となるモダンな管理ツールをピックアップし、読書習慣の維持やコミュニティ機能など、各アプリの強みを比較している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/25/grok-releases-the-first-seven-minutes-of-its-ai-generated-odyssey/" target="_blank" rel="noopener noreferrer">Grok releases the first seven minutes of its AI-generated ‘Odyssey’</a></h3>
+    <p class="meta">TechCrunch | 10/25 21:31</p>
+    <p class="summary">イーロン・マスク氏率いるxAIのAI「Grok」が、AI生成映像作品『Odyssey』の冒頭7分間を公開。最新の生成AI技術が映画制作にどのような革新をもたらすかを示すデモンストレーションとなっている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cw5yn3xlprpmo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Celebrations in Serbia after veteran ruler Vučić loses election to student-led protest movement</a></h3>
+    <p class="meta">BBC World News | 10/26 01:07</p>
+    <p class="summary">セルビアで長年政権を握っていたブチッチ大統領が、学生主導の抗議運動の影響を受けた選挙で敗北。街中では勝利を祝う人々が溢れ、同国の政治体制における歴史的な転換点となったことを報じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cvwy7wz9x12go?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Australian murderer loses bid to eat Vegemite in prison</a></h3>
+    <p class="meta">BBC World News | 10/26 04:05</p>
+    <p class="summary">オーストラリアの刑務所に収監されている殺人犯が、所内でベジマイトを食べる権利を求めた訴えが棄却された。当局は、発酵食品であるベジマイトが酒の密造に利用される恐れがあるとして禁止を主張し、裁判所がこれを認めた。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
