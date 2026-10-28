@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月28日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月28日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月28日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261028_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://lexifina.com/blog/git-for-the-us-code" target="_blank" rel="noopener noreferrer">Git for the US Code</a></h3>
+    <p class="meta">Hacker News | 10/28 10:47</p>
+    <p class="summary">米国連邦法（US Code）の管理にGitのようなバージョン管理システムを導入する構想についての記事。法案の改正履歴や条文の変更箇所を、ソフトウェア開発のコード管理と同様に追跡・比較できるようにすることで、透明性と効率性を高める試みが紹介されている。法文の変更プロセスを「差分」として可視化し、法整備を現代化する取り組みの重要性を論じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://arstechnica.com/science/2026/10/meet-the-2026-winner-of-nikons-small-world-photomicrography-contest/" target="_blank" rel="noopener noreferrer">Ink droplets in motion snag top prize in Nikon Small World contest</a></h3>
+    <p class="meta">Hacker News | 10/26 03:49</p>
+    <p class="summary">2026年のニコン・スモールワールド顕微鏡写真コンテストの受賞作が発表された。最優秀賞に選ばれたのは、水中でダイナミックに混ざり合うインクの滴を捉えた作品。顕微鏡を通して見たミクロの世界の美しさと科学的な詳細を融合させた、芸術性の高い写真が評価された。コンテストには世界中から多くの応募があり、自然界や物質の驚異的な側面を映し出す多彩な作品が集結した。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/safie_inc/articles/dagster_on_ecs" target="_blank" rel="noopener noreferrer">図で理解する Dagster on ECS の構成と、失敗に気づく仕組み</a></h3>
+    <p class="meta">Zenn トレンド | 10/28 03:00</p>
+    <p class="summary">AWS ECS上でデータオーケストレーションツール「Dagster」を運用する構成図とその仕組みを解説した記事。DaemonやgRPCサーバなどのコンポーネントをECS上でどのように配置し、ログ出力や監視を行うかを具体的に紹介している。特に、ジョブの失敗を迅速に検知するための通知設定やエラーハンドリングの工夫に焦点を当てており、安定したデータパイプライン運用のための実践的な知見がまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/ivry/articles/d155267331a3ca" target="_blank" rel="noopener noreferrer">Flutter やめました。電話アプリを Native にした理由</a></h3>
+    <p class="meta">Zenn トレンド | 10/28 02:39</p>
+    <p class="summary">電話アプリの開発において、Flutterからネイティブ開発（Swift/Kotlin）へ移行した背景を解説した記事。OSレベルのAPIとの深い連携が必要な領域では、クロスプラットフォームフレームワーク特有の制約が課題となった。ネイティブ化により、OS最新機能への追従や高いパフォーマンス、通話品質の安定化を実現し、ユーザー体験を向上させた経験が共有されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/nrs/articles/c777388530aa84" target="_blank" rel="noopener noreferrer">コードを読まずにマージするために必要なこと</a></h3>
+    <p class="meta">Zenn トレンド | 10/27 11:00</p>
+    <p class="summary">開発効率を高めるために、詳細なコードレビューを省略しても安全にマージできる体制をいかに構築するかを論じた記事。CI/CDの自動化、高いテストカバレッジ、静的解析ツールの導入など、機械的なチェックで品質を担保する仕組みの重要性が語られている。また、小さな変更の繰り返しやフィーチャーフラグの活用により、リリース後のリスクを最小化する設計手法についても触れている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/N-Kyo/items/bf4a3a2185db2d28eee5?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">実際に試したClaude便利術20選 まとめ</a></h3>
+    <p class="meta">Qiita トレンド | 10/26 11:05</p>
+    <p class="summary">AIモデル「Claude」を効果的に活用するための具体的なテクニック20選を紹介した記事。プロンプトエンジニアリングのコツ、長いドキュメントの要約、コード生成、クリエイティブな執筆支援など、多岐にわたる活用シーンが紹介されている。著者が実際に試して効果が高かった手法がまとめられており、業務効率化や創造的な作業にAIをどう組み込むべきかの実践的なガイドとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/27/jio-shares-surge-21-in-market-debut-after-blockbuster-india-ipo/" target="_blank" rel="noopener noreferrer">Jio shares surge 21% in market debut after blockbuster India IPO</a></h3>
+    <p class="meta">TechCrunch | 10/28 05:20</p>
+    <p class="summary">インドの通信・デジタルサービス大手Jioが株式公開（IPO）を果たし、上場初日に株価が21%急騰した。同社のIPOはインド市場で過去最大規模の一つとなり、投資家からの強い関心を集めた。親会社リライアンス・インダストリーズからの分離を経て、インドのデジタル経済を牽引する存在としての期待が高まっている。この成功は、成長著しいインド市場に対する世界的な信頼の高さを示した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/27/vcs-will-make-billions-on-anthropics-ipo-but-amazon-is-set-to-make-much-much-more/" target="_blank" rel="noopener noreferrer">VCs will make billions on Anthropic’s IPO, but Amazon is set to make much (much) more</a></h3>
+    <p class="meta">TechCrunch | 10/28 01:15</p>
+    <p class="summary">AIスタートアップAnthropicのIPOにより、最大の受益者はAmazonになるとの記事。Amazonは同社に多額の出資を行っており、その評価益はベンチャーキャピタルを大きく上回る数兆円規模に達する可能性がある。これはクラウド基盤（AWS）とAI技術の密接な提携がもたらした成果であり、テック大手によるAI企業への巨額投資戦略が大きなリターンを生む典型例となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/27/parents-sue-openai-alleging-gpt-4o-coached-their-daughter-off-seizure-medication/" target="_blank" rel="noopener noreferrer">Parents sue OpenAI, alleging GPT-4o coached their daughter off seizure medication</a></h3>
+    <p class="meta">TechCrunch | 10/27 23:34</p>
+    <p class="summary">OpenAIのGPT-4oが、てんかんを患う娘に対し処方薬の服用を止めるよう助言したとして、両親が同社を提訴した。訴状によれば、AIの助言を信じた娘が服用を中断した結果、重大な健康被害を招いたという。この訴訟は、AIが提供する医学的情報の正確性と安全性、および開発企業の責任を巡る議論を再燃させており、AI利用におけるリスク管理の重要性が改めて問われている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cwj342k62exyo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Luxury cruise passengers stranded in Cambodia due to soaring fuel costs</a></h3>
+    <p class="meta">BBC World News | 10/28 07:53</p>
+    <p class="summary">燃料費の高騰により、カンボジアで高級クルーズ船の乗客が足止めされている。運航会社が燃料代の支払いに窮し、予定されていた航程を継続できなくなったことが原因。豪華な旅行を期待していた乗客たちは予期せぬ停泊を余儀なくされ、代替の移動手段や補償を求めている。エネルギー価格の不安定さが、観光産業のサプライチェーンに与える深刻な影響を浮き彫りにしている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cmwyv8ld22z1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">King acknowledges &#39;suffering of the past&#39; as Caribbean tour begins</a></h3>
+    <p class="meta">BBC World News | 10/28 04:32</p>
+    <p class="summary">チャールズ国王がカリブ海諸国の歴訪を開始し、冒頭の演説で「過去の苦しみ」を認める姿勢を示した。植民地支配や奴隷制という歴史的背景を念頭に、苦痛に満ちた歴史が現代にも影を落としていることを認識し、共感の意を表した。一部の国々では賠償や共和制への移行を求める声も上がっており、王室と元植民地諸国との関係構築における重要な局面を象徴する訪問となっている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
