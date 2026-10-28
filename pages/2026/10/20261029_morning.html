@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月29日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月29日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月29日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261029_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://nullpt.rs/fingerprinting-bioweapons" target="_blank" rel="noopener noreferrer">Why Is This Fingerprinting Script Creating Bioweapons?</a></h3>
+    <p class="meta">Hacker News | 10/29 02:13</p>
+    <p class="summary">ブラウザのフィンガープリントを取得するためのスクリプト内に、エボラ出血熱などの致死的なウイルスのDNA配列が含まれているという奇妙な事例を調査した記事。一見無害なコードの裏に隠された意図や、バイオセキュリティ上の懸念、そしてなぜこのようなデータが混入したのかという謎を技術的な視点から考察している。バイオテロ対策のスクリーニングを回避するための実験的な試みである可能性を指摘している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/" target="_blank" rel="noopener noreferrer">Gemini 4 Carbon</a></h3>
+    <p class="meta">Hacker News | 10/29 02:01</p>
+    <p class="summary">Googleは、最新のAIモデル「Gemini 4 Carbon」を発表した。このモデルは、高いパフォーマンスを維持しつつ、計算効率の向上と環境負荷の低減を両立させることを目的としている。特にAI開発に伴うカーボンフットプリントの削減に焦点を当てており、持続可能なAI活用のための新たな基準を提示。エネルギー効率の高いアーキテクチャにより、少ないリソースで高度な推論を可能にし、企業の環境目標達成を支援する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://carmelitegothic.com/cnc-stone-carving/" target="_blank" rel="noopener noreferrer">CNC Stone Carving</a></h3>
+    <p class="meta">Hacker News | 10/28 23:38</p>
+    <p class="summary">伝統的なゴシック様式の建築において、石材彫刻にCNC（コンピュータ数値制御）技術を活用する方法を解説した記事。手彫りの美しさを維持しつつ、精密な加工と効率化を両立させるためのプロセスやツールの設定を紹介している。デジタル技術と伝統工芸の融合により、複雑な石の装飾を迅速かつ正確に製作することが可能になり、現代の建築プロジェクトにおける石材加工の可能性を広げている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://surgehq.ai/blog/dayjob-tax" target="_blank" rel="noopener noreferrer">Dayjob: Tax – evaluating AI agents on 50 professional tax assignments</a></h3>
+    <p class="meta">Hacker News | 10/29 00:46</p>
+    <p class="summary">AIエージェントの専門的能力を測定するため、50件の実際の税務課題を用いた評価指標「Dayjob: Tax」の結果を報告。複雑な税制の理解や正確な計算、文書作成能力をテストした結果、現在のAIが専門家レベルのタスクをどこまで遂行できるかが明らかにされた。この評価は、AIが単なる対話ボットを超え、高度な専門知識を必要とする実務領域でどの程度信頼できるツールになり得るかを判断する基準を提供する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.apple.com/macbook-pro/proled-xdr-display/" target="_blank" rel="noopener noreferrer">MacBook Pro with PROLED XDR Display and Touch</a></h3>
+    <p class="meta">Hacker News | 10/29 02:10</p>
+    <p class="summary">Appleは、新開発の「PROLED XDR」ディスプレイを搭載し、待望のタッチ操作に対応したMacBook Proを発表した。このディスプレイ技術は、従来のXDRを凌駕する輝度とコントラスト比を実現し、クリエイターに究極の視覚体験を提供する。タッチスクリーン機能の統合により直感的な操作が可能となり、高性能チップとの組み合わせで、プロフェッショナルなワークフローを劇的に進化させる。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/aws_japan/articles/49bf6abcee64bc" target="_blank" rel="noopener noreferrer">MCP ツールの引数と結果に入った個人番号を、AgentCore Gateway のインターセプターでマスクする</a></h3>
+    <p class="meta">Zenn トレンド | 10/28 07:55</p>
+    <p class="summary">MCP（Model Context Protocol）ツールの利用において、引数や実行結果に含まれるマイナンバーなどの個人番号を保護するための技術解説。AgentCore Gatewayのインターセプター機能を活用し、機密情報を動的に検知してマスク処理を行う手法を紹介している。これにより、LLMなどの外部サービスへ機密データが漏洩するリスクを低減し、安全に生成AIを活用できるインフラを構築する方法を説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/canly/articles/85dc645c252832" target="_blank" rel="noopener noreferrer">人間が見るのは設計書だけ ― PdM不在・バグ修正中心のチームで、AI-DLCを開発フローごと作り直した話</a></h3>
+    <p class="meta">Zenn トレンド | 10/28 07:55</p>
+    <p class="summary">PdMが不在でバグ修正中心だった開発チームが、AIを活用した開発ライフサイクル（AI-DLC）を導入してフローを刷新した事例。人間が設計書の作成に専念し、実装やテストをAIが担う体制を構築することで、開発効率と品質の向上を実現した。負債の返却と機能開発を並行させるための工夫や、AIを前提とした新しい開発プロセスの設計思想、そしてチームの役割の変化について実体験に基づき詳述されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/cutlet_of_pork/articles/selenium-rpa-new-entry-key-definition" target="_blank" rel="noopener noreferrer">業務マスタの新規登録をSeleniumで連続化したら、「新規」の判定を2回直すことになった【Python】</a></h3>
+    <p class="meta">Zenn トレンド | 10/28 07:08</p>
+    <p class="summary">PythonとSeleniumを使用して業務マスタの新規登録を自動化した際のトラブルシューティング記録。一括登録の過程で、既存データと新規データの判定ロジックに不備が見つかり、二度にわたって修正を余儀なくされた経緯を解説している。Web画面の仕様変更や動的な要素への対応、自動化プロセスにおける例外処理の重要性など、RPA開発における実践的な教訓がまとめられている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/28/hacker-stole-personnel-data-about-thousands-of-homeland-security-employees-including-cbp-and-ice-agents/" target="_blank" rel="noopener noreferrer">Hacker stole personnel data about thousands of Homeland Security employees, including CBP and ICE agents</a></h3>
+    <p class="meta">TechCrunch | 10/28 20:01</p>
+    <p class="summary">米国国土安全保障省（DHS）の数千人の職員の個人データが、ハッカーによって盗まれたことが判明。流出したデータには、税関・国境取締局（CBP）や移民・関税執行局（ICE）の捜査官の情報も含まれている。この侵害は、法執行機関の職員の安全を脅かす可能性があり、当局は影響を受けた職員への通知とシステムの脆弱性調査を急いでいる。サイバーセキュリティの脆弱性が国家安全保障に直結するリスクを浮き彫りにした。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/28/anthropic-just-launched-tools-to-show-companies-what-their-ai-spending-is-buying/" target="_blank" rel="noopener noreferrer">Anthropic just launched tools to show companies what their AI spending is buying</a></h3>
+    <p class="meta">TechCrunch | 10/28 19:19</p>
+    <p class="summary">Anthropicは、企業がAIへの投資に対してどのような成果を得ているかを可視化するための新ツールを発表した。APIの利用状況、パフォーマンス指標、コストの詳細な内訳を提供し、企業がAIモデルのROI（投資対効果）を正確に把握できるようにする。AI予算の透明性を高め、効率的なリソース配分を支援することで、ビジネスシーンでの大規模なAI導入を加速させる狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/video/wizs-cto-on-php2shell-and-the-coming-vulnpocalypse/" target="_blank" rel="noopener noreferrer">Wiz’s CTO on PHP2Shell and the coming ‘vulnpocalypse’</a></h3>
+    <p class="meta">TechCrunch | 10/28 19:05</p>
+    <p class="summary">クラウドセキュリティ企業WizのCTOが、PHPの脆弱性を悪用する「PHP2Shell」と、今後予想される大規模な脆弱性の連鎖「バルノポカリプス」について警告。クラウド環境の構成ミスやレガシーコードが引き金となり、一箇所の不備からシステム全体が侵害されるリスクを指摘した。自動化された攻撃が増加する中で、企業はパッチ管理だけでなく、包括的な可視化と迅速な対応体制の構築が不可欠であると説いている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/psiquantum-unveils-8x8-optical-circuit-switch-demonstration-vehicle-derived-from-silicon-photonics-quantum-architecture/" target="_blank" rel="noopener noreferrer">PsiQuantum Unveils 8×8 Optical Circuit Switch Demonstration Vehicle Derived from Silicon Photonics Quantum Architecture</a></h3>
+    <p class="meta">Quantum Computing Report | 10/28 18:48</p>
+    <p class="summary">PsiQuantumは、シリコンフォトニクスを用いた量子アーキテクチャから派生した、8×8光回路スイッチの実証機を発表。将来の誤り耐性量子コンピュータに不可欠な、大規模な光接続を低損失かつ高速に制御することを可能にする。この高度な技術が、データセンターや高性能コンピューティング（HPC）における光通信ネットワークの効率化にも応用できることを示し、光技術の新たな可能性を提示した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/nvision-demonstrates-addressable-molecular-spin-photon-interface-and-partners-with-hyperlight-for-integrated-photonic-hardware/" target="_blank" rel="noopener noreferrer">NVision Demonstrates Addressable Molecular Spin-Photon Interface and Partners with HyperLight for Integrated Photonic Hardware</a></h3>
+    <p class="meta">Quantum Computing Report | 10/28 18:13</p>
+    <p class="summary">NVisionは、分子スピンと光子のインターフェースを制御する技術の実証に成功し、集積光ハードウェア開発に向けてHyperLight社との提携を発表した。分子レベルでスピン状態を操作し、光通信と連携させることで、次世代の量子センシングやネットワークの構築を目指す。HyperLightの薄膜リチウムニオブ酸プラットフォームを活用し、システムの小型化と高性能化を図り、実用的な量子コンピューティングインフラの実現を加速させる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/lg-cns-and-d-wave-partner-to-evaluate-quantum-annealing-for-enterprise-combinatorial-optimization/" target="_blank" rel="noopener noreferrer">LG CNS and D-Wave Partner to Evaluate Quantum Annealing for Enterprise Combinatorial Optimization</a></h3>
+    <p class="meta">Quantum Computing Report | 10/28 17:53</p>
+    <p class="summary">LG CNSとD-Waveは、エンタープライズ領域における組合せ最適化問題を解決するため、量子アニーリング技術の評価に関する提携を発表。物流、金融、製造などの複雑なビジネス課題に対し、量子技術がどの程度の効率化をもたらすかを共同で検証する。従来のコンピュータでは困難だった大規模な最適化計算を高速化することを目指し、企業のデジタル変革（DX）における量子コンピューティングの実用化を推進する。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c6kglwe4lxwzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Flávio Bolsonaro lands in Miami after defeat in Brazil&#39;s presidential election</a></h3>
+    <p class="meta">BBC World News | 10/28 20:22</p>
+    <p class="summary">ブラジル大統領選挙でのジャイル・ボルソナロ氏の敗北後、息子のフラビオ・ボルソナロ氏がマイアミに到着した。ブラジル国内で政治的な緊張が高まり、支持者による抗議活動が続く中での出国は、国内外で大きな注目を集めている。この動きは、今後のボルソナロ一家の動向やブラジル政治の先行きについて、様々な憶測を呼んでいる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cmdx3knq1xexo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Netanyahu&#39;s bloc leading Israel election but short of majority, partial results show</a></h3>
+    <p class="meta">BBC World News | 10/28 20:24</p>
+    <p class="summary">イスラエル総選挙の暫定結果によると、ネタニヤフ元首相率いる右派ブロックがリードしているが、過半数の議席確保には至っていない。出口調査ではネタニヤフ氏の勝利が示唆されていたが、集計が進むにつれて僅差の展開となっている。最終結果次第では政権樹立に向けた連立交渉が難航する可能性があり、長引く政治的混乱を解消できるかどうかが焦点となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cm62y46d97wwo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">How could Israel break election deadlock? Here are four scenarios</a></h3>
+    <p class="meta">BBC World News | 10/28 14:30</p>
+    <p class="summary">イスラエル選挙後の政治的行き詰まりを解消するための4つのシナリオを解説。ネタニヤフ氏による極右政党との連立、現連立与党による多数派工作、大連立の形成、そして再選挙の可能性を分析している。各シナリオにおける政党間の対立点や妥協の余地、国内外の政策に与える影響を検討しており、複雑な政治状況下での出口戦略を多角的に提示している。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
