@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年10月31日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年10月31日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年10月31日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261031_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://xoranth.net/gcc-switch/" target="_blank" rel="noopener noreferrer">Switch Lowering in GCC</a></h3>
+    <p class="meta">Hacker News | 10/31 17:02</p>
+    <p class="summary">GCCコンパイラがswitch文を効率的なマシンコードに変換（Lowering）する仕組みを解説した記事。ジャンプテーブル、ビットテスト、バイナリサーチなど、ケース数や値の密度に応じた最適化手法の詳細や、GIMPLEからRTLへの変換プロセス、最近の改善点について技術的に詳述している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zebra.rodeo/en/blog/marelleo/" target="_blank" rel="noopener noreferrer">Show HN: Marelleo, an open-source story box I built for my kids using ESP32</a></h3>
+    <p class="meta">Hacker News | 10/28 00:24</p>
+    <p class="summary">ESP32を使用した子供向けのオープンソース・ストーリーボックス「Marelleo」の開発記。既存製品のクラウド依存や高価格に疑問を持ち、オフラインで動作しRFIDタグで物語を再生できるデバイスを自作。3Dプリント可能な筐体やオーディオ再生の仕組みなどの技術スタックを公開している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/chris124567/cfsolve" target="_blank" rel="noopener noreferrer">Cloudflare Turnstile solver library (no headless browser required)</a></h3>
+    <p class="meta">Hacker News | 10/29 02:29</p>
+    <p class="summary">ヘッドレスブラウザを使用せずにCloudflareのTurnstile（CAPTCHA代替）を解決するライブラリ「cfsolve」の紹介。JavaScript実行環境をエミュレートすることで、軽量かつ効率的にチャレンジをパスすることを目指しており、自動化プロセスにおけるボット検知回避ツールとして設計されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.wired.com/story/the-dollar63-billion-binance-hack-was-pulled-off-in-just-20-minutes/" target="_blank" rel="noopener noreferrer">The $6.3B Binance hack was pulled off in just 20 minutes</a></h3>
+    <p class="meta">Hacker News | 10/30 21:50</p>
+    <p class="summary">2022年に発生したBinanceのクロスチェーンブリッジに対する63億ドル規模のハッキング事件の舞台裏。攻撃者はわずか20分で偽の証明書を用いてBNBを不正発行した。仮想通貨史上最大級の被害であり、中央集権化の脆弱性と北朝鮮の関与が疑われるサイバー犯罪の深刻さを浮き彫りにした。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/cscloud_blog/articles/a987163efae5d8" target="_blank" rel="noopener noreferrer">今後のセキュリティの考え方</a></h3>
+    <p class="meta">Zenn トレンド | 10/30 10:30</p>
+    <p class="summary">クラウドやAIの普及に伴う今後のセキュリティのあり方を考察。従来の境界型防御からゼロトラストやアイデンティティ中心の防御への移行の重要性を説く。また、自動化による脅威への即時対応や、開発プロセスにセキュリティを組み込む「シフトレフト」が不可欠になると述べている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/nauh_blog/articles/3bf7430510d30a" target="_blank" rel="noopener noreferrer">TelegrafをARMv6で使う</a></h3>
+    <p class="meta">Zenn トレンド | 10/30 09:00</p>
+    <p class="summary">データ収集エージェント「Telegraf」を、古いRaspberry Pi等のARMv6アーキテクチャで動作させる手順を解説。公式バイナリの対応状況や自前ビルドの注意点、リソース制約が厳しい環境での設定最適化を紹介しており、古いIoTデバイスの有効活用において有用な知見を提供している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/flagxs/articles/931d7d45292717" target="_blank" rel="noopener noreferrer">フロントエンドカンファレンス関西2026に参加しました！</a></h3>
+    <p class="meta">Zenn トレンド | 10/30 07:50</p>
+    <p class="summary">「フロントエンドカンファレンス関西2026」の参加レポート。最新の技術動向やアクセシビリティ、パフォーマンス改善に関するセッションの内容を振り返る。コミュニティの熱量や交流を通じて得られた刺激、技術選定における新たな気づきなど、参加者の視点からイベントの魅力を伝えている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/j-yasukawa/items/701554f14fe8b02ff34e?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">SSM Session Managerを使ってDBに接続する</a></h3>
+    <p class="meta">Qiita トレンド | 10/30 06:39</p>
+    <p class="summary">AWS SSMセッションマネージャーを活用し、踏み台サーバーを置かずにプライベートサブネット内のDBへセキュアに接続する方法を解説。ポートフォワーディング機能の設定手順やIAMポリシーの構成、ローカル環境からの接続確認方法まで、具体的かつ実践的な手順をまとめたガイド記事。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/tsukasa_japan/items/b8bca096170d087e271d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AIはどれくらい動画編集ができるのか!? Claude CodeでYouTube動画編集した話</a></h3>
+    <p class="meta">Qiita トレンド | 10/29 08:11</p>
+    <p class="summary">AIエージェント「Claude Code」をYouTube動画の編集に活用した試行錯誤の記録。スクリプト作成、素材整理、カット編集の指示などをAIで自動化・効率化する手法を検証。現状のAIの限界と可能性を整理し、クリエイティブ分野におけるAIとの協働による作業時間短縮の効果を報告している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/30/pile-ins-payouts-and-pacing-pressure-the-investors-behind-the-vcs-open-up/" target="_blank" rel="noopener noreferrer">Pile-ins, payouts, and pacing pressure: the investors behind the VCs open up</a></h3>
+    <p class="meta">TechCrunch | 10/31 04:16</p>
+    <p class="summary">VCに出資するLP（リミテッド・パートナー）たちの本音に迫る記事。投資競争の激化、投資ペースへのプレッシャー、そしてリターン回収（ペイアウト）に関する懸念が語られている。スタートアップバブルの調整期において、VCエコシステムの資金源であるLPが戦略をどう変更しているかを詳述。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/30/nvidia-weighs-playing-the-cosigner-for-nscales-ai-data-center-in-west-virginia/" target="_blank" rel="noopener noreferrer">Nvidia weighs playing the cosigner for Nscale’s AI data center in West Virginia</a></h3>
+    <p class="meta">TechCrunch | 10/31 01:20</p>
+    <p class="summary">NVIDIAが、ウェストバージニア州のNscale製AIデータセンター建設で資金調達の連帯保証人になることを検討中。自社GPUを大量導入する顧客に対し、信用補完を行うことでインフラ構築を加速させ、自社チップの需要を確実に確保するとともに、AIインフラ市場での影響力を強める狙いがある。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/30/salesforces-ma-spree-continues-with-a-reported-375m-deal-for-defense-tech-startup-rune/" target="_blank" rel="noopener noreferrer">Salesforce’s M&amp;A spree continues with a reported $375M deal for defense tech startup Rune</a></h3>
+    <p class="meta">TechCrunch | 10/30 23:21</p>
+    <p class="summary">Salesforceが防衛技術スタートアップのRuneを約3億7500万ドルで買収する契約を結んだ。政府や国防関連の顧客向けサービス強化が目的。防衛分野におけるデータ統合やAI活用を支援するRuneの技術を取り込むことで、公共部門での市場シェア拡大を目指す、同社の継続的なM&amp;A戦略の一環。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/sandia-and-quantinuum-introduce-logical-gate-set-tomography-to-map-fault-tolerant-qubit-noise/" target="_blank" rel="noopener noreferrer">Sandia and Quantinuum Introduce Logical Gate Set Tomography to Map Fault-Tolerant Qubit Noise</a></h3>
+    <p class="meta">Quantum Computing Report | 10/31 02:40</p>
+    <p class="summary">サンディア国立研究所とQuantinuumが、誤り耐性量子コンピュータ実現に向けた新手法「論理ゲートセット・トモグラフィー（LGST）」を発表。論理Qubitのノイズを精密に特定する手法で、物理レベルのノイズが論理性能にどう影響するかを可視化でき、量子エラー訂正の精度向上に大きく貢献する。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/quantinuum-chief-scientist-argues-physical-fidelity-trumps-gate-speed-in-fault-tolerant-scaling-race/" target="_blank" rel="noopener noreferrer">Quantinuum Chief Scientist Argues Physical Fidelity Trumps Gate Speed in Fault-Tolerant Scaling Race</a></h3>
+    <p class="meta">Quantum Computing Report | 10/31 02:26</p>
+    <p class="summary">Quantinuumのチーフサイエンティストが、誤り耐性量子計算の競争において、ゲート速度よりも物理的な忠実度（フィデリティ）が重要だと主張。速度優先でエラー率が高まるよりも、高精度の演算を維持することが、最終的なスケーリングと誤り訂正効率の最大化につながるという戦略的見解を示した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/forschungszentrum-julich-demonstrates-6-8-nanosecond-single-qubit-gates-with-99-98-fidelity-via-multi-photon-leakage-suppression/" target="_blank" rel="noopener noreferrer">Forschungszentrum Jülich Demonstrates 6.8-Nanosecond Single-Qubit Gates with &gt; 99.98% Fidelity via Multi-Photon Leakage Suppression</a></h3>
+    <p class="meta">Quantum Computing Report | 10/31 02:01</p>
+    <p class="summary">ユーリッヒ研究センターが、マルチフォトン漏洩抑制により、6.8ナノ秒の高速で99.98%以上の忠実度を持つ単一量子ビットゲートを実現。超伝導量子ビットにおける速度と精度のトレードオフを克服した成果であり、デコヒーレンスが起きる前に多くの演算を可能にすることで量子計算の効率を大幅に高める。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c3vgxznlx7jzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">US approves sale of 500 Patriot missiles to Ukraine</a></h3>
+    <p class="meta">BBC World News | 10/31 00:40</p>
+    <p class="summary">米国政府がウクライナに対し、パトリオット・ミサイル500発の売却を承認した。総額約20億ドル規模。ロシアによる空爆からインフラや市民を守るための防空能力強化が目的であり、長期化する戦闘においてウクライナの防衛体制を持続させるための重要な軍事支援となる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/ck9dz3v7z7v3o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Why North Korea&#39;s &#39;elite&#39; hackers are the prime suspect in major Binance hack</a></h3>
+    <p class="meta">BBC World News | 10/31 02:12</p>
+    <p class="summary">Binanceハッキング事件で北朝鮮のエリートハッカー集団が容疑者として浮上している理由を分析。精緻なソーシャルエンジニアリングや脆弱性を突く手口、盗んだ資金を洗浄する手法が過去の北朝鮮の活動と一致。制裁下の北朝鮮にとって、仮想通貨窃盗が貴重な外貨獲得手段となっている現状を解説している。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
