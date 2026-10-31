@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年11月01日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年11月01日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年11月01日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261101_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://karpathy.bearblog.dev/hacker-tube/" target="_blank" rel="noopener noreferrer">HackerTube: YouTube built from videos recommended by HN</a></h3>
+    <p class="meta">Hacker News | 11/01 04:56</p>
+    <p class="summary">Andrej Karpathy氏が構築した、Hacker Newsでの推薦動画を集計・表示するサイト「HackerTube」の紹介。コミュニティによって厳選された質の高いYouTube動画を効率よく探索できる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://atlasum.net/blog/cve-2026-98432-linux-ipv4-tcp-uaf" target="_blank" rel="noopener noreferrer">TCP Use-After-Free: CVE-2026-98432 / CVSS 9.8</a></h3>
+    <p class="meta">Hacker News | 11/01 04:16</p>
+    <p class="summary">LinuxのIPv4 TCPスタックにおける深刻な脆弱性（CVE-2026-98432）を解説。CVSS 9.8のUse-After-Free脆弱性で、リモートからのコード実行やDoS攻撃を許す恐れがあるため、迅速な対応が求められる。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.daemonology.net/blog/2026-10-31-The-Duty-of-a-Scholar.html" target="_blank" rel="noopener noreferrer">The Duty of a Scholar</a></h3>
+    <p class="meta">Hacker News | 11/01 04:07</p>
+    <p class="summary">Colin Percival氏が学者の持つべき責任について論じたエッセイ。学術的な誠実さ、正確な情報の提供、社会への貢献といった、知識人としての倫理的義務について深く考察している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://pivotlake.io/blog/its-the-memory-latency-stupid/" target="_blank" rel="noopener noreferrer">It&#39;s the Memory Latency, Stupid</a></h3>
+    <p class="meta">Hacker News | 11/01 03:38</p>
+    <p class="summary">コンピューティングのボトルネックがCPU速度ではなくメモリのレイテンシ（遅延）にあると指摘する記事。現代のアーキテクチャにおいてメモリ速度が計算能力に追いついていない現状と、その影響を説く。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://sourceforge.net/projects/cdesktopenv/" target="_blank" rel="noopener noreferrer">Common Desktop Environment available now as open-source</a></h3>
+    <p class="meta">Hacker News | 11/01 05:43</p>
+    <p class="summary">かつての商用UNIX標準デスクトップ環境「Common Desktop Environment (CDE)」がオープンソースとして公開。レトロなUIを愛好するユーザーや、古い環境を現代のOS上で動かしたい開発者に向けた情報。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/hiro_pon/articles/2f3b68ec60ddae" target="_blank" rel="noopener noreferrer">FlutterKaigi 2026 で生字幕を映像に載せて会場スクリーンに投影しました</a></h3>
+    <p class="meta">Zenn トレンド | 10/31 06:40</p>
+    <p class="summary">FlutterKaigi 2026でのリアルタイム字幕表示の取り組みを解説。登壇者の音声を字幕化し、映像に重ねてスクリーンへ投影する技術構成やアクセシビリティ面での成果を詳細に紹介している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/comamoca/articles/2026-10-30-trying-hello-world-with-goda-vim" target="_blank" rel="noopener noreferrer">【最速解説】goda.vimでHello, worldする</a></h3>
+    <p class="meta">Zenn トレンド | 10/31 01:57</p>
+    <p class="summary">Vim/Neovim用プラグイン「goda.vim」を導入し、「Hello, world」を表示させる手順を最速で解説。プラグインのインストールから基本的な使い方までを初心者向けにまとめている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mrs1669/articles/20261031_visionos-dismiss-immersive-space" target="_blank" rel="noopener noreferrer">【Apple Vision Pro】Immersive Spaceを閉じた後のonDisappear、シミュレーターと実機で桁違いだった件</a></h3>
+    <p class="meta">Zenn トレンド | 10/30 21:19</p>
+    <p class="summary">Apple Vision Pro開発時、Immersive Spaceを閉じる際のonDisappearイベントの発生タイミングが、実機とシミュレーターで大きく異なる問題を指摘。実機での大幅な遅延に注意を促している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/jnchito/items/636c519c0b1d347c79b7?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AIにありがちな「イマイチなコードコメント」9パターン</a></h3>
+    <p class="meta">Qiita トレンド | 10/31 07:17</p>
+    <p class="summary">AIが生成するコードコメントに見られる、不要な説明や冗長な記述などの「イマイチな」パターンを9つ紹介。読みやすく保守性の高いコードにするための、コメント修正のポイントを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/NoguchiHikaru/items/dccd98d85a31c0cec279?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【Docker入門】Ubuntu 24.04コンテナ環境構築</a></h3>
+    <p class="meta">Qiita トレンド | 10/31 00:07</p>
+    <p class="summary">Ubuntu 24.04環境でDockerコンテナを構築するための初心者向けガイド。環境のインストールから、基本的なコンテナ操作、イメージ作成の手順までをステップバイステップで説明している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/31/openai-reportedly-lowers-funding-target-for-new-round/" target="_blank" rel="noopener noreferrer">OpenAI reportedly lowers funding target for new round</a></h3>
+    <p class="meta">TechCrunch | 10/31 16:12</p>
+    <p class="summary">OpenAIが新たな資金調達ラウンドにおいて、目標額を引き下げたとする報道。市場環境の変化や投資家との交渉を反映した動きとみられ、急拡大を続ける同社の資金調達戦略が注目されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/31/tiktoks-road-to-becoming-a-super-app/" target="_blank" rel="noopener noreferrer">From restaurant guides to payments, here’s how TikTok is building a super app</a></h3>
+    <p class="meta">TechCrunch | 10/31 15:41</p>
+    <p class="summary">TikTokが動画共有だけでなく、レストランガイドや決済機能の拡充を通じて「スーパーアプリ」化を目指す戦略を分析。ユーザーのライフスタイルに深く入り込もうとする同社の将来像を解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/31/i-took-two-iphones-on-vacation-the-duo-won-me-over/" target="_blank" rel="noopener noreferrer">I took two iPhones on vacation. The Duo won me over.</a></h3>
+    <p class="meta">TechCrunch | 10/31 14:00</p>
+    <p class="summary">休暇中にiPhoneを2台持ち歩いた体験記。仕事とプライベートの分離、バッテリーの持ち、カメラの使い分けなど、複数台運用することで得られた利便性と満足感について語っている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/university-of-stuttgart-deploys-quantum-dot-qkd-link-using-frequency-conversion-over-campus-fiber/" target="_blank" rel="noopener noreferrer">University of Stuttgart Deploys Quantum Dot QKD Link Using Frequency Conversion Over Campus Fiber</a></h3>
+    <p class="meta">Quantum Computing Report | 10/31 15:04</p>
+    <p class="summary">シュトゥットガルト大学が、キャンパス内の光ファイバーを用いて量子ドットQKD（量子鍵配送）の実証に成功。周波数変換技術を活用し、既存インフラでの高セキュアな量子通信の可能性を示した。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/chalmers-university-demonstrates-hardware-level-microwave-crosstalk-suppression-via-parasitic-capacitance-engineering/" target="_blank" rel="noopener noreferrer">Chalmers University Demonstrates Hardware-Level Microwave Crosstalk Suppression via Parasitic Capacitance Engineering</a></h3>
+    <p class="meta">Quantum Computing Report | 10/31 14:58</p>
+    <p class="summary">チャルマース工科大学の研究チームが、寄生容量の制御によりマイクロ波のクロストークをハードウェアレベルで抑制する手法を開発。量子ビット間の干渉を抑え、演算精度の向上に寄与する成果。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/los-alamos-and-qc-ware-model-correlated-iron-oxides-using-sample-based-quantum-diagonalization-on-ibm-hardware/" target="_blank" rel="noopener noreferrer">Los Alamos and QC Ware Model Correlated Iron Oxides Using Sample-Based Quantum Diagonalization on IBM Hardware</a></h3>
+    <p class="meta">Quantum Computing Report | 10/31 14:48</p>
+    <p class="summary">ロスアラモス国立研究所とQC Wareが、IBMの量子コンピュータ上で複雑な鉄酸化物の電子相関をモデリングすることに成功。材料科学分野における量子計算の実用化に向けた重要な進展となった。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cqglw3k7djp1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">&#39;We came back from hell&#39;, say Ukrainians after years in Russia-occupied front-line city</a></h3>
+    <p class="meta">BBC World News | 10/31 19:22</p>
+    <p class="summary">ロシア占領下の最前線の都市から避難してきたウクライナ人たちの証言。数年に及ぶ過酷な支配下での生活と、絶え間ない恐怖から脱出した人々の「地獄から戻った」という安堵の声を報じている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cqx2818elrnzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Ukrainian evacuees reunite with family after years trapped in Russia-occupied city</a></h3>
+    <p class="meta">BBC World News | 10/31 17:53</p>
+    <p class="summary">ロシア占領下の都市に長期間閉じ込められていたウクライナ人避難民が、数年ぶりに家族と再会する様子を伝える。戦争により引き裂かれた家族の絆と、再会を果たすまでの苦難を描いた報道。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/videos/ck0j0y87j303o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Clashes erupt between police and protesters in Paris</a></h3>
+    <p class="meta">BBC World News | 10/31 19:37</p>
+    <p class="summary">パリで警察とデモ隊の間で激しい衝突が発生。特定の政策や社会情勢に対する抗議デモが激化し、治安部隊による制圧行動や逮捕者が出るなどの緊迫した現地の状況を伝える映像ニュース。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
