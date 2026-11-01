@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年11月01日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年11月01日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年11月01日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261101_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.smithsonianmag.com/science-nature/italian-farmer-found-unknown-seeds-attic-with-nothing-lose-planted-them-result-biblical-180989644/" target="_blank" rel="noopener noreferrer">An Italian farmer found some unknown seeds in his attic and planted them</a></h3>
+    <p class="meta">Hacker News | 11/01 07:41</p>
+    <p class="summary">イタリアの農夫が屋根裏で見つけた未知の種を植えたところ、絶滅しかけていた希少なインゲン豆「ジャイアント・オブ・ザ・バレー」であることが判明しました。この発見は、地域の農業遺産や生物多様性の保護における重要な出来事となりました。かつて聖書的な規模の実りをもたらしたとされるこの種は、現代の農業において失われつつある伝統的な作物の価値を再認識させる象徴となっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://nolanlawson.com/2026/10/28/the-ai-cost-of-javascript-frameworks/" target="_blank" rel="noopener noreferrer">The AI cost of JavaScript frameworks</a></h3>
+    <p class="meta">Hacker News | 11/01 15:06</p>
+    <p class="summary">AIによるコード生成が普及する中、JavaScriptフレームワークの選択における「AIコスト」が指摘されています。現在のLLMはReactなどの人気フレームワークの学習データに偏っているため、それ以外のフレームワークを使用しようとすると、AIの支援が十分に得られない、あるいは非効率なコードが生成される傾向があります。このエコシステムの偏りが、開発者の技術選択やウェブのパフォーマンスに影響を与える可能性があります。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://blog.zamzar.com/2026/10/30/20-years-766-million-files-two-chameleons/" target="_blank" rel="noopener noreferrer">Running a bootstrapped SaaS for 20 years with my brother</a></h3>
+    <p class="meta">Hacker News | 10/30 22:58</p>
+    <p class="summary">ファイル変換サービス「Zamzar」を兄弟で20年間運営してきた経験が綴られています。外部資金に頼らないブートストラップ形式で成長し、これまでに7億6,600万以上のファイルを処理してきました。小規模なチームを維持しながら、技術の変遷や困難を乗り越えてきた軌跡は、持続可能なSaaSビジネスのモデルケースとして示唆に富んでいます。ユーザーのニーズに寄り添い続けることの重要性が強調されています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/" target="_blank" rel="noopener noreferrer">Brazilian Court Sanctions Lawyers for Prompt Injection in Court Filing</a></h3>
+    <p class="meta">Hacker News | 11/01 11:19</p>
+    <p class="summary">ブラジルの裁判所が、提出書類に「プロンプトインジェクション」の手法を忍び込ませた弁護士に対し、制裁を科しました。裁判所のAIシステムを操作して有利な判断を導き出そうとするこの試みは、法曹界におけるAI利用の倫理的・法的リスクを浮き彫りにしています。司法プロセスにおけるAIの信頼性維持という新たな課題を象徴する事件となりました。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/kauche/articles/f3736c660aab77" target="_blank" rel="noopener noreferrer">3 人それぞれの Claude Code を Slack でつないで ISUCON2026 に参加した（207,039 点）</a></h3>
+    <p class="meta">Zenn トレンド | 10/31 12:31</p>
+    <p class="summary">ISUCON2026に3人のチームで参加し、各メンバーがAIエージェント「Claude Code」をSlack経由で活用して207,039点を獲得した記録です。エージェントが自律的にコードを修正し、メンバーがそれをレビューするフローを構築しました。AIによる高速な改善と人間による方針決定の組み合わせが功を奏した一方で、エージェントの挙動を制御する難しさや調整の重要性についても述べられています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/paraponera/articles/2026-10-31-isucon-2026-isureal" target="_blank" rel="noopener noreferrer">ISUCONに初めて出たら、直すたびに次のボトルネックが出てきて、超面白かった</a></h3>
+    <p class="meta">Zenn トレンド | 10/31 12:17</p>
+    <p class="summary">ISUCON2026に初参加した開発者による試行錯誤の体験記です。一つのボトルネックを解消するたびに新たな課題が現れる競技の奥深さに魅了され、楽しみながら取り組んだ様子が描かれています。計測の重要性や、推測ではなく事実に基づいて改善を進めることの難しさと面白さが強調されており、技術的な成長とコミュニティの熱量を感じさせる内容となっています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/tak848/articles/20261031-isucon2026-writeup" target="_blank" rel="noopener noreferrer">ISUCON2026に人間1人＋AIエージェント軍団で出て19.6万点、ループは閉じたけど中身が弱かった反省文😇</a></h3>
+    <p class="meta">Zenn トレンド | 10/31 10:53</p>
+    <p class="summary">人間1人とAIエージェント群を組み合わせた構成でISUCON2026に挑み、19.6万点を獲得した振り返り記事です。AIに改善サイクルを回させる「ループ」の構築には成功したものの、個別の改善策の精度や深みが不足していたことが課題として挙げられています。AIを高度に自動化して参加する試みの可能性を示す一方で、スコアを伸ばすためには人間の専門知識やAIへの指示の具体性が不可欠であることを痛感する内容です。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/TOMOSIA-LinhND/items/3dec10762fcc224d9133?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">誤ってマルウェアを実行してしまった私が、AIとREA（Reverse Engineer Anything）に救われた話</a></h3>
+    <p class="meta">Qiita トレンド | 10/30 09:45</p>
+    <p class="summary">誤ってマルウェアを実行してしまった著者が、AIと「REA（Reverse Engineer Anything）」というツールを活用して、被害の全容解明と修復を行った体験談です。未知のバイナリを解析する際、AIがコードの挙動を解説し、不審な点を特定する上で大きな助けとなったプロセスが紹介されています。セキュリティインシデントへの対応において、AI技術が専門的な解析のハードルを下げ、迅速な復旧に寄与する可能性を示しています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/31/data-centers-are-now-a-midterm-issue-even-in-brooklyn/" target="_blank" rel="noopener noreferrer">Data centers are now a midterm issue, even in Brooklyn</a></h3>
+    <p class="meta">TechCrunch | 11/01 02:22</p>
+    <p class="summary">データセンターの建設が、ブルックリンのような都市部でも政治的な争点となっています。莫大な電力消費、冷却に必要な水資源、騒音問題、そして広大な用地の確保といった要因が、地域住民の生活や環境への負荷として懸念されています。テック企業の成長を支えるインフラが、技術的な問題にとどまらず、地域の公共政策や選挙の結果に直結する社会的課題へと変化している現状を伝えています。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/31/apple-ceo-says-the-company-doesnt-want-to-ship-ai-for-ais-sake/" target="_blank" rel="noopener noreferrer">Apple CEO says the company doesn’t ‘want to ship AI for AI’s sake’</a></h3>
+    <p class="meta">TechCrunch | 10/31 21:41</p>
+    <p class="summary">Appleのティム・クックCEOは、同社が「AIのためのAI」を提供することに関心がないと明言しました。単に流行を追うのではなく、ユーザーの実際の課題を解決し、日常生活を豊かにするためにAI技術を統合していく戦略を強調しています。この姿勢は、プライバシーへの配慮や使いやすさを優先するAppleの伝統的な方針を反映したものであり、他社との差別化を図る狙いがあると考えられます。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/10/31/4-days-left-how-techcrunch-founder-summit-helps-you-make-more-useful-connections-to-scale/" target="_blank" rel="noopener noreferrer">4 days left: How TechCrunch Founder Summit helps you make more useful connections to scale</a></h3>
+    <p class="meta">TechCrunch | 10/31 21:36</p>
+    <p class="summary">開催まで残り4日に迫った「TechCrunch Founder Summit」が、スタートアップの成長に不可欠なネットワーキングをいかに支援するかを紹介しています。投資家や経験豊富な起業家との有意義なつながりを作るためのプラットフォームとしての価値を強調し、参加者がビジネスを次の段階へ進めるための具体的な機会を提供することをアピールしています。創業者が協力関係を築くための重要なイベントです。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cqj34gnd3n30o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Shops looted as German cost of living protests turn violent</a></h3>
+    <p class="meta">BBC World News | 11/01 08:43</p>
+    <p class="summary">ドイツで生活費の高騰に対する抗議デモが激化し、暴徒化した一部の参加者によって商店が略奪される事態に発展しました。インフレによる経済的困窮が市民の不満を増幅させ、当初の平和的なデモが暴力的な衝突へと変貌した背景が報じられています。政府の対応に対する批判も高まっており、社会不安が深まっている現状が浮き彫りになっています。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
