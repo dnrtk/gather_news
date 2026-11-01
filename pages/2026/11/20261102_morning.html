@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年11月02日 朝刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年11月02日 朝刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年11月02日 06:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261102_morning.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://hackerbooks.org" target="_blank" rel="noopener noreferrer">Show HN: HackerBooks – HackerTube, but for books mentioned on HN</a></h3>
+    <p class="meta">Hacker News | 11/02 00:58</p>
+    <p class="summary">Hacker News（HN）で言及された書籍をまとめたサイト「HackerBooks」の紹介。HackerTubeの書籍版といえるサービスで、HNの膨大な投稿から特定の書籍に関する議論や推薦を効率的に探すことができる。コミュニティの知見に基づいた良書を見つけるための便利なツールとなっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://terrytao.wordpress.com/2026/11/01/mathematics-has-changed-lets-act-like-it/" target="_blank" rel="noopener noreferrer">Mathematics has changed. Let&#39;s act like it</a></h3>
+    <p class="meta">Hacker News | 11/02 03:28</p>
+    <p class="summary">数学者テレンス・タオによる、数学の変容に関する論考。AIや形式手法、大規模な共同作業が研究に不可欠なものとなり、従来の個人の直感に頼る手法から、よりテクノロジーを活用したアプローチへの転換が必要だと説いている。現代の数学界が直面している質的変化と、それに対応するための意識改革を促す内容。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/raphlinus/nibnib" target="_blank" rel="noopener noreferrer">Nibnib: Image compression with extreme decompression speed</a></h3>
+    <p class="meta">Hacker News | 10/30 13:17</p>
+    <p class="summary">非常に高速なデコンプレッション（復元）速度を特徴とする画像圧縮フォーマット「Nibnib」の紹介。GPUなどの並列処理を活かして高速に画像を読み込むことを目的としている。既存のフォーマットと比較して、特に読み込み速度のパフォーマンスに重点を置いた設計となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://nullprogram.com/blog/2025/02/05/" target="_blank" rel="noopener noreferrer">Tips for more effective fuzz testing with AFL++</a></h3>
+    <p class="meta">Hacker News | 10/28 18:46</p>
+    <p class="summary">AFL++を用いた効果的なファズテスト（脆弱性診断）のテクニックを紹介。ターゲットの選定、計装の最適化、コーパス管理、テストの並列化など、実践的なノウハウが解説されている。セキュリティ向上を目指す開発者向けに、効率的なバグ発見のコツを伝授する。</p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/catatsuy/articles/159edffe202c0c" target="_blank" rel="noopener noreferrer">ISUCON 2026 参加記</a></h3>
+    <p class="meta">Zenn トレンド | 11/01 03:40</p>
+    <p class="summary">ISUCON 2026に参加した開発者による振り返り記事。システムのボトルネック特定、キャッシュ戦略、データベースの最適化など、競技中に行った技術的な施策やチーム内での連携について詳しく語られている。得られた技術的な学びや、次への意気込みが記されている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/ntk221/articles/98b17a773669a1" target="_blank" rel="noopener noreferrer">ISUCON2026 本番に出た</a></h3>
+    <p class="meta">Zenn トレンド | 10/31 13:14</p>
+    <p class="summary">ISUCON 2026の本番に参加した際の実録。当日のトラブル対応や、スコアを伸ばすための具体的なチューニング手法、使用したツールなどが紹介されている。パフォーマンス改善の楽しさと難しさがリアルに描かれており、同様の競技に参加するエンジニアにとって参考になる内容となっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/ryo33/items/3a1a9d1ba2b289b23244?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">AIに証明を書かせてセキュアに開発する言語 Tauto をリリースしました！</a></h3>
+    <p class="meta">Qiita トレンド | 11/01 08:06</p>
+    <p class="summary">AIを活用してプログラムの正しさを証明し、開発を支援する新言語「Tauto」のリリース報告。開発者が仕様を記述し、AIが背後で形式的な証明を行うことで、バグや脆弱性のない堅牢なソフトウェアを効率的に構築できる。形式手法の障壁を下げ、実用性を高めた次世代の環境を目指している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/songchong/items/ac9779bb8e8838b546b9?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">compact の使い方、間違えるとトークン代 2.75 倍？ Claude Code で測ってわかった 5 つの結論【2026年版】</a></h3>
+    <p class="meta">Qiita トレンド | 11/01 19:05</p>
+    <p class="summary">Claude Codeにおける「compact」機能の最適な利用法を検証。誤った使い方をするとトークン消費量が大幅に増え、コストが最大2.75倍になる可能性を指摘。5つの結論を通じて、トークン効率を高める設定や指示の出し方など、AIエージェントを経済的かつ効果的に使いこなすテクニックを解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/11/01/ai-can-make-tech-ceos-lives-easier-what-about-everyone-else/" target="_blank" rel="noopener noreferrer">AI can make tech CEOs’ lives easier. What about everyone else?</a></h3>
+    <p class="meta">TechCrunch | 11/01 20:57</p>
+    <p class="summary">AIがテック企業のCEOの業務を効率化する一方で、一般労働者に与える影響を考察した記事。経営層が自動化の恩恵を受ける反面、現場では監視の強化や雇用の不安定化が懸念されている。AIによる生産性向上の利益が誰に分配されるべきかという社会的な課題を提起している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/11/01/techcrunch-mobility-a-new-bigger-av-boom-is-here/" target="_blank" rel="noopener noreferrer">TechCrunch Mobility: A new, bigger AV boom is here</a></h3>
+    <p class="meta">TechCrunch | 11/01 17:04</p>
+    <p class="summary">自動運転車（AV）業界に新たなブームが到来している。法規制の緩和や技術の進歩、ロボタクシーサービスの拡大などが背景にある。一時期の停滞を経て再び投資や開発が加速しており、移動手段の未来を大きく変える可能性について、最新の業界動向を交えて解説している。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/11/01/binance-resumes-withdrawals-following-6-3-billion-breach/" target="_blank" rel="noopener noreferrer">Binance resumes withdrawals following $6.3 billion breach</a></h3>
+    <p class="meta">TechCrunch | 11/01 16:20</p>
+    <p class="summary">63億ドル規模の巨額流出事件に見舞われた仮想通貨取引所バイナンスが、出金業務を再開した。セキュリティ体制の強化と調査を経て、一部制限付きながら資産引き出しが可能となった。業界史上最大級のハッキング被害からの復旧プロセスと、今後の信頼回復に向けた課題が注目されている。</p>
+  </div>
+  
+</section>
+
+
+
+
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c64g1y90p71eo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Russian strikes cut power to thousands in Ukraine as Kherson ceasefire to end</a></h3>
+    <p class="meta">BBC World News | 11/01 19:48</p>
+    <p class="summary">ウクライナのヘルソン州で停戦期間が終了する中、ロシア軍の攻撃により数千世帯が停電に見舞われている。インフラ施設が標的となり、冬の寒さが厳しさを増す中で市民生活への深刻な影響が懸念されている。終わりの見えない戦闘と、生活基盤の破壊という過酷な現状を伝える。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cmqln14rrzxvo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Israeli strikes in Gaza kill eight including child, hospitals say</a></h3>
+    <p class="meta">BBC World News | 11/01 17:06</p>
+    <p class="summary">ガザ地区で行われたイスラエル軍の空爆により、子供を含む少なくとも8名が死亡した。現地の病院関係者が明らかにしたもので、負傷者も多数出ている。紛争が継続する中で民間人の犠牲が相次いでおり、国際社会からは人道的危機の深刻化を懸念する声が一段と強まっている。</p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cq5ynzvkn1d8o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">University of Cambridge scientist among those who died in Spanish train crash</a></h3>
+    <p class="meta">BBC World News | 11/01 17:05</p>
+    <p class="summary">スペインで発生した列車脱線事故の犠牲者の中に、ケンブリッジ大学の科学者が含まれていたことが判明した。現地当局による身元確認作業が進められており、著名な研究者の突然の訃報に学術界でも悲しみが広がっている。事故の原因究明に向けた調査も並行して進められている。</p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
