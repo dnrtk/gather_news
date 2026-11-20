@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年11月20日 夕刊 ニュースダイジェスト</title>
+  <style>
+    :root {
+      --sidebar-w: 240px;
+      --bg: #ffffff;
+      --bg-sidebar: #f3f4f6;
+      --bg-card: #f9fafb;
+      --fg: #111827;
+      --fg-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+      --btn-bg: #e5e7eb;
+      --tier1: #7c3aed;
+      --tier2: #0891b2;
+      --tier3: #059669;
+      --tier4: #d97706;
+      --tier5: #dc2626;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111827;
+        --bg-sidebar: #1f2937;
+        --bg-card: #1f2937;
+        --fg: #f9fafb;
+        --fg-muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #374151;
+        --btn-bg: #374151;
+        --tier1: #a78bfa;
+        --tier2: #22d3ee;
+        --tier3: #34d399;
+        --tier4: #fbbf24;
+        --tier5: #f87171;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── Hamburger ─────────────────────── */
+    #hamburger {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 300;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 6px;
+      background: var(--btn-bg);
+      color: var(--fg);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hamburger:hover { opacity: 0.8; }
+
+    /* ── Sidebar ───────────────────────── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform 0.25s ease;
+    }
+    #sidebar.open   { transform: translateX(0); }
+    #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+
+    .sidebar-title {
+      padding: 0.85rem 1rem 0.85rem 3.5rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #nav-list { flex: 1; padding: 0.5rem 0; }
+
+    .nav-link {
+      display: block;
+      padding: 0.35rem 1rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      text-decoration: none;
+      border-radius: 0 4px 4px 0;
+      margin-right: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-link:hover {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+    .nav-link.active {
+      background: color-mix(in srgb, var(--accent) 15%, transparent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-empty { padding: 1rem; font-size: 0.85rem; color: var(--fg-muted); }
+
+    /* ── Overlay (mobile only) ─────────── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 150;
+    }
+    #overlay.show { display: block; }
+
+    /* ── Main ──────────────────────────── */
+    #main {
+      min-height: 100vh;
+      padding: 1.5rem 1rem 2rem 3.5rem;
+      transition: margin-left 0.25s ease;
+    }
+    .content { max-width: 800px; }
+
+    /* ── Desktop ───────────────────────── */
+    @media (min-width: 768px) {
+      #sidebar { transform: translateX(0); }
+      #sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+      #main {
+        margin-left: var(--sidebar-w);
+        padding-left: 2rem;
+        transition: margin-left 0.25s ease;
+      }
+      #main.sidebar-closed {
+        margin-left: 0;
+        padding-left: 3.5rem;
+      }
+      #overlay { display: none !important; }
+    }
+
+    
+header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--border); }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+header .meta { color: var(--fg-muted); font-size: 0.85rem; }
+
+section { margin-bottom: 2.5rem; }
+section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+section.tier-1 h2 { border-color: var(--tier1); background: color-mix(in srgb, var(--tier1) 8%, transparent); }
+section.tier-2 h2 { border-color: var(--tier2); background: color-mix(in srgb, var(--tier2) 8%, transparent); }
+section.tier-3 h2 { border-color: var(--tier3); background: color-mix(in srgb, var(--tier3) 8%, transparent); }
+section.tier-4 h2 { border-color: var(--tier4); background: color-mix(in srgb, var(--tier4) 8%, transparent); }
+section.tier-5 h2 { border-color: var(--tier5); background: color-mix(in srgb, var(--tier5) 8%, transparent); }
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.article-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+.article-card h3 a { color: var(--fg); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.article-card .meta { color: var(--fg-muted); font-size: 0.8rem; margin-bottom: 0.5rem; }
+.article-card .summary { font-size: 0.9rem; }
+
+.podcast-player {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.podcast-player p { font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+.podcast-player audio { width: 100%; }
+
+  </style>
+</head>
+<body>
+  <button id="hamburger" aria-label="メニュー">☰</button>
+
+  <aside id="sidebar">
+    <div class="sidebar-title">ニュースダイジェスト</div>
+    <nav id="nav-list"><p class="nav-empty">読み込み中…</p></nav>
+  </aside>
+
+  <div id="overlay"></div>
+
+  <main id="main">
+    <div class="content">
+      
+<header>
+  <h1>2026年11月20日 夕刊 ニュースダイジェスト</h1>
+  <p class="meta">生成日時: 2026年11月20日 18:00 JST</p>
+</header>
+
+
+<div class="podcast-player">
+  <p>🎙️ ポッドキャストで聴く</p>
+  <audio controls preload="none">
+    <source src="20261120_evening.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+
+
+
+<section class="tier-1">
+  <h2>🤖 AI一次情報</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://ethanlowman.com/posts/jj-primer/" target="_blank" rel="noopener noreferrer">Jujutsu Primer</a></h3>
+    <p class="meta">Hacker News | 11/20 14:46</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://github.com/openssl/openssl/pull/33652" target="_blank" rel="noopener noreferrer">OpenSSL: Buffer overflow in EVP_EncodeBlock() (CVE-2026-121481, CVSS 9.8)</a></h3>
+    <p class="meta">Hacker News | 11/20 11:01</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://healeycodes.com/introducing-the-worlds-strongest-sokoban-solver" target="_blank" rel="noopener noreferrer">The Strongest Sokoban Solver</a></h3>
+    <p class="meta">Hacker News | 11/17 06:04</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://ffmpeg.org/download.html#release_9.1" target="_blank" rel="noopener noreferrer">FFmpeg 9.1 &#39;Gauss&#39;</a></h3>
+    <p class="meta">Hacker News | 11/20 13:02</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.snowflake.com/en/blog/engineering/postgres-19-repack-table-bloat/" target="_blank" rel="noopener noreferrer">Postgres 19 Repack: Faster, Built-In Table Bloat Cleanup</a></h3>
+    <p class="meta">Hacker News | 11/20 11:43</p>
+    <p class="summary"></p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-2">
+  <h2>💻 テック全般</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/genax_corp/articles/20261109-judge-models-faq-check" target="_blank" rel="noopener noreferrer">Decision ModelはFAQの回答の確認と問い合わせの振り分けに使えるか</a></h3>
+    <p class="meta">Zenn トレンド | 11/20 03:00</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/mutsu_zenn/articles/75498c3f4e693b" target="_blank" rel="noopener noreferrer">Dockerfileでイメージを作成後、レイヤーとキャッシュの確認</a></h3>
+    <p class="meta">Zenn トレンド | 11/19 22:00</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://zenn.dev/shoyataguchi/articles/b1bc6a96d4b963" target="_blank" rel="noopener noreferrer">MetaのMuseを使ってみた: 内部構造とセキュリティの調査</a></h3>
+    <p class="meta">Zenn トレンド | 11/19 15:55</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/yuyanz/items/c3bb4801c105d96fa79d?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【朗報】Microsoft 365 CopilotがOneDriveのファイルを直接編集できるようになってた！CoworkなしでGitHub Copilotみたいに使える件</a></h3>
+    <p class="meta">Qiita トレンド | 11/19 03:56</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/mryo0826/items/c05efd7ac228fe85ab44?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">Muse の VM は約2時間で入れ替わる（実測と対策）</a></h3>
+    <p class="meta">Qiita トレンド | 11/19 12:47</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://qiita.com/N-Kyo/items/80ac96fd59b08b1a879a?utm_campaign=popular_items&amp;utm_medium=feed&amp;utm_source=popular_items" target="_blank" rel="noopener noreferrer">【Gemini 4 Hydrogen】「とりあえず一番上」から卒業！Agent Studioで試す手順</a></h3>
+    <p class="meta">Qiita トレンド | 11/19 11:09</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/11/19/apple-may-be-developing-its-own-ai-agent-that-runs-your-mac/" target="_blank" rel="noopener noreferrer">Apple may be developing its own AI agent that runs your Mac</a></h3>
+    <p class="meta">TechCrunch | 11/20 00:56</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/11/19/anthropics-7-founders-cashed-out-nearly-2b-in-record-breaking-ipo/" target="_blank" rel="noopener noreferrer">Anthropic’s 7 founders cashed out nearly $2B in record-breaking IPO</a></h3>
+    <p class="meta">TechCrunch | 11/20 00:43</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://techcrunch.com/2026/11/19/anthropic-rival-says-companies-can-mostly-skip-the-pricey-models/" target="_blank" rel="noopener noreferrer">Anthropic rival says companies can (mostly) skip the pricey models</a></h3>
+    <p class="meta">TechCrunch | 11/20 00:26</p>
+    <p class="summary"></p>
+  </div>
+  
+</section>
+
+
+
+
+
+<section class="tier-4">
+  <h2>⚛️ 量子コンピュータ</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/university-of-amsterdam-awards-e800000-across-four-quantum-simulation-projects-for-chemistry-and-materials-design/" target="_blank" rel="noopener noreferrer">University of Amsterdam Awards €800,000 Across Four Quantum Simulation Projects for Chemistry and Materials Design</a></h3>
+    <p class="meta">Quantum Computing Report | 11/20 01:30</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/ucla-researchers-model-collectively-enhanced-superconducting-qubit-interfaces-for-microwave-to-optical-transduction/" target="_blank" rel="noopener noreferrer">UCLA Researchers Model Collectively Enhanced Superconducting-Qubit Interfaces for Microwave-to-Optical Transduction</a></h3>
+    <p class="meta">Quantum Computing Report | 11/20 01:19</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://quantumcomputingreport.com/researchers-introduce-qeclean-framework-to-formally-verify-quantum-error-correcting-codes-in-lean-4/" target="_blank" rel="noopener noreferrer">Researchers Introduce QECLean Framework to Formally Verify Quantum Error-Correcting Codes in Lean 4</a></h3>
+    <p class="meta">Quantum Computing Report | 11/20 01:11</p>
+    <p class="summary"></p>
+  </div>
+  
+</section>
+
+
+
+<section class="tier-5">
+  <h2>🌐 世界情勢</h2>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c623j4kpg94go?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">UK and EU to agree youth mobility scheme, BBC understands</a></h3>
+    <p class="meta">BBC World News | 11/20 07:14</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/cx7v2d8q879eo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">&#39;I tell my son it&#39;s just fireworks&#39;: Life inside Yemeni city besieged by Houthis</a></h3>
+    <p class="meta">BBC World News | 11/20 00:13</p>
+    <p class="summary"></p>
+  </div>
+  
+  <div class="article-card">
+    <h3><a href="https://www.bbc.co.uk/news/articles/c6x29gn4pdn9o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Three Kyiv bridges hit during major Russian missile attack</a></h3>
+    <p class="meta">BBC World News | 11/20 08:40</p>
+    <p class="summary"></p>
+  </div>
+  
+</section>
+
+
+
+    </div>
+  </main>
+
+  <script>
+    const NAV_ROOT = "../../../";
+
+    const hamburger = document.getElementById('hamburger');
+    const sidebar   = document.getElementById('sidebar');
+    const overlay   = document.getElementById('overlay');
+    const main      = document.getElementById('main');
+
+    function isMobile() { return window.innerWidth < 768; }
+    function isOpen()   { return sidebar.classList.contains('open') || (!isMobile() && !sidebar.classList.contains('closed')); }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.classList.remove('closed');
+      if (isMobile()) overlay.classList.add('show');
+      else main.classList.remove('sidebar-closed');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.classList.add('closed');
+      overlay.classList.remove('show');
+      if (!isMobile()) main.classList.add('sidebar-closed');
+    }
+
+    // 初期状態: デスクトップは開く、モバイルは閉じる
+    if (isMobile()) closeSidebar(); else openSidebar();
+
+    hamburger.addEventListener('click', () => isOpen() ? closeSidebar() : openSidebar());
+    overlay.addEventListener('click', closeSidebar);
+
+    // ナビ読み込み
+    const CURRENT_FILE = location.pathname.endsWith('/')
+      ? 'index.html'
+      : location.pathname.split('/').pop();
+
+    async function loadNav() {
+      try {
+        const res = await fetch(NAV_ROOT + 'nav.json');
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+
+        let html = '';
+        for (const page of data) {
+          const filename = page.path.split('/').pop();
+          const active   = CURRENT_FILE === filename ? ' active' : '';
+          html += `<a href="${NAV_ROOT}${page.path}" class="nav-link${active}">${page.label}</a>`;
+        }
+        document.getElementById('nav-list').innerHTML = html || '<p class="nav-empty">ページなし</p>';
+      } catch {
+        document.getElementById('nav-list').innerHTML = '<p class="nav-empty">読み込み失敗</p>';
+      }
+    }
+    loadNav();
+  </script>
+</body>
+</html>
