@@ -1,8 +1,11 @@
+import html
 import json
 import logging
+import re
 import time
 import urllib.request
 from datetime import datetime
+from html.parser import HTMLParser
 from zoneinfo import ZoneInfo
 
 import feedparser
@@ -12,6 +15,11 @@ from modules.models import Article
 logger = logging.getLogger(__name__)
 JST = ZoneInfo("Asia/Tokyo")
 TIMEOUT = 10
+USER_AGENT = "gather-news/1.0"
+# 要約プロンプトのトークン数（Gemini Free プランの TPM 上限）を抑えるため概要を切り詰める
+DESCRIPTION_MAX_CHARS = 300
+# meta description は <head> 内にあるため先頭だけ読めば足りる
+META_FETCH_MAX_BYTES = 256 * 1024
 
 
 def collect_all(config: dict, now: datetime) -> list[Article]:
@@ -43,7 +51,7 @@ def _fetch_rss(source: dict, limit: int, now: datetime, tier: int) -> list[Artic
     url = source["url"]
     try:
         req = urllib.request.Request(
-            url, headers={"User-Agent": "gather-news/1.0"}
+            url, headers={"User-Agent": USER_AGENT}
         )
         with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
             content = resp.read()
@@ -60,6 +68,11 @@ def _fetch_rss(source: dict, limit: int, now: datetime, tier: int) -> list[Artic
                 published = datetime.fromtimestamp(
                     time.mktime(entry.published_parsed), tz=JST
                 )
+            description = _clean_text(
+                entry.get("summary", "") or entry.get("description", "")
+            )
+            if not description:
+                description = _fetch_meta_description(link)
             articles.append(
                 Article(
                     title=title,
@@ -67,6 +80,7 @@ def _fetch_rss(source: dict, limit: int, now: datetime, tier: int) -> list[Artic
                     source_name=name,
                     tier=tier,
                     published=published,
+                    description=description,
                 )
             )
         logger.info(f"collect: {name} → {len(articles)} 件取得")
@@ -112,6 +126,7 @@ def _fetch_hn(source: dict, limit: int, now: datetime, tier: int) -> list[Articl
                     source_name=name,
                     tier=tier,
                     published=published,
+                    description=_fetch_meta_description(item["url"]),
                 )
             )
 
@@ -120,3 +135,53 @@ def _fetch_hn(source: dict, limit: int, now: datetime, tier: int) -> list[Articl
     except Exception as e:
         logger.warning(f"collect: {name} → 失敗 ({e})、スキップ")
         return []
+
+
+def _clean_text(raw: str) -> str:
+    """HTML タグ・実体参照・余分な空白を除去し、DESCRIPTION_MAX_CHARS で切り詰める。"""
+    text = re.sub(r"<[^>]+>", " ", raw)
+    text = html.unescape(text)
+    text = re.sub(r"\s+", " ", text).strip()
+    if len(text) > DESCRIPTION_MAX_CHARS:
+        text = text[:DESCRIPTION_MAX_CHARS].rstrip() + "…"
+    return text
+
+
+class _MetaDescriptionParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.description = ""
+        self.og_description = ""
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag != "meta":
+            return
+        attr = {k.lower(): (v or "") for k, v in attrs}
+        key = (attr.get("name") or attr.get("property") or "").lower()
+        if key == "description" and not self.description:
+            self.description = attr.get("content", "")
+        elif key in ("og:description", "twitter:description") and not self.og_description:
+            self.og_description = attr.get("content", "")
+
+
+def _fetch_meta_description(url: str) -> str:
+    """記事ページの meta description を取得する。失敗時は空文字（要約はタイトルのみで行う）。"""
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+            content_type = resp.headers.get("Content-Type", "")
+            if "html" not in content_type:
+                return ""
+            charset = resp.headers.get_content_charset() or "utf-8"
+            body = resp.read(META_FETCH_MAX_BYTES).decode(charset, errors="replace")
+    except Exception as e:
+        logger.info(f"collect: meta description 取得失敗 {url} ({e})")
+        return ""
+
+    parser = _MetaDescriptionParser()
+    try:
+        parser.feed(body)
+    except Exception as e:
+        logger.info(f"collect: meta description 解析失敗 {url} ({e})")
+        return ""
+    return _clean_text(parser.og_description or parser.description)

@@ -9,6 +9,7 @@ class Article:
     source_name: str
     tier: int
     published: datetime
+    description: str = ""  # 要約の入力に使う記事概要（JSON には保存しない）
     summary: str = ""
     one_liner: str = ""
 

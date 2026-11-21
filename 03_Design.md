@@ -33,6 +33,7 @@ class Article:
     source_name: str
     tier: int                        # 1 / 2 / 3
     published: datetime              # JST aware datetime
+    description: str = ""            # 要約入力用の記事概要（300字以内、JSON には保存しない）
     summary: str = ""                # summarizer が埋める
     one_liner: str = ""              # weekly summarizer が埋める
 ```
@@ -87,6 +88,10 @@ def _fetch_rss(source: dict, limit: int, now: datetime) -> list[Article]
 def _fetch_hn(source: dict, limit: int, now: datetime) -> list[Article]
     """HN Firebase API でスコア順 Top500 を取得し上位 limit 件を返す。
     失敗時は空リストを返す。"""
+
+def _fetch_meta_description(url: str) -> str
+    """記事ページの og:description / meta description を取得する（先頭 256KB のみ読む）。
+    RSS に概要がない記事と HN 記事で使用。失敗時は空文字。Gemini API は呼ばない。"""
 ```
 
 ### modules/store.py
@@ -114,9 +119,11 @@ def load_weekly_articles(pages_dir: Path, target_dates: list[date]) -> list[Week
 
 ```python
 def summarize(articles: list[Article], api_key: str, primary: str, fallback: str) -> list[Article]
-    """全記事をまとめて Gemini API に投げ、summary を埋めた Article リストを返す。
+    """全記事の title と description をまとめて 1 回の Gemini API 呼び出しで要約し、
+    summary を埋めた Article リストを返す（URL 先の本文はモデルに取得させない）。
     articles が空の場合は即返却（API 呼び出しなし）。
-    primary が 429 の場合は fallback で再試行。
+    primary が API 例外、または JSON 配列として解釈できない応答（拒否文など）を返した場合は
+    fallback で再試行（呼び出しは最大 2 回）。
     fallback も失敗した場合は summary = "取得できませんでした" として継続。"""
 
 def summarize_weekly(articles: list[WeeklyArticle], api_key: str, primary: str, fallback: str) -> list[WeeklyArticle]
@@ -126,9 +133,13 @@ def summarize_weekly(articles: list[WeeklyArticle], api_key: str, primary: str, 
 def _call_api(prompt: str, api_key: str, model: str) -> str
     """Gemini API を呼び出しレスポンステキストを返す。429 時は RateLimitError を raise する。"""
 
-def _parse_summaries(response: str, articles: list) -> list
-    """API レスポンス（JSON 文字列）をパースして articles に結果をマージする。
-    パース失敗時は元の articles をそのまま返す（フォールバック済みとして扱う）。"""
+def _parse_response(response: str, key: str) -> list[dict]
+    """API レスポンスから JSON 配列を取り出して検証する。
+    配列が見つからない・デコード失敗・id / key 欠落の場合は InvalidResponseError を raise し、
+    _call_with_fallback が fallback モデルへ切り替える。"""
+
+def _apply(data: list[dict], articles: list, key: str) -> None
+    """検証済みの JSON 配列を id 順に articles の key 属性へマージする。"""
 ```
 
 ### modules/podcast.py
